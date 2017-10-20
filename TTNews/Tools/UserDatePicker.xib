@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserDatePicker">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="192"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="hJ7-kH-dmY">
+                    <rect key="frame" x="0.0" y="30" width="320" height="162"/>
+                    <date key="date" timeIntervalSinceReferenceDate="443187220.13916498">
+                        <!--2015-01-17 11:33:40 +0000-->
+                    </date>
+                </datePicker>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1S8-Lr-1Ul">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                    <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="w1y-7C-NPy"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVc-L2-tFa">
+                    <rect key="frame" x="238" y="2" width="80" height="25"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="bGS-u9-KjK"/>
+                        <constraint firstAttribute="height" constant="25" id="php-dT-0w1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="完成">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <state key="highlighted" title="完成">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="OnCommitDown:" destination="iN0-l3-epB" eventType="touchUpInside" id="Bff-fH-Cf0"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcb-P6-Pb9">
+                    <rect key="frame" x="5" y="5" width="225" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Lup-Le-FlP"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="hcb-P6-Pb9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="5jG-si-Ov3"/>
+                <constraint firstItem="YVc-L2-tFa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="GFX-8t-n4Y"/>
+                <constraint firstAttribute="bottom" secondItem="hJ7-kH-dmY" secondAttribute="bottom" id="GQG-WG-ZLY"/>
+                <constraint firstItem="1S8-Lr-1Ul" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="R2o-W1-e6A"/>
+                <constraint firstAttribute="trailing" secondItem="YVc-L2-tFa" secondAttribute="trailing" constant="2" id="bV8-ZY-xqJ"/>
+                <constraint firstItem="hcb-P6-Pb9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="bpB-56-SC9"/>
+                <constraint firstAttribute="trailing" secondItem="1S8-Lr-1Ul" secondAttribute="trailing" id="cj0-Rm-cXo"/>
+                <constraint firstAttribute="trailing" secondItem="hJ7-kH-dmY" secondAttribute="trailing" id="hN5-ln-jUX"/>
+                <constraint firstItem="1S8-Lr-1Ul" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kcr-oh-rjb"/>
+                <constraint firstItem="hJ7-kH-dmY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lZ2-iL-Tjc"/>
+                <constraint firstItem="YVc-L2-tFa" firstAttribute="leading" secondItem="hcb-P6-Pb9" secondAttribute="trailing" constant="8" id="pvQ-Iv-OPb"/>
+                <constraint firstItem="hJ7-kH-dmY" firstAttribute="top" secondItem="1S8-Lr-1Ul" secondAttribute="bottom" id="qbg-eT-Vua"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="m_Commit" destination="YVc-L2-tFa" id="H6b-g3-Oo8"/>
+                <outlet property="m_Picker" destination="hJ7-kH-dmY" id="feO-AZ-Air"/>
+                <outlet property="m_Title" destination="hcb-P6-Pb9" id="r7y-3X-ly5"/>
+            </connections>
+            <point key="canvasLocation" x="134" y="382"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellId" id="gTV-IL-0wX" customClass="home1CollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="160" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="160" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 校园高手" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qw6-wG-LwC">
+                        <rect key="frame" x="0.0" y="146" width="160" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="jNk-cg-Ilb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="21416661_1369810244934.png" translatesAutoresizingMaskIntoConstraints="NO" id="ak5-9O-dMT">
+                        <rect key="frame" x="0.0" y="0.0" width="160" height="137"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="137" id="skg-62-oAN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="陨落星辰" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reA-kx-b6k">
+                        <rect key="frame" x="0.0" y="170" width="160" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="27x-z6-h10"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="qw6-wG-LwC" secondAttribute="trailing" id="9t1-3N-Xcl"/>
+                <constraint firstItem="reA-kx-b6k" firstAttribute="top" secondItem="qw6-wG-LwC" secondAttribute="bottom" constant="4" id="Joe-yP-a91"/>
+                <constraint firstItem="ak5-9O-dMT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="WWD-Z1-HMe"/>
+                <constraint firstItem="qw6-wG-LwC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Zen-zp-bKT"/>
+                <constraint firstItem="qw6-wG-LwC" firstAttribute="top" secondItem="ak5-9O-dMT" secondAttribute="bottom" constant="9" id="elu-cj-RJM"/>
+                <constraint firstItem="ak5-9O-dMT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="elx-mc-jgm"/>
+                <constraint firstAttribute="trailing" secondItem="reA-kx-b6k" secondAttribute="trailing" id="okD-Ch-OgM"/>
+                <constraint firstItem="reA-kx-b6k" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="wkH-YO-hNS"/>
+                <constraint firstAttribute="trailing" secondItem="ak5-9O-dMT" secondAttribute="trailing" id="zx5-SL-kJl"/>
+            </constraints>
+            <size key="customSize" width="228" height="198"/>
+            <connections>
+                <outlet property="photo" destination="ak5-9O-dMT" id="Ltv-iS-qRx"/>
+                <outlet property="timeL2" destination="reA-kx-b6k" id="4qa-VY-14v"/>
+                <outlet property="titleL1" destination="qw6-wG-LwC" id="hn0-1i-xd7"/>
+            </connections>
+            <point key="canvasLocation" x="429" y="306"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="21416661_1369810244934.png" width="320" height="200"/>
+    </resources>
+</document>

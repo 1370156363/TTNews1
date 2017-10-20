@@ -1,0 +1,69 @@
+//
+//  PrefixHeader.pch
+//  TTNews
+//
+//  Created by 西安云美 on 2017/7/25.
+//  Copyright © 2017年 瑞文戴尔. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import <DKNightVersion.h>
+#import "UITableView+CBTableViewDataSource.h"
+#import "CBTableViewDataSource.h"
+#import "UIView+Shadow.h"
+#import <SDImageCache.h>
+#import <SVProgressHUD.h>
+#import <MJRefresh.h>
+#import "Masonry.h"
+#import "CKAlertViewController.h"
+#import "UIView+Shadow.h"
+#import "UIViewController+GeneralMethod.h"
+#import "UIViewController+KGNoResultTip.h"
+#import "UIColor+Util.h"
+#import "OWTool.h"
+#import <WHCategories.h>
+#import "UITableView+FDTemplateLayoutCell.h"
+#import "KGNetworkManager.h"
+#import "NetWorkConstants.h"
+#import "MJExtension.h"
+#import "NSObject+NullConfig.h"
+#import <UIImageView+WebCache.h>
+
+#define DismissKeyboard                     [[[UIApplication sharedApplication] keyWindow] endEditing:YES]
+#define winsize                             [UIScreen mainScreen].bounds.size
+#define UIImageNamed(imgName)               [UIImage imageNamed:imgName]
+#define weakSelf(ws)                         __weak typeof(self) ws = self;
+
+#define  kNewWordBaseURLString              @"http://xinwen.52jszhai.com/"
+
+
+
+
+
+
+
+
+/******阅读器部分通知******/
+#define LSYNoteNotification @"LSYNoteNotification"
+#define LSYThemeNotification @"LSYThemeNotification"
+#define LSYEditingNotification @"LSYEditingNotification"
+#define LSYEndEditNotification @"LSYEndEditNotification"
+#define RGB(R, G, B)    [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:1.0]
+#define TopSpacing 40.0f
+#define BottomSpacing 40.0f
+#define LeftSpacing 20.0f
+#define RightSpacing  20.0f
+#define DELAYEXECUTE(delayTime,func) (dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{func;}))
+#define DistanceFromTopGuiden(view) (view.frame.origin.y + view.frame.size.height)
+#define DistanceFromLeftGuiden(view) (view.frame.origin.x + view.frame.size.width)
+#define ViewOrigin(view)   (view.frame.origin)
+#define ViewSize(view)  (view.frame.size)
+#define ScreenSize [UIScreen mainScreen].bounds.size
+#import "LSYReadUtilites.h"
+#import "LSYReadModel.h"
+#import "LSYReadParser.h"
+#define MinFontSize 11.0f
+#define MaxFontSize 20.0f
+#endif
