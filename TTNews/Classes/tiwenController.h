@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger,TiWenType)
+{
+    /*
+     问答模式
+     */
+    WenDaType,
+    /*
+     动态模式
+     */
+    DongTaiType
+    
+};
+
 @interface tiwenController : UIViewController
+
+///判断自己的类型
+@property(nonatomic,assign)TiWenType type;
 
 @end

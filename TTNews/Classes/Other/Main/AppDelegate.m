@@ -25,6 +25,8 @@
      [OWGuideView push];
     [self.window makeKeyAndVisible];
     [[OWTool Instance] saveUid:@"1"];
+
+    
     return YES;
 }
 

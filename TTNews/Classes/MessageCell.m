@@ -22,6 +22,7 @@
 
 -(void)updateUIwithdic:(WendaModel *)data
 {
+    
     NSString *str = data.title;
     CGSize constraint = CGSizeMake(winsize.width-20, 20000.0f);
     CGSize size = [str sizeWithFont:[UIFont systemFontOfSize:16]
@@ -101,4 +102,5 @@
     UIImageView *imageview = (UIImageView *)sender.view;
     self.ImgTapBlock(imageview, self);
 }
+
 @end

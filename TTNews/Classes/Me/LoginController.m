@@ -112,6 +112,7 @@
              if ([message[@"status"] intValue]==1)
              {
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
+                 [[OWTool Instance] saveUid:message[@"uid"]];
                  [ws popToRootViewController];
              }
              else
@@ -145,6 +146,7 @@
              if ([message[@"status"] intValue]==1)
              {
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
+                 [[OWTool Instance] saveUid:message[@"uid"]];
                  [ws popToRootViewController];
              }
              else

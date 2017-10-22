@@ -116,6 +116,7 @@
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
 }
 
+///刷新
 -(void)loadData
 {
     KGTableviewCellModel *model=[[KGTableviewCellModel alloc] init];

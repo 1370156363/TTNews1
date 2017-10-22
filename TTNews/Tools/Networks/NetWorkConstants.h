@@ -27,10 +27,18 @@ typedef enum _NetWorkAction
     KNetWorkYzmLogin,                       //手机验证码登录
     KNetWorkgetVideolist,                   //根据栏目获取视频信息（获取视频列表）
     KNetWorkgetVideoDetaillist,             //获取我的文章图片视频评论
-    
-    
-    
-    
+    KNetworkWenDaContent,            //获取问答列表
+    KNetworkWenDaComment,            //获取问答评论列表
+    KNetworkWenAddWenDaComment,      //添加问答评论
+    KNetworkWenAddWenDa,      //添加问答
+    KNetworkWenAddDongTai,      //添加动态
+    KNetworkGetUser,      //推荐用户
+    KNetworkGetGUANZHU, ///获取我的关注
+    KNetworkAddGUANZHU,///添加关注
+    KNetworkDelGuanZhu,///删除关注
+    KNetworkDongTaiComment,            //获取动态评论列表
+    KNetworkADDDongTaiComment,  ///添加动态评论
+    KNetworkGetCategory,///获取分类列表
     
     
     

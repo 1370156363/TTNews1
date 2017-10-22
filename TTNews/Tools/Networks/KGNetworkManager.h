@@ -28,6 +28,10 @@
 
 ///GET请求
 -(void)GetInvokeNetWorkAPIWith:(NetWorkAction)action withUserInfo:(NSMutableDictionary *)params success:(HJMNetWorkSuccessBlock)successBlock failure:(HJMFailureBlock)failureBlock visibleHUD:(BOOL)visible;
+///带page的请求
+///上传照片接口
++(void)uploadImageWithArray:(NSMutableArray *)imageArray parameter:(NSDictionary *)parameter success:(void(^)(id response)) success fail:(void(^) (NSError *error))fail;
+
 
 - (BOOL)checkedNetworkStatus;
 - (NetworkStatus)networkStatus;

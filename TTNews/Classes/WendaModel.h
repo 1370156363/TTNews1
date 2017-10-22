@@ -42,4 +42,6 @@
 
 @property (nonatomic, copy) NSString *view;
 
+//@property (nonatomic,copy) NSString *description;
+
 @end

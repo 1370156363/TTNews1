@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *separatorLine;
+
 @end
 @implementation SinglePictureNewsTableViewCell
 

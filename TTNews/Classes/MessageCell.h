@@ -11,5 +11,6 @@
 @interface MessageCell : UITableViewCell
 
 -(void)updateUIwithdic:(WendaModel *)data;
+
 @property(nonatomic,copy)void (^ImgTapBlock)(UIImageView *imgView,MessageCell *cell);
 @end

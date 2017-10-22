@@ -10,4 +10,5 @@
 
 @interface WendaHeaderView : UIView
 @property(nonatomic,copy)void (^btnBlock)(NSInteger tag);
+
 @end

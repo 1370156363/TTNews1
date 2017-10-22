@@ -12,6 +12,18 @@
 
 @implementation KGNetworkManager
 
+static NSMutableArray *tasks;
+
+
++(NSMutableArray *)tasks{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+//        DLog(@"创建数组");
+        tasks = [[NSMutableArray alloc] init];
+    });
+    return tasks;
+}
+
 + (instancetype)sharedInstance {
     static KGNetworkManager *networkManager;
     static dispatch_once_t onceToken;
@@ -53,10 +65,15 @@
         case KNetWorkgetVideolist:
             actionValue=@"api/user/get_mypinglun";
             break;
-            
 
-            
-            
+
+
+        case KNetworkWenAddDongTai:
+            actionValue=@"api/user/adddt";
+            break;
+        case KNetworkWenAddWenDa:
+            actionValue=@"api/user/addanswer";
+            break;
         case KNetWrokGetVersion:
             actionValue=@"api/pubshare/sysVersion/getLatestVersion";
             break;
@@ -189,6 +206,13 @@
         case KNetworkQunzuInformation:
             actionValue=@"api/pb/chatGroup/getByDept";
             break;
+        case KNetworkWenAddWenDaComment:
+            actionValue=@"api/content/addawpinglun/";
+            break;
+        case KNetworkADDDongTaiComment:
+            actionValue=@"api/content/adddtpinglun/";
+            break;
+
     }
     
     if (visible) {
@@ -237,10 +261,12 @@
 //        failureBlock(error);
 //        return;
 //    }
+
     if (params == nil) {
         params = [[NSMutableDictionary alloc] initWithCapacity:2];
     }
-    
+
+
     NSString *baseUrl=kNewWordBaseURLString;
     NSString *actionValue = nil;
     switch (action)
@@ -254,6 +280,50 @@
         case KNetWorkgetVideolist:
             actionValue=@"api/content/shipinlists/id/1/page/1";
             break;
+        case KNetworkWenDaContent:
+        {
+            actionValue=@"api/content/answerlists/";
+//            actionValue=[NSString stringWithFormat:@"api/content/answerlists/page/%@",[params objectForKey:@"page"]];
+//            params = [[NSMutableDictionary alloc] initWithCapacity:2];
+
+        }
+            break;
+        case KNetworkWenDaComment:
+        {
+             actionValue=@"api/content/answerpinglun/";
+        }
+            break;
+        case KNetworkGetUser:
+        {
+            actionValue=@"api/user/tuijianuser/";
+        }
+            break;
+        case KNetworkGetGUANZHU:
+        {
+            actionValue=@"api/user/get_myguanzhu/";
+        }
+            break;
+        case KNetworkAddGUANZHU:{
+            ///添加关注
+            actionValue=@"api/user/addfriend";
+        }
+            break;
+        case KNetworkDelGuanZhu:{
+            ///删除关注:
+            actionValue=@"api/user/delfriend";
+        }
+            break;
+        case KNetworkDongTaiComment:{
+            ///
+            actionValue=@"api/content/dtpinglun/";
+        }
+            break;
+        case KNetworkGetCategory:
+        {
+            actionValue=@"api/index/get_category";
+        }
+            break;
+
         default:
             break;
     }
@@ -264,12 +334,14 @@
     
     AFHTTPSessionManager *manager = [self baseHtppRequest];
     NSString *urlStr = [[NSString stringWithFormat:@"%@/%@",baseUrl,actionValue] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     [manager GET:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
         if (!responseObject) {
             [SVProgressHUD dismiss];
             return;
         }
+
         if (successBlock) {
             
             successBlock(responseObject);
@@ -277,12 +349,15 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
+
         NSLog(@"error == %@",error);
         if (failureBlock) {
             failureBlock(error);
         }
     }];
 }
+
+
 
 #pragma mark - 网络检测
 
@@ -307,5 +382,100 @@
         return NotReachable;
     }
 }
+
+#pragma mark 上传照片
+///上传照片接口
++(void)uploadImageWithArray:(NSMutableArray *)imageArray parameter:(NSDictionary *)parameter success:(void(^)(id response)) success fail:(void(^) (NSError *error))fail
+{
+    //    [SVProgressHUD show];
+
+    UIImage *image = imageArray[0];
+    //组合成url
+    NSString *url=[NSString stringWithFormat:@"%@/index/upload/upload.html",kNewWordBaseURLString];
+    //检查地址中是否有中文
+    NSString *urlStr=[NSURL URLWithString:url]?url:[self strUTF8Encoding:url];
+    parameter=[[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"flash",@"service",@"fileType",@"images",@"filename", nil];
+
+    AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
+    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    [manager setResponseSerializer:responseSerializer];
+
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+    manager.requestSerializer.stringEncoding = NSUTF8StringEncoding;
+    manager.requestSerializer.timeoutInterval=15;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"application/json",
+                                                                              @"text/html",
+                                                                              @"text/json",
+                                                                              @"text/plain",
+                                                                              @"text/javascript",
+                                                                              @"text/xml",
+                                                                              @"image/*"]];
+
+
+    NSURLSessionTask *sessionTask=[manager POST:urlStr parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+
+        ///压缩图片
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+        //制定名字
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *name = [formatter stringFromDate:[NSDate date]];
+        NSString *imageFileName=[NSString stringWithFormat:@"%@.jpg", name];
+
+        if(imageData){
+            [formData appendPartWithFileData:imageData name:@"file" fileName:imageFileName mimeType:@"image/jpeg"];
+        }
+        // 上传图片，以文件流的格式
+        //        [formData appendPartWithFileData:imageData name:name fileName:imageFileName mimeType:@"image/jpeg"];
+
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        //        typedef void( ^ LXUploadProgress)(int64_t bytesProgress,
+        //                                          int64_t totalBytesProgress);
+        //
+        //        typedef void( ^ LXDownloadProgress)(int64_t bytesProgress,
+        //                                            int64_t totalBytesProgress);
+        //        DLog(@"上传进度--%lld,总进度---%lld",uploadProgress.completedUnitCount,uploadProgress.totalUnitCount);
+        //        if (progress) {
+        //            progress(uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
+        //        }
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"上传图片成功=%@",responseObject);
+        //        [SVProgressHUD dismiss];
+        if (success) {
+            success(responseObject);
+        }
+
+        [[self tasks] removeObject:sessionTask];
+
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error=%@",error);
+        if (fail) {
+            fail(error);
+            //            [SVProgressHUD dismiss];
+
+        }
+
+        [[self tasks] removeObject:sessionTask];
+    }];
+
+    if (sessionTask) {
+        [[self tasks] addObject:sessionTask];
+    }
+
+
+    [sessionTask resume];
+
+}
+
+///修改编码
++(NSString *)strUTF8Encoding:(NSString *)str{
+    //return [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+    return [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 
 @end

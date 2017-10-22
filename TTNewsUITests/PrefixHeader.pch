@@ -39,8 +39,12 @@
 #define  kNewWordBaseURLString              @"http://xinwen.52jszhai.com/"
 
 
+/*新添加的公共方法*/
+#import "UtilsMacro.h"
+#import "UIViewController+Station.h"
 
 
+#define navColor HexRGB(0x26ACCC)
 
 
 

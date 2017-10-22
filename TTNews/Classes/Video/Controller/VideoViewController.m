@@ -64,9 +64,7 @@ static NSString * const VideoCell = @"VideoCell";
 
 #pragma mark 基本设置
 -(void)setupBasic {
-    self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    
-    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+    [self initNavigationWithImgAndTitle:@"视频" leftBtton:@"" rightButImg:nil rightBut:nil navBackColor:navColor];
 
     self.currentPage = 1;
     self.isFullScreenPlaying = NO;
@@ -78,6 +76,7 @@ static NSString * const VideoCell = @"VideoCell";
     self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame) + 10, 0, 0, 0);
     self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
 }
 
@@ -93,7 +92,9 @@ static NSString * const VideoCell = @"VideoCell";
 -(void)loadData
 {
     AFHTTPSessionManager *manager = [[KGNetworkManager sharedInstance] baseHtppRequest];
-    NSString *urlStr = [[NSString stringWithFormat:@"%@/%@%d",kNewWordBaseURLString,@"api/content/shipinlists/id/1/page/",self.currentPage] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *urlStr = [[NSString stringWithFormat:@"%@/api/content/shipinlists/id/%@/page/%d",kNewWordBaseURLString,[[OWTool Instance] getUid],self.currentPage] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray  *_Nullable message)
      {
          NSMutableArray *newArr=[TTVideo mj_objectArrayWithKeyValuesArray:message];

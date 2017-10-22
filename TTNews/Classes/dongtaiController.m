@@ -22,13 +22,16 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     [self setupBasic];
-    [self getZonInfo];
+//    [self getZonInfo];
 }
 
 #pragma mark 基本设置
 - (void)setupBasic
 {
-    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+
+    [self initNavigationWithImgAndTitle:@"动态" leftBtton:@"" rightButImg:[UIImage imageNamed:@"jiahaoyou"] rightBut:nil navBackColor:navColor];
+    [self.navigationController.navigationItem.rightBarButtonItems[1] setAction:@selector(okAction)];
+
 }
 
 -(void)getZonInfo
@@ -51,5 +54,11 @@
     };
     _zoneView.fVC = self;
 }
+
+///确定
+-(void)okAction{
+
+}
+
 
 @end

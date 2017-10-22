@@ -18,6 +18,9 @@
 #import <DKNightVersion.h>
 #import <SDImageCache.h>
 
+#import "NewWenDaViewController.h"
+#import "NewDongTaiViewController.h"
+
 @interface TTTabBarController ()<MeTableViewControllerDelegate>
 {
     MyController *_MeController;
@@ -38,15 +41,16 @@
     VideoViewController *vc3 = [[VideoViewController alloc] init];
     [self addChildViewController:vc3 withImage:[UIImage imageNamed:@"shipin"] selectedImage:[UIImage imageNamed:@"shipinXZ"] withTittle:@"视频"];
 
-    WendaViewController *wendaVc=[[WendaViewController alloc] init];
-      [self addChildViewController:wendaVc withImage:[UIImage imageNamed:@"wenda"] selectedImage:[UIImage imageNamed:@"wendaXZ"] withTittle:@"问答"];
+//    WendaViewController *wendaVc=[[WendaViewController alloc] init];
+    NewWenDaViewController *wendaVc=[[NewWenDaViewController alloc] initWithNibName:@"NewWenDaViewController" bundle:nil];
+    [self addChildViewController:wendaVc withImage:[UIImage imageNamed:@"wenda"] selectedImage:[UIImage imageNamed:@"wendaXZ"] withTittle:@"问答"];
+
     
-    dongtaiController *dongtaiVc=[[dongtaiController alloc] init];
+//    dongtaiController *dongtaiVc=[[dongtaiController alloc] init];
+    NewDongTaiViewController *dongtaiVc=[[NewDongTaiViewController alloc] initWithNibName:@"NewDongTaiViewController" bundle:nil];
     [self addChildViewController:dongtaiVc withImage:[UIImage imageNamed:@"dongtai"] selectedImage:[UIImage imageNamed:@"dongtaiXZ"] withTittle:@"动态"];
     
-//    PictureViewController *vc2 = [[PictureViewController alloc] init];
-//    [self addChildViewController:vc2 withImage:[UIImage imageNamed:@"tabbar_picture"] selectedImage:[UIImage imageNamed:@"tabbar_picture_hl"] withTittle:@"图片"];
-//    
+
     
     MyController *vc4 = [[MyController alloc] init];
     _MeController = vc4;
@@ -60,7 +64,7 @@
     if ([self.dk_manager.themeVersion isEqualToString:DKThemeVersionNormal]) {
         self.tabBar.barTintColor = [UIColor whiteColor];
     } else {
-        self.tabBar.barTintColor = [UIColor colorWithRed:34/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
+        self.tabBar.barTintColor = navColor;
     }
 
     [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
@@ -77,7 +81,8 @@
     if (motion == UIEventSubtypeMotionShake) {
         if (self.isShakeCanChangeSkin == NO) return;
         if ([self.dk_manager.themeVersion isEqualToString:DKThemeVersionNormal]) {//将要切换至夜间模式
-            self.dk_manager.themeVersion = DKThemeVersionNight;                self.tabBar.barTintColor = [UIColor colorWithRed:34/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
+//            self.dk_manager.themeVersion = DKThemeVersionNight;                self.tabBar.barTintColor = [UIColor colorWithRed:34/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
+            self.tabBar.barTintColor = navColor;
             _MeController.changeSkinSwitch.on = YES;
         } else {
                 self.dk_manager.themeVersion = DKThemeVersionNormal;             self.tabBar.barTintColor = [UIColor whiteColor];
