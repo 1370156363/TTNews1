@@ -32,6 +32,7 @@ static NSString * const collectionCellID = @"ChannelCollectionCell";
 static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeader";
 
 @implementation NewsViewController
+
 - (NSArray *)arrayLists
 {
     if (_arrayLists == nil) {
@@ -39,6 +40,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     }
     return _arrayLists;
 }
+
 -(void)viewDidLoad {
     self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.isCellShouldShake = NO;
@@ -63,17 +65,20 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     [self.view bringSubviewToFront:addBtn];
 
     [addBtn addTarget:self action:@selector(AddChannelSelect) forControlEvents:UIControlEventTouchUpInside];
-
 }
 
 -(void)AddChannelSelect
 {
+
     NSArray *arr1 = @[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
+
     NSArray *arr2 = @[@"有声",@"家居",@"电竞",@"美容",@"电视剧",@"搏击",@"健康",@"摄影",@"生活",@"旅游",@"韩流",@"探索",@"综艺",@"美食",@"育儿"];
+
     [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:arr2 finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
         NSLog(@"inUseTitles = %@",inUseTitles);
         NSLog(@"unUseTitles = %@",unUseTitles);
     }];
+
 }
 
 #pragma mark --private Method--初始化子控制器
@@ -89,6 +94,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 
 #pragma mark --private Method--初始化上方的新闻频道选择的View
 - (void)setupTopContianerView{
+
     CGFloat top = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     TTTopChannelContianerView *topContianerView = [[TTTopChannelContianerView alloc] initWithFrame:CGRectMake(0, top, [UIScreen mainScreen].bounds.size.width, 30)];
     topContianerView.channelNameArray = self.currentChannelsArray;
@@ -101,6 +107,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 
 #pragma mark --private Method--初始化相信新闻内容的scrollView
 - (void)setupContentScrollView {
+
     UIScrollView *contentScrollView = [[UIScrollView alloc] init];
     self.contentScrollView = contentScrollView;
     contentScrollView.frame = self.view.bounds;
@@ -109,6 +116,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     contentScrollView.delegate = self;
     [self.view insertSubview:contentScrollView atIndex:0];
     [self scrollViewDidEndScrollingAnimation:contentScrollView];
+
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -161,6 +169,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 
 #pragma mark --private Method--存储更新后的currentChannelsArray到偏好设置中
 -(NSMutableArray *)currentChannelsArray {
+
     if (!_currentChannelsArray) {
         if (!_currentChannelsArray) {
             _currentChannelsArray = [NSMutableArray arrayWithObjects:@"推荐",@"问答",@"要闻",@"直播",@"趣图",@"新闻",@"电影",@"科技", nil];

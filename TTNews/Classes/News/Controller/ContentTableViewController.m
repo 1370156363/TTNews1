@@ -77,6 +77,7 @@ static NSString * const topPictureCell = @"TopPictureCell";
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BigPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:bigPictureCell];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SinglePictureNewsTableViewCell class]) bundle:nil] forCellReuseIdentifier:singlePictureCell];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MultiPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:multiPictureCell];
+
 }
 
 
@@ -177,6 +178,7 @@ static NSString * const topPictureCell = @"TopPictureCell";
 
         return cell;
     }
+    
 //    if (newsModel.imgextra){
 //        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
 //        cell.theTitle = newsModel.title;

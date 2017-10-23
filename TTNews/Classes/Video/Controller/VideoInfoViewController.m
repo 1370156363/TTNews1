@@ -20,9 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.url=@"http://xinwen.52jszhai.com/index/news/detail/id/6/model_id/6";
-
     
+//    self.url=@"http://xinwen.52jszhai.com/index/news/detail/id/6/model_id/6";
+
+    self.url=[NSString stringWithFormat:@"%@/index/news/detail/id/%@/model_id/6",kNewWordBaseURLString,self.url];
     [self.mainWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
 }
 

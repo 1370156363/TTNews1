@@ -22,9 +22,18 @@
 #import <DKNightVersion.h>
 
 #import "VideoInfoViewController.h"
+#import "TTTopChannelContianerView.h"
+#import "XLChannelControl.h"
+//#import "ContentTableViewController.h"
+////视屏内容
+#import "VideoContentTableViewController.h"
 
 
-@interface VideoViewController ()<VideoTableViewCellDelegate, VideoPlayViewDelegate>
+@interface VideoViewController ()<TTTopChannelContianerViewDelegate,UIScrollViewDelegate>
+{
+
+    NSMutableArray *CategorySetArr;
+}
 
 
 ///分类数据集
@@ -39,10 +48,17 @@
 @property (nonatomic, copy) NSString *currentSkinModel;
 @property (nonatomic, assign) BOOL isFullScreenPlaying;
 
+@property (nonatomic, weak) TTTopChannelContianerView *topContianerView;
+
+@property (nonatomic, weak) UIScrollView *contentScrollView;
 
 @end
 
 static NSString * const VideoCell = @"VideoCell";
+
+static NSString * const collectionCellID = @"ChannelCollectionCell";
+static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeader";
+
 
 @implementation VideoViewController
 
@@ -52,13 +68,16 @@ static NSString * const VideoCell = @"VideoCell";
     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"1",@"display", nil];
 
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetCategory withUserInfo:dict success:^(id message) {
-        NSMutableArray *arr=message[@"data"];
-
-        if (arr.count!=0) {
-
+        [SVProgressHUD dismiss];
+        CategorySetArr=message[@"data"];
+        if (CategorySetArr.count!=0) {
+            for (NSDictionary *dict in CategorySetArr) {
+                [self.CategoryArr addObject:[dict objectForKey:@"title_show"]];
+            }
+            if (self.CategoryArr.count!=0) {
+                [self setupTopContianerView];
+            }
         }
-
-        
     } failure:^(NSError *error) {
 
     } visibleHUD:YES];
@@ -69,13 +88,19 @@ static NSString * const VideoCell = @"VideoCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    if (!self.CategoryArr) {
+        self.CategoryArr=[[NSMutableArray alloc] init];
+    }
+    if (!CategorySetArr) {
+        CategorySetArr=[[NSMutableArray alloc] init];
+    }
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
     ///分类
     [self getFenlei];
 
     [self setupBasic];
-    [self setupTableView];
-    [self setupMJRefreshHeader];
+
 
 }
 
@@ -91,202 +116,151 @@ static NSString * const VideoCell = @"VideoCell";
     }
 
 //    self.navigationController.navigationBar.alpha = 1;
+
 }
 
 
 
 #pragma mark 基本设置
+///创建上列表
+-(void)setupTopContianerView{
+    ///上面
+//    [self.navigationController setNavigationBarHidden:YES];
+    
+    CGFloat top = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+
+    TTTopChannelContianerView *topContianerView = [[TTTopChannelContianerView alloc] initWithFrame:CGRectMake(0, top, [UIScreen mainScreen].bounds.size.width, 30)];
+
+    topContianerView.channelNameArray = self.CategoryArr;
+    self.topContianerView  = topContianerView;
+    topContianerView.delegate = self;
+
+    [self.view addSubview:topContianerView];
+
+    ///右边添加
+    UIButton *addBtn=[[UIButton alloc] initWithFrame:CGRectMake(winsize.width-40,64, 40, 30)];
+
+    [addBtn setImage:[UIImage imageNamed:@"sousuoB"] forState:UIControlStateNormal];
+
+
+    [self.view addSubview:addBtn];
+    addBtn.backgroundColor=[UIColor whiteColor];
+    [self.view bringSubviewToFront:addBtn];
+
+    [addBtn addTarget:self action:@selector(AddChannelSelect) forControlEvents:UIControlEventTouchUpInside];
+
+    ///创建子视图
+    [self setupChildController];
+     [self setupContentScrollView];
+}
+
+#pragma mark -接口
+-(void)AddChannelSelect
+{
+
+    ///搜索接口
+//    NSArray *arr1 = @[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
+//
+//    NSArray *arr2 = @[@"有声",@"家居",@"电竞",@"美容",@"电视剧",@"搏击",@"健康",@"摄影",@"生活",@"旅游",@"韩流",@"探索",@"综艺",@"美食",@"育儿"];
+//
+//    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:arr2 finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
+//        NSLog(@"inUseTitles = %@",inUseTitles);
+//        NSLog(@"unUseTitles = %@",unUseTitles);
+//    }];
+
+}
+
 -(void)setupBasic {
     
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
-    
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
 
     self.currentPage = 1;
     self.isFullScreenPlaying = NO;
 }
 
-#pragma mark 初始化TableView
-- (void)setupTableView {
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame) + 10, 0, 0, 0);
-    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+#pragma mark --private Method--初始化子控制器
+-(void)setupChildController {
+    ///频道书两
+    for (NSInteger i = 0; i<CategorySetArr.count; i++) {
 
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
+        VideoContentTableViewController *viewController = [[VideoContentTableViewController alloc] initWithNibName:@"VideoContentTableViewController" bundle:nil];
+        viewController.channelId=CategorySetArr[i][@"id"];
 
-}
-
-#pragma mark 初始化刷新控件
-- (void)setupMJRefreshHeader {
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(LoadNewData)];
-    self.tableView.mj_header.automaticallyChangeAlpha = YES;
-    [self.tableView.mj_header beginRefreshing];
-    
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(LoadMoreData)];
-}
-
--(void)loadData
-{
-    AFHTTPSessionManager *manager = [[KGNetworkManager sharedInstance] baseHtppRequest];
-    
-    NSString *urlStr = [[NSString stringWithFormat:@"%@/api/content/shipinlists/id/%@/page/%d",kNewWordBaseURLString,[[OWTool Instance] getUid],self.currentPage] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray  *_Nullable message)
-     {
-         NSMutableArray *newArr=[TTVideo mj_objectArrayWithKeyValuesArray:message];
-         if (self.currentPage==1)
-         {
-            [self.videoArray removeAllObjects];
-         }
-         [self.videoArray addObjectsFromArray:newArr];
-         [self.tableView reloadData];
-         [self.tableView.mj_header endRefreshing];
-         [self.tableView.mj_footer endRefreshing];
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-     }];
-}
-#pragma mark 加载最新数据
-- (void)LoadNewData
-{
-    self.currentPage=1;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadData];
-    });
-}
-
-#pragma mark 加载更多数据
-- (void)LoadMoreData
-{
-    self.currentPage+=1;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadData];
-    });
-}
-
-#pragma mark - Table view data source
-#pragma mark -UITableViewDataSource 返回tableView有多少组
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-#pragma mark -UITableViewDataSource 返回tableView每一组有多少行
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.videoArray.count;
-}
-
-
-#pragma mark -UITableViewDataSource 返回indexPath对应的cell
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VideoCell];
-    cell.video = self.videoArray[indexPath.row];
-    cell.delegate = self;
-    cell.indexPath = indexPath;
-    return cell;
-}
-
-#pragma mark -UITableViewDataSource 返回indexPath对应的cell的高度
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TTVideo *video = self.videoArray[indexPath.row];
-//    return video.cellHeight;
-    return 322;
-}
-
-#pragma mark -UITableViewDelegate 点击了某个cell
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [self pushToVideoCommentViewControllerWithIndexPath:indexPath];
-    VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
-    [self.navigationController pushViewController:info animated:YES];
-    
-}
-
-#pragma mark 点击某个Cell或点击评论按钮跳转到评论页面
--(void)pushToVideoCommentViewControllerWithIndexPath:(NSIndexPath *)indexPath {
-    VideoCommentViewController *vc = [[VideoCommentViewController alloc] init];
-    vc.video = self.videoArray[indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-#pragma mark VideoPlayViewDelegate 视频播放时窗口模式与全屏模式切换
-- (void)videoplayViewSwitchOrientation:(BOOL)isFull
-{
-    if (isFull) {
-        self.isFullScreenPlaying = YES;
-        [self presentViewController:self.fullVc animated:YES completion:^{
-            self.playView.frame = self.fullVc.view.bounds;
-            [self.fullVc.view addSubview:self.playView];
-        }];
-    } else {
-        [self.fullVc dismissViewControllerAnimated:YES completion:^{
-            self.playView.frame = CGRectMake(0, 80, winsize.width, 200);
-            [self.currentSelectedCell addSubview:self.playView];
-            self.isFullScreenPlaying = NO;
-
-        }];
-        
+        [self addChildViewController:viewController];
     }
 }
 
-#pragma mark - 懒加载代码
-- (FullViewController *)fullVc
-{
-    if (_fullVc == nil) {
-        self.fullVc = [[FullViewController alloc] init];
-    }
-    
-    return _fullVc;
-}
 
-#pragma mark VideoTableViewCell的代理方法
--(void)clickVideoButton:(NSIndexPath *)indexPath {
-    [self.playView resetPlayView];
 
-    VideoTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    self.currentSelectedCell = cell;
-    VideoPlayView *playView = [VideoPlayView videoPlayView];
-    TTVideo *video = self.videoArray[indexPath.row];
-    playView.frame = CGRectMake(0, 80, winsize.width, 200);
-    [cell addSubview:playView];
-    cell.playView = playView;
-    self.playView = playView;
-    self.playView.delegate = self;
-    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,video.videourl]]];
-    self.playView.playerItem = item;
-}
-
-#pragma mark VideoTableViewCell的代理方法
--(void)clickCommentButton:(NSIndexPath *)indexPath {
-    [self pushToVideoCommentViewControllerWithIndexPath:indexPath];
-}
-
--(NSMutableArray *)videoArray {
-    if (!_videoArray) {
-        _videoArray = [NSMutableArray array];
-    }
-    return _videoArray;
-}
-
-#pragma mark --UIScrollViewDelegate--scrollView滑动了
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.playView.superview && self.isFullScreenPlaying == NO) {//点全屏和退出的时候，也会调用scrollViewDidScroll这个方法
-        NSIndexPath *indePath = [self.tableView indexPathForCell:self.currentSelectedCell];
-            if (![self.tableView.indexPathsForVisibleRows containsObject:indePath]) {//播放video的cell已离开屏幕
-                [self.playView resetPlayView];
-            }
-    }
-
-//    if (self.tableView.contentOffset.y>0) {
-//        self.navigationController.navigationBar.alpha = 0;
-//    } else {
-//        CGFloat yValue = - self.tableView.contentOffset.y;//纵向的差距
-//        CGFloat alphValue = yValue/self.tableView.contentInset.top;
-//        self.navigationController.navigationBar.alpha =alphValue;
-//    }
-}
 -(void)didReceiveMemoryWarning {
     [[SDImageCache sharedImageCache] clearDisk];
     
 }
+
+#pragma mark --private Method--初始化相信新闻内容的scrollView
+- (void)setupContentScrollView {
+
+    UIScrollView *contentScrollView = [[UIScrollView alloc] init];
+    self.contentScrollView = contentScrollView;
+    contentScrollView.frame = self.view.bounds;
+//    [contentScrollView setBackgroundColor:[UIColor blueColor]];
+
+    contentScrollView.contentSize = CGSizeMake(contentScrollView.frame.size.width* self.CategoryArr.count, 0);
+    contentScrollView.pagingEnabled = YES;
+    contentScrollView.delegate = self;
+    contentScrollView.showsHorizontalScrollIndicator=NO;
+    [self.view insertSubview:contentScrollView atIndex:0];
+    [self scrollViewDidEndScrollingAnimation:contentScrollView];
+
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+
+    if (scrollView == self.contentScrollView) {
+        NSInteger index = scrollView.contentOffset.x/self.contentScrollView.frame.size.width;
+        VideoContentTableViewController *vc = self.childViewControllers[index];
+        vc.view.frame = CGRectMake(scrollView.contentOffset.x, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
+        vc.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame)+self.topContianerView.scrollView.frame.size.height, 0, self.tabBarController.tabBar.frame.size.height, 0);
+        [scrollView addSubview:vc.view];
+        for (int i = 0; i<self.contentScrollView.subviews.count; i++) {
+            NSInteger currentIndex = vc.tableView.frame.origin.x/self.contentScrollView.frame.size.width;
+            if ([self.contentScrollView.subviews[i] isKindOfClass:[UITableView class]]) {
+                UITableView *theTableView = self.contentScrollView.subviews[i];
+                NSInteger theIndex = theTableView.frame.origin.x/self.contentScrollView.frame.size.width;
+                NSInteger gap = theIndex - currentIndex;
+                if (gap<=2&&gap>=-2) {
+                    continue;
+                } else {
+                    [theTableView removeFromSuperview];
+                }
+            }
+
+        }
+
+    }
+}
+#pragma mark --UIScrollViewDelegate-- 滑动的减速动画结束后会调用这个方法
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (scrollView == self.contentScrollView) {
+        [self scrollViewDidEndScrollingAnimation:scrollView];
+        NSInteger index = scrollView.contentOffset.x/self.contentScrollView.frame.size.width;
+        [self.topContianerView selectChannelButtonWithIndex:index];
+    }
+}
+#pragma mark --UICollectionViewDataSource-- 返回每个UICollectionViewCell发Size
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat kDeviceWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat kMargin = 10;
+    return CGSizeMake((kDeviceWidth - 5*kMargin)/4, 40);
+}
+
+
+#pragma mark --TTTopChannelContianerViewDelegate--选择了某个新闻频道，更新scrollView的contenOffset
+- (void)chooseChannelWithIndex:(NSInteger)index {
+    [self.contentScrollView setContentOffset:CGPointMake(self.contentScrollView.frame.size.width * index, 0) animated:YES];
+}
+
 
 @end

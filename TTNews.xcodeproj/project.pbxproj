@@ -42,40 +42,6 @@
 		01EC09F11F93A33B0002BEB8 /* DongtaiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EC09F01F93A33B0002BEB8 /* DongtaiModel.m */; };
 		01EC09F51F93A6C30002BEB8 /* DyqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EC09F31F93A6C30002BEB8 /* DyqCell.m */; };
 		01EC09F61F93A6C30002BEB8 /* DyqCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01EC09F41F93A6C30002BEB8 /* DyqCell.xib */; };
-		042B477D1F9B7C1B006FFBA9 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B477C1F9B7C1A006FFBA9 /* UIView+Extension.m */; };
-		042B47861F9B9866006FFBA9 /* NewDongTaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B47841F9B9865006FFBA9 /* NewDongTaiViewController.m */; };
-		042B47871F9B9866006FFBA9 /* NewDongTaiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B47851F9B9865006FFBA9 /* NewDongTaiViewController.xib */; };
-		042B478B1F9B9BA9006FFBA9 /* DongTaiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B47891F9B9BA9006FFBA9 /* DongTaiTableViewCell.m */; };
-		042B478C1F9B9BA9006FFBA9 /* DongTaiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B478A1F9B9BA9006FFBA9 /* DongTaiTableViewCell.xib */; };
-		042B47901F9C534B006FFBA9 /* TiWenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B478E1F9C534B006FFBA9 /* TiWenTableViewCell.m */; };
-		042B47911F9C534B006FFBA9 /* TiWenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B478F1F9C534B006FFBA9 /* TiWenTableViewCell.xib */; };
-		042B47941F9C8A63006FFBA9 /* ImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B47931F9C8A63006FFBA9 /* ImageModel.m */; };
-		042B47971F9CA8E4006FFBA9 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B47961F9CA8E4006FFBA9 /* UserModel.m */; };
-		042B479B1F9CAC09006FFBA9 /* DongTaiInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B47991F9CAC09006FFBA9 /* DongTaiInfoViewController.m */; };
-		042B479C1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B479A1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib */; };
-		042B47A01F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B479E1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m */; };
-		042B47A11F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B479F1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib */; };
-		04AEEFAE1F9DB314000BF3DE /* VideoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEEFAC1F9DB314000BF3DE /* VideoInfoViewController.m */; };
-		04AEEFAF1F9DB314000BF3DE /* VideoInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AEEFAD1F9DB314000BF3DE /* VideoInfoViewController.xib */; };
-		04AEEFB21F9DD1AA000BF3DE /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEEFB11F9DD1AA000BF3DE /* CategoryModel.m */; };
-		04E2A4251F9AC5F800B93AAB /* NewWenDaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4231F9AC5F800B93AAB /* NewWenDaViewController.m */; };
-		04E2A4261F9AC5F800B93AAB /* NewWenDaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4241F9AC5F800B93AAB /* NewWenDaViewController.xib */; };
-		04E2A42A1F9AD15800B93AAB /* WenDaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4281F9AD15800B93AAB /* WenDaTableViewCell.m */; };
-		04E2A42B1F9AD15800B93AAB /* WenDaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4291F9AD15800B93AAB /* WenDaTableViewCell.xib */; };
-		04E2A42F1F9ADB1B00B93AAB /* UIViewController+Station.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A42C1F9ADB1900B93AAB /* UIViewController+Station.m */; };
-		04E2A4331F9ADBA100B93AAB /* WenDaInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4311F9ADBA100B93AAB /* WenDaInfoViewController.m */; };
-		04E2A4341F9ADBA100B93AAB /* WenDaInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4321F9ADBA100B93AAB /* WenDaInfoViewController.xib */; };
-		04E2A43A1F9AF72C00B93AAB /* HuiDaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4381F9AF72C00B93AAB /* HuiDaTableViewCell.m */; };
-		04E2A43B1F9AF72C00B93AAB /* HuiDaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4391F9AF72C00B93AAB /* HuiDaTableViewCell.xib */; };
-		04E2A4401F9B0C8A00B93AAB /* SearchInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A43E1F9B0C8A00B93AAB /* SearchInfoViewController.m */; };
-		04E2A4411F9B0C8B00B93AAB /* SearchInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A43F1F9B0C8A00B93AAB /* SearchInfoViewController.xib */; };
-		04E2A4451F9B2CE500B93AAB /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4431F9B2CE500B93AAB /* CommentTableViewCell.m */; };
-		04E2A4461F9B2CE500B93AAB /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4441F9B2CE500B93AAB /* CommentTableViewCell.xib */; };
-		04E2A4491F9B3A5A00B93AAB /* WenDaComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4481F9B3A5A00B93AAB /* WenDaComment.m */; };
-		04E2A44D1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A44B1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.m */; };
-		04E2A44E1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A44C1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.xib */; };
-		04E2A4521F9B489B00B93AAB /* WenDaMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4501F9B489B00B93AAB /* WenDaMessageTableViewCell.m */; };
-		04E2A4531F9B489B00B93AAB /* WenDaMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4511F9B489B00B93AAB /* WenDaMessageTableViewCell.xib */; };
 		1DC67303B4F8A6F87BEC546A /* libPods-TTNewsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92641E010C8FDC1389C15EF /* libPods-TTNewsTests.a */; };
 		BD4494E9A4C1D9280E2633AD /* libPods-TTNewsUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1BD80293E5CCDE5FA9C5DD /* libPods-TTNewsUITests.a */; };
 		BDDC5FC5BE6F9BF558CF189F /* libPods-TTNews.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C265EF5919FE5ACB7629966 /* libPods-TTNews.a */; };
@@ -767,67 +733,6 @@
 		01EC09F21F93A6C30002BEB8 /* DyqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DyqCell.h; sourceTree = "<group>"; };
 		01EC09F31F93A6C30002BEB8 /* DyqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DyqCell.m; sourceTree = "<group>"; };
 		01EC09F41F93A6C30002BEB8 /* DyqCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DyqCell.xib; sourceTree = "<group>"; };
-		042B477B1F9B7C1A006FFBA9 /* UIView+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
-		042B477C1F9B7C1A006FFBA9 /* UIView+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
-		042B477F1F9B91E8006FFBA9 /* XHWebImageAutoSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XHWebImageAutoSize.h; sourceTree = "<group>"; };
-		042B47801F9B91E8006FFBA9 /* XHWebImageAutoSizeCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XHWebImageAutoSizeCache.m; sourceTree = "<group>"; };
-		042B47811F9B91E8006FFBA9 /* XHWebImageAutoSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XHWebImageAutoSize.m; sourceTree = "<group>"; };
-		042B47821F9B91E8006FFBA9 /* XHWebImageAutoSizeCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XHWebImageAutoSizeCache.h; sourceTree = "<group>"; };
-		042B47831F9B9865006FFBA9 /* NewDongTaiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewDongTaiViewController.h; sourceTree = "<group>"; };
-		042B47841F9B9865006FFBA9 /* NewDongTaiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewDongTaiViewController.m; sourceTree = "<group>"; };
-		042B47851F9B9865006FFBA9 /* NewDongTaiViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewDongTaiViewController.xib; sourceTree = "<group>"; };
-		042B47881F9B9BA9006FFBA9 /* DongTaiTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DongTaiTableViewCell.h; sourceTree = "<group>"; };
-		042B47891F9B9BA9006FFBA9 /* DongTaiTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DongTaiTableViewCell.m; sourceTree = "<group>"; };
-		042B478A1F9B9BA9006FFBA9 /* DongTaiTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DongTaiTableViewCell.xib; sourceTree = "<group>"; };
-		042B478D1F9C534B006FFBA9 /* TiWenTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiWenTableViewCell.h; sourceTree = "<group>"; };
-		042B478E1F9C534B006FFBA9 /* TiWenTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TiWenTableViewCell.m; sourceTree = "<group>"; };
-		042B478F1F9C534B006FFBA9 /* TiWenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TiWenTableViewCell.xib; sourceTree = "<group>"; };
-		042B47921F9C8A63006FFBA9 /* ImageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageModel.h; sourceTree = "<group>"; };
-		042B47931F9C8A63006FFBA9 /* ImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageModel.m; sourceTree = "<group>"; };
-		042B47951F9CA8E4006FFBA9 /* UserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
-		042B47961F9CA8E4006FFBA9 /* UserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
-		042B47981F9CAC09006FFBA9 /* DongTaiInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DongTaiInfoViewController.h; sourceTree = "<group>"; };
-		042B47991F9CAC09006FFBA9 /* DongTaiInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DongTaiInfoViewController.m; sourceTree = "<group>"; };
-		042B479A1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DongTaiInfoViewController.xib; sourceTree = "<group>"; };
-		042B479D1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZhuanJiaTableViewCell.h; sourceTree = "<group>"; };
-		042B479E1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZhuanJiaTableViewCell.m; sourceTree = "<group>"; };
-		042B479F1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZhuanJiaTableViewCell.xib; sourceTree = "<group>"; };
-		04AEEFAB1F9DB314000BF3DE /* VideoInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoInfoViewController.h; sourceTree = "<group>"; };
-		04AEEFAC1F9DB314000BF3DE /* VideoInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoInfoViewController.m; sourceTree = "<group>"; };
-		04AEEFAD1F9DB314000BF3DE /* VideoInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoViewController.xib; sourceTree = "<group>"; };
-		04AEEFB01F9DD1AA000BF3DE /* CategoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryModel.h; sourceTree = "<group>"; };
-		04AEEFB11F9DD1AA000BF3DE /* CategoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoryModel.m; sourceTree = "<group>"; };
-		04E2A4221F9AC5F800B93AAB /* NewWenDaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewWenDaViewController.h; sourceTree = "<group>"; };
-		04E2A4231F9AC5F800B93AAB /* NewWenDaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewWenDaViewController.m; sourceTree = "<group>"; };
-		04E2A4241F9AC5F800B93AAB /* NewWenDaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewWenDaViewController.xib; sourceTree = "<group>"; };
-		04E2A4271F9AD15800B93AAB /* WenDaTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenDaTableViewCell.h; sourceTree = "<group>"; };
-		04E2A4281F9AD15800B93AAB /* WenDaTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenDaTableViewCell.m; sourceTree = "<group>"; };
-		04E2A4291F9AD15800B93AAB /* WenDaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WenDaTableViewCell.xib; sourceTree = "<group>"; };
-		04E2A42C1F9ADB1900B93AAB /* UIViewController+Station.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Station.m"; sourceTree = "<group>"; };
-		04E2A42D1F9ADB1A00B93AAB /* UtilsMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UtilsMacro.h; sourceTree = "<group>"; };
-		04E2A42E1F9ADB1A00B93AAB /* UIViewController+Station.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Station.h"; sourceTree = "<group>"; };
-		04E2A4301F9ADBA100B93AAB /* WenDaInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenDaInfoViewController.h; sourceTree = "<group>"; };
-		04E2A4311F9ADBA100B93AAB /* WenDaInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenDaInfoViewController.m; sourceTree = "<group>"; };
-		04E2A4321F9ADBA100B93AAB /* WenDaInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WenDaInfoViewController.xib; sourceTree = "<group>"; };
-		04E2A4351F9AE86F00B93AAB /* 返回@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回@3x.png"; sourceTree = "<group>"; };
-		04E2A4361F9AE86F00B93AAB /* 返回@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回@2x.png"; sourceTree = "<group>"; };
-		04E2A4371F9AF72C00B93AAB /* HuiDaTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HuiDaTableViewCell.h; sourceTree = "<group>"; };
-		04E2A4381F9AF72C00B93AAB /* HuiDaTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HuiDaTableViewCell.m; sourceTree = "<group>"; };
-		04E2A4391F9AF72C00B93AAB /* HuiDaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HuiDaTableViewCell.xib; sourceTree = "<group>"; };
-		04E2A43D1F9B0C8A00B93AAB /* SearchInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchInfoViewController.h; sourceTree = "<group>"; };
-		04E2A43E1F9B0C8A00B93AAB /* SearchInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInfoViewController.m; sourceTree = "<group>"; };
-		04E2A43F1F9B0C8A00B93AAB /* SearchInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchInfoViewController.xib; sourceTree = "<group>"; };
-		04E2A4421F9B2CE500B93AAB /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
-		04E2A4431F9B2CE500B93AAB /* CommentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
-		04E2A4441F9B2CE500B93AAB /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
-		04E2A4471F9B3A5900B93AAB /* WenDaComment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenDaComment.h; sourceTree = "<group>"; };
-		04E2A4481F9B3A5A00B93AAB /* WenDaComment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenDaComment.m; sourceTree = "<group>"; };
-		04E2A44A1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenDaInfoImgTableViewCell.h; sourceTree = "<group>"; };
-		04E2A44B1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenDaInfoImgTableViewCell.m; sourceTree = "<group>"; };
-		04E2A44C1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WenDaInfoImgTableViewCell.xib; sourceTree = "<group>"; };
-		04E2A44F1F9B489B00B93AAB /* WenDaMessageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WenDaMessageTableViewCell.h; sourceTree = "<group>"; };
-		04E2A4501F9B489B00B93AAB /* WenDaMessageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WenDaMessageTableViewCell.m; sourceTree = "<group>"; };
-		04E2A4511F9B489B00B93AAB /* WenDaMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WenDaMessageTableViewCell.xib; sourceTree = "<group>"; };
 		07E9D64488E92C60CF8D2B6B /* Pods-TTNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsUITests/Pods-TTNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2BAF96C60E66025F03CAF1B4 /* Pods-TTNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNews/Pods-TTNews.release.xcconfig"; sourceTree = "<group>"; };
 		4BD837B9395343B702E90E80 /* Pods-TTNewsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsTests/Pods-TTNewsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1707,30 +1612,6 @@
 			path = Networks;
 			sourceTree = "<group>";
 		};
-		042B477E1F9B91E8006FFBA9 /* XHWebImageAutoSize */ = {
-			isa = PBXGroup;
-			children = (
-				042B477F1F9B91E8006FFBA9 /* XHWebImageAutoSize.h */,
-				042B47811F9B91E8006FFBA9 /* XHWebImageAutoSize.m */,
-				042B47801F9B91E8006FFBA9 /* XHWebImageAutoSizeCache.m */,
-				042B47821F9B91E8006FFBA9 /* XHWebImageAutoSizeCache.h */,
-			);
-			path = XHWebImageAutoSize;
-			sourceTree = "<group>";
-		};
-		04E2A43C1F9B0C0200B93AAB /* 公共 */ = {
-			isa = PBXGroup;
-			children = (
-				04E2A43D1F9B0C8A00B93AAB /* SearchInfoViewController.h */,
-				04E2A43E1F9B0C8A00B93AAB /* SearchInfoViewController.m */,
-				04E2A43F1F9B0C8A00B93AAB /* SearchInfoViewController.xib */,
-				04E2A4421F9B2CE500B93AAB /* CommentTableViewCell.h */,
-				04E2A4431F9B2CE500B93AAB /* CommentTableViewCell.m */,
-				04E2A4441F9B2CE500B93AAB /* CommentTableViewCell.xib */,
-			);
-			path = "公共";
-			sourceTree = "<group>";
-		};
 		EE4635BA1CC72B8900DB248F = {
 			isa = PBXGroup;
 			children = (
@@ -1803,7 +1684,6 @@
 		EE79B08C1CC8C435001029EF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				04E2A43C1F9B0C0200B93AAB /* 公共 */,
 				013A87E61F6788920017175F /* WelcomePage */,
 				F89E70621F28A763003965B1 /* 电子书阅读器 */,
 				F832CE6D1F2762390032C23D /* 动态 */,
@@ -2072,9 +1952,6 @@
 				EE79B0F51CC8C435001029EF /* VideoCommentViewController.h */,
 				EE79B0F61CC8C435001029EF /* VideoCommentViewController.m */,
 				EE79B0F71CC8C435001029EF /* VideoCommentViewController.xib */,
-				04AEEFAB1F9DB314000BF3DE /* VideoInfoViewController.h */,
-				04AEEFAC1F9DB314000BF3DE /* VideoInfoViewController.m */,
-				04AEEFAD1F9DB314000BF3DE /* VideoInfoViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2183,8 +2060,6 @@
 				013A87EC1F6788FB0017175F /* welcome_3.jpg */,
 				F832CB481F2761B60032C23D /* bianijDT.png */,
 				F832CB491F2761B60032C23D /* bianijDT@2x.png */,
-				04E2A4361F9AE86F00B93AAB /* 返回@2x.png */,
-				04E2A4351F9AE86F00B93AAB /* 返回@3x.png */,
 				F832CB4A1F2761B60032C23D /* bianijDT@3x.png */,
 				F832CB4B1F2761B60032C23D /* bianji.png */,
 				F832CB4C1F2761B60032C23D /* bianji@2x.png */,
@@ -2604,20 +2479,6 @@
 				F832CE981F277A9A0032C23D /* WendaHeaderView.h */,
 				F832CE991F277A9A0032C23D /* WendaHeaderView.m */,
 				F832CE9B1F277AA00032C23D /* WendaHeaderView.xib */,
-				04E2A4221F9AC5F800B93AAB /* NewWenDaViewController.h */,
-				04E2A4231F9AC5F800B93AAB /* NewWenDaViewController.m */,
-				04E2A4241F9AC5F800B93AAB /* NewWenDaViewController.xib */,
-				04E2A4271F9AD15800B93AAB /* WenDaTableViewCell.h */,
-				04E2A4281F9AD15800B93AAB /* WenDaTableViewCell.m */,
-				04E2A4291F9AD15800B93AAB /* WenDaTableViewCell.xib */,
-				04E2A4301F9ADBA100B93AAB /* WenDaInfoViewController.h */,
-				04E2A4311F9ADBA100B93AAB /* WenDaInfoViewController.m */,
-				04E2A4321F9ADBA100B93AAB /* WenDaInfoViewController.xib */,
-				04E2A4471F9B3A5900B93AAB /* WenDaComment.h */,
-				04E2A4481F9B3A5A00B93AAB /* WenDaComment.m */,
-				04E2A44F1F9B489B00B93AAB /* WenDaMessageTableViewCell.h */,
-				04E2A4501F9B489B00B93AAB /* WenDaMessageTableViewCell.m */,
-				04E2A4511F9B489B00B93AAB /* WenDaMessageTableViewCell.xib */,
 			);
 			name = "问答";
 			sourceTree = "<group>";
@@ -2628,17 +2489,6 @@
 				F8B5A61B1F281EA500AEBF39 /* 朋友圈 */,
 				F832CE711F2762620032C23D /* dongtaiController.h */,
 				F832CE721F2762620032C23D /* dongtaiController.m */,
-				042B47831F9B9865006FFBA9 /* NewDongTaiViewController.h */,
-				042B47841F9B9865006FFBA9 /* NewDongTaiViewController.m */,
-				042B47851F9B9865006FFBA9 /* NewDongTaiViewController.xib */,
-				042B47881F9B9BA9006FFBA9 /* DongTaiTableViewCell.h */,
-				042B47891F9B9BA9006FFBA9 /* DongTaiTableViewCell.m */,
-				042B478A1F9B9BA9006FFBA9 /* DongTaiTableViewCell.xib */,
-				042B47981F9CAC09006FFBA9 /* DongTaiInfoViewController.h */,
-				042B47991F9CAC09006FFBA9 /* DongTaiInfoViewController.m */,
-				042B479A1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib */,
-				01EC09EF1F93A33B0002BEB8 /* DongtaiModel.h */,
-				01EC09F01F93A33B0002BEB8 /* DongtaiModel.m */,
 			);
 			name = "动态";
 			sourceTree = "<group>";
@@ -2688,18 +2538,12 @@
 		F832CE941F2772A90032C23D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				042B477E1F9B91E8006FFBA9 /* XHWebImageAutoSize */,
 				01D153FF1F7FA5950033CCF1 /* Networks */,
 				01B181EF1F75170B00D9F7AF /* YYLocationPickerView */,
 				01B181E21F75091F00D9F7AF /* ValuePickerView.h */,
 				01B181E31F75091F00D9F7AF /* ValuePickerView.m */,
-				04E2A42E1F9ADB1A00B93AAB /* UIViewController+Station.h */,
-				04E2A42C1F9ADB1900B93AAB /* UIViewController+Station.m */,
-				04E2A42D1F9ADB1A00B93AAB /* UtilsMacro.h */,
 				F857B9031F28C4B500301B2D /* UIColor+Util.h */,
 				F857B9041F28C4B500301B2D /* UIColor+Util.m */,
-				042B477B1F9B7C1A006FFBA9 /* UIView+Extension.h */,
-				042B477C1F9B7C1A006FFBA9 /* UIView+Extension.m */,
 				F89E71281F28C218003965B1 /* UIView+Util.h */,
 				F89E71291F28C218003965B1 /* UIView+Util.m */,
 				012D91C81F87E18A00C8CDD8 /* NSObject+NullConfig.h */,
@@ -2729,12 +2573,6 @@
 			children = (
 				F832CEA11F27802A0032C23D /* ZhuanjiaController.h */,
 				F832CEA21F27802A0032C23D /* ZhuanjiaController.m */,
-				04E2A44A1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.h */,
-				04E2A44B1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.m */,
-				04E2A44C1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.xib */,
-				042B479D1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.h */,
-				042B479E1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m */,
-				042B479F1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib */,
 			);
 			name = "专家团";
 			sourceTree = "<group>";
@@ -3030,11 +2868,6 @@
 				F8B5A6101F281A2100AEBF39 /* BiaoqianController.h */,
 				F8B5A6111F281A2100AEBF39 /* BiaoqianController.m */,
 				F8B5A6121F281A2100AEBF39 /* BiaoqianController.xib */,
-				042B478D1F9C534B006FFBA9 /* TiWenTableViewCell.h */,
-				042B478E1F9C534B006FFBA9 /* TiWenTableViewCell.m */,
-				042B478F1F9C534B006FFBA9 /* TiWenTableViewCell.xib */,
-				042B47921F9C8A63006FFBA9 /* ImageModel.h */,
-				042B47931F9C8A63006FFBA9 /* ImageModel.m */,
 			);
 			name = "提问";
 			sourceTree = "<group>";
@@ -3045,9 +2878,6 @@
 				F8B5A6161F281B3800AEBF39 /* huidaController.h */,
 				F8B5A6171F281B3800AEBF39 /* huidaController.m */,
 				F8B5A6181F281B3800AEBF39 /* huidaController.xib */,
-				04E2A4371F9AF72C00B93AAB /* HuiDaTableViewCell.h */,
-				04E2A4381F9AF72C00B93AAB /* HuiDaTableViewCell.m */,
-				04E2A4391F9AF72C00B93AAB /* HuiDaTableViewCell.xib */,
 			);
 			name = "回答";
 			sourceTree = "<group>";
@@ -3076,6 +2906,8 @@
 				01B181D51F74F2B700D9F7AF /* CommentCell.h */,
 				01B181D61F74F2B700D9F7AF /* CommentCell.m */,
 				01B181D71F74F2B700D9F7AF /* CommentCell.xib */,
+				01EC09EF1F93A33B0002BEB8 /* DongtaiModel.h */,
+				01EC09F01F93A33B0002BEB8 /* DongtaiModel.m */,
 			);
 			name = "朋友圈";
 			sourceTree = "<group>";
@@ -3134,10 +2966,6 @@
 				F8B5A6621F2841EA00AEBF39 /* KGTableviewCellModel.m */,
 				013A87F31F6789790017175F /* OWTool.h */,
 				013A87F41F6789790017175F /* OWTool.m */,
-				042B47951F9CA8E4006FFBA9 /* UserModel.h */,
-				042B47961F9CA8E4006FFBA9 /* UserModel.m */,
-				04AEEFB01F9DD1AA000BF3DE /* CategoryModel.h */,
-				04AEEFB11F9DD1AA000BF3DE /* CategoryModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3326,8 +3154,6 @@
 				F832CE481F2761B80032C23D /* yizan.png in Resources */,
 				F832CE1D1F2761B80032C23D /* wuiboFX@3x.png in Resources */,
 				F832CD411F2761B70032C23D /* guanzhuGB@2x.png in Resources */,
-				04AEEFAF1F9DB314000BF3DE /* VideoInfoViewController.xib in Resources */,
-				04E2A4411F9B0C8B00B93AAB /* SearchInfoViewController.xib in Resources */,
 				F832CE401F2761B80032C23D /* xuanzeY@2x.png in Resources */,
 				F832CD7B1F2761B70032C23D /* qianwang@3x.png in Resources */,
 				F832CD381F2761B70032C23D /* guan@2x.png in Resources */,
@@ -3371,7 +3197,6 @@
 				F832CD6C1F2761B70032C23D /* pengyouwang@3x.png in Resources */,
 				F832CE5A1F2761B80032C23D /* zhifubaoZF.png in Resources */,
 				F832CD6D1F2761B70032C23D /* pinglun.png in Resources */,
-				042B47871F9B9866006FFBA9 /* NewDongTaiViewController.xib in Resources */,
 				F832CCE61F2761B70032C23D /* chakanC.png in Resources */,
 				F832CDFC1F2761B80032C23D /* weixinLogo@3x.png in Resources */,
 				F832CD331F2761B70032C23D /* glxiaoxi@3x.png in Resources */,
@@ -3390,7 +3215,6 @@
 				F832CD851F2761B70032C23D /* qqkongjian.png in Resources */,
 				F832CD761F2761B70032C23D /* pinglunX.png in Resources */,
 				F832CD3D1F2761B70032C23D /* guanzhu.png in Resources */,
-				042B47A11F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib in Resources */,
 				F832CD6A1F2761B70032C23D /* pengyouwang.png in Resources */,
 				F832CD721F2761B70032C23D /* pinglunGL@3x.png in Resources */,
 				F832CCFB1F2761B70032C23D /* dingwei.png in Resources */,
@@ -3417,7 +3241,6 @@
 				F89E70D61F28A7B4003965B1 /* bt_tjcp_no@2x.png in Resources */,
 				F832CDF81F2761B80032C23D /* weixinhaoyou@2x.png in Resources */,
 				F832CDBE1F2761B70032C23D /* shouyi.png in Resources */,
-				04E2A43B1F9AF72C00B93AAB /* HuiDaTableViewCell.xib in Resources */,
 				F832CDC11F2761B70032C23D /* shouyiGLxz.png in Resources */,
 				F832CD201F2761B70032C23D /* gengduo@2x.png in Resources */,
 				F832CD5E1F2761B70032C23D /* logo.png in Resources */,
@@ -3428,7 +3251,6 @@
 				F832CE231F2761B80032C23D /* xiahuanDR@3x.png in Resources */,
 				F832CD9E1F2761B70032C23D /* shangchuan@2x.png in Resources */,
 				F832CD151F2761B70032C23D /* fabuGL@3x.png in Resources */,
-				04E2A4261F9AC5F800B93AAB /* NewWenDaViewController.xib in Resources */,
 				F832CCF61F2761B70032C23D /* daishouhuo@2x.png in Resources */,
 				F832CE9C1F277AA00032C23D /* WendaHeaderView.xib in Resources */,
 				F832CD8D1F2761B70032C23D /* qunzu@3x.png in Resources */,
@@ -3473,7 +3295,6 @@
 				F832CDD61F2761B80032C23D /* tianxie.png in Resources */,
 				EE79B11F1CC8C435001029EF /* NoPictureNewsTableViewCell.xib in Resources */,
 				F857B90B1F28C8CF00301B2D /* fensiController.xib in Resources */,
-				04E2A42B1F9AD15800B93AAB /* WenDaTableViewCell.xib in Resources */,
 				EE4636B81CC7499D00DB248F /* LaunchScreen.xib in Resources */,
 				F832CD821F2761B70032C23D /* qqhaoyou.png in Resources */,
 				EE79B10F1CC8C435001029EF /* AppInfoViewController.xib in Resources */,
@@ -3494,7 +3315,6 @@
 				F832CD3C1F2761B70032C23D /* guanbi@3x.png in Resources */,
 				F832CCEB1F2761B70032C23D /* chazhao@3x.png in Resources */,
 				F832CCE11F2761B70032C23D /* bianjiSC@2x.png in Resources */,
-				04E2A4531F9B489B00B93AAB /* WenDaMessageTableViewCell.xib in Resources */,
 				F832CD141F2761B70032C23D /* fabuGL@2x.png in Resources */,
 				F832CD9A1F2761B70032C23D /* shangcheng.png in Resources */,
 				F832CCE71F2761B70032C23D /* chakanC@2x.png in Resources */,
@@ -3533,7 +3353,6 @@
 				F832CE2C1F2761B80032C23D /* xiangce@3x.png in Resources */,
 				F832CD861F2761B70032C23D /* qqkongjian@2x.png in Resources */,
 				F832CDBF1F2761B70032C23D /* shouyi@2x.png in Resources */,
-				042B47911F9C534B006FFBA9 /* TiWenTableViewCell.xib in Resources */,
 				F832CE661F2761B80032C23D /* zhuye.png in Resources */,
 				F832CE041F2761B80032C23D /* weixuan@2x.png in Resources */,
 				F832CDBA1F2761B70032C23D /* shouye@3x.png in Resources */,
@@ -3594,7 +3413,6 @@
 				F89E70E71F28A80E003965B1 /* bg_back_white@2x.png in Resources */,
 				F832CD881F2761B70032C23D /* qqZF.png in Resources */,
 				F832CE171F2761B80032C23D /* wo@3x.png in Resources */,
-				04E2A4461F9B2CE500B93AAB /* CommentTableViewCell.xib in Resources */,
 				F832CDD01F2761B80032C23D /* tianjia.png in Resources */,
 				F832CD7D1F2761B70032C23D /* qingkong@2x.png in Resources */,
 				F832CDDC1F2761B80032C23D /* tiwen.png in Resources */,
@@ -3624,7 +3442,6 @@
 				F832CD671F2761B70032C23D /* pengyouquan.png in Resources */,
 				EE79B1331CC8C435001029EF /* PictureCommentViewController.xib in Resources */,
 				F832CCDF1F2761B70032C23D /* bianji@3x.png in Resources */,
-				04E2A44E1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.xib in Resources */,
 				F832CD981F2761B70032C23D /* shanchuSC@2x.png in Resources */,
 				F832CE311F2761B80032C23D /* xiaoxiTZ@2x.png in Resources */,
 				F832CD191F2761B70032C23D /* fenxiang.png in Resources */,
@@ -3674,7 +3491,6 @@
 				F832CE5D1F2761B80032C23D /* zhuanfa.png in Resources */,
 				01B181EE1F750CC900D9F7AF /* EditController.xib in Resources */,
 				F832CE561F2761B80032C23D /* zanX@3x.png in Resources */,
-				042B479C1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib in Resources */,
 				F832CE3B1F2761B80032C23D /* xinzeng@3x.png in Resources */,
 				F832CD481F2761B70032C23D /* huida@3x.png in Resources */,
 				F832CDD41F2761B80032C23D /* tianjiaRZ@2x.png in Resources */,
@@ -3684,7 +3500,6 @@
 				F832CE3D1F2761B80032C23D /* xuanzeN@2x.png in Resources */,
 				F832CD9F1F2761B70032C23D /* shangchuan@3x.png in Resources */,
 				F832CDE41F2761B80032C23D /* tuichu@3x.png in Resources */,
-				042B478C1F9B9BA9006FFBA9 /* DongTaiTableViewCell.xib in Resources */,
 				F832CD471F2761B70032C23D /* huida@2x.png in Resources */,
 				F832CD271F2761B70032C23D /* gerenxz@3x.png in Resources */,
 				F832CDFF1F2761B80032C23D /* weixinX@3x.png in Resources */,
@@ -3715,7 +3530,6 @@
 				01D153F91F7F9DED0033CCF1 /* forGetpassoneController.xib in Resources */,
 				F832CD5A1F2761B70032C23D /* lahei@3x.png in Resources */,
 				F832CD1D1F2761B70032C23D /* fenxiangDT@2x.png in Resources */,
-				04E2A4341F9ADBA100B93AAB /* WenDaInfoViewController.xib in Resources */,
 				01D153EF1F7F9A830033CCF1 /* ResignController.xib in Resources */,
 				F832CDA61F2761B70032C23D /* shipinGL.png in Resources */,
 				F832CD431F2761B70032C23D /* guanzhuGD.png in Resources */,
@@ -3900,14 +3714,12 @@
 				01B181E11F75069800D9F7AF /* InformEditController.m in Sources */,
 				F89E70AD1F28A798003965B1 /* CXMLElement.m in Sources */,
 				EE79B1281CC8C435001029EF /* TTConst.m in Sources */,
-				04E2A4491F9B3A5A00B93AAB /* WenDaComment.m in Sources */,
 				F8B5A64B1F2820E500AEBF39 /* IDMPhotoBrowser.m in Sources */,
 				EE79B12D1CC8C435001029EF /* AppDelegate.m in Sources */,
 				F8B5A64E1F2820E500AEBF39 /* IDMZoomingScrollView.m in Sources */,
 				F89E70AA1F28A798003965B1 /* CXHTMLDocument.m in Sources */,
 				EE79B12E1CC8C435001029EF /* TTNavigationController.m in Sources */,
 				013A87E91F67889F0017175F /* OWGuideView.m in Sources */,
-				042B47861F9B9866006FFBA9 /* NewDongTaiViewController.m in Sources */,
 				EE79B1301CC8C435001029EF /* Reachability.m in Sources */,
 				F89E70B71F28A798003965B1 /* ioapi.c in Sources */,
 				F89E70DA1F28A7B4003965B1 /* LSYTopMenuView.m in Sources */,
@@ -3922,7 +3734,6 @@
 				F8B5A6231F281EEC00AEBF39 /* DynamicCell.m in Sources */,
 				01B181E81F750B2400D9F7AF /* UserDatePicker.m in Sources */,
 				EE79B13E1CC8C435001029EF /* VideoCommentViewController.m in Sources */,
-				04E2A43A1F9AF72C00B93AAB /* HuiDaTableViewCell.m in Sources */,
 				F832CE921F2771A50032C23D /* XLChannelItem.m in Sources */,
 				F832CE971F2772AD0032C23D /* UIView+Shadow.m in Sources */,
 				EE79B1361CC8C435001029EF /* TTPictureComment.m in Sources */,
@@ -3952,7 +3763,6 @@
 				F8B5A61E1F281EB400AEBF39 /* ZoneView.m in Sources */,
 				01D153E71F7F86740033CCF1 /* LoginController.m in Sources */,
 				EEB3DFA91D8F92920039ABF5 /* TopTextTableViewCell.m in Sources */,
-				042B47901F9C534B006FFBA9 /* TiWenTableViewCell.m in Sources */,
 				F89E70A61F28A798003965B1 /* LSYViewPagerVC.m in Sources */,
 				EEE3E81E1CD5AD3E00D699E0 /* ChannelsSectionHeaderView.m in Sources */,
 				F8B5A64D1F2820E500AEBF39 /* IDMTapDetectingView.m in Sources */,
@@ -3971,7 +3781,6 @@
 				EE79B12F1CC8C435001029EF /* TTTabBarController.m in Sources */,
 				EE3A071E1CDA1DAD0024C37A /* ContentTableViewController.m in Sources */,
 				EE79B1251CC8C435001029EF /* UIImage+Extension.m in Sources */,
-				042B477D1F9B7C1B006FFBA9 /* UIView+Extension.m in Sources */,
 				F89E712A1F28C218003965B1 /* UIView+Util.m in Sources */,
 				012D91CD1F88A3A600C8CDD8 /* WendaModel.m in Sources */,
 				F89E70C91F28A7AC003965B1 /* LSYNoteModel.m in Sources */,
@@ -3981,12 +3790,8 @@
 				F89E70FA1F28A842003965B1 /* LSYReadViewController.m in Sources */,
 				F89E70AC1F28A798003965B1 /* CXMLDocument_PrivateExtensions.m in Sources */,
 				01EC09F11F93A33B0002BEB8 /* DongtaiModel.m in Sources */,
-				04E2A4251F9AC5F800B93AAB /* NewWenDaViewController.m in Sources */,
 				F832CEC11F27813C0032C23D /* MASLayoutConstraint.m in Sources */,
-				04E2A42F1F9ADB1B00B93AAB /* UIViewController+Station.m in Sources */,
-				04E2A42A1F9AD15800B93AAB /* WenDaTableViewCell.m in Sources */,
 				F89E70A71F28A798003965B1 /* NSString+HTML.m in Sources */,
-				042B47971F9CA8E4006FFBA9 /* UserModel.m in Sources */,
 				EE79B1201CC8C435001029EF /* SinglePictureNewsTableViewCell.m in Sources */,
 				F832CE821F2765920032C23D /* CBBaseTableViewDataSource.m in Sources */,
 				F832CE701F2762550032C23D /* WendaViewController.m in Sources */,
@@ -3997,7 +3802,6 @@
 				F89E70AB1F28A798003965B1 /* CXMLDocument.m in Sources */,
 				EE79B1401CC8C435001029EF /* VideoViewController.m in Sources */,
 				F832CEC01F27813C0032C23D /* MASConstraintMaker.m in Sources */,
-				042B47A01F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m in Sources */,
 				F8B5A6311F281FF500AEBF39 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
 				01D154051F7FA5950033CCF1 /* KGNetworkManager.m in Sources */,
 				F8B5A62F1F281FF500AEBF39 /* UITableView+FDKeyedHeightCache.m in Sources */,
@@ -4018,7 +3822,6 @@
 				01EC09F51F93A6C30002BEB8 /* DyqCell.m in Sources */,
 				EE79B11C1CC8C435001029EF /* MultiPictureTableViewCell.m in Sources */,
 				F832CE9A1F277A9A0032C23D /* WendaHeaderView.m in Sources */,
-				042B478B1F9B9BA9006FFBA9 /* DongTaiTableViewCell.m in Sources */,
 				F89E70F21F28A83B003965B1 /* LSYReadUtilites.m in Sources */,
 				F832CE931F2771A50032C23D /* XLChannelHeader.m in Sources */,
 				EEB3DFA11D8F92010039ABF5 /* TopPictureTableViewCell.m in Sources */,
@@ -4034,7 +3837,6 @@
 				F832CEC31F27813C0032C23D /* MASViewConstraint.m in Sources */,
 				F832CEC41F27813C0032C23D /* NSArray+MASAdditions.m in Sources */,
 				F832CEC71F27813C0032C23D /* ViewController+MASAdditions.m in Sources */,
-				04E2A4401F9B0C8A00B93AAB /* SearchInfoViewController.m in Sources */,
 				F89E70C71F28A7AC003965B1 /* LSYChapterModel.m in Sources */,
 				013A87F51F6789790017175F /* OWTool.m in Sources */,
 				F832CE841F2765920032C23D /* CBTableViewDataSourceMaker.m in Sources */,
@@ -4045,19 +3847,15 @@
 				F8B5A6061F2816D500AEBF39 /* CKAlertViewController.m in Sources */,
 				EE79B1451CC8C435001029EF /* VideoPlayView.m in Sources */,
 				01B181ED1F750CC900D9F7AF /* EditController.m in Sources */,
-				04E2A4331F9ADBA100B93AAB /* WenDaInfoViewController.m in Sources */,
 				EE79B12B1CC8C435001029EF /* TTPictureFetchDataParameter.m in Sources */,
 				EE79B1131CC8C435001029EF /* SendFeedbackViewController.m in Sources */,
 				F8B5A64C1F2820E500AEBF39 /* IDMTapDetectingImageView.m in Sources */,
 				012D91D01F88A7BC00C8CDD8 /* MessageCell.m in Sources */,
 				01B181D81F74F2B700D9F7AF /* CommentCell.m in Sources */,
-				04AEEFB21F9DD1AA000BF3DE /* CategoryModel.m in Sources */,
 				EE79B12A1CC8C435001029EF /* TTNormalNewsFetchDataParameter.m in Sources */,
 				01D153FD1F7F9E010033CCF1 /* forGetpassTwpController.m in Sources */,
-				04E2A4451F9B2CE500B93AAB /* CommentTableViewCell.m in Sources */,
 				F832CE831F2765920032C23D /* CBDataSourceSection.m in Sources */,
 				F89E70B81F28A798003965B1 /* mztools.c in Sources */,
-				042B47941F9C8A63006FFBA9 /* ImageModel.m in Sources */,
 				F89E70BB1F28A798003965B1 /* ZipArchive.mm in Sources */,
 				EE79B1171CC8C435001029EF /* ShowMultiPictureViewController.m in Sources */,
 				F832CEC51F27813C0032C23D /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
@@ -4066,12 +3864,10 @@
 				EE79B1151CC8C435001029EF /* DetailViewController.m in Sources */,
 				01B181F81F75170B00D9F7AF /* YYLocationPickerView.m in Sources */,
 				F89E70B21F28A798003965B1 /* CXMLNode_PrivateExtensions.m in Sources */,
-				04AEEFAE1F9DB314000BF3DE /* VideoInfoViewController.m in Sources */,
 				F89E70A81F28A798003965B1 /* CXMLDocument_CreationExtensions.m in Sources */,
 				F8B5A6021F28125000AEBF39 /* tiwenController.m in Sources */,
 				012D91CA1F87E18A00C8CDD8 /* NSObject+NullConfig.m in Sources */,
 				F89E70F91F28A842003965B1 /* LSYReadPageViewController.m in Sources */,
-				04E2A44D1F9B484D00B93AAB /* WenDaInfoImgTableViewCell.m in Sources */,
 				F89E70D91F28A7B4003965B1 /* LSYMenuView.m in Sources */,
 				EE79B1221CC8C435001029EF /* Foundation+Log.m in Sources */,
 				F857B90A1F28C8CF00301B2D /* fensiController.m in Sources */,
@@ -4089,9 +3885,7 @@
 				F89E70CB1F28A7AC003965B1 /* LSYRecordModel.m in Sources */,
 				F89E70C81F28A7AC003965B1 /* LSYMarkModel.m in Sources */,
 				F8B5A6351F28201D00AEBF39 /* TTTAttributedLabel.m in Sources */,
-				042B479B1F9CAC09006FFBA9 /* DongTaiInfoViewController.m in Sources */,
 				F89E70B51F28A798003965B1 /* CTidy.m in Sources */,
-				04E2A4521F9B489B00B93AAB /* WenDaMessageTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
