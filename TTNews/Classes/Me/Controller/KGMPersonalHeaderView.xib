@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="21416661_1369810244934.png" translatesAutoresizingMaskIntoConstraints="NO" id="Isv-bD-B5I">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bac_temp" translatesAutoresizingMaskIntoConstraints="NO" id="Isv-bD-B5I">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
                 </imageView>
                 <imageView tag="50" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qq.png" translatesAutoresizingMaskIntoConstraints="NO" id="WR0-pU-tG9">
@@ -36,7 +36,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这家伙很懒，什么都没留下" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFA-UP-Gaa">
-                    <rect key="frame" x="60" y="80" width="218" height="20"/>
+                    <rect key="frame" x="60" y="80" width="159.5" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Zzw-wc-frv"/>
                     </constraints>
@@ -237,45 +237,18 @@
                         <constraint firstItem="CxP-xm-cfb" firstAttribute="top" secondItem="jZF-cF-acY" secondAttribute="top" id="ujg-wA-2oL"/>
                     </constraints>
                 </view>
-                <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azY-vm-Ngp">
-                    <rect key="frame" x="292" y="19" width="17" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="17" id="XJR-It-SOD"/>
-                        <constraint firstAttribute="height" constant="22" id="cmr-WC-YzO"/>
-                    </constraints>
-                    <state key="normal" image="zhuye.png"/>
-                    <connections>
-                        <action selector="btnSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="dNN-7Q-i1D"/>
-                    </connections>
-                </button>
-                <button opaque="NO" tag="60" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6b-dw-bki">
-                    <rect key="frame" x="292" y="80" width="17" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="17" id="EbK-8M-Asj"/>
-                        <constraint firstAttribute="height" constant="22" id="xeC-tE-d2b"/>
-                    </constraints>
-                    <state key="normal" image="zhuye.png"/>
-                    <connections>
-                        <action selector="btnSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="l1G-E8-1Jv"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="ORi-ly-cy2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="5Pv-bk-X5J"/>
                 <constraint firstAttribute="trailing" secondItem="jZF-cF-acY" secondAttribute="trailing" id="6dl-kT-BWj"/>
-                <constraint firstItem="ORi-ly-cy2" firstAttribute="top" secondItem="azY-vm-Ngp" secondAttribute="bottom" constant="9" id="8cH-HC-Csu"/>
-                <constraint firstAttribute="trailing" secondItem="azY-vm-Ngp" secondAttribute="trailing" constant="11" id="8lz-Zb-yRt"/>
                 <constraint firstItem="WR0-pU-tG9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="AJ4-8U-uSx"/>
-                <constraint firstItem="c6b-dw-bki" firstAttribute="top" secondItem="ORi-ly-cy2" secondAttribute="bottom" constant="10" id="Bfj-Pw-qmm"/>
                 <constraint firstAttribute="trailing" secondItem="Isv-bD-B5I" secondAttribute="trailing" id="CgC-VD-ozu"/>
                 <constraint firstItem="Isv-bD-B5I" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ig8-gY-UdA"/>
                 <constraint firstAttribute="bottom" secondItem="Isv-bD-B5I" secondAttribute="bottom" id="ODc-LI-Dba"/>
                 <constraint firstItem="WR0-pU-tG9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="SS3-0k-B15"/>
                 <constraint firstItem="mFA-UP-Gaa" firstAttribute="leading" secondItem="WR0-pU-tG9" secondAttribute="trailing" constant="10" id="Uem-0s-avp"/>
                 <constraint firstItem="Isv-bD-B5I" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="W4Z-7P-CsU"/>
-                <constraint firstAttribute="trailing" secondItem="c6b-dw-bki" secondAttribute="trailing" constant="11" id="Ye4-pw-ud8"/>
-                <constraint firstItem="c6b-dw-bki" firstAttribute="leading" secondItem="mFA-UP-Gaa" secondAttribute="trailing" constant="14" id="gIo-dP-pap"/>
-                <constraint firstItem="azY-vm-Ngp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="19" id="nXG-DM-cNl"/>
                 <constraint firstAttribute="trailing" secondItem="ORi-ly-cy2" secondAttribute="trailing" constant="16" id="oyv-jj-GyG"/>
                 <constraint firstItem="jZF-cF-acY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rVk-sS-A69"/>
                 <constraint firstItem="ORi-ly-cy2" firstAttribute="leading" secondItem="WR0-pU-tG9" secondAttribute="trailing" constant="10" id="sUH-Zl-BHO"/>
@@ -297,8 +270,7 @@
         </view>
     </objects>
     <resources>
-        <image name="21416661_1369810244934.png" width="320" height="200"/>
+        <image name="bac_temp" width="750" height="460"/>
         <image name="qq.png" width="35" height="38"/>
-        <image name="zhuye.png" width="17" height="15"/>
     </resources>
 </document>

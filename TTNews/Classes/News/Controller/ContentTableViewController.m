@@ -24,7 +24,16 @@
 #import "BigPictureTableViewCell.h"
 #import <UIImageView+WebCache.h>
 
+#import "VideoInfoViewController.h"
+#import "VideoTableViewCell.h"
+
+#import "NewsTableViewCell.h"
+#import "NewsInfoViewController.h"
+#import "TTVideo.h"
+
 @interface ContentTableViewController ()
+
+
 
 @property (nonatomic, strong) NSMutableArray *headerNewsArray;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -40,11 +49,18 @@ static NSString * const multiPictureCell = @"MultiPictureCell";
 static NSString * const bigPictureCell = @"BigPictureCell";
 static NSString * const topTextPictureCell = @"TopTextPictureCell";
 static NSString * const topPictureCell = @"TopPictureCell";
+//@"news";
+static NSString * const VideoCell = @"VideoCell";
+
 
 @implementation ContentTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    if (!self.arrayList) {
+        self.arrayList=[[NSMutableArray alloc] init];
+    }
 
     [self setupBasic];
     [self setupRefresh];
@@ -57,6 +73,7 @@ static NSString * const topPictureCell = @"TopPictureCell";
         [self.tableView.mj_header beginRefreshing];
         self.update = NO;
     }
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -78,6 +95,9 @@ static NSString * const topPictureCell = @"TopPictureCell";
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SinglePictureNewsTableViewCell class]) bundle:nil] forCellReuseIdentifier:singlePictureCell];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MultiPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:multiPictureCell];
 
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
+
+
 }
 
 
@@ -96,37 +116,39 @@ static NSString * const topPictureCell = @"TopPictureCell";
 - (void)loadData
 {
     // http://c.m.163.com//nc/article/headline/T1348647853363/0-30.html
-    NSString *allUrlstring = [NSString stringWithFormat:@"/nc/article/%@/0-20.html",self.urlString];
-    [self loadDataForType:1 withURL:allUrlstring];
+    //http://xinwen.52jszhai.com/api/content/lists/id/1/page/2
+    self.currentPage=1;
+    [self loadDataForType];
 }
 
 - (void)loadMoreData
 {
-    NSString *allUrlstring = [NSString stringWithFormat:@"/nc/article/%@/%ld-20.html",self.urlString,(self.arrayList.count - self.arrayList.count%10)];
-    //    NSString *allUrlstring = [NSString stringWithFormat:@"/nc/article/%@/%ld-20.html",self.urlString,self.arrayList.count];
-    [self loadDataForType:2 withURL:allUrlstring];
+    self.currentPage++;
+    [self loadDataForType];
 }
 
-- (void)loadDataForType:(int)type withURL:(NSString *)allUrlstring
+- (void)loadDataForType
 {
-    [[[SXNetworkTools sharedNetworkTools] GET:allUrlstring parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-        NSLog(@"%@",allUrlstring);
-        NSString *key = [responseObject.keyEnumerator nextObject];
+    NSString *allUrlstring=[NSString stringWithFormat:@"%@/api/content/lists/id/%@/page/%ld",kNewWordBaseURLString,self.channelId,(long)self.currentPage];
+
+    [[[SXNetworkTools sharedNetworkTools] GET:allUrlstring parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
         
-        NSArray *temArray = responseObject[key];
-        
-        NSArray *arrayM = [SXNewsEntity mj_objectArrayWithKeyValuesArray:temArray];
-        
-        if (type == 1) {
-            self.arrayList = [arrayM mutableCopy];
-            [self.tableView.mj_header endRefreshing];
-            [self.tableView reloadData];
-        }else if(type == 2){
-            [self.arrayList addObjectsFromArray:arrayM];
-            
-            [self.tableView.mj_footer endRefreshing];
+        if(self.currentPage==1){
+            [self.arrayList removeAllObjects];
+        }
+
+        NSArray *arrayM = [TTVideo mj_objectArrayWithKeyValuesArray:responseObject];
+        [self.arrayList addObjectsFromArray:arrayM];
+
+        if (arrayM.count==0) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        else{
             [self.tableView reloadData];
         }
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
@@ -137,48 +159,74 @@ static NSString * const topPictureCell = @"TopPictureCell";
 
 #pragma mark -UITableViewDataSource 返回tableView有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.arrayList.count;
 }
 
 #pragma mark -UITableViewDataSource 返回tableView每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.arrayList.count;
+    return 1;
 }
 
 #pragma mark -UITableViewDataSource 返回indexPath对应的cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
-    if (NewsModel.hasHead && NewsModel.photosetID) {
-        TopPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:topPictureCell];
-        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
-        cell.LblTitleLabel.text = NewsModel.title;
-        return cell;
-    }else if (NewsModel.hasHead){
-        TopTextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:topTextPictureCell];
-        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
-        cell.LblTitleLabel.text = NewsModel.title;
-        return cell;
-    }else if (NewsModel.imgType){
-        BigPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bigPictureCell];
-        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
-        cell.LblTitleLabel.text = NewsModel.title;
-        cell.subTitleLabel.text = NewsModel.subtitle;
-        return cell;
-    }else if (NewsModel.imgextra){
-        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
-        cell.theTitle = NewsModel.title;
-        cell.imageUrls = [NSArray arrayWithObjects:NewsModel.imgsrc, NewsModel.imgextra[0], NewsModel.imgextra[0], nil];
-        return cell;
-    }else{
-        SinglePictureNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:singlePictureCell];
-        cell.imageUrl = NewsModel.imgsrc;
-        cell.contentTittle = NewsModel.title;
-        cell.desc = NewsModel.digest;
 
+    TTVideo *video=self.arrayList[indexPath.section];
+
+    if ([video.model_id integerValue]==6) {
+        VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VideoCell];
+        cell.video = video;
+        cell.indexPath = indexPath;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell setBackgroundColor:[UIColor whiteColor]];
         return cell;
     }
-    
+    else{
+        
+        NewsTableViewCell *cell;
+        cell=[tableView dequeueReusableCellWithIdentifier:@"news"];
+        cell =[[NSBundle mainBundle] loadNibNamed:@"NewsTableViewCell" owner:self options:nil][0];
+        cell.txtLab.text=video.title;
+
+        NSArray *imagss=[video.fengmian componentsSeparatedByString:@","];
+        if (imagss.count!=0) {
+            [cell.myImage1 setBackgroundColor:[UIColor redColor]];
+          [cell.myImage1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,imagss[0]]] placeholderImage:nil];
+            
+        }
+        return cell;
+    }
+
+//    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
+//    if (NewsModel.hasHead && NewsModel.photosetID) {
+//        TopPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:topPictureCell];
+//        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
+//        cell.LblTitleLabel.text = NewsModel.title;
+//        return cell;
+//    }else if (NewsModel.hasHead){
+//        TopTextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:topTextPictureCell];
+//        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
+//        cell.LblTitleLabel.text = NewsModel.title;
+//        return cell;
+//    }else if (NewsModel.imgType){
+//        BigPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bigPictureCell];
+//        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
+//        cell.LblTitleLabel.text = NewsModel.title;
+//        cell.subTitleLabel.text = NewsModel.subtitle;
+//        return cell;
+//    }else if (NewsModel.imgextra){
+//        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
+//        cell.theTitle = NewsModel.title;
+//        cell.imageUrls = [NSArray arrayWithObjects:NewsModel.imgsrc, NewsModel.imgextra[0], NewsModel.imgextra[0], nil];
+//        return cell;
+//    }else{
+//        SinglePictureNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:singlePictureCell];
+//        cell.imageUrl = NewsModel.imgsrc;
+//        cell.contentTittle = NewsModel.title;
+//        cell.desc = NewsModel.digest;
+//
+//        return cell;
+//    }
+
 //    if (newsModel.imgextra){
 //        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
 //        cell.theTitle = newsModel.title;
@@ -220,47 +268,53 @@ static NSString * const topPictureCell = @"TopPictureCell";
 
 #pragma mark -UITableViewDataSource 返回indexPath对应的cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
-//
-//    return newsModel.cellHeight;
-    if (NewsModel.hasHead && NewsModel.photosetID){
-        return 245;
-    }else if(NewsModel.hasHead) {
-        return 245;
-    }else if(NewsModel.imgType) {
-        return 170;
-    }else if (NewsModel.imgextra){
-        return 130;
-    }else{
-        return 100;
+    TTVideo *video=self.arrayList[indexPath.section];
+    if ([video.model_id integerValue]==6) {
+        return 322;
     }
+    else{
+        return 147;
+    }
+
 }
 
 #pragma mark -UITableViewDelegate 点击了某个cell
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
-    if (NewsModel.hasHead && NewsModel.photosetID) {
-        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-    }else if (NewsModel.hasHead){
-        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-
-    }else if (NewsModel.imgType){
-        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-
-    }else if (NewsModel.imgextra){
-        ShowMultiPictureViewController *viewController = [[ShowMultiPictureViewController alloc] init];
-        viewController.imageUrls =  [NSArray arrayWithObjects:NewsModel.imgsrc, NewsModel.imgextra[0], NewsModel.imgextra[0], nil];
-        NSString *text = NewsModel.digest;
-        if (text == nil || [text isEqualToString:@""]) {
-            text = NewsModel.title;
-        }
-        viewController.text = text;
-        [self.navigationController pushViewController:viewController animated:YES];
-    }else{
-        [self pushToDetailViewControllerWithUrl:NewsModel.url];
+    TTVideo *video=self.arrayList[indexPath.section];
+    if ([video.model_id integerValue]==6) {
+        VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
+//        TTVideo *video=self.videoArray[indexPath.row];
+        info.url=video.id;
+        [self.navigationController pushViewController:info animated:YES];
     }
+    else{
+        NewsInfoViewController *info=[[NewsInfoViewController alloc] init];
+        info.url=video.id;
+        [self.navigationController pushViewController:info animated:YES];
+        
+    }
+    
+//    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
+//    if (NewsModel.hasHead && NewsModel.photosetID) {
+//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
+//    }else if (NewsModel.hasHead){
+//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
+//
+//    }else if (NewsModel.imgType){
+//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
+//
+//    }else if (NewsModel.imgextra){
+//        ShowMultiPictureViewController *viewController = [[ShowMultiPictureViewController alloc] init];
+//        viewController.imageUrls =  [NSArray arrayWithObjects:NewsModel.imgsrc, NewsModel.imgextra[0], NewsModel.imgextra[0], nil];
+//        NSString *text = NewsModel.digest;
+//        if (text == nil || [text isEqualToString:@""]) {
+//            text = NewsModel.title;
+//        }
+//        viewController.text = text;
+//        [self.navigationController pushViewController:viewController animated:YES];
+//    }else{
+//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
+//    }
 
 }
 

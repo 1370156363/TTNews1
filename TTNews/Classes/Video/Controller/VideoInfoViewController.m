@@ -21,11 +21,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.url=@"http://xinwen.52jszhai.com/index/news/detail/id/6/model_id/6";
-
+    self.title=@"详情";
     self.url=[NSString stringWithFormat:@"%@/index/news/detail/id/%@/model_id/6",kNewWordBaseURLString,self.url];
     [self.mainWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
 }
+
+-(void)setupBasic {
+
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

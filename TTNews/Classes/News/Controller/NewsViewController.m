@@ -21,6 +21,14 @@
 #import "XLChannelControl.h"
 
 @interface NewsViewController()<UIScrollViewDelegate,TTTopChannelContianerViewDelegate>
+{
+
+    NSMutableArray *CategorySetArr;
+}
+
+///分类数据集
+@property (nonatomic,strong)NSMutableArray *CategoryArr;
+
 @property (nonatomic, strong) NSMutableArray *currentChannelsArray;
 @property (nonatomic, weak) TTTopChannelContianerView *topContianerView;
 @property (nonatomic, weak) UIScrollView *contentScrollView;
@@ -31,7 +39,32 @@
 static NSString * const collectionCellID = @"ChannelCollectionCell";
 static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeader";
 
+
 @implementation NewsViewController
+
+
+#pragma mark -获取分类
+-(void)getFenlei
+{
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"1",@"display", nil];
+
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetCategory withUserInfo:dict success:^(id message) {
+        [SVProgressHUD dismiss];
+        CategorySetArr=message[@"data"];
+        if (CategorySetArr.count!=0) {
+            for (NSDictionary *dict in CategorySetArr) {
+                [self.CategoryArr addObject:[dict objectForKey:@"title_show"]];
+            }
+            if (self.CategoryArr.count!=0) {
+                [self setupTopContianerView];
+            }
+        }
+    } failure:^(NSError *error) {
+
+    } visibleHUD:YES];
+
+}
+
 
 - (NSArray *)arrayLists
 {
@@ -44,15 +77,63 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 -(void)viewDidLoad {
     self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.isCellShouldShake = NO;
+
+    if (!self.CategoryArr) {
+        self.CategoryArr=[[NSMutableArray alloc] init];
+    }
+    if (!CategorySetArr) {
+        CategorySetArr=[[NSMutableArray alloc] init];
+    }
+    [self getFenlei];
+
     self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-//    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0xfa5054,0x444444,0xfa5054);
 
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+
+
+
+}
+
+-(void)AddChannelSelect
+{
+    ///搜索页面
     
-    [self setupTopContianerView];
+//    NSArray *arr1 = @[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
+//
+//    NSArray *arr2 = @[@"有声",@"家居",@"电竞",@"美容",@"电视剧",@"搏击",@"健康",@"摄影",@"生活",@"旅游",@"韩流",@"探索",@"综艺",@"美食",@"育儿"];
+//
+//    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:arr2 finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
+//        NSLog(@"inUseTitles = %@",inUseTitles);
+//        NSLog(@"unUseTitles = %@",unUseTitles);
+//    }];
+
+}
+
+#pragma mark --private Method--初始化子控制器
+-(void)setupChildController {
+
+    for (NSInteger i = 0; i<CategorySetArr.count; i++) {
+        ContentTableViewController *viewController = [[ContentTableViewController alloc] init];
+        viewController.channelId=CategorySetArr[i][@"id"];
+
+        [self addChildViewController:viewController];
+    }
+}
+
+#pragma mark --private Method--初始化上方的新闻频道选择的View
+- (void)setupTopContianerView{
+
+    CGFloat top = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    TTTopChannelContianerView *topContianerView = [[TTTopChannelContianerView alloc] initWithFrame:CGRectMake(0, top, [UIScreen mainScreen].bounds.size.width, 30)];
+    topContianerView.channelNameArray = self.CategoryArr;
+    self.topContianerView  = topContianerView;
+
+    topContianerView.delegate = self;
+    [self.view addSubview:topContianerView];
+
     [self setupChildController];
     [self setupContentScrollView];
-//    [self setupCollectionView];
+    //    [self setupCollectionView];
 
     ///右边添加
     UIButton *addBtn=[[UIButton alloc] initWithFrame:CGRectMake(winsize.width-40, 64, 40, 30)];
@@ -65,43 +146,6 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     [self.view bringSubviewToFront:addBtn];
 
     [addBtn addTarget:self action:@selector(AddChannelSelect) forControlEvents:UIControlEventTouchUpInside];
-}
-
--(void)AddChannelSelect
-{
-
-    NSArray *arr1 = @[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
-
-    NSArray *arr2 = @[@"有声",@"家居",@"电竞",@"美容",@"电视剧",@"搏击",@"健康",@"摄影",@"生活",@"旅游",@"韩流",@"探索",@"综艺",@"美食",@"育儿"];
-
-    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:arr2 finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
-        NSLog(@"inUseTitles = %@",inUseTitles);
-        NSLog(@"unUseTitles = %@",unUseTitles);
-    }];
-
-}
-
-#pragma mark --private Method--初始化子控制器
--(void)setupChildController {
-
-    for (NSInteger i = 0; i<self.currentChannelsArray.count; i++) {
-        ContentTableViewController *viewController = [[ContentTableViewController alloc] init];
-        viewController.title = self.arrayLists[i][@"title"];
-        viewController.urlString = self.arrayLists[i][@"urlString"];
-        [self addChildViewController:viewController];
-    }
-}
-
-#pragma mark --private Method--初始化上方的新闻频道选择的View
-- (void)setupTopContianerView{
-
-    CGFloat top = CGRectGetMaxY(self.navigationController.navigationBar.frame);
-    TTTopChannelContianerView *topContianerView = [[TTTopChannelContianerView alloc] initWithFrame:CGRectMake(0, top, [UIScreen mainScreen].bounds.size.width, 30)];
-    topContianerView.channelNameArray = self.currentChannelsArray;
-    self.topContianerView  = topContianerView;
-
-    topContianerView.delegate = self;
-    [self.view addSubview:topContianerView];
 
 }
 
