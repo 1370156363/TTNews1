@@ -21,9 +21,14 @@
 #import "TTJudgeNetworking.h"
 #import <DKNightVersion.h>
 
+#import "VideoInfoViewController.h"
+
 
 @interface VideoViewController ()<VideoTableViewCellDelegate, VideoPlayViewDelegate>
 
+
+///分类数据集
+@property (nonatomic,strong)NSMutableArray *CategoryArr;
 @property (nonatomic, strong) NSMutableArray *videoArray;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, strong) NSString *maxtime;
@@ -34,17 +39,44 @@
 @property (nonatomic, copy) NSString *currentSkinModel;
 @property (nonatomic, assign) BOOL isFullScreenPlaying;
 
+
 @end
 
 static NSString * const VideoCell = @"VideoCell";
 
 @implementation VideoViewController
 
+#pragma mark -获取分类
+-(void)getFenlei
+{
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"1",@"display", nil];
+
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetCategory withUserInfo:dict success:^(id message) {
+        NSMutableArray *arr=message[@"data"];
+
+        if (arr.count!=0) {
+
+        }
+
+        
+    } failure:^(NSError *error) {
+
+    } visibleHUD:YES];
+
+}
+
+#pragma mark -图片介绍
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    ///分类
+    [self getFenlei];
+
     [self setupBasic];
     [self setupTableView];
     [self setupMJRefreshHeader];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -57,6 +89,7 @@ static NSString * const VideoCell = @"VideoCell";
     if (self.isFullScreenPlaying == NO) {//将要呈现的画面不是全屏播放页面
         [self.playView resetPlayView];
     }
+
 //    self.navigationController.navigationBar.alpha = 1;
 }
 
@@ -64,7 +97,9 @@ static NSString * const VideoCell = @"VideoCell";
 
 #pragma mark 基本设置
 -(void)setupBasic {
-    [self initNavigationWithImgAndTitle:@"视频" leftBtton:@"" rightButImg:nil rightBut:nil navBackColor:navColor];
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    
 
     self.currentPage = 1;
     self.isFullScreenPlaying = NO;
@@ -72,12 +107,14 @@ static NSString * const VideoCell = @"VideoCell";
 
 #pragma mark 初始化TableView
 - (void)setupTableView {
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame) + 10, 0, 0, 0);
     self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
+
 }
 
 #pragma mark 初始化刷新控件
@@ -158,7 +195,10 @@ static NSString * const VideoCell = @"VideoCell";
 
 #pragma mark -UITableViewDelegate 点击了某个cell
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self pushToVideoCommentViewControllerWithIndexPath:indexPath];
+//    [self pushToVideoCommentViewControllerWithIndexPath:indexPath];
+    VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
+    [self.navigationController pushViewController:info animated:YES];
+    
 }
 
 #pragma mark 点击某个Cell或点击评论按钮跳转到评论页面

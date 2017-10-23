@@ -55,6 +55,9 @@
 		042B479C1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B479A1F9CAC09006FFBA9 /* DongTaiInfoViewController.xib */; };
 		042B47A01F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B479E1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m */; };
 		042B47A11F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B479F1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib */; };
+		04AEEFAE1F9DB314000BF3DE /* VideoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEEFAC1F9DB314000BF3DE /* VideoInfoViewController.m */; };
+		04AEEFAF1F9DB314000BF3DE /* VideoInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AEEFAD1F9DB314000BF3DE /* VideoInfoViewController.xib */; };
+		04AEEFB21F9DD1AA000BF3DE /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEEFB11F9DD1AA000BF3DE /* CategoryModel.m */; };
 		04E2A4251F9AC5F800B93AAB /* NewWenDaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4231F9AC5F800B93AAB /* NewWenDaViewController.m */; };
 		04E2A4261F9AC5F800B93AAB /* NewWenDaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E2A4241F9AC5F800B93AAB /* NewWenDaViewController.xib */; };
 		04E2A42A1F9AD15800B93AAB /* WenDaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E2A4281F9AD15800B93AAB /* WenDaTableViewCell.m */; };
@@ -789,6 +792,11 @@
 		042B479D1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZhuanJiaTableViewCell.h; sourceTree = "<group>"; };
 		042B479E1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZhuanJiaTableViewCell.m; sourceTree = "<group>"; };
 		042B479F1F9CBBEC006FFBA9 /* ZhuanJiaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZhuanJiaTableViewCell.xib; sourceTree = "<group>"; };
+		04AEEFAB1F9DB314000BF3DE /* VideoInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoInfoViewController.h; sourceTree = "<group>"; };
+		04AEEFAC1F9DB314000BF3DE /* VideoInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoInfoViewController.m; sourceTree = "<group>"; };
+		04AEEFAD1F9DB314000BF3DE /* VideoInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoViewController.xib; sourceTree = "<group>"; };
+		04AEEFB01F9DD1AA000BF3DE /* CategoryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryModel.h; sourceTree = "<group>"; };
+		04AEEFB11F9DD1AA000BF3DE /* CategoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoryModel.m; sourceTree = "<group>"; };
 		04E2A4221F9AC5F800B93AAB /* NewWenDaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewWenDaViewController.h; sourceTree = "<group>"; };
 		04E2A4231F9AC5F800B93AAB /* NewWenDaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewWenDaViewController.m; sourceTree = "<group>"; };
 		04E2A4241F9AC5F800B93AAB /* NewWenDaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewWenDaViewController.xib; sourceTree = "<group>"; };
@@ -2064,6 +2072,9 @@
 				EE79B0F51CC8C435001029EF /* VideoCommentViewController.h */,
 				EE79B0F61CC8C435001029EF /* VideoCommentViewController.m */,
 				EE79B0F71CC8C435001029EF /* VideoCommentViewController.xib */,
+				04AEEFAB1F9DB314000BF3DE /* VideoInfoViewController.h */,
+				04AEEFAC1F9DB314000BF3DE /* VideoInfoViewController.m */,
+				04AEEFAD1F9DB314000BF3DE /* VideoInfoViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3125,6 +3136,8 @@
 				013A87F41F6789790017175F /* OWTool.m */,
 				042B47951F9CA8E4006FFBA9 /* UserModel.h */,
 				042B47961F9CA8E4006FFBA9 /* UserModel.m */,
+				04AEEFB01F9DD1AA000BF3DE /* CategoryModel.h */,
+				04AEEFB11F9DD1AA000BF3DE /* CategoryModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3313,6 +3326,7 @@
 				F832CE481F2761B80032C23D /* yizan.png in Resources */,
 				F832CE1D1F2761B80032C23D /* wuiboFX@3x.png in Resources */,
 				F832CD411F2761B70032C23D /* guanzhuGB@2x.png in Resources */,
+				04AEEFAF1F9DB314000BF3DE /* VideoInfoViewController.xib in Resources */,
 				04E2A4411F9B0C8B00B93AAB /* SearchInfoViewController.xib in Resources */,
 				F832CE401F2761B80032C23D /* xuanzeY@2x.png in Resources */,
 				F832CD7B1F2761B70032C23D /* qianwang@3x.png in Resources */,
@@ -4037,6 +4051,7 @@
 				F8B5A64C1F2820E500AEBF39 /* IDMTapDetectingImageView.m in Sources */,
 				012D91D01F88A7BC00C8CDD8 /* MessageCell.m in Sources */,
 				01B181D81F74F2B700D9F7AF /* CommentCell.m in Sources */,
+				04AEEFB21F9DD1AA000BF3DE /* CategoryModel.m in Sources */,
 				EE79B12A1CC8C435001029EF /* TTNormalNewsFetchDataParameter.m in Sources */,
 				01D153FD1F7F9E010033CCF1 /* forGetpassTwpController.m in Sources */,
 				04E2A4451F9B2CE500B93AAB /* CommentTableViewCell.m in Sources */,
@@ -4051,6 +4066,7 @@
 				EE79B1151CC8C435001029EF /* DetailViewController.m in Sources */,
 				01B181F81F75170B00D9F7AF /* YYLocationPickerView.m in Sources */,
 				F89E70B21F28A798003965B1 /* CXMLNode_PrivateExtensions.m in Sources */,
+				04AEEFAE1F9DB314000BF3DE /* VideoInfoViewController.m in Sources */,
 				F89E70A81F28A798003965B1 /* CXMLDocument_CreationExtensions.m in Sources */,
 				F8B5A6021F28125000AEBF39 /* tiwenController.m in Sources */,
 				012D91CA1F87E18A00C8CDD8 /* NSObject+NullConfig.m in Sources */,

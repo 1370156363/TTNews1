@@ -55,6 +55,7 @@
     MyController *vc4 = [[MyController alloc] init];
     _MeController = vc4;
     [self addChildViewController:vc4 withImage:[UIImage imageNamed:@"geren"] selectedImage:[UIImage imageNamed:@"gerenxz"] withTittle:@"我的"];
+
     vc4.delegate = self;
     
     [self setupBasic];
@@ -81,8 +82,8 @@
     if (motion == UIEventSubtypeMotionShake) {
         if (self.isShakeCanChangeSkin == NO) return;
         if ([self.dk_manager.themeVersion isEqualToString:DKThemeVersionNormal]) {//将要切换至夜间模式
-//            self.dk_manager.themeVersion = DKThemeVersionNight;                self.tabBar.barTintColor = [UIColor colorWithRed:34/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
-            self.tabBar.barTintColor = navColor;
+            self.dk_manager.themeVersion = DKThemeVersionNight;                self.tabBar.barTintColor = [UIColor colorWithRed:34/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
+//            self.tabBar.barTintColor = navColor;
             _MeController.changeSkinSwitch.on = YES;
         } else {
                 self.dk_manager.themeVersion = DKThemeVersionNormal;             self.tabBar.barTintColor = [UIColor whiteColor];
@@ -100,7 +101,9 @@
 //    nav.tabBarItem.title = tittle;
 //    controller.navigationItem.title = tittle;
     controller.title = tittle;//这句代码相当于上面两句代码
-    [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]} forState:UIControlStateSelected];
+
+    ///改成navcolor
+    [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:navColor} forState:UIControlStateSelected];
     nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -3);
     [self addChildViewController:nav];
 }

@@ -43,18 +43,27 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.isCellShouldShake = NO;
     self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+//    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0xfa5054,0x444444,0xfa5054);
+
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     
     [self setupTopContianerView];
     [self setupChildController];
     [self setupContentScrollView];
 //    [self setupCollectionView];
-    UIButton *addBtn=[UIButton buttonWithType:UIButtonTypeContactAdd];
-    addBtn.frame=CGRectMake(winsize.width-40, 64, 40, 30);
+
+    ///右边添加
+    UIButton *addBtn=[[UIButton alloc] initWithFrame:CGRectMake(winsize.width-40, 64, 40, 30)];
+
+    [addBtn setImage:[UIImage imageNamed:@"sousuoB"] forState:UIControlStateNormal];
+
+
     [self.view addSubview:addBtn];
     addBtn.backgroundColor=[UIColor whiteColor];
     [self.view bringSubviewToFront:addBtn];
+
     [addBtn addTarget:self action:@selector(AddChannelSelect) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 -(void)AddChannelSelect
@@ -69,10 +78,9 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 
 #pragma mark --private Method--初始化子控制器
 -(void)setupChildController {
+
     for (NSInteger i = 0; i<self.currentChannelsArray.count; i++) {
-
         ContentTableViewController *viewController = [[ContentTableViewController alloc] init];
-
         viewController.title = self.arrayLists[i][@"title"];
         viewController.urlString = self.arrayLists[i][@"urlString"];
         [self addChildViewController:viewController];
@@ -85,8 +93,10 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     TTTopChannelContianerView *topContianerView = [[TTTopChannelContianerView alloc] initWithFrame:CGRectMake(0, top, [UIScreen mainScreen].bounds.size.width, 30)];
     topContianerView.channelNameArray = self.currentChannelsArray;
     self.topContianerView  = topContianerView;
+
     topContianerView.delegate = self;
     [self.view addSubview:topContianerView];
+
 }
 
 #pragma mark --private Method--初始化相信新闻内容的scrollView
@@ -102,6 +112,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+
     if (scrollView == self.contentScrollView) {
         NSInteger index = scrollView.contentOffset.x/self.contentScrollView.frame.size.width;
         ContentTableViewController *vc = self.childViewControllers[index];
@@ -157,6 +168,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     }
     return _currentChannelsArray;
 }
+
 
 @end
 

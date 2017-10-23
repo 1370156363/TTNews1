@@ -45,8 +45,10 @@
 
 
 #define navColor HexRGB(0x26ACCC)
-
-
+///主色调
+#define MainColor 0x26ACCC
+///频道选中色调
+#define selectColor HexRGB(0x26ACCC)
 
 
 /******阅读器部分通知******/

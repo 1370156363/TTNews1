@@ -45,7 +45,7 @@ static CGFloat buttonWidth = 65;
     }
     
     //默认选中第三个channelButton,因为scrollView的subview含有indicatorView，所以第三个按钮对应scrollView的subview的index是3
-    [self clickChannelButton:self.scrollView.subviews[3]];
+    [self clickChannelButton:self.scrollView.subviews[1]];
 }
 
 #pragma mark 初始化子控件
@@ -59,17 +59,18 @@ static CGFloat buttonWidth = 65;
     
     //初始化scrollView右侧的显示阴影效果的imageView
 //    [self addSubview:[self createSliderView]];
-    
+
     //初始化被选中channelButton的红线，也就是indicatorView
     UIView *indicatorView = [self createIndicatorView];
     self.indicatorView = indicatorView;
     [self.scrollView addSubview:self.indicatorView];
-    
+
+//    [self];
     //初始化右侧的加号button
 //    UIButton *button = [self createTheAddButton];
 //    self.addButton = button;
 //    [self addSubview:self.addButton];
-    
+
 }
 
 #pragma mark 创建容纳channelButton的ScrollView
@@ -77,6 +78,7 @@ static CGFloat buttonWidth = 65;
     UIScrollView *scrollView = [[UIScrollView alloc] init];
     self.scrollView = scrollView;
     scrollView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.frame.size.height);
+    scrollView.contentInset=UIEdgeInsetsMake(0, 0, 0, 40);
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     return scrollView;
@@ -88,7 +90,7 @@ static CGFloat buttonWidth = 65;
 //    UIButton *addChannelButton =[UIButton buttonWithType:UIButtonTypeCustom];
 //    addChannelButton.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x343434, 0xfafafa);
 //    self.addButton = addChannelButton;
-//    [addChannelButton setImage:[UIImage imageNamed:@"home_header_add_slim"] forState:UIControlStateNormal];
+//    [addChannelButton setImage:[UIImage imageNamed:@"sousou"] forState:UIControlStateNormal];
 //    addChannelButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - kAddChannelWidth, 0, kAddChannelWidth, kAddChannelWidth);
 //    [addChannelButton addTarget:self action:@selector(clickAddButton:) forControlEvents:UIControlEventTouchUpInside];
 //    return addChannelButton;
@@ -99,14 +101,14 @@ static CGFloat buttonWidth = 65;
     UIImageView *slideView = [[UIImageView alloc] init];
     slideView.frame = CGRectMake(self.frame.size.width - kSliderViewWidth -kAddChannelWidth, 0, kSliderViewWidth, self.frame.size.height);
     slideView.alpha = 0.9;
-    slideView.image = [UIImage imageNamed:@"slidetab_mask"];
+    slideView.image = [UIImage imageNamed:@"sousou"];
     return slideView;
 }
 
 #pragma mark 创建被选中channelButton的红线，也就是indicatorView
 - (UIView *)createIndicatorView {
     UIView *indicatorView = [[UIView alloc] init];
-    indicatorView.backgroundColor = [UIColor colorWithRed:243/255.0 green:75/255.0 blue:80/255.0 alpha:1.0];
+    indicatorView.backgroundColor = selectColor;
     [self addSubview:indicatorView];
     return indicatorView;
 }
@@ -116,7 +118,9 @@ static CGFloat buttonWidth = 65;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x949494, 0xfafafa);
-    [button setTitleColor:[UIColor colorWithRed:243/255.0 green:75/255.0 blue:80/255.0 alpha:1.0] forState:UIControlStateDisabled];
+    ///选中
+    [button setTitleColor:selectColor forState:UIControlStateDisabled];
+    ///
     [button.titleLabel setFont:[UIFont systemFontOfSize:kTitleLabelNorimalFont]];
     [button addTarget:self action:@selector(clickChannelButton:) forControlEvents:UIControlEventTouchUpInside];
     [button layoutIfNeeded];
@@ -137,6 +141,7 @@ static CGFloat buttonWidth = 65;
     if (newOffsetX > self.scrollView.contentSize.width - self.scrollView.frame.size.width) {
         newOffsetX = self.scrollView.contentSize.width - self.scrollView.frame.size.width;
     }
+
     [UIView animateWithDuration:0.25 animations:^{
         [sender.titleLabel setFont:[UIFont systemFontOfSize:kTitleLabelSelectedFont]];
         [sender layoutIfNeeded];
@@ -150,6 +155,7 @@ static CGFloat buttonWidth = 65;
     if ([self.delegate respondsToSelector:@selector(chooseChannelWithIndex:)]) {
         [self.delegate chooseChannelWithIndex:index];
     }
+
 }
 
 #pragma mark 选中某个ChannelButton
@@ -173,6 +179,7 @@ static CGFloat buttonWidth = 65;
     
     //将scrollView的contentSize减小一个buuton的宽度
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width - self.scrollView.frame.size.width/5, 0);
+    
 }
 
 //#pragma mark 点击addButton,展示或隐藏添加channel的View
@@ -184,12 +191,14 @@ static CGFloat buttonWidth = 65;
 
 #pragma mark 添加新闻频道：增加scrollView的contensize，然后在最后添加一个channelButton
 - (void)addAChannelButtonWithChannelName:(NSString *)channelName {
+
 //    CGFloat buttonWidth = self.scrollView.frame.size.width/5;
     UIButton *button = [self createChannelButton];
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width + buttonWidth, 0);
     button.frame = CGRectMake(self.scrollView.contentSize.width - buttonWidth , 0, buttonWidth, self.frame.size.height);
     [button setTitle:channelName forState:UIControlStateNormal];
     [self.scrollView addSubview:button];
+
 }
 
 

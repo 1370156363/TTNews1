@@ -100,7 +100,7 @@
     //找到取消按钮
     [_searchBar setTranslucent:YES];// 设置是否透明
     self.navigationItem.titleView=_searchBar;
-    [_searchBar setBackgroundColor:navColor];
+//    [_searchBar setBackgroundColor:navColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,9 +108,10 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)setupBasic {
-//    self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-//    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithColors(navColor);
-    self.navigationController.navigationBar.tintColor=navColor;
+    self.MainTabView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+
+//    self.navigationController.navigationBar.tintColor=navColor;
 
 //    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
     self.currentPage = 1;

@@ -104,6 +104,9 @@
 
     [self initNavigationWithImgAndTitle:@"动态" leftBtton:@"" rightButImg:[UIImage imageNamed:@"jiahaoyou"] rightBut:nil navBackColor:navColor];
     [self.navigationItem.rightBarButtonItems[1] setAction:@selector(okAction)];
+    
+    self.MainTabView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 
 }
 -(void)setupRefresh {

@@ -323,7 +323,6 @@ static NSMutableArray *tasks;
             actionValue=@"api/index/get_category";
         }
             break;
-
         default:
             break;
     }

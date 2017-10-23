@@ -27,8 +27,8 @@
 -(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (self.childViewControllers.count > 0) { // 如果push进来的不是第一个控制器
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setImage:[UIImage imageNamed:@"navigationbar_pic_back_icon"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"navigationbar_back_icon"] forState:UIControlStateHighlighted];
+        [button setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateHighlighted];
         button.frame = CGRectMake(0, 0, 30, 30);
         // 让按钮内部的所有内容左对齐
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
