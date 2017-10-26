@@ -97,7 +97,6 @@ static NSString * const VideoCell = @"VideoCell";
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
 
-
 }
 
 
