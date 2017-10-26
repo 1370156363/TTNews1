@@ -21,6 +21,9 @@
     IBOutlet UIButton   *btn3;
     BOOL     isYzmLog;
 }
+
+@property (nonatomic,retain) NSString *CodeStr;
+
 @end
 
 @implementation LoginController
@@ -48,6 +51,8 @@
     if (sender.tag==100)
     {
         isYzmLog=YES;
+        pass.keyboardType = UIKeyboardTypeNumberPad;
+        pass.secureTextEntry = NO;
         [btn1 setTitleColor:RGB(145, 207, 229) forState:UIControlStateNormal];
         [btn2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         
@@ -58,6 +63,8 @@
     else
     {
         isYzmLog=NO;
+        pass.keyboardType = UIKeyboardTypeDefault;
+        pass.secureTextEntry = YES;
         [btn1 setTitleColor:[UIColor darkGrayColor] forState:
          UIControlStateNormal];
         [btn2 setTitleColor:RGB(145, 207, 229) forState:UIControlStateNormal];
@@ -69,16 +76,31 @@
 
 -(IBAction)Btn3Select:(id)sender
 {
+    if (phone.text.length==0)
+    {
+        [SVProgressHUD showImage:nil status:@"请填写11位手机号！"];
+        return ;
+    }
+    if (![phone.text wh_isMobileNumber])
+    {
+        [SVProgressHUD showImage:nil status:@"请输入正确的手机号码！"];
+        return;
+    }
+    
     if (isYzmLog)
     {
-        
+        NSMutableDictionary *prms=[@{
+                                     @"mobile":phone.text
+                                     }mutableCopy];
         //获取验证码
-        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetWorkYzmAction withUserInfo:nil success:^(id message) {
+        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetWorkYzmAction withUserInfo:prms success:^(NSDictionary* message) {
             
+            NSDictionary *CodeDic = [message objectForKey:@"data"];
+            self.CodeStr = [CodeDic objectForKey:@"verify"];
+            [SVProgressHUD dismiss];
         } failure:^(NSError *error)
-        {
-            
-        } visibleHUD:YES];
+         {
+         } visibleHUD:YES];
     }
     else
     {
@@ -91,22 +113,26 @@
 {
     weakSelf(ws);
     [SVProgressHUD showWithStatus:@"发送中..."];
-    if (isYzmLog)
+    if (![phone.text wh_isMobileNumber])
     {
-        if (![phone.text wh_isMobileNumber])
-        {
-            [SVProgressHUD showImage:nil status:@"请输入正确的手机号码"];
-            return;
-        }
-        else if (pass.text.length==0||pass.text==nil)
+        [SVProgressHUD showImage:nil status:@"请输入正确的手机号码！"];
+        return;
+    }
+    if (isYzmLog)
+    {if (pass.text.length==0||pass.text==nil)
         {
             [SVProgressHUD showImage:nil status:@"请输入验证码！"];
+            return;
+        }
+        else if (![pass.text isEqualToString:self.CodeStr]){
+            [SVProgressHUD showImage:nil status:@"验证码错误！"];
             return;
         }
         NSMutableDictionary *prms=[@{
                                      @"username":phone.text,
                                      @"verify":pass.text
                                      }mutableCopy];
+        
         [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetWorkYzmLogin withUserInfo:prms success:^(NSDictionary *message)
          {
              if ([message[@"status"] intValue]==1)
@@ -126,24 +152,19 @@
     }
     else
     {
-        if (![phone.text wh_isMobileNumber])
-        {
-            [SVProgressHUD showImage:nil status:@"请输入正确的手机号码"];
-            return;
-        }
-        else if (pass.text.length==0||pass.text==nil)
+        if (pass.text.length==0||pass.text==nil)
         {
             [SVProgressHUD showImage:nil status:@"请输入密码！"];
             return;
         }
         
         NSMutableDictionary *parms=[@{
-                                      @"username":@"1",
-                                      @"password":@"1  "
+                                      @"username":phone.text,
+                                      @"password":pass.text
                                       }mutableCopy];
         [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:kNetWorkActionLogin withUserInfo:parms success:^(NSDictionary *message)
          {
-             if ([message[@"status"] intValue]==1)
+             if ([message[@"message"] isEqualToString:@"登陆成功"])
              {
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
                  [[OWTool Instance] saveUid:message[@"uid"]];
