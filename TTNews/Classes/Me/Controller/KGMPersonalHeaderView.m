@@ -30,10 +30,17 @@
     {
         self=[[NSBundle mainBundle] loadNibNamed:@"KGMPersonalHeaderView" owner:self options:nil][0];
         self.frame=frame;
+        [self initSubViews];
     }
     return self;
 }
 
+-(void) initSubViews{
+    [_headImageView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+        self.KGPersonalCheckBlock(50);
+    }];
+}
+    
 -(void)reloadHeaderUI:(NSDictionary *)dic
 {
 
