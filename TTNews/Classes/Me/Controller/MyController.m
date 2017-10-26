@@ -44,8 +44,11 @@
     if (tag==50)
     {
 //        [self.navigationController pushViewController:[SettingController new] animated:YES];
-        
+//        if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid]isEqualToString:@""]){
+//
+//        }
         [self.navigationController pushViewController:[[LoginController alloc] init] animated:YES];
+        
     }
     else if (tag==10)
     {
