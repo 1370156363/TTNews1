@@ -62,12 +62,18 @@ static NSMutableArray *tasks;
         case kNetWorkActionLogin:
             actionValue = @"api/login/login";
             break;
+        case KNetWorkYzmLogin:
+            actionValue=@"api/login/index";
+            break;
         case KNetWorkgetVideolist:
             actionValue=@"api/user/get_mypinglun";
             break;
 
-
-
+        case kNetWorkActionRegister:
+            ///注册
+            actionValue = @"api/login/reg";
+            break;
+        
         case KNetworkWenAddDongTai:
             actionValue=@"api/user/adddt";
             break;
@@ -272,6 +278,7 @@ static NSMutableArray *tasks;
     switch (action)
     {
         case KNetWorkYzmAction:
+            //获取验证码
             actionValue=@"api/content/get_mobileverify.html";
             break;
         case KNetWorkYzmLogin:
