@@ -3227,7 +3227,7 @@
 				TargetAttributes = {
 					EE4635C21CC72B8900DB248F = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 5VEWQQ4SN5;
+						DevelopmentTeam = P59V3E9HH2;
 						ProvisioningStyle = Automatic;
 					};
 					EE4635DB1CC72B8A00DB248F = {
@@ -4239,7 +4239,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Di Wang (VX37MHVFD7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5VEWQQ4SN5;
+				DEVELOPMENT_TEAM = P59V3E9HH2;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/TTNewsUITests/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4280,7 +4280,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Di Wang (VX37MHVFD7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5VEWQQ4SN5;
+				DEVELOPMENT_TEAM = P59V3E9HH2;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/TTNewsUITests/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
