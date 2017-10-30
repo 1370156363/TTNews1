@@ -97,7 +97,7 @@
     
     NSString *extension = picture.image1.pathExtension;
     [self.pictureImageView sd_setImageWithURL:
-     [NSURL URLWithString:picture.image1] placeholderImage:[UIImage imageNamed:@"allplaceholderImage"] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+     [NSURL URLWithString:picture.image1] placeholderImage:[UIImage imageNamed:@"allplaceholderImage"] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize , NSURL * _Nullable targetURL) {
         self.progressView.hidden = NO;
         CGFloat progress = 1.0*receivedSize/expectedSize;
         NSString *text = [NSString stringWithFormat:@"%.0f%%", 100*progress];

@@ -89,8 +89,8 @@ typedef enum _NetWorkAction
     KNetworkFabuTiezi,                      //发布帖子
     KNetworkgetshijuanContent,              //通过编码获取试卷
     KNetworkQunzuInformation,               //依据部门id获取聊天群组
-    
-    
+    KNetworkMyFensi,                        //我的粉丝
+    KNetworkmyDynamic,                      //我的动态
     
     
     

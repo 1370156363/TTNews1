@@ -30,6 +30,8 @@
 #import "MJExtension.h"
 #import "NSObject+NullConfig.h"
 #import <UIImageView+WebCache.h>
+#import <PYPhotoBrowser.h>
+#import <SDAutoLayout.h>
 
 #define DismissKeyboard                     [[[UIApplication sharedApplication] keyWindow] endEditing:YES]
 #define winsize                             [UIScreen mainScreen].bounds.size

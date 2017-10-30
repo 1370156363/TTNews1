@@ -7,6 +7,6 @@
 //
 
 
-@interface KGDynamicsController : UIViewController
+@interface KGDynamicsController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @end

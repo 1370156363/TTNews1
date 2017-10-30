@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,63 +18,8 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view tag="1000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7aC-Mb-Dxn">
-                    <rect key="frame" x="6" y="64" width="363" height="50"/>
-                    <subviews>
-                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCr-8A-KaH">
-                            <rect key="frame" x="0.0" y="0.0" width="121" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="RoK-DP-ZHS"/>
-                            </constraints>
-                            <state key="normal" title="评论"/>
-                            <connections>
-                                <action selector="BtnSelect:" destination="-1" eventType="touchUpInside" id="PNd-mM-5VF"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ysh-4B-iCY">
-                            <rect key="frame" x="121" y="0.0" width="121" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="4PN-Fd-wt9"/>
-                            </constraints>
-                            <state key="normal" title="赞"/>
-                            <connections>
-                                <action selector="BtnSelect:" destination="-1" eventType="touchUpInside" id="54b-wH-vWc"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="300" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVe-Qh-M8t">
-                            <rect key="frame" x="242" y="0.0" width="121" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="W9U-kE-6EW"/>
-                            </constraints>
-                            <state key="normal" title="系统消息"/>
-                            <connections>
-                                <action selector="BtnSelect:" destination="-1" eventType="touchUpInside" id="Wg6-LE-80A"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="2pc-Nj-XlZ"/>
-                        <constraint firstItem="Ysh-4B-iCY" firstAttribute="leading" secondItem="QCr-8A-KaH" secondAttribute="trailing" id="H4d-Tr-YEp"/>
-                        <constraint firstItem="QCr-8A-KaH" firstAttribute="top" secondItem="7aC-Mb-Dxn" secondAttribute="top" id="UEx-Sw-z6J"/>
-                        <constraint firstItem="Ysh-4B-iCY" firstAttribute="top" secondItem="7aC-Mb-Dxn" secondAttribute="top" id="Z2C-sY-KMp"/>
-                        <constraint firstItem="eVe-Qh-M8t" firstAttribute="leading" secondItem="Ysh-4B-iCY" secondAttribute="trailing" id="fuz-b4-H1R"/>
-                        <constraint firstItem="QCr-8A-KaH" firstAttribute="leading" secondItem="7aC-Mb-Dxn" secondAttribute="leading" id="hVt-Fh-LxG"/>
-                        <constraint firstItem="eVe-Qh-M8t" firstAttribute="width" secondItem="QCr-8A-KaH" secondAttribute="width" id="qdE-zV-u8e"/>
-                        <constraint firstItem="eVe-Qh-M8t" firstAttribute="top" secondItem="7aC-Mb-Dxn" secondAttribute="top" id="qqq-VI-dbU"/>
-                        <constraint firstAttribute="trailing" secondItem="eVe-Qh-M8t" secondAttribute="trailing" id="wV2-qF-cpc"/>
-                        <constraint firstItem="Ysh-4B-iCY" firstAttribute="width" secondItem="QCr-8A-KaH" secondAttribute="width" id="wl8-9T-ROK"/>
-                    </constraints>
-                </view>
-            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="7aC-Mb-Dxn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="6" id="5pc-du-aTa"/>
-                <constraint firstItem="7aC-Mb-Dxn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Ttf-WY-yRX"/>
-                <constraint firstAttribute="trailing" secondItem="7aC-Mb-Dxn" secondAttribute="trailing" constant="6" id="aaN-lT-I4W"/>
-            </constraints>
-            <point key="canvasLocation" x="35.5" y="73.5"/>
+            <point key="canvasLocation" x="1" y="-134"/>
         </view>
     </objects>
 </document>

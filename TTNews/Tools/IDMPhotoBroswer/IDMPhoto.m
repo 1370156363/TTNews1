@@ -143,7 +143,7 @@ caption = _caption;
                 _tmpImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
             }
             
-            [_tmpImageView sd_setImageWithURL:_photoURL placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            [_tmpImageView sd_setImageWithURL:_photoURL placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                 CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                 if (self.progressUpdateBlock) {
                     self.progressUpdateBlock(progress);

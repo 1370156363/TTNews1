@@ -40,15 +40,13 @@
         self.scrollView.contentSize = CGSizeMake(0, imageHeight);
     }
     
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.picture.image1] placeholderImage:[UIImage imageNamed:@"defaultUserIcon"] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.picture.image1] placeholderImage:[UIImage imageNamed:@"defaultUserIcon"] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
         self.progressView.hidden = NO;
         CGFloat progress = 1.0*receivedSize/expectedSize;
         NSString *text = [NSString stringWithFormat:@"%.0f%%", 100*progress];
         self.progressView.progressLabel.text = [text stringByReplacingOccurrencesOfString:@"-" withString:@""];
         [self.progressView setProgress:progress animated:YES];
-        
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        }  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.progressView.hidden = YES;
     }];
 }

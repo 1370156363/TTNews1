@@ -8,8 +8,9 @@
 
 #import "fensiController.h"
 #import "SinglePictureNewsTableViewCell.h"
-
-
+#import "MyFensiController.h"
+#import "fensiTableViewCell.h"
+#import "MyFensiModel.h"
 #define  Margion 5
 
 @interface fensiController ()<UIScrollViewDelegate>
@@ -17,10 +18,26 @@
 @property(nonatomic,strong)UITableView      *L_tableview;
 @property(nonatomic,strong)UITableView      *C_tableview;
 @property(nonatomic,strong)UITableView      *R_Tableview;
+@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *L_model;
+@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *C_model;
+@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *R_model;
+
+
 @property(nonatomic,strong)UIView           *line;
+
+@property (nonatomic,strong) UIView   * myfensiHeaderView;
+
+@property (weak, nonatomic) IBOutlet UIButton *BtnGusts;
+@property (weak, nonatomic) IBOutlet UIButton *BtnFocus;
+@property (weak, nonatomic) IBOutlet UIButton *btnFensi;
+
 @end
 
 @implementation fensiController
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationController.navigationBar setBarTintColor:navColor];
+}
 
 - (void)viewDidLoad
 {
@@ -31,6 +48,7 @@
     self.line.backgroundColor=RGB(240, 240, 240);
     self.title=@"收藏/历史";
     [self setupBasic];
+    
 }
 
 #pragma mark 基本设置
@@ -40,6 +58,10 @@
     self.C_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.R_Tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+}
+
+-(void)updateLTableViewMode:(int)index{
+    
 }
 
 -(IBAction)BtnSelect:(UIButton *)sender
@@ -55,6 +77,21 @@
     [UIView animateWithDuration:0.35 animations:^{
         [topView layoutIfNeeded];
     }];
+    if (tag == 0) {
+        self.BtnGusts.selected = NO;
+        self.BtnFocus.selected = NO;
+        self.btnFensi.selected = YES;
+    }
+    else if (tag == 1){
+        self.BtnGusts.selected = NO;
+        self.BtnFocus.selected = YES;
+        self.btnFensi.selected = NO;
+    }
+    else if (tag == 2){
+        self.BtnGusts.selected = YES;
+        self.BtnFocus.selected = NO;
+        self.btnFensi.selected = NO;
+    }
     
     if (tag==2) {
         [self kg_hidden:NO];
@@ -104,13 +141,45 @@
     return _m_Scrollview;
 }
 
+-(UIView *)myfensiHeaderView
+{
+    if (!_myfensiHeaderView){
+        _myfensiHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, winsize.width, 100)];
+        _myfensiHeaderView.backgroundColor = [UIColor whiteColor];
+        UIImageView * imgHeadView= [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 60, 60)];
+        imgHeadView.layer.masksToBounds = YES;
+        imgHeadView.contentMode = UIViewContentModeScaleAspectFit;
+        imgHeadView.image = [UIImage imageNamed:@"zhuanjia"];
+        
+        UILabel *labTitle = [[UILabel alloc]init];
+        labTitle.text = @"我的问答";
+        labTitle.font = [UIFont systemFontOfSize:17];
+        
+        [_myfensiHeaderView sd_addSubviews:@[imgHeadView,labTitle]];
+        
+        labTitle.sd_layout.leftSpaceToView(imgHeadView, 20).widthIs(80).heightIs(30).centerYEqualToView(_myfensiHeaderView);
+        
+        [_myfensiHeaderView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            [self myfensiHeaderViewClick];
+        }];
+    }
+    return _myfensiHeaderView;
+}
+
+-(void)myfensiHeaderViewClick{
+    NSLog(@"myfensiHeaderViewClicked");
+}
+
+
 -(UITableView *)L_tableview
 {
     if (!_L_tableview)
     {
         _L_tableview=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        
         [self.m_Scrollview addSubview:_L_tableview];
         _L_tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
+        _L_tableview.tableHeaderView = self.myfensiHeaderView;
         [_L_tableview mas_makeConstraints:^(MASConstraintMaker *make)
         {
             make.top.height.width.equalTo(self.m_Scrollview);
@@ -119,9 +188,9 @@
         
         [_L_tableview cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
             [make makeSection:^(CBTableViewSectionMaker *section) {
-                section.cell([SinglePictureNewsTableViewCell class])
+                section.cell([fensiTableViewCell class])
                 .data(@[@{}])
-                .adapter(^(SinglePictureNewsTableViewCell * cell,NSDictionary * data,NSUInteger index)
+                .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                          {
                          
                          })
