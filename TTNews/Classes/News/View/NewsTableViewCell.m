@@ -20,5 +20,13 @@
 
     // Configure the view for the selected state
 }
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self==[super initWithStyle:style reuseIdentifier:reuseIdentifier])
+    {
+        self=[[NSBundle mainBundle] loadNibNamed:@"NewsTableViewCell" owner:self options:nil][0];
+    }
+    return self;
+}
 
 @end

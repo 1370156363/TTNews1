@@ -101,6 +101,8 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
     [self caculateCacheSize];
     [self setupBasic];
+    self.navigationController.navigationBar.barTintColor=navColor;
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     self.tableView.tableHeaderView=self.personalHeaderView;
     self.tableView.separatorColor = [UIColor colorWithHexString:@"#dfdfdf"];
     self.arrayDataItems=[NSMutableArray array];

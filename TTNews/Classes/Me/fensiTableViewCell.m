@@ -64,14 +64,22 @@
     _btnAttention.userInteractionEnabled = false;
 }
 
-
 -(void)setModel:(MyFensiModel *)model{
     if(!_isShowBtnAttention){
         _btnAttention.hidden = YES;
     }
-    [_imgHeaderView sd_setImageWithURL:[NSURL URLWithString:model.avatar] placeholderImage:[UIImage imageNamed:@"geren"]];
+    [_imgHeaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]] placeholderImage:[UIImage imageNamed:@"geren"]];
     _labNickname.text = model.nicheng?model.nicheng:model.username;
     _labSignature.text = model.sign?model.sign:@"这个家伙很懒，什么都没有留下！";
+}
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self==[super initWithStyle:style reuseIdentifier:reuseIdentifier])
+    {
+        self=[[NSBundle mainBundle] loadNibNamed:@"fensiTableViewCell" owner:self options:nil][0];
+    }
+    return self;
 }
 
 @end

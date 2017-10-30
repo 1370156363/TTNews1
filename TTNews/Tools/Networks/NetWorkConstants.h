@@ -63,6 +63,7 @@ typedef enum _NetWorkAction
     KNetWorkJiaonaSearch,                   //党费缴纳信息展示
     KNetWorkjgImg,                          //组织机构图展示
     KNetWorkMyCollection,                   //我的收藏
+    KNetWorkMyHistory,                      //历史记录
     KNetWorkSexAnalyase,                    //党员的性别统计
     KNetWorkWenzhangAnalyase,               //党员的文章统计
     KNetWorkDeplomaAnalyase,                //党员的学历统计
