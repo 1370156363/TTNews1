@@ -1,19 +1,19 @@
 //
-//  fensiController.m
-//  Aerospace
+//  PublishManageViewController.m
+//  TTNews
 //
-//  Created by 王迪 on 2017/2/22.
-//  Copyright © 2017年 王迪. All rights reserved.
+//  Created by 薛立强 on 2017/10/30.
+//  Copyright © 2017年 瑞文戴尔. All rights reserved.
 //
 
-#import "fensiController.h"
-#import "SinglePictureNewsTableViewCell.h"
-#import "MyFensiController.h"
-#import "fensiTableViewCell.h"
+#import "PublishManageViewController.h"
 #import "MyFensiModel.h"
+#import "fensiTableViewCell.h"
+
 #define  Margion 5
 
-@interface fensiController ()<UIScrollViewDelegate>
+@interface PublishManageViewController ()
+
 {
     int currentLPage ;
     int currentCPage ;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation fensiController
+@implementation PublishManageViewController
 
 
 - (void)viewDidLoad
@@ -327,12 +327,12 @@
         _L_tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
         _L_tableview.tableHeaderView = self.myfensiHeaderView;
         [_L_tableview mas_makeConstraints:^(MASConstraintMaker *make)
-        {
-            make.top.height.width.equalTo(self.m_Scrollview);
-            make.left.mas_equalTo(0);
-        }];
+         {
+             make.top.height.width.equalTo(self.m_Scrollview);
+             make.left.mas_equalTo(0);
+         }];
         [self setupRefresh:_L_tableview ];
-       
+        
         [_L_tableview addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenKeyBoard)]];
     }
     return _L_tableview;
@@ -403,7 +403,7 @@
         [self setupRefresh:_R_tableview ];
         
     }
-
+    
     return _R_tableview;
 }
 -(void)setModel_R_tablevie{

@@ -45,27 +45,34 @@
     if (tag==50)
     {
 //        [self.navigationController pushViewController:[SettingController new] animated:YES];
-//        if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid]isEqualToString:@""]){
-//
-//        }
-        [self.navigationController pushViewController:[[LoginController alloc] init] animated:YES];
-        
+
+        if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+            [self.navigationController pushViewController:[[LoginController alloc] init] animated:YES];
+        }
     }
-    else if (tag==10)
+    else
     {
-        [self.navigationController pushViewController:[KGDynamicsController new] animated:YES];
-    }
-    else if (tag==20)
-    {
-        [self.navigationController pushViewController:[MyFensiController new] animated:YES];
-    }
-    else if (tag==30)
-    {
-        [self.navigationController pushViewController:[fensiController new] animated:YES];
-    }
-    else if (tag==40)
-    {
-        [self.navigationController pushViewController:[fensiController new] animated:YES];
+        if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+            [SVProgressHUD showImage:nil status:@"用户未登录"];
+            [SVProgressHUD dismissWithDelay:2];
+            return;
+        }
+        if (tag==10)
+        {
+            [self.navigationController pushViewController:[KGDynamicsController new] animated:YES];
+        }
+        else if (tag==20)
+        {
+            [self.navigationController pushViewController:[MyFensiController new] animated:YES];
+        }
+        else if (tag==30)
+        {
+            [self.navigationController pushViewController:[fensiController new] animated:YES];
+        }
+        else if (tag==40)
+        {
+            [self.navigationController pushViewController:[fensiController new] animated:YES];
+        }
     }
 }
 -(KGMPersonalHeaderView *)personalHeaderView
@@ -94,6 +101,8 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
     [self caculateCacheSize];
     [self setupBasic];
+    self.navigationController.navigationBar.barTintColor=navColor;
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     self.tableView.tableHeaderView=self.personalHeaderView;
     self.tableView.separatorColor = [UIColor colorWithHexString:@"#dfdfdf"];
     self.arrayDataItems=[NSMutableArray array];

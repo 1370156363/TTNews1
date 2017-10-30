@@ -10,10 +10,6 @@
 
 @interface fensiTableViewCell(){
     
-    __weak IBOutlet UIImageView *imgHeaderView;
-    __weak IBOutlet UILabel *labNickname;
-    __weak IBOutlet UILabel *labSignature;
-    __weak IBOutlet UIButton *btnAttention;
 }
 @property(nonatomic,strong)UIView *separatorView;
 
@@ -50,32 +46,40 @@
 }
 
 -(void)setupview{
-    imgHeaderView.layer.cornerRadius = 40;
-    imgHeaderView.contentMode = UIViewContentModeScaleAspectFit;
-    imgHeaderView.clipsToBounds = YES;
+    _imgHeaderView.layer.cornerRadius = 40;
+    _imgHeaderView.contentMode = UIViewContentModeScaleAspectFit;
+    _imgHeaderView.clipsToBounds = YES;
     
-    btnAttention.layer.cornerRadius = 5.0;
-    btnAttention.layer.borderWidth = 1.0;
-    btnAttention.layer.borderColor = [UIColor redColor].CGColor;
+    _btnAttention.layer.cornerRadius = 5.0;
+    _btnAttention.layer.borderWidth = 1.0;
+    _btnAttention.layer.borderColor = [UIColor redColor].CGColor;
     
     [self.contentView addSubview:self.separatorView];
  
 }
 - (IBAction)btnAttentionClick:(UIButton*)sender {
-    [btnAttention setTitle:@"已关注" forState:UIControlStateNormal];
-    [btnAttention setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    btnAttention.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    btnAttention.userInteractionEnabled = false;
+    [_btnAttention setTitle:@"已关注" forState:UIControlStateNormal];
+    [_btnAttention setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    _btnAttention.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _btnAttention.userInteractionEnabled = false;
 }
-
 
 -(void)setModel:(MyFensiModel *)model{
     if(!_isShowBtnAttention){
-        btnAttention.hidden = YES;
+        _btnAttention.hidden = YES;
     }
-    [imgHeaderView sd_setImageWithURL:[NSURL URLWithString:model.avatar] placeholderImage:[UIImage imageNamed:@"geren"]];
-    labNickname.text = model.nicheng?model.nicheng:model.username;
-    labSignature.text = model.sign?model.sign:@"这个家伙很懒，什么都没有留下！";
+    [_imgHeaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]] placeholderImage:[UIImage imageNamed:@"geren"]];
+    _labNickname.text = model.nicheng?model.nicheng:model.username;
+    _labSignature.text = model.sign?model.sign:@"这个家伙很懒，什么都没有留下！";
+}
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self==[super initWithStyle:style reuseIdentifier:reuseIdentifier])
+    {
+        self=[[NSBundle mainBundle] loadNibNamed:@"fensiTableViewCell" owner:self options:nil][0];
+    }
+    return self;
 }
 
 @end

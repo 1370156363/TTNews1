@@ -113,9 +113,6 @@ static NSMutableArray *tasks;
         case KNetWorkLanMuData:
             actionValue=@"api/cms/channel/channleListData";
             break;
-        case KNetWorkMyCollection:
-            actionValue=@"api/pubshare/myCollection/getListJsonData";
-            break;
         case KNetWorkZuzhijigou:
             actionValue=@"api/common/getAllOrg";
             break;
@@ -315,6 +312,15 @@ static NSMutableArray *tasks;
         {
             actionValue=@"api/user/get_myguanzhu/";
         }
+            break;
+        case KNetworkGetMyFangwen:
+            actionValue=@"api/user/get_myfangwen";
+            break;
+        case KNetWorkMyCollection:
+            actionValue=@"api/user/get_mycollect";
+            break;
+        case KNetWorkMyHistory:
+            actionValue = @"api/user/get_myyuedu";
             break;
         case KNetworkAddGUANZHU:{
             ///添加关注

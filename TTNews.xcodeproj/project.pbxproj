@@ -118,6 +118,10 @@
 		1DC67303B4F8A6F87BEC546A /* libPods-TTNewsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92641E010C8FDC1389C15EF /* libPods-TTNewsTests.a */; };
 		6F1566DD1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */; };
 		6F1566E31FA332AA00EA9FD4 /* DymamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */; };
+		6F18DDC11FA705E000369ABD /* wendaimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F18DDC01FA705DF00369ABD /* wendaimg@2x.png */; };
+		6F18DDC41FA715BC00369ABD /* MyCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F18DDC31FA715BC00369ABD /* MyCollectionModel.m */; };
+		6F18DDC91FA736C100369ABD /* PublishManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F18DDC71FA736C100369ABD /* PublishManageViewController.m */; };
+		6F18DDCA1FA736C100369ABD /* PublishManageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F18DDC81FA736C100369ABD /* PublishManageViewController.xib */; };
 		6FDF358C1FA409C400670E18 /* fensiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */; };
 		6FDF358D1FA409C400670E18 /* fensiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */; };
 		6FDF35901FA4143E00670E18 /* MyFensiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF358F1FA4143E00670E18 /* MyFensiController.m */; };
@@ -918,6 +922,12 @@
 		6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDynamicTableViewCell.m; sourceTree = "<group>"; };
 		6F1566E11FA332AA00EA9FD4 /* DymamicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DymamicModel.h; sourceTree = "<group>"; };
 		6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DymamicModel.m; sourceTree = "<group>"; };
+		6F18DDC01FA705DF00369ABD /* wendaimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wendaimg@2x.png"; path = "../../../../../Downloads/wendaimg@2x.png"; sourceTree = "<group>"; };
+		6F18DDC21FA715BC00369ABD /* MyCollectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionModel.h; sourceTree = "<group>"; };
+		6F18DDC31FA715BC00369ABD /* MyCollectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionModel.m; sourceTree = "<group>"; };
+		6F18DDC61FA736C100369ABD /* PublishManageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublishManageViewController.h; sourceTree = "<group>"; };
+		6F18DDC71FA736C100369ABD /* PublishManageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublishManageViewController.m; sourceTree = "<group>"; };
+		6F18DDC81FA736C100369ABD /* PublishManageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublishManageViewController.xib; sourceTree = "<group>"; };
 		6FDF35891FA409C400670E18 /* fensiTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fensiTableViewCell.h; sourceTree = "<group>"; };
 		6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fensiTableViewCell.m; sourceTree = "<group>"; };
 		6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = fensiTableViewCell.xib; sourceTree = "<group>"; };
@@ -1833,6 +1843,8 @@
 				6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */,
 				6FDF35911FA41C6A00670E18 /* MyFensiModel.h */,
 				6FDF35921FA41C6A00670E18 /* MyFensiModel.m */,
+				6F18DDC21FA715BC00369ABD /* MyCollectionModel.h */,
+				6F18DDC31FA715BC00369ABD /* MyCollectionModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1842,6 +1854,16 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		6F18DDC51FA7361400369ABD /* 发布管理 */ = {
+			isa = PBXGroup;
+			children = (
+				6F18DDC61FA736C100369ABD /* PublishManageViewController.h */,
+				6F18DDC71FA736C100369ABD /* PublishManageViewController.m */,
+				6F18DDC81FA736C100369ABD /* PublishManageViewController.xib */,
+			);
+			name = "发布管理";
 			sourceTree = "<group>";
 		};
 		EE4635BA1CC72B8900DB248F = {
@@ -1940,6 +1962,7 @@
 				6F1566D91FA3128200EA9FD4 /* 动态 */,
 				F857B9061F28C89F00301B2D /* 粉丝关注房客 */,
 				F89E71241F28BF5D003965B1 /* 收藏／历史 */,
+				6F18DDC51FA7361400369ABD /* 发布管理 */,
 				F89E71161F28B57D003965B1 /* 设置 */,
 				EE79B08E1CC8C435001029EF /* Controller */,
 			);
@@ -3795,6 +3818,7 @@
 				F832CD671F2761B70032C23D /* pengyouquan.png in Resources */,
 				EE79B1331CC8C435001029EF /* PictureCommentViewController.xib in Resources */,
 				F832CCDF1F2761B70032C23D /* bianji@3x.png in Resources */,
+				6F18DDC11FA705E000369ABD /* wendaimg@2x.png in Resources */,
 				F832CD981F2761B70032C23D /* shanchuSC@2x.png in Resources */,
 				F832CE311F2761B80032C23D /* xiaoxiTZ@2x.png in Resources */,
 				F832CD191F2761B70032C23D /* fenxiang.png in Resources */,
@@ -4148,6 +4172,7 @@
 				F8B5A65C1F282D6C00AEBF39 /* ZoneReplyView.m in Sources */,
 				F89E711D1F28B5E8003965B1 /* SettingController.m in Sources */,
 				F89E70B11F28A798003965B1 /* CXMLNode.m in Sources */,
+				6F18DDC91FA736C100369ABD /* PublishManageViewController.m in Sources */,
 				04AEEFED1F9E3233000BF3DE /* ZhuanJiaTableViewCell.m in Sources */,
 				F89E70D71F28A7B4003965B1 /* LSYBottomMenuView.m in Sources */,
 				04AEF02A1F9E33AE000BF3DE /* VideoContentTableViewController.m in Sources */,
@@ -4268,6 +4293,7 @@
 				F89E70B41F28A798003965B1 /* CXMLUnsupportedNode.m in Sources */,
 				EE79B1311CC8C435001029EF /* TTJudgeNetworking.m in Sources */,
 				F89E71151F28B318003965B1 /* LibraryController.m in Sources */,
+				6F18DDC41FA715BC00369ABD /* MyCollectionModel.m in Sources */,
 				04AEF0191F9E329A000BF3DE /* HuiDaTableViewCell.m in Sources */,
 				F832CE901F2771A50032C23D /* XLChannelControl.m in Sources */,
 				F89E706C1F28A78D003965B1 /* LSYNoteVC.m in Sources */,
