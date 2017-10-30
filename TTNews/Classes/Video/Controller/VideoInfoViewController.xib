@@ -5,13 +5,14 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoInfoViewController">
             <connections>
                 <outlet property="mainWebView" destination="oWS-1x-6mM" id="6Yn-h8-bzG"/>
+                <outlet property="pingLunAction" destination="Dmn-FU-Icj" id="FAc-Bj-jum"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,14 +25,101 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfl-je-J23">
+                    <rect key="frame" x="0.0" y="613" width="375" height="54"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whX-dU-aID">
+                            <rect key="frame" x="0.0" y="0.0" width="75" height="54"/>
+                            <state key="normal" image="zan_1.png"/>
+                            <state key="selected" image="zan_2.png"/>
+                            <connections>
+                                <action selector="dianZanAction:" destination="-1" eventType="touchUpInside" id="SdD-yW-hFB"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-FD-3ca">
+                            <rect key="frame" x="75" y="0.0" width="75" height="54"/>
+                            <state key="normal" image="shoucang_1.png"/>
+                            <state key="selected" image="shoucang_2.png"/>
+                            <connections>
+                                <action selector="shoucangAction:" destination="-1" eventType="touchUpInside" id="Ze2-81-UuO"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dmn-FU-Icj">
+                            <rect key="frame" x="225" y="0.0" width="75" height="54"/>
+                            <state key="normal" image="pinglun_1.png"/>
+                            <state key="selected" image="pinglun_2.png"/>
+                            <connections>
+                                <action selector="pingLunAction:" destination="-1" eventType="touchUpInside" id="Bz0-h7-O1a"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ply-YH-huO">
+                            <rect key="frame" x="300" y="0.0" width="75" height="54"/>
+                            <state key="normal" image="zhuanfa_1.png"/>
+                            <state key="selected" image="zhuanfa_2.png"/>
+                            <connections>
+                                <action selector="fenXiangAction:" destination="-1" eventType="touchUpInside" id="yoe-gi-fKw"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w94-ya-LiK">
+                            <rect key="frame" x="150" y="0.0" width="75" height="54"/>
+                            <state key="normal" image="dashang_1.png"/>
+                            <state key="selected" image="dashang_2.png"/>
+                            <connections>
+                                <action selector="ShouQianAction:" destination="-1" eventType="touchUpInside" id="wV8-S5-Gx0"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Dmn-FU-Icj" firstAttribute="leading" secondItem="w94-ya-LiK" secondAttribute="trailing" id="5FA-eR-rcd"/>
+                        <constraint firstItem="Ply-YH-huO" firstAttribute="leading" secondItem="Dmn-FU-Icj" secondAttribute="trailing" id="6FA-lI-30t"/>
+                        <constraint firstItem="V8W-FD-3ca" firstAttribute="leading" secondItem="whX-dU-aID" secondAttribute="trailing" id="6Wy-jg-ft3"/>
+                        <constraint firstItem="w94-ya-LiK" firstAttribute="top" secondItem="vfl-je-J23" secondAttribute="top" id="Bc1-IO-lrG"/>
+                        <constraint firstAttribute="bottom" secondItem="V8W-FD-3ca" secondAttribute="bottom" id="Df5-xe-XIJ"/>
+                        <constraint firstItem="V8W-FD-3ca" firstAttribute="top" secondItem="vfl-je-J23" secondAttribute="top" id="FPD-cB-gef"/>
+                        <constraint firstAttribute="bottom" secondItem="whX-dU-aID" secondAttribute="bottom" id="GXy-QT-fbo"/>
+                        <constraint firstAttribute="bottom" secondItem="Ply-YH-huO" secondAttribute="bottom" id="GzJ-RB-Opl"/>
+                        <constraint firstAttribute="bottom" secondItem="w94-ya-LiK" secondAttribute="bottom" id="Hkz-hd-WUh"/>
+                        <constraint firstAttribute="bottom" secondItem="Dmn-FU-Icj" secondAttribute="bottom" id="OoM-SQ-Zd0"/>
+                        <constraint firstItem="whX-dU-aID" firstAttribute="top" secondItem="vfl-je-J23" secondAttribute="top" id="S4c-iP-Rci"/>
+                        <constraint firstAttribute="height" constant="54" id="Vcx-wp-RyC"/>
+                        <constraint firstItem="Ply-YH-huO" firstAttribute="top" secondItem="vfl-je-J23" secondAttribute="top" id="Z3J-ag-cbp"/>
+                        <constraint firstItem="w94-ya-LiK" firstAttribute="height" secondItem="whX-dU-aID" secondAttribute="height" id="bAC-KQ-iah"/>
+                        <constraint firstItem="whX-dU-aID" firstAttribute="leading" secondItem="vfl-je-J23" secondAttribute="leading" id="bTV-JK-5Nz"/>
+                        <constraint firstItem="w94-ya-LiK" firstAttribute="width" secondItem="whX-dU-aID" secondAttribute="width" id="h2U-Q3-F1T"/>
+                        <constraint firstItem="w94-ya-LiK" firstAttribute="leading" secondItem="V8W-FD-3ca" secondAttribute="trailing" id="jz3-gK-KuL"/>
+                        <constraint firstItem="V8W-FD-3ca" firstAttribute="height" secondItem="whX-dU-aID" secondAttribute="height" id="l67-nM-kS3"/>
+                        <constraint firstItem="Ply-YH-huO" firstAttribute="width" secondItem="whX-dU-aID" secondAttribute="width" id="l91-Uy-I8C"/>
+                        <constraint firstItem="Ply-YH-huO" firstAttribute="height" secondItem="whX-dU-aID" secondAttribute="height" id="lq9-5x-Toe"/>
+                        <constraint firstItem="Dmn-FU-Icj" firstAttribute="width" secondItem="whX-dU-aID" secondAttribute="width" id="qUy-a8-4nf"/>
+                        <constraint firstItem="Dmn-FU-Icj" firstAttribute="top" secondItem="vfl-je-J23" secondAttribute="top" id="qd1-Hg-J6h"/>
+                        <constraint firstAttribute="trailing" secondItem="Ply-YH-huO" secondAttribute="trailing" id="qmD-2j-ibN"/>
+                        <constraint firstItem="Dmn-FU-Icj" firstAttribute="height" secondItem="whX-dU-aID" secondAttribute="height" id="zNZ-qP-OJU"/>
+                        <constraint firstItem="V8W-FD-3ca" firstAttribute="width" secondItem="whX-dU-aID" secondAttribute="width" id="zdH-0U-Y7M"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="vfl-je-J23" secondAttribute="trailing" id="2NA-fa-bdi"/>
                 <constraint firstAttribute="bottom" secondItem="oWS-1x-6mM" secondAttribute="bottom" id="EqC-hK-sRj"/>
                 <constraint firstAttribute="trailing" secondItem="oWS-1x-6mM" secondAttribute="trailing" id="OCh-Xv-r2r"/>
                 <constraint firstItem="oWS-1x-6mM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Rek-dY-cv0"/>
+                <constraint firstItem="vfl-je-J23" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TZF-Vb-8YJ"/>
+                <constraint firstAttribute="bottom" secondItem="vfl-je-J23" secondAttribute="bottom" id="cRT-2g-HLc"/>
                 <constraint firstItem="oWS-1x-6mM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fZC-72-3Cs"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="dashang_1.png" width="35" height="35"/>
+        <image name="dashang_2.png" width="35" height="35"/>
+        <image name="pinglun_1.png" width="35" height="35"/>
+        <image name="pinglun_2.png" width="35" height="35"/>
+        <image name="shoucang_1.png" width="36" height="35"/>
+        <image name="shoucang_2.png" width="36" height="35"/>
+        <image name="zan_1.png" width="35" height="35"/>
+        <image name="zan_2.png" width="35" height="35"/>
+        <image name="zhuanfa_1.png" width="39" height="35"/>
+        <image name="zhuanfa_2.png" width="39" height="35"/>
+    </resources>
 </document>

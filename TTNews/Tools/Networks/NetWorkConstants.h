@@ -39,6 +39,7 @@ typedef enum _NetWorkAction
     KNetworkDongTaiComment,            //获取动态评论列表
     KNetworkADDDongTaiComment,  ///添加动态评论
     KNetworkGetCategory,///获取分类列表
+    KNetworkGetCommnet,//获取文章，图片，视频评论
     
     
     

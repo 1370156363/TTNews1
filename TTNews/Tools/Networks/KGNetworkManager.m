@@ -336,6 +336,12 @@ static NSMutableArray *tasks;
             actionValue=@"api/index/get_category";
         }
             break;
+        case KNetworkGetCommnet:
+        {
+            ///获取评论
+            actionValue=@"api/content/get_pinglun";
+        }
+            break;
         default:
             break;
     }

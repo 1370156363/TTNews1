@@ -279,16 +279,20 @@ static NSString * const VideoCell = @"VideoCell";
 
 #pragma mark -UITableViewDelegate 点击了某个cell
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
     TTVideo *video=self.arrayList[indexPath.section];
     if ([video.model_id integerValue]==6) {
         VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
 //        TTVideo *video=self.videoArray[indexPath.row];
         info.url=video.id;
+        info.vedio=video;
         [self.navigationController pushViewController:info animated:YES];
     }
     else{
         NewsInfoViewController *info=[[NewsInfoViewController alloc] init];
+
         info.url=video.id;
+        info.vedio=video;
         [self.navigationController pushViewController:info animated:YES];
         
     }

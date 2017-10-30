@@ -12,6 +12,7 @@
 @interface VideoInfoViewController : UIViewController
 
 @property(nonatomic,strong)NSString *url;
+@property(nonatomic,strong)TTVideo *vedio;
 
 
 @end

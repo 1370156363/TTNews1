@@ -88,10 +88,13 @@ static NSString * const VideoCommentCellID = @"VideoCommentCell";
 #pragma mark 基本设置
 - (void)setupBasic
 {
+    
+    [self initNavigationWithImgAndTitle:@"评论详情" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
+
     self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.bottomContianerView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
 
-    self.title = @"评论";
+//    self.title = @"评论";
     self.page = 1;
     // cell的高度设置
     self.tableView.estimatedRowHeight = 44;
@@ -400,10 +403,12 @@ static NSString * const VideoCommentCellID = @"VideoCommentCell";
 
 -(BOOL)textFieldShouldReturn:(UITextField *)aTextfield
 {
+
     [self.commentTextField resignFirstResponder];//关闭键盘
     self.commentTextField.text=@"";
     NSLog(@"fas");
     return YES;
+
 }
 
 @end

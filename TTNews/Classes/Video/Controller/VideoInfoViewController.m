@@ -7,12 +7,25 @@
 //
 
 #import "VideoInfoViewController.h"
+#import "VideoCommentViewController.h"
+
 
 @interface VideoInfoViewController ()
 
 
 @property (weak, nonatomic) IBOutlet UIWebView *mainWebView;
 
+
+- (IBAction)dianZanAction:(id)sender;
+
+- (IBAction)shoucangAction:(UIButton *)sender;
+
+- (IBAction)ShouQianAction:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *pingLunAction;
+///评论
+- (IBAction)pingLunAction:(UIButton *)sender;
+///分享
+- (IBAction)fenXiangAction:(UIButton *)sender;
 
 @end
 
@@ -39,4 +52,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)dianZanAction:(UIButton *)sender {
+    sender.selected=!sender.selected;
+}
+
+- (IBAction)shoucangAction:(UIButton *)sender {
+    sender.selected=!sender.selected;
+}
+
+- (IBAction)ShouQianAction:(UIButton *)sender {
+
+}
+- (IBAction)pingLunAction:(UIButton *)sender {
+    VideoCommentViewController *video=[[VideoCommentViewController alloc] initWithNibName:@"VideoCommentViewController" bundle:nil];
+    video.video=self.vedio;
+    [self.navigationController pushViewController:video animated:YES];
+}
+
+- (IBAction)fenXiangAction:(UIButton *)sender {
+
+}
 @end

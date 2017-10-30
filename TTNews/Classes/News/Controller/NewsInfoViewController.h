@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TTVideo.h"
+
+
 
 @interface NewsInfoViewController : UIViewController
 
 @property(nonatomic,strong)NSString *url;
+
+@property(nonatomic,strong)TTVideo *vedio;
 
 @end
