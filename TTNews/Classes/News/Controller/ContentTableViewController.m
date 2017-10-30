@@ -341,7 +341,7 @@ static NSString * const VideoCell = @"VideoCell";
     return _headerNewsArray;
 }
 -(void)didReceiveMemoryWarning {
-    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
     
 }
 @end

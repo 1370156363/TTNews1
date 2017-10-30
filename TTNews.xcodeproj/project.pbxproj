@@ -84,6 +84,12 @@
 		04AEF0341F9E41B6000BF3DE /* NewsInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AEF0321F9E41B6000BF3DE /* NewsInfoViewController.xib */; };
 		04AEF0371F9E4543000BF3DE /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEF0361F9E4543000BF3DE /* NewsModel.m */; };
 		1DC67303B4F8A6F87BEC546A /* libPods-TTNewsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92641E010C8FDC1389C15EF /* libPods-TTNewsTests.a */; };
+		6F1566DD1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */; };
+		6F1566E31FA332AA00EA9FD4 /* DymamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */; };
+		6FDF358C1FA409C400670E18 /* fensiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */; };
+		6FDF358D1FA409C400670E18 /* fensiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */; };
+		6FDF35901FA4143E00670E18 /* MyFensiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF358F1FA4143E00670E18 /* MyFensiController.m */; };
+		6FDF35931FA41C6A00670E18 /* MyFensiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF35921FA41C6A00670E18 /* MyFensiModel.m */; };
 		BD4494E9A4C1D9280E2633AD /* libPods-TTNewsUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1BD80293E5CCDE5FA9C5DD /* libPods-TTNewsUITests.a */; };
 		BDDC5FC5BE6F9BF558CF189F /* libPods-TTNews.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C265EF5919FE5ACB7629966 /* libPods-TTNews.a */; };
 		EE3A071E1CDA1DAD0024C37A /* ContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3A071D1CDA1DAD0024C37A /* ContentTableViewController.m */; };
@@ -843,6 +849,17 @@
 		07E9D64488E92C60CF8D2B6B /* Pods-TTNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsUITests/Pods-TTNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2BAF96C60E66025F03CAF1B4 /* Pods-TTNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNews/Pods-TTNews.release.xcconfig"; sourceTree = "<group>"; };
 		4BD837B9395343B702E90E80 /* Pods-TTNewsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsTests/Pods-TTNewsTests.release.xcconfig"; sourceTree = "<group>"; };
+		6F1566DA1FA3162D00EA9FD4 /* KGDynamicTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGDynamicTableViewCell.h; sourceTree = "<group>"; };
+		6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDynamicTableViewCell.m; sourceTree = "<group>"; };
+		6F1566E11FA332AA00EA9FD4 /* DymamicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DymamicModel.h; sourceTree = "<group>"; };
+		6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DymamicModel.m; sourceTree = "<group>"; };
+		6FDF35891FA409C400670E18 /* fensiTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fensiTableViewCell.h; sourceTree = "<group>"; };
+		6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fensiTableViewCell.m; sourceTree = "<group>"; };
+		6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = fensiTableViewCell.xib; sourceTree = "<group>"; };
+		6FDF358E1FA4143E00670E18 /* MyFensiController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFensiController.h; sourceTree = "<group>"; };
+		6FDF358F1FA4143E00670E18 /* MyFensiController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFensiController.m; sourceTree = "<group>"; };
+		6FDF35911FA41C6A00670E18 /* MyFensiModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFensiModel.h; sourceTree = "<group>"; };
+		6FDF35921FA41C6A00670E18 /* MyFensiModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFensiModel.m; sourceTree = "<group>"; };
 		8C265EF5919FE5ACB7629966 /* libPods-TTNews.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TTNews.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A16E3C36200CB6B1E5B217 /* Pods-TTNewsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsTests/Pods-TTNewsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F1BD80293E5CCDE5FA9C5DD /* libPods-TTNewsUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TTNewsUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1732,6 +1749,36 @@
 			path = "公共";
 			sourceTree = "<group>";
 		};
+		6F1566D91FA3128200EA9FD4 /* 动态 */ = {
+			isa = PBXGroup;
+			children = (
+				F857B9101F28CFEC00301B2D /* KGDynamicsController.xib */,
+				F857B9111F28CFEC00301B2D /* KGDynamicsController.h */,
+				F857B9121F28CFEC00301B2D /* KGDynamicsController.m */,
+				6F1566DA1FA3162D00EA9FD4 /* KGDynamicTableViewCell.h */,
+				6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */,
+			);
+			name = "动态";
+			sourceTree = "<group>";
+		};
+		6F1566DF1FA32D6D00EA9FD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6F1566E11FA332AA00EA9FD4 /* DymamicModel.h */,
+				6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */,
+				6FDF35911FA41C6A00670E18 /* MyFensiModel.h */,
+				6FDF35921FA41C6A00670E18 /* MyFensiModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6F1566E01FA32D6D00EA9FD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		EE4635BA1CC72B8900DB248F = {
 			isa = PBXGroup;
 			children = (
@@ -1821,14 +1868,15 @@
 		EE79B08D1CC8C435001029EF /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				6F1566DF1FA32D6D00EA9FD4 /* Model */,
+				6F1566E01FA32D6D00EA9FD4 /* View */,
 				01D153E31F7F85E40033CCF1 /* 登录 */,
 				F857B90F1F28CEF400301B2D /* 消息通知 */,
+				6F1566D91FA3128200EA9FD4 /* 动态 */,
 				F857B9061F28C89F00301B2D /* 粉丝关注房客 */,
 				F89E71241F28BF5D003965B1 /* 收藏／历史 */,
 				F89E71161F28B57D003965B1 /* 设置 */,
 				EE79B08E1CC8C435001029EF /* Controller */,
-				EE79B0991CC8C435001029EF /* Model */,
-				EE79B09A1CC8C435001029EF /* View */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -1859,20 +1907,6 @@
 				F89E71211F28B62C003965B1 /* FocusCell.xib */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		EE79B0991CC8C435001029EF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		EE79B09A1CC8C435001029EF /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		EE79B09B1CC8C435001029EF /* News */ = {
@@ -2790,6 +2824,11 @@
 				F857B9071F28C8CF00301B2D /* fensiController.h */,
 				F857B9081F28C8CF00301B2D /* fensiController.m */,
 				F857B9091F28C8CF00301B2D /* fensiController.xib */,
+				6FDF35891FA409C400670E18 /* fensiTableViewCell.h */,
+				6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */,
+				6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */,
+				6FDF358E1FA4143E00670E18 /* MyFensiController.h */,
+				6FDF358F1FA4143E00670E18 /* MyFensiController.m */,
 			);
 			name = "粉丝关注房客";
 			sourceTree = "<group>";
@@ -2797,9 +2836,6 @@
 		F857B90F1F28CEF400301B2D /* 消息通知 */ = {
 			isa = PBXGroup;
 			children = (
-				F857B9101F28CFEC00301B2D /* KGDynamicsController.xib */,
-				F857B9111F28CFEC00301B2D /* KGDynamicsController.h */,
-				F857B9121F28CFEC00301B2D /* KGDynamicsController.m */,
 			);
 			name = "消息通知";
 			sourceTree = "<group>";
@@ -3286,6 +3322,7 @@
 				F832CD941F2761B70032C23D /* shanchu.png in Resources */,
 				F89E70DF1F28A7E6003965B1 /* reader_more@2x.png in Resources */,
 				F832CDEB1F2761B80032C23D /* wancheng.png in Resources */,
+				6FDF358D1FA409C400670E18 /* fensiTableViewCell.xib in Resources */,
 				F89E70E01F28A7E6003965B1 /* sale_discount_yellow.png in Resources */,
 				F832CDAF1F2761B70032C23D /* shoucang.png in Resources */,
 				F832CE151F2761B80032C23D /* wo.png in Resources */,
@@ -3926,6 +3963,7 @@
 				F89E70A51F28A798003965B1 /* GTMNSString+HTML.m in Sources */,
 				F8B5A6131F281A2100AEBF39 /* BiaoqianController.m in Sources */,
 				F89E71221F28B62C003965B1 /* FocusCell.m in Sources */,
+				6FDF35901FA4143E00670E18 /* MyFensiController.m in Sources */,
 				F8B5A6631F2841EA00AEBF39 /* KGTableviewCellModel.m in Sources */,
 				01B181F61F75170B00D9F7AF /* YYLocationDataBase.m in Sources */,
 				F89E70F01F28A83B003965B1 /* LSYReadConfig.m in Sources */,
@@ -3937,6 +3975,7 @@
 				F832CE921F2771A50032C23D /* XLChannelItem.m in Sources */,
 				04AEF0181F9E329A000BF3DE /* WenDaMessageTableViewCell.m in Sources */,
 				F832CE971F2772AD0032C23D /* UIView+Shadow.m in Sources */,
+				6F1566E31FA332AA00EA9FD4 /* DymamicModel.m in Sources */,
 				EE79B1361CC8C435001029EF /* TTPictureComment.m in Sources */,
 				04AEF02E1F9E3950000BF3DE /* NewsTableViewCell.m in Sources */,
 				F89E70BA1F28A798003965B1 /* zip.c in Sources */,
@@ -3990,6 +4029,7 @@
 				04AEF01C1F9E329A000BF3DE /* ImageModel.m in Sources */,
 				EE79B12F1CC8C435001029EF /* TTTabBarController.m in Sources */,
 				EE3A071E1CDA1DAD0024C37A /* ContentTableViewController.m in Sources */,
+				6FDF35931FA41C6A00670E18 /* MyFensiModel.m in Sources */,
 				04AEF01F1F9E329A000BF3DE /* WenDaInfoViewController.m in Sources */,
 				EE79B1251CC8C435001029EF /* UIImage+Extension.m in Sources */,
 				04AEEFE71F9E3200000BF3DE /* DongTaiTableViewCell.m in Sources */,
@@ -4005,11 +4045,13 @@
 				F832CEC11F27813C0032C23D /* MASLayoutConstraint.m in Sources */,
 				F89E70A71F28A798003965B1 /* NSString+HTML.m in Sources */,
 				EE79B1201CC8C435001029EF /* SinglePictureNewsTableViewCell.m in Sources */,
+				6FDF358C1FA409C400670E18 /* fensiTableViewCell.m in Sources */,
 				F832CE821F2765920032C23D /* CBBaseTableViewDataSource.m in Sources */,
 				04AEEFD91F9E31C5000BF3DE /* UIView+Extension.m in Sources */,
 				F832CE701F2762550032C23D /* WendaViewController.m in Sources */,
 				EE79B1191CC8C435001029EF /* TTNormalNews.m in Sources */,
 				F832CEC21F27813C0032C23D /* MASViewAttribute.m in Sources */,
+				6F1566DD1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m in Sources */,
 				F832CE911F2771A50032C23D /* XLChannelView.m in Sources */,
 				F832CE731F2762620032C23D /* dongtaiController.m in Sources */,
 				04AEEFC91F9E3196000BF3DE /* SearchInfoViewController.m in Sources */,

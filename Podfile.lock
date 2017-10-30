@@ -15,34 +15,44 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - DACircularProgress (2.3.1)
-  - DKNightVersion (2.3.0):
-    - DKNightVersion/Core (= 2.3.0)
-    - DKNightVersion/CoreAnimation (= 2.3.0)
-    - DKNightVersion/UIKit (= 2.3.0)
-  - DKNightVersion/Core (2.3.0):
-    - DKNightVersion/Core/DeallocBlockExecutor (= 2.3.0)
-    - DKNightVersion/Core/extobjc (= 2.3.0)
-  - DKNightVersion/Core/DeallocBlockExecutor (2.3.0)
-  - DKNightVersion/Core/extobjc (2.3.0)
-  - DKNightVersion/CoreAnimation (2.3.0):
+  - DKNightVersion (2.4.3):
+    - DKNightVersion/Core (= 2.4.3)
+    - DKNightVersion/CoreAnimation (= 2.4.3)
+    - DKNightVersion/UIKit (= 2.4.3)
+  - DKNightVersion/Core (2.4.3):
+    - DKNightVersion/Core/DeallocBlockExecutor (= 2.4.3)
+    - DKNightVersion/Core/extobjc (= 2.4.3)
+  - DKNightVersion/Core/DeallocBlockExecutor (2.4.3)
+  - DKNightVersion/Core/extobjc (2.4.3)
+  - DKNightVersion/CoreAnimation (2.4.3):
     - DKNightVersion/Core
-  - DKNightVersion/UIKit (2.3.0):
+  - DKNightVersion/UIKit (2.4.3):
     - DKNightVersion/Core
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
-  - MJExtension (3.0.10)
-  - MJRefresh (3.1.0)
+  - FLAnimatedImage (1.0.12)
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
+  - MBProgressHUD (1.0.0)
+  - MJExtension (3.0.13)
+  - MJRefresh (3.1.12)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
     - NJKWebViewProgress/ProgressView (= 0.2.3)
   - NJKWebViewProgress/Core (0.2.3)
   - NJKWebViewProgress/ProgressView (0.2.3)
   - pop (1.0.9)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
-  - SVProgressHUD (2.0.3)
+  - PYPhotoBrowser (1.5.0):
+    - DACircularProgress
+    - MBProgressHUD
+    - SDWebImage/GIF (~> 4.0.0)
+  - SDAutoLayout (2.1.8)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
+  - SDWebImage/GIF (4.0.0):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - SVProgressHUD (2.1.2)
   - WHCategories (0.08)
 
 DEPENDENCIES:
@@ -54,6 +64,8 @@ DEPENDENCIES:
   - MJRefresh
   - NJKWebViewProgress
   - pop
+  - PYPhotoBrowser
+  - SDAutoLayout
   - SDWebImage
   - SVProgressHUD
   - WHCategories
@@ -61,16 +73,20 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
-  DKNightVersion: 459438cbfd14edb9e41a777ff14b18e5661b9269
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
-  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  DKNightVersion: eaa80cc4014b4bae7d4b535fd87ecc6a3c2767b3
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MJExtension: 5932755f451458eefa24239358817f8d291240c7
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  PYPhotoBrowser: eb140689619b10843beaad9e532581825ad7f542
+  SDAutoLayout: 5a4b48d6b8a5172ae8d088d2879e40dd795e6251
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   WHCategories: 2d6f8ca5efe229842422cec68cd348bd20ced9a2
 
-PODFILE CHECKSUM: 85af33b815414a2cfb063ef5264ff521802d8f07
+PODFILE CHECKSUM: eaa2f49f86deac123e16fbac8505529a9e44613f
 
 COCOAPODS: 1.2.1

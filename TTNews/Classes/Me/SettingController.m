@@ -106,7 +106,7 @@
                        {
                            [SVProgressHUD show];
                            [TTDataTool deletePartOfCacheInSqlite];
-                           [[SDImageCache sharedImageCache] clearDisk];
+                           [[SDImageCache sharedImageCache] clearMemory];
                            [SVProgressHUD showSuccessWithStatus:@"缓存清除完毕!"];
                        }];
                      [alert addAction:camera];

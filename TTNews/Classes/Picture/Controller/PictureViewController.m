@@ -190,7 +190,7 @@ static NSString * const PictureCell = @"PictureCell";
 }
 
 -(void)didReceiveMemoryWarning {
-    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
     
 }
 

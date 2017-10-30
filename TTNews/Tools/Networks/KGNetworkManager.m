@@ -277,6 +277,9 @@ static NSMutableArray *tasks;
     NSString *actionValue = nil;
     switch (action)
     {
+        case KNetworkmyDynamic:
+            actionValue = @"api/user/mydynamiclists";
+            break;
         case KNetWorkYzmAction:
             //获取验证码
             actionValue=@"api/content/get_mobileverify.html";
@@ -304,6 +307,9 @@ static NSMutableArray *tasks;
         {
             actionValue=@"api/user/tuijianuser/";
         }
+            break;
+        case KNetworkMyFensi:
+            actionValue=@"api/user/get_myfensi";
             break;
         case KNetworkGetGUANZHU:
         {

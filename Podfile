@@ -16,6 +16,8 @@ pod 'NJKWebViewProgress'
 pod 'DKNightVersion'
 pod 'AFNetworking'
 pod ‘WHCategories’
+pod 'PYPhotoBrowser'
+pod 'SDAutoLayout'
 end
 
 target 'TTNewsTests' do

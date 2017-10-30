@@ -113,7 +113,7 @@
 }
 
 -(void)didReceiveMemoryWarning {
-    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
 
 }
 @end

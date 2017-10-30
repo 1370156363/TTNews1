@@ -26,6 +26,7 @@
 #import "fensiController.h"
 #import "KGDynamicsController.h"
 #import "LoginController.h"
+#import "MyFensiController.h"
 
 @interface MyController ()
 @property (nonatomic, weak) UISwitch                *shakeCanChangeSkinSwitch;
@@ -52,11 +53,11 @@
     }
     else if (tag==10)
     {
-        [self.navigationController pushViewController:[fensiController new] animated:YES];
+        [self.navigationController pushViewController:[KGDynamicsController new] animated:YES];
     }
     else if (tag==20)
     {
-        [self.navigationController pushViewController:[fensiController new] animated:YES];
+        [self.navigationController pushViewController:[MyFensiController new] animated:YES];
     }
     else if (tag==30)
     {
@@ -207,7 +208,7 @@
 }
 
 -(void)didReceiveMemoryWarning {
-    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
 }
 
 -(void)SetTableviewMethod
