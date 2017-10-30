@@ -316,6 +316,10 @@ static NSMutableArray *tasks;
             actionValue=@"api/user/get_myguanzhu/";
         }
             break;
+        case KNetworkGetMyFangwen:
+            actionValue=@"api/user/get_myfangwen";
+            break;
+            
         case KNetworkAddGUANZHU:{
             ///添加关注
             actionValue=@"api/user/addfriend";

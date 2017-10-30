@@ -14,13 +14,19 @@
 #define  Margion 5
 
 @interface fensiController ()<UIScrollViewDelegate>
+{
+    int currentLPage ;
+    int currentCPage ;
+    int currentRPage ;
+    int indexType;
+}
 @property(nonatomic,strong)UIScrollView     *m_Scrollview;
 @property(nonatomic,strong)UITableView      *L_tableview;
 @property(nonatomic,strong)UITableView      *C_tableview;
-@property(nonatomic,strong)UITableView      *R_Tableview;
-@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *L_model;
-@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *C_model;
-@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *R_model;
+@property(nonatomic,strong)UITableView      *R_tableview;
+@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *L_modelList;
+@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *C_modelList;
+@property(nonatomic,strong)NSMutableArray   <MyFensiModel*>  *R_modelList;
 
 
 @property(nonatomic,strong)UIView           *line;
@@ -44,7 +50,7 @@
     [super viewDidLoad];
     self.L_tableview.backgroundColor=[UIColor clearColor];
     self.C_tableview.backgroundColor=[UIColor clearColor];
-    self.R_Tableview.backgroundColor=[UIColor clearColor];
+    self.R_tableview.backgroundColor=[UIColor clearColor];
     self.line.backgroundColor=RGB(240, 240, 240);
     self.title=@"收藏/历史";
     [self setupBasic];
@@ -56,11 +62,137 @@
 {
     self.L_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.C_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    self.R_Tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    self.R_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+    [MyFensiModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+        return @{@"ID":@"id"};
+    }];
+    currentLPage = 1;
+    currentCPage = 1;
+    currentRPage = 1;
+    indexType = 1;
+    //初次加载数据
+    [self.L_tableview.mj_header beginRefreshing];
+}
+//网络请求
+-(void)requestURL:(int)index withType:(NetWorkAction)type{
+    NSMutableDictionary *prms;
+    if (KNetworkGetGUANZHU == type){
+        prms=[@{
+                @"uid":[[OWTool Instance] getUid],
+                @"limit":@(index)
+                
+                }mutableCopy];
+    }
+    else{
+        prms=[@{
+                @"uid":[[OWTool Instance] getUid],
+                @"page":@(index)
+                
+                }mutableCopy];
+    }
+    
+    
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:type withUserInfo:prms success:^(NSDictionary *message)
+     {
+         if ([message[@"status"] intValue]==1)
+         {
+             if (KNetworkMyFensi == type) {
+                 [self updateCtableViewModel:index dic:message];
+             }
+             else if (KNetworkGetGUANZHU == type){
+                 [self updateLtableViewModel:index dic:message];
+             }
+             else if (KNetworkGetMyFangwen == type){
+                 [self updateRtableViewModel:index dic:message];
+             }
+             
+         }
+         else
+         {
+             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD dismissWithDelay:2];
+         }
+     } failure:^(NSError *error) {
+         
+     } visibleHUD:NO];
+    [self.L_tableview.mj_header endRefreshing];
+    [self.L_tableview.mj_footer endRefreshing];
+    
+    [self.C_tableview.mj_header endRefreshing];
+    [self.C_tableview.mj_footer endRefreshing];
+    
+    [self.R_tableview.mj_header endRefreshing];
+    [self.R_tableview.mj_footer endRefreshing];
+}
+//更新数据
+-(void)updateLtableViewModel:(int)index dic:(NSDictionary*)dic{
+    if (index == 1) {
+        _L_modelList = [MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]];
+    }
+    else{
+        [_L_modelList addObjectsFromArray:[MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]]];
+    }
+    [self.L_tableview reloadData];
+}
+-(void)updateCtableViewModel:(int)index dic:(NSDictionary*)dic{
+    if (index == 1) {
+        _C_modelList = [MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]];
+    }
+    else{
+        [_C_modelList addObjectsFromArray:[MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]]];
+    }
+    [self.C_tableview reloadData];
+}
+-(void)updateRtableViewModel:(int)index dic:(NSDictionary*)dic{
+    if (index == 1) {
+        _R_modelList = [MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]];
+    }
+    else{
+        [_R_modelList addObjectsFromArray:[MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]]];
+    }
+    [self.R_tableview reloadData];
+}
+//上拉刷新下拉加载
+-(void)setupRefresh:(UITableView*)tableView type:(NetWorkAction)type {
+    tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    tableView.mj_header.automaticallyChangeAlpha = YES;
+    tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
 }
 
--(void)updateLTableViewMode:(int)index{
+#pragma mark - /************************* 刷新数据 ***************************/
+// ------下拉刷新
+- (void)loadData
+{
+    if (2 == indexType) {
+        currentLPage=1;
+        [self requestURL:1 withType:KNetworkMyFensi];
+    }
+    else if (1 == indexType){
+        currentCPage=1;
+        [self requestURL:1 withType:KNetworkGetGUANZHU];
+    }
+    else if(3 == indexType){
+        currentRPage=1;
+        [self requestURL:1 withType:KNetworkGetMyFangwen];
+    }
+    
+}
+
+- (void)loadMoreData
+{
+    if (2 == indexType) {
+        currentLPage += 1;
+        [self requestURL:currentLPage withType:KNetworkMyFensi];
+    }
+    else if (1 == indexType){
+        currentCPage += 1;
+        [self requestURL:currentCPage withType:KNetworkGetGUANZHU];
+    }
+    else if(3 == indexType){
+        currentRPage += 1;
+        [self requestURL:currentRPage withType:KNetworkGetMyFangwen];
+    }
     
 }
 
@@ -81,18 +213,29 @@
         self.BtnGusts.selected = NO;
         self.BtnFocus.selected = NO;
         self.btnFensi.selected = YES;
+        indexType = 1;
     }
     else if (tag == 1){
         self.BtnGusts.selected = NO;
         self.BtnFocus.selected = YES;
         self.btnFensi.selected = NO;
+        indexType = 2;
     }
     else if (tag == 2){
         self.BtnGusts.selected = YES;
         self.BtnFocus.selected = NO;
         self.btnFensi.selected = NO;
+        indexType = 3;
     }
-    
+    if(_L_modelList == nil){
+        [self.L_tableview.mj_header beginRefreshing];
+    }
+    if(_C_modelList == nil){
+        [self.C_tableview.mj_header beginRefreshing];
+    }
+    if(_R_modelList == nil){
+        [self.R_tableview.mj_header beginRefreshing];
+    }
     if (tag==2) {
         [self kg_hidden:NO];
     }
@@ -176,7 +319,6 @@
     if (!_L_tableview)
     {
         _L_tableview=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        
         [self.m_Scrollview addSubview:_L_tableview];
         _L_tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
         _L_tableview.tableHeaderView = self.myfensiHeaderView;
@@ -185,14 +327,17 @@
             make.top.height.width.equalTo(self.m_Scrollview);
             make.left.mas_equalTo(0);
         }];
-        
+        [self setupRefresh:_L_tableview type:KNetworkGetGUANZHU];
         [_L_tableview cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
             [make makeSection:^(CBTableViewSectionMaker *section) {
                 section.cell([fensiTableViewCell class])
-                .data(@[@{}])
+                .data(_L_modelList)
                 .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                          {
-                         
+                         //cell.model = _L_modelList[index];
+                             [cell.imgHeaderView sd_setImageWithURL:[NSURL URLWithString:_L_modelList[index].avatar] placeholderImage:[UIImage imageNamed:@"geren"]];
+                             cell.labNickname.text = _L_modelList[index].nicheng?_L_modelList[index].nicheng:_L_modelList[index].username;
+                             cell.labSignature.text = _L_modelList[index].sign?_L_modelList[index].sign:@"这个家伙很懒，什么都没有留下！";
                          })
                 .autoHeight();
             }];
@@ -201,6 +346,7 @@
     }
     return _L_tableview;
 }
+
 
 -(void)hiddenKeyBoard
 {
@@ -219,13 +365,14 @@
              make.top.height.width.equalTo(self.m_Scrollview);
              make.left.equalTo(self.L_tableview.mas_right);
          }];
+        [self setupRefresh:_L_tableview type:KNetworkMyFensi];
         [_C_tableview cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
             [make makeSection:^(CBTableViewSectionMaker *section) {
-                section.cell([SinglePictureNewsTableViewCell class])
-                .data(@[@{}])
-                .adapter(^(SinglePictureNewsTableViewCell * cell,NSDictionary * data,NSUInteger index)
+                section.cell([fensiTableViewCell class])
+                .data(_C_modelList)
+                .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                 {
-                
+                    cell.model = _C_modelList[index];
                 })
                 .autoHeight();
             }];
@@ -234,32 +381,33 @@
     return _C_tableview;
 }
 
--(UITableView *)R_Tableview
+-(UITableView *)R_tableview
 {
-    if (!_R_Tableview)
+    if (!_R_tableview)
     {
-        _R_Tableview=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        [self.m_Scrollview addSubview:_R_Tableview];
-        _R_Tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
-        [_R_Tableview mas_makeConstraints:^(MASConstraintMaker *make)
+        _R_tableview=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        [self.m_Scrollview addSubview:_R_tableview];
+        _R_tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
+        [_R_tableview mas_makeConstraints:^(MASConstraintMaker *make)
          {
              make.top.height.width.equalTo(self.m_Scrollview);
              make.left.equalTo(self.C_tableview.mas_right);
          }];
-        [_R_Tableview cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
+        [self setupRefresh:_L_tableview type:KNetworkGetMyFangwen];
+        [_R_tableview cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
             [make makeSection:^(CBTableViewSectionMaker *section) {
-                section.cell([SinglePictureNewsTableViewCell class])
-                .data(@[@{}])
-                .adapter(^(SinglePictureNewsTableViewCell * cell,NSDictionary * data,NSUInteger index)
+                section.cell([fensiTableViewCell class])
+                .data(_R_modelList)
+                .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                 {
-                             
+                    cell.model = _R_modelList[index];
                 })
                 .autoHeight();
             }];
         }];
     }
 
-    return _R_Tableview;
+    return _R_tableview;
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

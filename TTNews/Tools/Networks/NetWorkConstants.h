@@ -33,6 +33,7 @@ typedef enum _NetWorkAction
     KNetworkWenAddWenDa,      //添加问答
     KNetworkWenAddDongTai,      //添加动态
     KNetworkGetUser,      //推荐用户
+    KNetworkGetMyFangwen,//我的访问
     KNetworkGetGUANZHU, ///获取我的关注
     KNetworkAddGUANZHU,///添加关注
     KNetworkDelGuanZhu,///删除关注

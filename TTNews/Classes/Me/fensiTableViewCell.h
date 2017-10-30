@@ -13,6 +13,10 @@
 /** @brief 关注按钮是否显示*/
 @property (nonatomic, assign) BOOL isShowBtnAttention;
 
-@property (nonatomic, strong) MyFensiModel *model;
+@property (nonatomic, strong)  MyFensiModel *model;
+@property (nonatomic, strong) IBOutlet UIImageView *imgHeaderView;
+@property (nonatomic, strong) IBOutlet UILabel *labNickname;
+@property (nonatomic, strong) IBOutlet UILabel *labSignature;
+@property (nonatomic, strong) IBOutlet UIButton *btnAttention;
 
 @end
