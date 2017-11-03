@@ -317,11 +317,11 @@
                         }
                         else if (index==9){
                             SettingController *settingCol = [[SettingController alloc]init];
+                            [self.navigationController pushViewController:settingCol  animated:YES];
                             weakSelf(ws)
                             settingCol.loginOutBlock = ^{
                                 [ws.personalHeaderView updateSubView];
                             };
-                            [self.navigationController pushViewController:settingCol  animated:YES];
                         }
                         
                     })

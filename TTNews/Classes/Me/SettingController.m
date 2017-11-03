@@ -22,11 +22,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:RGB(220, 220, 220)];
     self.title=@"设置";
     self.arrayDataItems=[NSMutableArray array];
     [self.view addSubview:self.tableview];
     [self.view addSubview:self.btnLoginOut];
+    self.btnLoginOut.sd_layout
+    .bottomSpaceToView(self.view, 160)
+    .leftSpaceToView(self.view, 20)
+    .rightSpaceToView(self.view, 20)
+    .heightIs(45);
     [self loadData];
     //self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
 }
@@ -89,7 +94,7 @@
 -(void)btnLoginOutClick{
     [[OWTool Instance] saveUid:@""];
     self.loginOutBlock();
-    [self.navigationController popViewController];
+    [self.navigationController popToRootViewController];
 }
 
 -(void)SetTableviewMethod
@@ -162,15 +167,12 @@
 {
     if (!_tableview)
     {
-        _tableview=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
-        [_tableview mas_makeConstraints:^(MASConstraintMaker *make)
-         {
-             make.top.width.equalTo(self.view);
-             make.left.equalTo(0);
-             make.height.equalTo(self.view).offset(-200);
-         }];
-        
+        _tableview=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, winsize.width, winsize.height-249) style:UITableViewStylePlain];
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc]init];
+        _tableview.layoutMargins = UIEdgeInsetsZero;
+        _tableview.separatorColor = [UIColor lightGrayColor];
+        _tableview.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
     }
     
     return _tableview;
@@ -178,17 +180,14 @@
 -(UIButton *)btnLoginOut
 {
     if (_btnLoginOut == nil) {
-        _btnLoginOut = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_btnLoginOut mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.tableview).offset(20);
-            make.left.right.equalTo(self.view).offset(-40);
-            make.height.mas_equalTo(45);
-        }];
+        _btnLoginOut = [UIButton buttonWithType:UIButtonTypeSystem];
+       
         _btnLoginOut.layer.cornerRadius = 22.5;
         [_btnLoginOut setTitle:@"退出" forState: UIControlStateNormal];
         [_btnLoginOut.titleLabel setFont:[UIFont systemFontOfSize:16]];
         [_btnLoginOut.titleLabel setTextColor:[UIColor redColor]];
         [_btnLoginOut addTarget:self action:@selector(btnLoginOutClick) forControlEvents:UIControlEventTouchUpInside];
+        [_btnLoginOut setBackgroundColor:[UIColor whiteColor]];
     }
     return _btnLoginOut;
 }
