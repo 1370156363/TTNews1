@@ -92,9 +92,9 @@
 }
 
 -(void)btnLoginOutClick{
-    [[OWTool Instance] saveUid:@""];
+    [[OWTool Instance] saveUid:nil];
     self.loginOutBlock();
-    [self.navigationController popToRootViewController];
+    [self popViewController];
 }
 
 -(void)SetTableviewMethod
