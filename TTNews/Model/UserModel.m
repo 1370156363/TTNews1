@@ -10,4 +10,8 @@
 
 @implementation UserModel
 
++(NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"uid":@"dtnum",
+             };
+}
 @end

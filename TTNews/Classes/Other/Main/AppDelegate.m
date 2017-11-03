@@ -24,7 +24,7 @@
     self.window.rootViewController = [[TTTabBarController alloc] init];
      [OWGuideView push];
     [self.window makeKeyAndVisible];
-    [[OWTool Instance] saveUid:@"1"];
+//    [[OWTool Instance] saveUid:@"1"];
 
     
     return YES;

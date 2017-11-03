@@ -33,6 +33,17 @@
 #import <PYPhotoBrowser.h>
 #import <SDAutoLayout.h>
 
+
+//图片选择器
+#import <TZImagePickerController.h>
+#import <UIView+Layout.h>
+#import <TZAssetCell.h>
+#import <TZPhotoPreviewController.h>
+#import <TZGifPhotoPreviewController.h>
+#import <TZVideoPlayerController.h>
+#import <TZImageManager.h>
+
+
 #define DismissKeyboard                     [[[UIApplication sharedApplication] keyWindow] endEditing:YES]
 #define winsize                             [UIScreen mainScreen].bounds.size
 #define UIImageNamed(imgName)               [UIImage imageNamed:imgName]

@@ -16,8 +16,10 @@
 /**是否首次安装*/
 -(void)SaveStateofInstall:(NSString *)a;
 -(NSString *)getStateofInstall;
-
-
+/** 用户信息*/
+-(void)setUserInfo:(NSDictionary*)userInfo;
+-(NSDictionary*)getUserInfo;
+/** 用户id*/
 -(void)saveUid:(NSString *)a;
 -(NSString *)getUid;
 

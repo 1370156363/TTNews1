@@ -53,6 +53,7 @@ PODS:
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - SVProgressHUD (2.1.2)
+  - TZImagePickerController (1.8.1)
   - WHCategories (0.08)
 
 DEPENDENCIES:
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - SDAutoLayout
   - SDWebImage
   - SVProgressHUD
+  - TZImagePickerController
   - WHCategories
 
 SPEC CHECKSUMS:
@@ -85,8 +87,9 @@ SPEC CHECKSUMS:
   SDAutoLayout: 5a4b48d6b8a5172ae8d088d2879e40dd795e6251
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  TZImagePickerController: '086034156913375cb19c8e4103562f15322c3b36'
   WHCategories: 2d6f8ca5efe229842422cec68cd348bd20ced9a2
 
-PODFILE CHECKSUM: eaa2f49f86deac123e16fbac8505529a9e44613f
+PODFILE CHECKSUM: 7500ba9bb372f198f06676e20c4cb650a4f6ec1e
 
 COCOAPODS: 1.2.1

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface LoginController : UIViewController
+
+@property (nonatomic, copy)void(^LoginSuccessBlock)();
 
 @end

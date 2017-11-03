@@ -18,6 +18,8 @@ pod 'AFNetworking'
 pod ‘WHCategories’
 pod 'PYPhotoBrowser'
 pod 'SDAutoLayout'
+#图片选择器
+pod 'TZImagePickerController'
 end
 
 target 'TTNewsTests' do

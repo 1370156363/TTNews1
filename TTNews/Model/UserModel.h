@@ -57,8 +57,15 @@
 
 @property (nonatomic, copy) NSString *avatar;
 
-@property (nonatomic, copy) NSString *nicheng;
+@property (nonatomic, copy) NSString *dtnum;
 
 @property (nonatomic, copy) NSString *id;
+
+@property (nonatomic, copy) NSString *nicheng;
+
+@property (nonatomic, copy) NSString *fensinum;
+
+@property (nonatomic, copy) NSString *fangwennum;
+
 
 @end

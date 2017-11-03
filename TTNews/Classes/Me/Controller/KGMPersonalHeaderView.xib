@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,7 +35,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这家伙很懒，什么都没留下" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFA-UP-Gaa">
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这家伙很懒，什么都没留下" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFA-UP-Gaa">
                     <rect key="frame" x="60" y="80" width="159.5" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Zzw-wc-frv"/>
@@ -259,12 +259,12 @@
             <connections>
                 <outlet property="backView" destination="jZF-cF-acY" id="fJR-CA-AvV"/>
                 <outlet property="contenttext" destination="mFA-UP-Gaa" id="GpH-sL-MEa"/>
-                <outlet property="dongtai" destination="UPB-Ur-dVj" id="iar-gg-ZOD"/>
-                <outlet property="fangwen" destination="nN5-7S-KzR" id="NqA-lD-FbD"/>
-                <outlet property="fensi" destination="BIT-Hb-LSh" id="mk5-XY-CVw"/>
+                <outlet property="dongtai" destination="DXX-Xn-zTV" id="djz-Lf-Bps"/>
+                <outlet property="fangwen" destination="Ypc-5n-xTe" id="Aak-PW-oTP"/>
+                <outlet property="fensi" destination="a7r-aW-Fne" id="m3I-cl-rJl"/>
                 <outlet property="headImageView" destination="Isv-bD-B5I" id="ith-3p-Jf9"/>
                 <outlet property="headerImg" destination="WR0-pU-tG9" id="coc-sx-1G8"/>
-                <outlet property="jifen" destination="O7T-WM-dqZ" id="jVf-lC-6vo"/>
+                <outlet property="jifen" destination="K3q-x8-Yqn" id="uHd-tW-o73"/>
                 <outlet property="name" destination="ORi-ly-cy2" id="95a-1f-zc7"/>
             </connections>
         </view>

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingController : UITableViewController
+@interface SettingController : UIViewController
+
+@property (nonatomic, copy) void(^loginOutBlock)();
 
 @end

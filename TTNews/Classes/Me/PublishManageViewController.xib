@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PublishManageViewController">
             <connections>
+                <outlet property="BtnFocus" destination="dWd-4S-wQJ" id="fKj-sU-y3L"/>
+                <outlet property="BtnWenzhang" destination="WoN-EN-360" id="gtv-8i-SR5"/>
+                <outlet property="btnFangke" destination="ZoK-2e-u5z" id="bqU-0b-cz4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,47 +23,49 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view tag="1000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LMl-wj-Ayn">
-                    <rect key="frame" x="6" y="64" width="363" height="80"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                     <subviews>
                         <button opaque="NO" tag="100" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WoN-EN-360">
-                            <rect key="frame" x="0.0" y="0.0" width="121" height="70"/>
+                            <rect key="frame" x="0.0" y="0.0" width="125" height="70"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="70" id="wKG-eX-q8Y"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <state key="normal" title="文章" image="wenzhang"/>
+                            <state key="selected" image="wenzhangGLxz"/>
                             <connections>
                                 <action selector="BtnSelect:" destination="-1" eventType="touchUpInside" id="XgG-Th-0ql"/>
                             </connections>
                         </button>
                         <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWd-4S-wQJ">
-                            <rect key="frame" x="121" y="0.0" width="121" height="70"/>
+                            <rect key="frame" x="125" y="0.0" width="125" height="70"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="70" id="oop-O7-BAh"/>
                             </constraints>
-                            <state key="normal" title="关注" image="pinglunGLxz"/>
-                            <state key="selected">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
+                            <state key="normal" title="关注" image="pinglunGL"/>
+                            <state key="selected" image="pinglunGLxz"/>
                             <connections>
                                 <action selector="BtnSelect:" destination="-1" eventType="touchUpInside" id="wIW-sF-uFe"/>
                             </connections>
                         </button>
                         <button opaque="NO" tag="300" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZoK-2e-u5z">
-                            <rect key="frame" x="242" y="0.0" width="121" height="70"/>
+                            <rect key="frame" x="250" y="0.0" width="125" height="70"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="70" id="fcY-0e-c5v"/>
                             </constraints>
-                            <state key="normal" title="访客" image="shouyiGLxz"/>
-                            <state key="selected">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="访客" image="shouyi"/>
+                            <state key="selected" image="shouyiGLxz">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="BtnSelect:" destination="-1" eventType="touchUpInside" id="oQc-P7-meX"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.074509803920000006" green="0.5568627451" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="dWd-4S-wQJ" firstAttribute="top" secondItem="LMl-wj-Ayn" secondAttribute="top" id="0Cg-2L-w9l"/>
                         <constraint firstItem="dWd-4S-wQJ" firstAttribute="width" secondItem="WoN-EN-360" secondAttribute="width" id="5wf-4y-Lmu"/>
@@ -77,15 +82,18 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="LMl-wj-Ayn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="6" id="3gV-tG-vn6"/>
-                <constraint firstAttribute="trailing" secondItem="LMl-wj-Ayn" secondAttribute="trailing" constant="6" id="QB3-QP-vMy"/>
-                <constraint firstItem="LMl-wj-Ayn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="YYy-JM-D7g"/>
+                <constraint firstItem="LMl-wj-Ayn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3gV-tG-vn6"/>
+                <constraint firstAttribute="trailing" secondItem="LMl-wj-Ayn" secondAttribute="trailing" id="QB3-QP-vMy"/>
+                <constraint firstItem="LMl-wj-Ayn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YYy-JM-D7g"/>
             </constraints>
         </view>
     </objects>
     <resources>
+        <image name="pinglunGL" width="16" height="16"/>
         <image name="pinglunGLxz" width="16" height="16"/>
+        <image name="shouyi" width="16" height="16"/>
         <image name="shouyiGLxz" width="16" height="16"/>
         <image name="wenzhang" width="16" height="16"/>
+        <image name="wenzhangGLxz" width="16" height="16"/>
     </resources>
 </document>

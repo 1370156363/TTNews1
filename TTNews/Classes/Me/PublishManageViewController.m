@@ -12,7 +12,7 @@
 
 #define  Margion 5
 
-@interface PublishManageViewController ()
+@interface PublishManageViewController ()<UIScrollViewDelegate>
 
 {
     int currentLPage ;
@@ -31,15 +31,41 @@
 
 @property(nonatomic,strong)UIView           *line;
 
-@property (nonatomic,strong) UIView   * myfensiHeaderView;
-
-@property (weak, nonatomic) IBOutlet UIButton *BtnGusts;
+@property (weak, nonatomic) IBOutlet UIButton *BtnWenzhang;
 @property (weak, nonatomic) IBOutlet UIButton *BtnFocus;
-@property (weak, nonatomic) IBOutlet UIButton *btnFensi;
+@property (weak, nonatomic) IBOutlet UIButton *btnFangke;
 
 @end
 
 @implementation PublishManageViewController
+
+- (UIImage*)createImageWithColor:(UIColor*)color{
+    
+    CGRect rect=CGRectMake(0.0f,0.0f,1.0f,1.0f);UIGraphicsBeginImageContext(rect.size);
+    
+    CGContextRef context=UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    
+    CGContextFillRect(context, rect);
+    
+    UIImage*theImage=UIGraphicsGetImageFromCurrentImageContext();UIGraphicsEndImageContext();
+    return theImage;
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTintColor:RGB(0, 122, 255)];
+    [self.navigationController.navigationBar setBackgroundImage:[self createImageWithColor:RGB(0, 122, 255)] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setTintColor:navColor];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
+}
 
 
 - (void)viewDidLoad
@@ -49,7 +75,8 @@
     self.C_tableview.backgroundColor=[UIColor clearColor];
     self.R_tableview.backgroundColor=[UIColor clearColor];
     self.line.backgroundColor=RGB(240, 240, 240);
-    self.title=@"粉丝";
+    self.title=@"发布管理";
+    
     [self setupBasic];
     
 }
@@ -57,9 +84,10 @@
 #pragma mark 基本设置
 - (void)setupBasic
 {
-    self.L_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    self.C_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    self.R_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+//    [self.navigationController.navigationBar setTintColor:RGB(0, 122, 255)];
+//    self.L_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+//    self.C_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+//    self.R_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     
     [MyFensiModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
         return @{@"ID":@"id"};
@@ -68,51 +96,64 @@
     currentCPage = 1;
     currentRPage = 1;
     indexType = 1;
+    
+    [_BtnWenzhang setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 30)];
+    [_BtnWenzhang setImageEdgeInsets:UIEdgeInsetsMake(0, 30, 30, 0)];
+    
+    [_BtnFocus setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 30)];
+    [_BtnFocus setImageEdgeInsets:UIEdgeInsetsMake(0, 30, 30, 0)];
+    
+    [_btnFangke setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 30)];
+    [_btnFangke setImageEdgeInsets:UIEdgeInsetsMake(0, 30, 30, 0)];
+    
+    
+    
     //初次加载数据
-    [self.L_tableview.mj_header beginRefreshing];
+    //[self.L_tableview.mj_header beginRefreshing];
 }
 //网络请求
 -(void)requestURL:(int)index withType:(NetWorkAction)type{
-    NSMutableDictionary *prms;
-    if (KNetworkGetGUANZHU == type){
-        prms=[@{
-                @"uid":[[OWTool Instance] getUid],
-                @"limit":@(index)
-                
-                }mutableCopy];
-    }
-    else{
-        prms=[@{
-                @"uid":[[OWTool Instance] getUid],
-                @"page":@(index)
-                
-                }mutableCopy];
-    }
+//    NSMutableDictionary *prms;
+//    if (KNetworkGetGUANZHU == type){
+//        prms=[@{
+//                @"uid":[[OWTool Instance] getUid],
+//                @"limit":@(index)
+//
+//                }mutableCopy];
+//    }
+//    else{
+//        prms=[@{
+//                @"uid":[[OWTool Instance] getUid],
+//                @"page":@(index)
+//
+//                }mutableCopy];
+//    }
+//
+//    weakSelf(ws)
+//    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:type withUserInfo:prms success:^(NSDictionary *message)
+//     {
+//         if ([message[@"status"] intValue]==1)
+//         {
+//             if (KNetworkMyFensi == type) {
+//                 [ws updateCtableViewModel:index dic:message];
+//             }
+//             else if (KNetworkGetGUANZHU == type){
+//                 [ws updateLtableViewModel:index dic:message];
+//             }
+//             else if (KNetworkGetMyFangwen == type){
+//                 [ws updateRtableViewModel:index dic:message];
+//             }
+//
+//         }
+//         else
+//         {
+//             [SVProgressHUD showImage:nil status:message[@"message"]];
+//             [SVProgressHUD dismissWithDelay:2];
+//         }
+//     } failure:^(NSError *error) {
+//
+//     } visibleHUD:NO];
     
-    weakSelf(ws)
-    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:type withUserInfo:prms success:^(NSDictionary *message)
-     {
-         if ([message[@"status"] intValue]==1)
-         {
-             if (KNetworkMyFensi == type) {
-                 [ws updateCtableViewModel:index dic:message];
-             }
-             else if (KNetworkGetGUANZHU == type){
-                 [ws updateLtableViewModel:index dic:message];
-             }
-             else if (KNetworkGetMyFangwen == type){
-                 [ws updateRtableViewModel:index dic:message];
-             }
-             
-         }
-         else
-         {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
-             [SVProgressHUD dismissWithDelay:2];
-         }
-     } failure:^(NSError *error) {
-         
-     } visibleHUD:NO];
     [self.L_tableview.mj_header endRefreshing];
     [self.L_tableview.mj_footer endRefreshing];
     
@@ -208,21 +249,21 @@
         [topView layoutIfNeeded];
     }];
     if (tag == 0) {
-        self.BtnGusts.selected = NO;
+        self.btnFangke.selected = NO;
         self.BtnFocus.selected = NO;
-        self.btnFensi.selected = YES;
+        self.BtnWenzhang.selected = YES;
         indexType = 1;
     }
     else if (tag == 1){
-        self.BtnGusts.selected = NO;
+        self.btnFangke.selected = NO;
         self.BtnFocus.selected = YES;
-        self.btnFensi.selected = NO;
+        self.BtnWenzhang.selected = NO;
         indexType = 2;
     }
     else if (tag == 2){
-        self.BtnGusts.selected = YES;
+        self.btnFangke.selected = YES;
         self.BtnFocus.selected = NO;
-        self.btnFensi.selected = NO;
+        self.BtnWenzhang.selected = NO;
         indexType = 3;
     }
     if(_L_modelList == nil){
@@ -269,7 +310,7 @@
         [self.view addSubview:_m_Scrollview];
         [_m_Scrollview mas_makeConstraints:^(MASConstraintMaker *make)
          {
-             make.top.equalTo(self.view).offset(114);
+             make.top.equalTo(self.view).offset(80);
              make.left.equalTo(self.view).offset(Margion);
              make.right.equalTo(self.view).offset(-Margion);
              make.bottom.equalTo(self.view.mas_bottom);
@@ -280,37 +321,6 @@
         _m_Scrollview.showsHorizontalScrollIndicator=NO;
     }
     return _m_Scrollview;
-}
-
--(UIView *)myfensiHeaderView
-{
-    if (!_myfensiHeaderView){
-        _myfensiHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, winsize.width, 110)];
-        _myfensiHeaderView.backgroundColor = [UIColor whiteColor];
-        UIImageView * imgHeadView= [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 70, 70)];
-        imgHeadView.layer.masksToBounds = YES;
-        imgHeadView.contentMode = UIViewContentModeScaleAspectFit;
-        imgHeadView.image = [UIImage imageNamed:@"wendaimg"];
-        
-        UIView* separatorView = [[UIView alloc]init];
-        separatorView.backgroundColor = [UIColor lightGrayColor];
-        separatorView.alpha = 0.6;
-        
-        UILabel *labTitle = [[UILabel alloc]init];
-        labTitle.text = @"我的问答";
-        labTitle.font = [UIFont systemFontOfSize:17];
-        
-        [_myfensiHeaderView sd_addSubviews:@[imgHeadView,labTitle,separatorView]];
-        
-        separatorView.sd_layout.leftSpaceToView(_myfensiHeaderView, 20).heightIs(0.5).rightSpaceToView(_myfensiHeaderView, 0).bottomSpaceToView(_myfensiHeaderView, 2);
-        
-        labTitle.sd_layout.leftSpaceToView(imgHeadView, 20).widthIs(80).heightIs(30).centerYEqualToView(_myfensiHeaderView);
-        
-        [_myfensiHeaderView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            [self myfensiHeaderViewClick];
-        }];
-    }
-    return _myfensiHeaderView;
 }
 
 -(void)myfensiHeaderViewClick{
@@ -325,7 +335,6 @@
         _L_tableview=[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         [self.m_Scrollview addSubview:_L_tableview];
         _L_tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
-        _L_tableview.tableHeaderView = self.myfensiHeaderView;
         [_L_tableview mas_makeConstraints:^(MASConstraintMaker *make)
          {
              make.top.height.width.equalTo(self.m_Scrollview);

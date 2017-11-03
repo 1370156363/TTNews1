@@ -287,6 +287,9 @@ static NSMutableArray *tasks;
         case KNetWorkgetVideolist:
             actionValue=@"api/content/shipinlists/id/1/page/1";
             break;
+        case KNetworGetUserINfo:
+            actionValue=@"api/user/get_myinfo";
+            break;
         case KNetworkWenDaContent:
         {
             actionValue=@"api/content/answerlists/";
@@ -409,7 +412,7 @@ static NSMutableArray *tasks;
 
     UIImage *image = imageArray[0];
     //组合成url
-    NSString *url=[NSString stringWithFormat:@"%@/index/upload/upload.html",kNewWordBaseURLString];
+    NSString *url=[NSString stringWithFormat:@"%@index/upload/upload.html",kNewWordBaseURLString];
     //检查地址中是否有中文
     NSString *urlStr=[NSURL URLWithString:url]?url:[self strUTF8Encoding:url];
     parameter=[[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"flash",@"service",@"fileType",@"images",@"filename", nil];

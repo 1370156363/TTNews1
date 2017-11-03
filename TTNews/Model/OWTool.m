@@ -69,6 +69,20 @@ static OWTool * instance = nil;
     return [personInformation objectForKey:@"firstLaunch"];
 }
 
+-(void)setUserInfo:(NSDictionary *)userInfo{
+    // 将用户信息存入数组或者字典中
+    // 持久化操作者
+    NSUserDefaults *userInfo1 = [NSUserDefaults standardUserDefaults];
+    [userInfo1 removeObjectForKey:@"userInfo"];
+    // 操作者将包含用户信息的数组arr持久化
+    [userInfo1 setObject:userInfo forKey:@"userInfo"];
+    [userInfo1 synchronize];
+}
+-(NSDictionary*)getUserInfo{
+    NSUserDefaults *userInfo = [NSUserDefaults standardUserDefaults];
+    return [userInfo objectForKey:@"userInfo"];
+}
+
 -(void)saveUid:(NSString *)a
 {
     NSUserDefaults *personInformation = [NSUserDefaults standardUserDefaults];
@@ -80,6 +94,6 @@ static OWTool * instance = nil;
 -(NSString *)getUid
 {
     NSUserDefaults *personInformation = [NSUserDefaults standardUserDefaults];
-    return [personInformation objectForKey:@"userUid"];
+    return [NSString stringWithFormat:@"%d",[[personInformation objectForKey:@"userUid"] intValue]] ;
 }
 @end
