@@ -6,8 +6,6 @@
 
 #import <UIKit/UIKit.h>
 #import "UIView+PYExtension.h"
-#import "FLAnimatedImageView.h"
-
 @class PYPhoto, PYPhotoCell, PYPhotosView, PYProgressView, PYPhotoView;
 
 @protocol PYPhotoViewDelegate <NSObject>
@@ -18,7 +16,7 @@
 
 @end
 
-@interface PYPhotoView : FLAnimatedImageView
+@interface PYPhotoView : UIImageView
 
 @property (nonatomic, weak) id<PYPhotoViewDelegate> delegate;
 

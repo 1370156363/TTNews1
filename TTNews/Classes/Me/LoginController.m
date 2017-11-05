@@ -139,6 +139,7 @@
              {
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
                  [[OWTool Instance] saveUid:message[@"uid"]];
+                 self.LoginSuccessBlock();
                  [ws popToRootViewController];
              }
              else
@@ -167,8 +168,8 @@
              if ([message[@"message"] isEqualToString:@"登陆成功"])
              {
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
-                 self.LoginSuccessBlock();
                  [[OWTool Instance] saveUid:message[@"uid"]];
+                 self.LoginSuccessBlock();
                  [ws popToRootViewController];
              }
              else

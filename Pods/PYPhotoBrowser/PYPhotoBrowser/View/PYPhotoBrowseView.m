@@ -9,8 +9,6 @@
 #import "PYPhoto.h"
 #import "PYPhotoView.h"
 #import "PYProgressView.h"
-#import "FLAnimatedImage.h"
-
 @interface PYPhotoBrowseView ()
 
 /** 是否正在浏览 */

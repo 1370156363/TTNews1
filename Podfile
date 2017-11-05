@@ -20,6 +20,11 @@ pod 'PYPhotoBrowser'
 pod 'SDAutoLayout'
 #图片选择器
 pod 'TZImagePickerController'
+
+pod 'Hyphenate'
+pod 'MBProgressHUD'
+pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
+
 end
 
 target 'TTNewsTests' do

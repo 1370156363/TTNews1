@@ -38,20 +38,21 @@
     for (UIGestureRecognizer *ges in _contenttext.gestureRecognizers) {
         [_contenttext removeGestureRecognizer:ges];
     }
-    
+    weakSelf(ws)
     if ([[OWTool Instance] getUid] == nil || [[OWTool Instance] getUid].length == 0) {
         [_headImageView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            self.KGPersonalCheckBlock(50);
+            ws.KGPersonalCheckBlock(50);
         }];
+        [self updateSubViewData];
     }
     else{
         [self requestURL];
         
         [_headerImg wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            self.KGPersonalCheckBlock(60);
+            ws.KGPersonalCheckBlock(60);
         }];
         [_contenttext wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            self.KGPersonalCheckBlock(70);
+            ws.KGPersonalCheckBlock(70);
         }];
     }
     
@@ -82,14 +83,25 @@
 }
 
 -(void)updateSubViewData{
-    UserModel *userModel = [UserModel mj_objectWithKeyValues:[[OWTool Instance] getUserInfo]];
-    [_headerImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",userModel.avatar]]];
-    _name.text = userModel.nickname;
-    _contenttext.text = userModel.signature?userModel.signature:@"这个家伙很懒，什么都没有留下！";
-    _dongtai.text = userModel.dtnum;
-    _fensi.text = userModel.fensinum;
-    _jifen.text = userModel.score;
-    _fangwen.text = userModel.fangwennum;
+    if ([[OWTool Instance] getUid] == nil || [[OWTool Instance] getUid].length == 0) {
+        _headerImg.image = UIImageNamed(@"geren") ;
+        _name.text = @"暂未登录";
+        _contenttext.text = @"";
+        _dongtai.text = @"0";
+        _fensi.text = @"0";
+        _jifen.text = @"0";
+        _fangwen.text = @"0";
+    }else{
+        UserModel *userModel = [UserModel mj_objectWithKeyValues:[[OWTool Instance] getUserInfo]];
+        [_headerImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",userModel.avatar]]];
+        _name.text = userModel.nickname;
+        _contenttext.text = userModel.signature?userModel.signature:@"这个家伙很懒，什么都没有留下！";
+        _dongtai.text = userModel.dtnum;
+        _fensi.text = userModel.fensinum;
+        _jifen.text = userModel.score;
+        _fangwen.text = userModel.fangwennum;
+    }
+    
     
 }
     
