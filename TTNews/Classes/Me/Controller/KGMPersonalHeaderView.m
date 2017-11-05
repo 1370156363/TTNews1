@@ -22,6 +22,16 @@
     {
         self=[[NSBundle mainBundle] loadNibNamed:@"KGMPersonalHeaderView" owner:self options:nil][0];
         self.frame=frame;
+        weakSelf(ws)
+        [_headImageView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            ws.KGPersonalCheckBlock(50);
+        }];
+        [_headerImg wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            ws.KGPersonalCheckBlock(60);
+        }];
+        [_contenttext wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            ws.KGPersonalCheckBlock(70);
+        }];
         [self updateSubView];
     }
     return self;
@@ -46,6 +56,9 @@
         [self updateSubViewData];
     }
     else{
+        _headImageView.userInteractionEnabled = NO;
+        _headerImg.userInteractionEnabled = YES;
+        _contenttext.userInteractionEnabled = YES;
         [self requestURL];
         
         [_headerImg wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {

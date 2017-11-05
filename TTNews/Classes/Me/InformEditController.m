@@ -25,7 +25,7 @@
     self.title=@"编辑个人资料";
     self.arrayDataItems=[NSMutableArray array];
     [self loadData];
-    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+//    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
 }
 
 -(void)loadData
