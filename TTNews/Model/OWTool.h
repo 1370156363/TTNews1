@@ -22,5 +22,7 @@
 /** 用户id*/
 -(void)saveUid:(NSString *)a;
 -(NSString *)getUid;
+///获取环信账号
+- (NSString *)getLastLoginUsername;
 
 @end

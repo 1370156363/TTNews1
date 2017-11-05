@@ -42,7 +42,17 @@
 #import <TZGifPhotoPreviewController.h>
 #import <TZVideoPlayerController.h>
 #import <TZImageManager.h>
+///即时通讯
+#import "EMAlertView.h"
+#import "TTGlobalUICommon.h"
+#import "EaseUI.h"
+#import <Hyphenate/Hyphenate.h>
+#import "ChatUIDefine.h"
 
+#import "AVOSCloud/AVOSCloud.h"// 后端云LeanCloud
+#import "UserCacheManager.h"
+#import "UserWebManager.h"
+#import "YYCategories.h"
 
 #define DismissKeyboard                     [[[UIApplication sharedApplication] keyWindow] endEditing:YES]
 #define winsize                             [UIScreen mainScreen].bounds.size
@@ -67,6 +77,15 @@
 #define selectColor HexRGB(0x26ACCC)
 
 
+///---------------------转势-------------------------------
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+
+#define KNOTIFICATION_LOGINCHANGE @"loginStateChange"
+#define KNOTIFICATIONNAME_DELETEALLMESSAGE @"RemoveAllMessages"
+
+#define CHATVIEWBACKGROUNDCOLOR [UIColor colorWithRed:0.936 green:0.932 blue:0.907 alpha:1]
 
 
 /******阅读器部分通知******/

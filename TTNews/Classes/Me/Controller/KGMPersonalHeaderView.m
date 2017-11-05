@@ -38,21 +38,11 @@
 }
 
 -(void) updateSubView{
-    //先移除再添加
-    for (UIGestureRecognizer *ges in _headImageView.gestureRecognizers) {
-        [_headImageView removeGestureRecognizer:ges];
-    }
-    for (UIGestureRecognizer *ges in _headerImg.gestureRecognizers) {
-        [_headerImg removeGestureRecognizer:ges];
-    }
-    for (UIGestureRecognizer *ges in _contenttext.gestureRecognizers) {
-        [_contenttext removeGestureRecognizer:ges];
-    }
-    weakSelf(ws)
+    
     if ([[OWTool Instance] getUid] == nil || [[OWTool Instance] getUid].length == 0) {
-        [_headImageView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            ws.KGPersonalCheckBlock(50);
-        }];
+        _headImageView.userInteractionEnabled = YES;
+        _headerImg.userInteractionEnabled = NO;
+        _contenttext.userInteractionEnabled = NO;
         [self updateSubViewData];
     }
     else{
@@ -61,12 +51,7 @@
         _contenttext.userInteractionEnabled = YES;
         [self requestURL];
         
-        [_headerImg wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            ws.KGPersonalCheckBlock(60);
-        }];
-        [_contenttext wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
-            ws.KGPersonalCheckBlock(70);
-        }];
+       
     }
     
 }

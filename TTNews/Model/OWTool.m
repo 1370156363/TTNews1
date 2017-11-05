@@ -101,4 +101,11 @@ static OWTool * instance = nil;
     return nil;
     
 }
+
+///获取极光通讯的账号
+- (NSString *)getLastLoginUsername
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    return  [ud objectForKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
+}
 @end

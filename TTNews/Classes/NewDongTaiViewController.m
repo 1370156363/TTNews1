@@ -17,7 +17,7 @@
 #import "tiwenController.h"
 ///详情
 #import "DongTaiInfoViewController.h"
-
+#import "IMViewController.h"
 
 @interface NewDongTaiViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -209,6 +209,87 @@
 }
 
 - (IBAction)IMAction:(UIButton *)sender {
-    
+
+    ///默认在这里登录
+    if ([[OWTool Instance] getLastLoginUsername].length!=0) {
+
+        IMViewController *im=[[IMViewController alloc] init];
+        [self.navigationController pushViewController:im animated:YES];
+    }
+    else{
+        ///登录进入
+
+    }
+
 }
+
+
+#pragma  mark - private
+
+//点击登陆后的操作
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password
+{
+    //    [self showHudInView:self.view hint:NSLocalizedString(@"login.ongoing", @"Is Login...")];
+    //异步登陆账号
+    __weak typeof(self) weakself = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //            [weakself hideHud];
+            if (!error) {
+                //设置是否自动登录
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
+
+                //保存最近一次登录用户名
+                [weakself saveLastLoginUsername];
+                //发送自动登陆状态通知
+
+            } else {
+                switch (error.code)
+                {
+                    case EMErrorUserNotFound:
+                        TTAlertNoTitle(NSLocalizedString(@"error.usernotExist", @"User not exist!"));
+                        break;
+                    case EMErrorNetworkUnavailable:
+                        TTAlertNoTitle(NSLocalizedString(@"error.connectNetworkFail", @"No network connection!"));
+                        break;
+                    case EMErrorServerNotReachable:
+                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                        break;
+                    case EMErrorUserAuthenticationFailed:
+                        TTAlertNoTitle(error.errorDescription);
+                        break;
+                    case EMErrorServerTimeout:
+                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                        break;
+                    case EMErrorServerServingForbidden:
+                        TTAlertNoTitle(NSLocalizedString(@"servingIsBanned", @"Serving is banned"));
+                        break;
+                    case EMErrorUserLoginTooManyDevices:
+                        TTAlertNoTitle(NSLocalizedString(@"alert.multi.tooManyDevices", @"Login too many devices"));
+                        break;
+                    default:
+                        TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Login failure"));
+                        break;
+                }
+            }
+        });
+    });
+}
+
+
+- (void)saveLastLoginUsername
+{
+
+    NSString *username = [[EMClient sharedClient] currentUsername];
+    if (username && username.length > 0) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setObject:username forKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
+        [ud synchronize];
+    }
+
+}
+
+
 @end
