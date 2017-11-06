@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -82,7 +82,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
-                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chakan@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="TCf-Y8-6xE">
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="TCf-Y8-6xE">
                                     <rect key="frame" x="300" y="5" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="4ig-h2-ZdZ"/>
@@ -124,7 +124,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
-                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chakan@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="wuU-yu-nD1">
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="wuU-yu-nD1">
                                     <rect key="frame" x="300" y="5" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="AOC-YP-3TI"/>
@@ -292,7 +292,7 @@
         </view>
     </objects>
     <resources>
-        <image name="chakan@3x.png" width="16" height="16"/>
         <image name="geren@3x.png" width="16" height="16"/>
+        <image name="password" width="16" height="16"/>
     </resources>
 </document>

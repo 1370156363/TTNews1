@@ -58,19 +58,42 @@
  
 }
 - (IBAction)btnAttentionClick:(UIButton*)sender {
-    [_btnAttention setTitle:@"已关注" forState:UIControlStateNormal];
-    [_btnAttention setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    _btnAttention.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _btnAttention.userInteractionEnabled = false;
+    NSMutableDictionary *prms=[@{
+                                 @"uid":_model1.uid,
+                                 }mutableCopy];
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkAddGUANZHU withUserInfo:prms success:^(NSDictionary *message)
+     {
+         if ([message[@"status"] intValue]==0)
+         {
+             [SVProgressHUD showImage:nil status:message[@"msg"]];
+             [SVProgressHUD dismissWithDelay:2];
+         }
+         else{
+             [_btnAttention setTitle:@"已关注" forState:UIControlStateNormal];
+             [_btnAttention setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+             _btnAttention.layer.borderColor = [UIColor lightGrayColor].CGColor;
+             _btnAttention.userInteractionEnabled = false;
+         }
+         
+     } failure:^(NSError *error) {
+         
+     } visibleHUD:NO];
+    
 }
 
 -(void)setModel:(MyFensiModel *)model{
-    if(!_isShowBtnAttention){
-        _btnAttention.hidden = YES;
-    }
+    _model = model;
+    _btnAttention.hidden = YES;
     [_imgHeaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]] placeholderImage:[UIImage imageNamed:@"geren"]];
     _labNickname.text = model.nicheng?model.nicheng:model.username;
     _labSignature.text = model.sign?model.sign:@"这个家伙很懒，什么都没有留下！";
+}
+-(void)setModel1:(UserModel *)model1{
+    _model1 = model1;
+    _btnAttention.hidden = NO;
+    [_imgHeaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model1.avatar]] placeholderImage:[UIImage imageNamed:@"geren"]];
+    _labNickname.text = model1.nicheng?model1.nicheng:model1.username;
+    _labSignature.text = model1.signature?model1.signature:@"这个家伙很懒，什么都没有留下！";
 }
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

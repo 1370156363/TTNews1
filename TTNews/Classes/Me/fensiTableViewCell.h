@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MyFensiModel.h"
-
+#import "UserModel.h"
 @interface fensiTableViewCell : UITableViewCell
-/** @brief 关注按钮是否显示*/
-@property (nonatomic, assign) BOOL isShowBtnAttention;
 
-@property (nonatomic, strong)  MyFensiModel *model;
+@property (nonatomic, strong)  MyFensiModel *model;//我的关注
+@property (nonatomic, strong) UserModel* model1;//添加关注
 @property (nonatomic, strong) IBOutlet UIImageView *imgHeaderView;
 @property (nonatomic, strong) IBOutlet UILabel *labNickname;
 @property (nonatomic, strong) IBOutlet UILabel *labSignature;

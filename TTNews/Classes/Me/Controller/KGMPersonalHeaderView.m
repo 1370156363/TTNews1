@@ -65,7 +65,6 @@
      {
          if ([message[@"status"] intValue]==1)
          {
-             [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
              UserModel *userModel = [UserModel mj_objectWithKeyValues:message[@"data"]];
              [[OWTool Instance] setUserInfo:[userModel mj_keyValues]];
              [ws updateSubViewData];

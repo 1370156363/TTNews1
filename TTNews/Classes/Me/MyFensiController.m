@@ -9,11 +9,13 @@
 #import "MyFensiController.h"
 #import "fensiTableViewCell.h"
 #import "MyFensiModel.h"
+#import "UserModel.h"
 
 @interface MyFensiController ()
 
 @property (nonatomic, strong) UITableView      *tableview;
-@property (nonatomic, strong) NSArray <MyFensiModel*>* modelList;
+@property (nonatomic, strong) NSArray <MyFensiModel*>* modelList;//我的关注
+@property (nonatomic, strong) NSArray <UserModel*>* userModelList;
 
 @end
 
@@ -26,8 +28,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.title=@"粉丝";
+    if (_isShowBtnAttention) {
+        self.title=@"添加关注";
+    }
+    else
+        self.title=@"粉丝";
     [self setupBasic];
 }
 
@@ -49,21 +54,40 @@
     [self.view addSubview:_tableview];
     [_tableview registerNib:[UINib nibWithNibName:@"fensiTableViewCell" bundle:nil] forCellReuseIdentifier:@"fensiTableViewCellIdentify"];
     
-    NSMutableDictionary *prms=[@{
-                                 @"uid":[[OWTool Instance] getUid] ,
-                                 @"page":@1
-                                 }mutableCopy];
     
-    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkMyFensi withUserInfo:prms success:^(NSDictionary *message)
-     {
-         [MyFensiModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
-             return @{@"ID":@"id"};
-         }];
-         _modelList = [MyFensiModel mj_objectArrayWithKeyValuesArray:message[@"data"]];
-         [self.tableview reloadData];
-     } failure:^(NSError *error) {
-         
-     } visibleHUD:NO];
+    
+    if (_isShowBtnAttention) {
+        NSMutableDictionary *prms=[@{
+                                     @"page":@1
+                                     }mutableCopy];
+        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetUser withUserInfo:prms success:^(NSDictionary *message)
+         {
+//             [UserModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+//                 return @{@"uid":@"uid"
+//                          };
+//             }];
+             _userModelList = [UserModel mj_objectArrayWithKeyValuesArray:message[@"info"]];
+             [self.tableview reloadData];
+         } failure:^(NSError *error) {
+             
+         } visibleHUD:NO];
+    }
+    else{
+        NSMutableDictionary *prms=[@{
+                                     @"uid":[[OWTool Instance] getUid] ,
+                                     @"page":@1
+                                     }mutableCopy];
+        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkMyFensi withUserInfo:prms success:^(NSDictionary *message)
+         {
+             [MyFensiModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+                 return @{@"ID":@"id"};
+             }];
+             _modelList = [MyFensiModel mj_objectArrayWithKeyValuesArray:message[@"data"]];
+             [self.tableview reloadData];
+         } failure:^(NSError *error) {
+             
+         } visibleHUD:NO];
+    }
 }
 
 #pragma mark UITableViewDelegate
@@ -76,8 +100,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
     fensiTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"fensiTableViewCellIdentify"forIndexPath:indexPath];
-    
-    cell.model = _modelList[row];
+    if (_isShowBtnAttention) {
+        cell.model1 = _userModelList[row];
+    }
+    else
+        cell.model = _modelList[row];
     return cell;
 }
 
@@ -89,7 +116,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _modelList ?_modelList.count: 0;
+    if (_isShowBtnAttention) {
+        return _userModelList ?_userModelList.count: 0;
+    }
+    else
+        return _modelList ?_modelList.count: 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
