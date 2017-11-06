@@ -350,7 +350,12 @@
         }];
     }];
 }
-
+///添加关注
+- (IBAction)btnAddGuanzhuClick:(id)sender {
+    MyFensiController *fensiCol = [MyFensiController new];
+    fensiCol.isShowBtnAttention = YES;
+    [self.navigationController pushViewController:fensiCol animated:YES ];
+}
 
 -(void)hiddenKeyBoard
 {

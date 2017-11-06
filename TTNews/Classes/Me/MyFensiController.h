@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MyFensiController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
-
+/** @brief 关注按钮是否显示*/
+@property (nonatomic, assign) BOOL isShowBtnAttention;
 @end

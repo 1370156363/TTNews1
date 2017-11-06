@@ -30,8 +30,41 @@
 
 -(void)finishAction
 {
-    self.SendTextBlock(_field.text);
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([_titleStr isEqualToString:@"昵称"])
+    {
+        NSMutableDictionary *prms=[@{
+                                     @"uid":[[OWTool Instance] getUid] ,
+                                     @"page":@1
+                                     }mutableCopy];
+        
+        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkmyDynamic withUserInfo:prms success:^(NSDictionary *message)
+         {
+             self.SendTextBlock(_field.text);
+             [SVProgressHUD showSuccessWithStatus:message[@"message"]];
+             [SVProgressHUD dismissWithDelay:2];
+             [self popViewController];
+         } failure:^(NSError *error) {
+             
+         } visibleHUD:NO];
+    }
+    else if ([_titleStr isEqualToString:@"签名"]){
+        NSMutableDictionary *prms=[@{
+                                     @"uid":[[OWTool Instance] getUid] ,
+                                     @"signstr":self.descLab.text
+                                     }mutableCopy];
+        
+        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkMySign withUserInfo:prms success:^(NSDictionary *message)
+         {
+             self.SendTextBlock(_field.text);
+             [SVProgressHUD showSuccessWithStatus:message[@"message"]];
+             [SVProgressHUD dismissWithDelay:2];
+             [self popViewController];
+         } failure:^(NSError *error) {
+             
+         } visibleHUD:NO];
+    }
+    
+    
 }
 
 

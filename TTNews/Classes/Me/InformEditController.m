@@ -12,9 +12,15 @@
 #import "UserDatePicker.h"
 #import "EditController.h"
 #import "YYLocation.h"
+#import "UserModel.h"
 
 @interface InformEditController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,YYLocationPickerViewDelegate>
 @property(nonatomic,strong)NSMutableArray *arrayDataItems;
+
+@property (nonatomic, assign) NSInteger sexIndex;
+@property (nonatomic, strong) NSString * birthdayIndex;
+@property (nonatomic, strong) NSString * locationStr;
+@property (nonatomic, strong) UserModel *userModel;
 @end
 
 @implementation InformEditController
@@ -23,13 +29,41 @@
 {
     [super viewDidLoad];
     self.title=@"编辑个人资料";
+    self.tableView.tableFooterView = [UIView new];
     self.arrayDataItems=[NSMutableArray array];
-    [self loadData];
+    
+    [self requestURL];
 //    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+}
+
+-(void)requestURL{
+    NSMutableDictionary *prms=[@{
+                                 @"uid":[[OWTool Instance] getUid]
+                                 }mutableCopy];
+    weakSelf(ws)
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworGetUserINfo withUserInfo:prms success:^(NSDictionary *message)
+     {
+         if ([message[@"status"] intValue]==1)
+         {
+             _userModel = [UserModel mj_objectWithKeyValues:message[@"data"]];
+             [[OWTool Instance] setUserInfo:[_userModel mj_keyValues]];
+             [ws loadData];
+         }
+         else
+         {
+             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD dismissWithDelay:2];
+         }
+     } failure:^(NSError *error) {
+         
+     } visibleHUD:NO];
 }
 
 -(void)loadData
 {
+    _sexIndex = [_userModel.sex integerValue];
+    _birthdayIndex = _userModel.birthday;
+    
     KGTableviewCellModel *model=[[KGTableviewCellModel alloc] init];
     model.title=@"头像";
     [self.arrayDataItems addObject:model];
@@ -53,9 +87,15 @@
     model=[[KGTableviewCellModel alloc] init];
     model.title=@"所在地";
     [self.arrayDataItems addObject:model];
+    
+    model=[[KGTableviewCellModel alloc] init];
+    model.title=@"完成";
+    [self.arrayDataItems addObject:model];
 
     [self SetTableviewMethod];
 }
+
+
 
 -(void)SetTableviewMethod
 {
@@ -67,20 +107,40 @@
              .cell([UITableViewCell class])
              .adapter(^(UITableViewCell *cell,KGTableviewCellModel *model,NSUInteger index)
                       {
-                          cell=[cell initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identify"];
+                          cell=[cell initWithStyle:UITableViewStylePlain reuseIdentifier:@"identify"];
                           cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-                          cell.textLabel.text=model.title;
+                          if (index != 6) {
+                              cell.textLabel.text=model.title;
+                          }
+                          
                           cell.textLabel.font=[UIFont systemFontOfSize:16];
                           cell.detailTextLabel.text=model.detail;
                           cell.detailTextLabel.font=[UIFont systemFontOfSize:13];
                           cell.detailTextLabel.textColor=[UIColor colorWithHexString:@"#848484"];
                           
                           //清理缓存
-                          if (index!=0)
+                          if (index!=0 && index <6)
                           {
                               UILabel *lab=[[UILabel alloc] init];
                               [cell.contentView addSubview:lab];
-                              lab.text=@"章三";
+                              
+                              if (index == 1) {
+                                  lab.text=_userModel.nicheng;
+                              }
+                              else if (index == 2) {
+                                  lab.text=_userModel.signature;
+                              }
+                              else if (index == 3) {
+                                  NSArray * sexList = @[@"男",@"女",@"保密"];
+                                  NSString *sexStr = [sexList objectAtIndex:[_userModel.sex intValue]];
+                                  lab.text=sexStr;
+                              }
+                              else if (index == 4) {
+                                  lab.text=_userModel.birthday;
+                              }
+                              else if (index == 5) {
+                                  lab.text=[NSString stringWithFormat:@"%@ %@ %@",_userModel.pos_province,_userModel.pos_city,_userModel.pos_district];
+                              }
                               lab.font=[UIFont systemFontOfSize:14];
                               lab.textAlignment=2;
                               lab.tag=1000;
@@ -93,9 +153,10 @@
                                    make.bottom.offset(-5);
                                }];
                           }
-                          else
+                          else if(index == 0)
                           {
-                              UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qq"]];
+                              UIImageView *img=[[UIImageView alloc] init];
+                              [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",_userModel.avatar]]];
                               [cell.contentView addSubview:img];
                               img.layer.masksToBounds=YES;
                               img.layer.cornerRadius=25;
@@ -106,6 +167,21 @@
                                   make.width.mas_equalTo(50);
                                   make.bottom.offset(-5);
                               }];
+                          }
+                          else if (index == 6){
+                              UIButton * btn =[UIButton buttonWithType:UIButtonTypeSystem];
+                              [cell.contentView addSubview:btn];
+                              cell.selectionStyle = UITableViewCellAccessoryNone;
+                              cell.accessoryType = UITableViewCellAccessoryNone;
+                              [btn setTitle:model.title forState:UIControlStateNormal];
+                              [btn.titleLabel setFont:[UIFont systemFontOfSize:17]];
+                              [btn setTitleColor:navColor forState:UIControlStateNormal];
+                              [btn addTarget:self action:@selector(btnNextStep) forControlEvents:UIControlEventTouchUpInside];
+                              btn.sd_layout
+                              .leftEqualToView(cell.contentView)
+                              .rightEqualToView(cell.contentView)
+                              .topEqualToView(cell.contentView)
+                              .bottomEqualToView(cell.contentView);
                           }
                           
                       })
@@ -173,6 +249,7 @@
                             picker.valueDidSelect=^(NSString *value)
                             {
                                 lab.text=value;
+                                _sexIndex =  [picker.dataSource indexOfObject:value];
                             };
                             [picker show];
                         }
@@ -183,6 +260,7 @@
                             datePick.UserDateBlock=^(UserDatePicker *picker, NSString *date, NSString *udate)
                             {
                                 lab.text=date;
+                                _birthdayIndex =date;
                             };
                         }
                         else if (index==5)
@@ -192,10 +270,28 @@
                             [location show];
                         }
                     })
-             
              .height(60);
          }];
     }];
+}
+
+-(void)btnNextStep{
+    weakSelf(ws)
+    NSMutableDictionary *prms=[@{
+                                 @"uid":[[OWTool Instance] getUid] ,
+                                 @"sex":@(_sexIndex),
+                                 @"birthday":_birthdayIndex
+                                 }mutableCopy];
+    
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:NNetworkUpdateUserInfo withUserInfo:prms success:^(NSDictionary *message)
+     {
+         [SVProgressHUD showSuccessWithStatus:message[@"message"]];
+         
+         [SVProgressHUD dismissWithDelay:2];
+         [ws popViewController];
+     } failure:^(NSError *error) {
+         
+     } visibleHUD:NO];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -203,7 +299,34 @@
     UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     UIImageView *img=[cell viewWithTag:1000];
     img.image=info[UIImagePickerControllerEditedImage];
-    [self dismissViewController];
+    weakSelf(ws)
+    [KGNetworkManager uploadImageWithArray:@[img.image] parameter:nil success:^(NSData* data) {
+        NSError *err;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:&err];
+        if(err == nil) {
+            NSMutableDictionary *prms=[@{
+                                         @"uid":[[OWTool Instance] getUid] ,
+                                         @"avatar":dic[@"Info"][@"id"]
+                                         }mutableCopy];
+            
+            [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkmyDynamic withUserInfo:prms success:^(NSDictionary *message)
+             {
+                 [SVProgressHUD showSuccessWithStatus:message[@"message"]];
+                
+                 [SVProgressHUD dismissWithDelay:2];
+                  [ws dismissViewController];
+             } failure:^(NSError *error) {
+                 
+             } visibleHUD:NO];
+            //[ws.personalHeaderView.headerImg setImage:img];
+        }
+        
+    } fail:^(NSError *error) {
+        
+    }];
+    
 }
 
 #pragma mark - YYLocationPickViewDelegate
@@ -212,5 +335,6 @@
     UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
     UILabel *lab=(UILabel *)[cell viewWithTag:1000];
     lab.text = location;
+    _locationStr = location;
 }
 @end

@@ -9,7 +9,9 @@
 #import "SettingController.h"
 #import "InformEditController.h"
 #import "KGTableviewCellModel.h"
+#import "EditPwdController.h"
 #import "TTDataTool.h"
+#import "ApproveController.h"
 
 @interface SettingController ()
 @property (nonatomic, strong) UITableView    *tableview;
@@ -132,29 +134,33 @@
              })
              .event(^(NSUInteger index, KGTableviewCellModel *model)
              {
-                 
-                 if (index==2)
+                 if (index == 1) {
+                     //用户认证
+                     [self.navigationController pushViewController:[ApproveController new] animated:YES];
+                 }
+                 else if (index==2)
                  {
                      InformEditController *editVc=[[InformEditController alloc] init];
                      [ws.navigationController pushViewController:editVc animated:YES];
                  }
                  else if (index==3)
                  {
-                     CKAlertViewController *alert=[CKAlertViewController alertControllerWithTitle:@"提示" message:@"确定要删除所有缓存吗？"];
-                     CKAlertAction *camera=[CKAlertAction actionWithTitle:@"取消" handler:^(CKAlertAction *action)
-                     {
-                         
-                     }];
-                     CKAlertAction *phont=[CKAlertAction actionWithTitle:@"确定" handler:^(CKAlertAction *action)
-                       {
-                           [SVProgressHUD show];
-                           [TTDataTool deletePartOfCacheInSqlite];
-                           [[SDImageCache sharedImageCache] clearMemory];
-                           [SVProgressHUD showSuccessWithStatus:@"缓存清除完毕!"];
-                       }];
-                     [alert addAction:camera];
-                     [alert addAction:phont];
-                     [ws presentViewController:alert animated:NO completion:nil];
+                     [self.navigationController pushViewController:[EditPwdController new] animated:YES];
+//                     CKAlertViewController *alert=[CKAlertViewController alertControllerWithTitle:@"提示" message:@"确定要删除所有缓存吗？"];
+//                     CKAlertAction *camera=[CKAlertAction actionWithTitle:@"取消" handler:^(CKAlertAction *action)
+//                     {
+//
+//                     }];
+//                     CKAlertAction *phont=[CKAlertAction actionWithTitle:@"确定" handler:^(CKAlertAction *action)
+//                       {
+//                           [SVProgressHUD show];
+//                           [TTDataTool deletePartOfCacheInSqlite];
+//                           [[SDImageCache sharedImageCache] clearMemory];
+//                           [SVProgressHUD showSuccessWithStatus:@"缓存清除完毕!"];
+//                       }];
+//                     [alert addAction:camera];
+//                     [alert addAction:phont];
+//                     [ws presentViewController:alert animated:NO completion:nil];
                  }
  
              })

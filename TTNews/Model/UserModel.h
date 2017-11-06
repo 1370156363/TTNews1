@@ -23,7 +23,7 @@
 
 @property (nonatomic, copy) NSString *mobile;
 
-@property (nonatomic, copy) NSString *sex;
+@property (nonatomic, copy) NSNumber *sex;
 
 @property (nonatomic, copy) NSString *birthday;
 

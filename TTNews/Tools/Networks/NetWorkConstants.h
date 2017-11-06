@@ -41,7 +41,7 @@ typedef enum _NetWorkAction
     KNetworkADDDongTaiComment,  ///添加动态评论
     KNetworkGetCategory,///获取分类列表
     KNetworGetUserINfo,///用户信息
-    
+    KNetworkGetMyApprove,                   //获取我的认证信息
     
     
     
@@ -93,8 +93,10 @@ typedef enum _NetWorkAction
     KNetworkQunzuInformation,               //依据部门id获取聊天群组
     KNetworkMyFensi,                        //我的粉丝
     KNetworkmyDynamic,                      //我的动态
-    
-    
+    KNetworkMySign,                         //我的签名
+    KNetworkMyApprove,                      //我的认证状态
+    KnetworkApplyApprove,                   //申请认证
+    NNetworkUpdateUserInfo,                 //更新用户信息
     
     
     

@@ -22,6 +22,7 @@
 /**回调选择的状态字符串(stateStr格式:state/row)*/
 @property (nonatomic, copy) void (^valueDidSelect)(NSString * value);
 
+
 /**显示时间弹层*/
 - (void)show;
 

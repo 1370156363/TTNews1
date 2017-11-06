@@ -90,6 +90,15 @@
 		6F18DDC91FA736C100369ABD /* PublishManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F18DDC71FA736C100369ABD /* PublishManageViewController.m */; };
 		6F18DDCA1FA736C100369ABD /* PublishManageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F18DDC81FA736C100369ABD /* PublishManageViewController.xib */; };
 		6F69CF8C1FA7436B0022A1A9 /* wendaimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F69CF8B1FA7436B0022A1A9 /* wendaimg@2x.png */; };
+		6F8106B01FAE9F3300E00946 /* EditPwdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8106AE1FAE9F3300E00946 /* EditPwdController.m */; };
+		6F8106B11FAE9F3300E00946 /* EditPwdController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F8106AF1FAE9F3300E00946 /* EditPwdController.xib */; };
+		6F8106B51FAEBF3900E00946 /* ApproveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8106B41FAEBF3900E00946 /* ApproveController.m */; };
+		6F8106B81FAEBF7300E00946 /* NoApproveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8106B71FAEBF7300E00946 /* NoApproveView.m */; };
+		6F8106BB1FAEBFB800E00946 /* ApproveInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8106BA1FAEBFB800E00946 /* ApproveInfoView.m */; };
+		6F8106BF1FAEF02E00E00946 /* ApplyApproveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8106BD1FAEF02E00E00946 /* ApplyApproveController.m */; };
+		6F8106C01FAEF02E00E00946 /* ApplyApproveController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F8106BE1FAEF02E00E00946 /* ApplyApproveController.xib */; };
+		6F8106C31FAF021D00E00946 /* addApproveImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8106C11FAF021C00E00946 /* addApproveImg.png */; };
+		6F8106C41FAF021D00E00946 /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8106C21FAF021D00E00946 /* password@2x.png */; };
 		6FDF358C1FA409C400670E18 /* fensiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */; };
 		6FDF358D1FA409C400670E18 /* fensiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */; };
 		6FDF35901FA4143E00670E18 /* MyFensiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF358F1FA4143E00670E18 /* MyFensiController.m */; };
@@ -866,6 +875,20 @@
 		6F18DDC71FA736C100369ABD /* PublishManageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublishManageViewController.m; sourceTree = "<group>"; };
 		6F18DDC81FA736C100369ABD /* PublishManageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublishManageViewController.xib; sourceTree = "<group>"; };
 		6F69CF8B1FA7436B0022A1A9 /* wendaimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wendaimg@2x.png"; sourceTree = "<group>"; };
+		6F8106AD1FAE9F3300E00946 /* EditPwdController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditPwdController.h; sourceTree = "<group>"; };
+		6F8106AE1FAE9F3300E00946 /* EditPwdController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPwdController.m; sourceTree = "<group>"; };
+		6F8106AF1FAE9F3300E00946 /* EditPwdController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditPwdController.xib; sourceTree = "<group>"; };
+		6F8106B31FAEBF3900E00946 /* ApproveController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApproveController.h; sourceTree = "<group>"; };
+		6F8106B41FAEBF3900E00946 /* ApproveController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApproveController.m; sourceTree = "<group>"; };
+		6F8106B61FAEBF7300E00946 /* NoApproveView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoApproveView.h; sourceTree = "<group>"; };
+		6F8106B71FAEBF7300E00946 /* NoApproveView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoApproveView.m; sourceTree = "<group>"; };
+		6F8106B91FAEBFB800E00946 /* ApproveInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApproveInfoView.h; sourceTree = "<group>"; };
+		6F8106BA1FAEBFB800E00946 /* ApproveInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApproveInfoView.m; sourceTree = "<group>"; };
+		6F8106BC1FAEF02E00E00946 /* ApplyApproveController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplyApproveController.h; sourceTree = "<group>"; };
+		6F8106BD1FAEF02E00E00946 /* ApplyApproveController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplyApproveController.m; sourceTree = "<group>"; };
+		6F8106BE1FAEF02E00E00946 /* ApplyApproveController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApplyApproveController.xib; sourceTree = "<group>"; };
+		6F8106C11FAF021C00E00946 /* addApproveImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addApproveImg.png; sourceTree = "<group>"; };
+		6F8106C21FAF021D00E00946 /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
 		6FDF35891FA409C400670E18 /* fensiTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fensiTableViewCell.h; sourceTree = "<group>"; };
 		6FDF358A1FA409C400670E18 /* fensiTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fensiTableViewCell.m; sourceTree = "<group>"; };
 		6FDF358B1FA409C400670E18 /* fensiTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = fensiTableViewCell.xib; sourceTree = "<group>"; };
@@ -1810,6 +1833,22 @@
 			name = "发布管理";
 			sourceTree = "<group>";
 		};
+		6F8106B21FAEBE5C00E00946 /* 认证 */ = {
+			isa = PBXGroup;
+			children = (
+				6F8106B31FAEBF3900E00946 /* ApproveController.h */,
+				6F8106B41FAEBF3900E00946 /* ApproveController.m */,
+				6F8106B61FAEBF7300E00946 /* NoApproveView.h */,
+				6F8106B71FAEBF7300E00946 /* NoApproveView.m */,
+				6F8106B91FAEBFB800E00946 /* ApproveInfoView.h */,
+				6F8106BA1FAEBFB800E00946 /* ApproveInfoView.m */,
+				6F8106BC1FAEF02E00E00946 /* ApplyApproveController.h */,
+				6F8106BD1FAEF02E00E00946 /* ApplyApproveController.m */,
+				6F8106BE1FAEF02E00E00946 /* ApplyApproveController.xib */,
+			);
+			name = "认证";
+			sourceTree = "<group>";
+		};
 		6FFC462E1FA811C400C57D90 /* 发布动态 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2268,6 +2307,8 @@
 		F832CB471F2761B60032C23D /* 前沿资讯-切图 */ = {
 			isa = PBXGroup;
 			children = (
+				6F8106C11FAF021C00E00946 /* addApproveImg.png */,
+				6F8106C21FAF021D00E00946 /* password@2x.png */,
 				6F69CF8B1FA7436B0022A1A9 /* wendaimg@2x.png */,
 				013A87EA1F6788FB0017175F /* welcome_1.jpg */,
 				013A87EB1F6788FB0017175F /* welcome_2.jpg */,
@@ -3093,6 +3134,7 @@
 		F89E71161F28B57D003965B1 /* 设置 */ = {
 			isa = PBXGroup;
 			children = (
+				6F8106B21FAEBE5C00E00946 /* 认证 */,
 				01B181EA1F750CC900D9F7AF /* EditController.h */,
 				01B181EB1F750CC900D9F7AF /* EditController.m */,
 				01B181EC1F750CC900D9F7AF /* EditController.xib */,
@@ -3101,6 +3143,9 @@
 				F89E711C1F28B5E8003965B1 /* SettingController.xib */,
 				01B181DF1F75069800D9F7AF /* InformEditController.h */,
 				01B181E01F75069800D9F7AF /* InformEditController.m */,
+				6F8106AD1FAE9F3300E00946 /* EditPwdController.h */,
+				6F8106AE1FAE9F3300E00946 /* EditPwdController.m */,
+				6F8106AF1FAE9F3300E00946 /* EditPwdController.xib */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -3372,6 +3417,7 @@
 				F89E70E01F28A7E6003965B1 /* sale_discount_yellow.png in Resources */,
 				F832CDAF1F2761B70032C23D /* shoucang.png in Resources */,
 				F832CE151F2761B80032C23D /* wo.png in Resources */,
+				6F8106C01FAEF02E00E00946 /* ApplyApproveController.xib in Resources */,
 				F832CE031F2761B80032C23D /* weixuan.png in Resources */,
 				F832CCF21F2761B70032C23D /* daifukuan.png in Resources */,
 				F832CE6B1F2761B80032C23D /* zitiGL@3x.png in Resources */,
@@ -3396,6 +3442,7 @@
 				01B181D91F74F2B700D9F7AF /* CommentCell.xib in Resources */,
 				F832CD901F2761B70032C23D /* quxiao@3x.png in Resources */,
 				F832CE371F2761B80032C23D /* xihuanR@2x.png in Resources */,
+				6F8106B11FAE9F3300E00946 /* EditPwdController.xib in Resources */,
 				F832CD591F2761B70032C23D /* lahei@2x.png in Resources */,
 				F832CDBC1F2761B70032C23D /* shouyeXZ@2x.png in Resources */,
 				F832CDBD1F2761B70032C23D /* shouyeXZ@3x.png in Resources */,
@@ -3546,6 +3593,7 @@
 				F8B5A6481F2820E500AEBF39 /* IDMPBLocalizations.bundle in Resources */,
 				F832CE5E1F2761B80032C23D /* zhuanfa@2x.png in Resources */,
 				F832CE391F2761B80032C23D /* xinzeng.png in Resources */,
+				6F8106C31FAF021D00E00946 /* addApproveImg.png in Resources */,
 				F832CE541F2761B80032C23D /* zanX.png in Resources */,
 				04AEF0161F9E329A000BF3DE /* NewWenDaViewController.xib in Resources */,
 				F832CD2C1F2761B70032C23D /* glshouze@2x.png in Resources */,
@@ -3646,6 +3694,7 @@
 				F832CDCA1F2761B70032C23D /* sousuo.png in Resources */,
 				F832CD171F2761B70032C23D /* fankui@2x.png in Resources */,
 				F832CDE71F2761B80032C23D /* tuikuan@3x.png in Resources */,
+				6F8106C41FAF021D00E00946 /* password@2x.png in Resources */,
 				F832CDEF1F2761B80032C23D /* weibo@2x.png in Resources */,
 				F832CD691F2761B70032C23D /* pengyouquan@3x.png in Resources */,
 				F832CD9B1F2761B70032C23D /* shangcheng@2x.png in Resources */,
@@ -4011,6 +4060,7 @@
 				F89E70A51F28A798003965B1 /* GTMNSString+HTML.m in Sources */,
 				F8B5A6131F281A2100AEBF39 /* BiaoqianController.m in Sources */,
 				F89E71221F28B62C003965B1 /* FocusCell.m in Sources */,
+				6F8106B51FAEBF3900E00946 /* ApproveController.m in Sources */,
 				6FDF35901FA4143E00670E18 /* MyFensiController.m in Sources */,
 				F8B5A6631F2841EA00AEBF39 /* KGTableviewCellModel.m in Sources */,
 				01B181F61F75170B00D9F7AF /* YYLocationDataBase.m in Sources */,
@@ -4081,6 +4131,7 @@
 				EE3A071E1CDA1DAD0024C37A /* ContentTableViewController.m in Sources */,
 				6FDF35931FA41C6A00670E18 /* MyFensiModel.m in Sources */,
 				04AEF01F1F9E329A000BF3DE /* WenDaInfoViewController.m in Sources */,
+				6F8106BB1FAEBFB800E00946 /* ApproveInfoView.m in Sources */,
 				EE79B1251CC8C435001029EF /* UIImage+Extension.m in Sources */,
 				04AEEFE71F9E3200000BF3DE /* DongTaiTableViewCell.m in Sources */,
 				F89E712A1F28C218003965B1 /* UIView+Util.m in Sources */,
@@ -4106,6 +4157,7 @@
 				F832CE731F2762620032C23D /* dongtaiController.m in Sources */,
 				04AEEFC91F9E3196000BF3DE /* SearchInfoViewController.m in Sources */,
 				F89E70AB1F28A798003965B1 /* CXMLDocument.m in Sources */,
+				6F8106BF1FAEF02E00E00946 /* ApplyApproveController.m in Sources */,
 				EE79B1401CC8C435001029EF /* VideoViewController.m in Sources */,
 				F832CEC01F27813C0032C23D /* MASConstraintMaker.m in Sources */,
 				F8B5A6311F281FF500AEBF39 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
@@ -4124,6 +4176,7 @@
 				F832CE851F2765920032C23D /* CBTableViewSectionMaker.m in Sources */,
 				6FFC46341FA811EA00C57D90 /* AddMessageViewController.m in Sources */,
 				F8B5A6471F2820E500AEBF39 /* IDMCaptionView.m in Sources */,
+				6F8106B01FAE9F3300E00946 /* EditPwdController.m in Sources */,
 				F8B5A6511F28211500AEBF39 /* LCActionSheet.m in Sources */,
 				01D153F81F7F9DED0033CCF1 /* forGetpassoneController.m in Sources */,
 				EE79B1231CC8C435001029EF /* NSDate+Extension.m in Sources */,
@@ -4150,6 +4203,7 @@
 				F89E70C71F28A7AC003965B1 /* LSYChapterModel.m in Sources */,
 				013A87F51F6789790017175F /* OWTool.m in Sources */,
 				F832CE841F2765920032C23D /* CBTableViewDataSourceMaker.m in Sources */,
+				6F8106B81FAEBF7300E00946 /* NoApproveView.m in Sources */,
 				F8B5A60B1F2817B600AEBF39 /* UIViewController+GeneralMethod.m in Sources */,
 				F89E70B61F28A798003965B1 /* UIImage+ImageEffects.m in Sources */,
 				EE79B1421CC8C435001029EF /* TTVideoComment.m in Sources */,

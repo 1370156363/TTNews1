@@ -73,6 +73,9 @@ static NSMutableArray *tasks;
             ///注册
             actionValue = @"api/login/reg";
             break;
+        case kNetWorkActionChangePassword:
+            actionValue = @"api/login/editpw";
+            break;
         
         case KNetworkWenAddDongTai:
             actionValue=@"api/user/adddt";
@@ -215,6 +218,12 @@ static NSMutableArray *tasks;
         case KNetworkADDDongTaiComment:
             actionValue=@"api/content/adddtpinglun/";
             break;
+        case KNetworkMyApprove:
+            actionValue= @"api/user/myrenzhengstatus";
+            break;
+        case KnetworkApplyApprove:
+            actionValue = @"api/content/addrenzheng";
+            break;
 
     }
     
@@ -325,6 +334,10 @@ static NSMutableArray *tasks;
         case KNetWorkMyHistory:
             actionValue = @"api/user/get_myyuedu";
             break;
+        case KNetworkMySign:
+            ///我的签名
+            actionValue = @"api/user/qianming";
+            break;
         case KNetworkAddGUANZHU:{
             ///添加关注
             actionValue=@"api/user/addfriend";
@@ -344,6 +357,12 @@ static NSMutableArray *tasks;
         {
             actionValue=@"api/index/get_category";
         }
+            break;
+        case KNetworkGetMyApprove:
+            actionValue=@"api/user/getmyrenzheng";
+            break;
+        case NNetworkUpdateUserInfo:
+            actionValue=@"api/user/editmyinfo";
             break;
         default:
             break;

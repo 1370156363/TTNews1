@@ -340,7 +340,19 @@
                                                             options:NSJSONReadingMutableContainers
                                                               error:&err];
         if(err == nil) {
-            [ws.personalHeaderView.headerImg setImage:img];
+            NSMutableDictionary *prms=[@{
+                                         @"uid":[[OWTool Instance] getUid] ,
+                                         @"avatar":dic[@"Info"][@"id"]
+                                         }mutableCopy];
+            
+            [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkmyDynamic withUserInfo:prms success:^(NSDictionary *message)
+             {
+                 [SVProgressHUD showSuccessWithStatus:message[@"message"]];
+                 [SVProgressHUD dismissWithDelay:2];
+             } failure:^(NSError *error) {
+                 
+             } visibleHUD:NO];
+            //[ws.personalHeaderView.headerImg setImage:img];
         }
       
     } fail:^(NSError *error) {
