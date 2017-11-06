@@ -140,6 +140,8 @@
 		04AEF0341F9E41B6000BF3DE /* NewsInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AEF0321F9E41B6000BF3DE /* NewsInfoViewController.xib */; };
 		04AEF0371F9E4543000BF3DE /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEF0361F9E4543000BF3DE /* NewsModel.m */; };
 		04B22DC31FAF5BDE00AFE149 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B22DC21FAF5BDE00AFE149 /* libicucore.tbd */; };
+		04B22DC81FAF621500AFE149 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DC71FAF621500AFE149 /* ContactListViewController.m */; };
+		04B22DCD1FAF674100AFE149 /* ConversationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DCC1FAF674100AFE149 /* ConversationListController.m */; };
 		1DC67303B4F8A6F87BEC546A /* libPods-TTNewsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92641E010C8FDC1389C15EF /* libPods-TTNewsTests.a */; };
 		6F1566DD1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */; };
 		6F1566E31FA332AA00EA9FD4 /* DymamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */; };
@@ -1024,6 +1026,10 @@
 		04AEF0351F9E4543000BF3DE /* NewsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsModel.h; sourceTree = "<group>"; };
 		04AEF0361F9E4543000BF3DE /* NewsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsModel.m; sourceTree = "<group>"; };
 		04B22DC21FAF5BDE00AFE149 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		04B22DC61FAF621500AFE149 /* ContactListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactListViewController.h; sourceTree = "<group>"; };
+		04B22DC71FAF621500AFE149 /* ContactListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
+		04B22DCB1FAF674100AFE149 /* ConversationListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConversationListController.h; sourceTree = "<group>"; };
+		04B22DCC1FAF674100AFE149 /* ConversationListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConversationListController.m; sourceTree = "<group>"; };
 		07E9D64488E92C60CF8D2B6B /* Pods-TTNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsUITests/Pods-TTNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2BAF96C60E66025F03CAF1B4 /* Pods-TTNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNews/Pods-TTNews.release.xcconfig"; sourceTree = "<group>"; };
 		4BD837B9395343B702E90E80 /* Pods-TTNewsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsTests/Pods-TTNewsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1931,6 +1937,8 @@
 		0430623B1FAEEE28001113C4 /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				04B22DC41FAF5CD400AFE149 /* Chat */,
+				04B22DC51FAF5CD400AFE149 /* Contacts */,
 				0430634C1FAF54D2001113C4 /* Core Data */,
 				043062441FAF4782001113C4 /* 3rdPart */,
 				043063201FAF521E001113C4 /* Custom */,
@@ -2187,6 +2195,40 @@
 				04AEEFC81F9E3196000BF3DE /* SearchInfoViewController.xib */,
 			);
 			path = "公共";
+			sourceTree = "<group>";
+		};
+		04B22DC41FAF5CD400AFE149 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				04B22DC91FAF672F00AFE149 /* ChatList */,
+				04B22DCA1FAF672F00AFE149 /* ChatView */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		04B22DC51FAF5CD400AFE149 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				04B22DC61FAF621500AFE149 /* ContactListViewController.h */,
+				04B22DC71FAF621500AFE149 /* ContactListViewController.m */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		04B22DC91FAF672F00AFE149 /* ChatList */ = {
+			isa = PBXGroup;
+			children = (
+				04B22DCB1FAF674100AFE149 /* ConversationListController.h */,
+				04B22DCC1FAF674100AFE149 /* ConversationListController.m */,
+			);
+			path = ChatList;
+			sourceTree = "<group>";
+		};
+		04B22DCA1FAF672F00AFE149 /* ChatView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatView;
 			sourceTree = "<group>";
 		};
 		6F1566D91FA3128200EA9FD4 /* 动态 */ = {
@@ -4465,6 +4507,7 @@
 				F89E71221F28B62C003965B1 /* FocusCell.m in Sources */,
 				6FDF35901FA4143E00670E18 /* MyFensiController.m in Sources */,
 				F8B5A6631F2841EA00AEBF39 /* KGTableviewCellModel.m in Sources */,
+				04B22DC81FAF621500AFE149 /* ContactListViewController.m in Sources */,
 				01B181F61F75170B00D9F7AF /* YYLocationDataBase.m in Sources */,
 				0430628B1FAF47F0001113C4 /* SRSlimeView.m in Sources */,
 				F89E70F01F28A83B003965B1 /* LSYReadConfig.m in Sources */,
@@ -4550,6 +4593,7 @@
 				04AEEFE71F9E3200000BF3DE /* DongTaiTableViewCell.m in Sources */,
 				F89E712A1F28C218003965B1 /* UIView+Util.m in Sources */,
 				012D91CD1F88A3A600C8CDD8 /* WendaModel.m in Sources */,
+				04B22DCD1FAF674100AFE149 /* ConversationListController.m in Sources */,
 				F89E70C91F28A7AC003965B1 /* LSYNoteModel.m in Sources */,
 				EE79B11E1CC8C435001029EF /* NoPictureNewsTableViewCell.m in Sources */,
 				0430639C1FAF5749001113C4 /* YYClassInfo.m in Sources */,

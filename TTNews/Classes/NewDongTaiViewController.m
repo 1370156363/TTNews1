@@ -218,7 +218,7 @@
     }
     else{
         ///登录进入
-
+        [self loginWithUsername:@"17762274010" password:@"1"];
     }
 
 }

@@ -8,14 +8,22 @@
 
 #import "IMViewController.h"
 ///
-//#import "ContactListViewController.h"
+#import "ContactListViewController.h"
 
+#import "ConversationListController.h"
 
-@interface IMViewController ()
+@interface IMViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,UIScrollViewDelegate>
+{
+    UIPageViewController *_pageVC;
+
+    NSMutableArray *_viewControllers;
+}
+
 ///会话按钮
 @property(nonatomic,strong)UIButton *chatBtu;
 ///通讯录
 @property(nonatomic,strong)UIButton *contactsBtu;
+
 
 
 
@@ -62,7 +70,7 @@
     [self.chatBtu setTitle:@"会话" forState:UIControlStateNormal];
     [self.chatBtu setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.chatBtu setTitleColor:selectColor forState:UIControlStateSelected];
-    self.chatBtu.selected=NO;
+    self.chatBtu.selected=YES;
     ///点击会话事件
     [self.chatBtu addTarget:self action:@selector(chatAction:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -74,10 +82,24 @@
     self.contactsBtu.selected=NO;
     ///点击会话事件
     [self.contactsBtu addTarget:self action:@selector(contactsAction:) forControlEvents:UIControlEventTouchUpInside];
+    //添加分页滚动视图控制器
+    if (!_pageVC) {
+        _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+        _pageVC.view.frame = CGRectMake(0, 64+50, winsize.width, SCREEN_HEIGHT-64+50 );
+        _pageVC.delegate = self;
+        _pageVC.dataSource = self;
 
+        _pageVC.view.backgroundColor=[UIColor yellowColor];
+    }
 
     [self.view addSubview:self.chatBtu];
     [self.view addSubview:self.contactsBtu];
+    [self.view addSubview:_pageVC.view];
+
+//    if (!) {
+//        <#statements#>
+//    }
+
 }
 
 #pragma mark 点击事件
@@ -91,13 +113,67 @@
 - (void)chatAction:(UIButton *)sender{
     NSLog(@"11122");
     sender.selected=!sender.selected;
+    if (sender.selected) {
+        self.contactsBtu.selected=NO;
+    }
+    else
+    {
+        self.contactsBtu.selected=YES;
+    }
 }
 
 ///点击通讯录事件
 - (void)contactsAction:(UIButton *)sender{
     NSLog(@"111223333");
     sender.selected=!sender.selected;
+    if (sender.selected) {
+        self.chatBtu.selected=NO;
+    }
+    else{
+        self.chatBtu.selected=YES;
+    }
 }
+
+
+#pragma mark -
+#pragma mark UIPageViewControllerDelegate&DataSource
+
+//- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+//
+//    if (self.chatBtu.selected) {
+//
+//    }
+//
+//    UIViewController *vc;
+//    if (_selectedIndex + 1 < _viewControllers.count) {
+//        vc = _viewControllers[_selectedIndex + 1];
+//        vc.view.bounds = pageViewController.view.bounds;
+//    }
+//    return vc;
+//}
+//
+//- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+//    UIViewController *vc;
+//    if (_selectedIndex - 1 >= 0) {
+//        vc = _viewControllers[_selectedIndex - 1];
+//        vc.view.bounds = pageViewController.view.bounds;
+//    }
+//    return vc;
+//}
+//
+//
+//- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed {
+//    _selectedIndex = [_viewControllers indexOfObject:pageViewController.viewControllers.firstObject];
+//    _segment.selectedIndex = _selectedIndex;
+//    [self performSwitchDelegateMethod];
+//}
+//
+//
+//
+//-(UIInterfaceOrientation)pageViewControllerPreferredInterfaceOrientationForPresentation:(UIPageViewController *)pageViewController NS_AVAILABLE_IOS(7_0) __TVOS_PROHIBITED {
+//    return UIInterfaceOrientationPortrait;
+//}
+
 
 
 @end
