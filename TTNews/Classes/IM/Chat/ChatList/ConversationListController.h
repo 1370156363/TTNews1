@@ -8,6 +8,8 @@
 
 #import <EaseUI/EaseUI.h>
 
-@interface ConversationListController : EaseConversationListViewController
+//@interface ConversationListController : EaseConversationListViewController
+@interface ConversationListController : UIViewController
+
 
 @end

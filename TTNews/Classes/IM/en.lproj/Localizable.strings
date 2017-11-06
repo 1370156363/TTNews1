@@ -29,6 +29,7 @@
 "delete" = "Delete";
 "copy" = "Copy";
 "transpond" = "Transpond";
+"recall" = "Recall";
 "save" = "Save";
 "prompt" = "Prompt";
 "add" = "Add";
@@ -61,6 +62,8 @@
 "noMore" = "No more data";
 "hasRead" = "Read";
 "servingIsBanned" = "Service disabled";
+"getPermission" = "Get Permission";
+"recallFailed" = "Recall failed:%@";
 
 //app
 "AppName" = "EaseMobDemo";
@@ -172,7 +175,17 @@
 "group.owner" = "Owner";
 "group.admins" = "Admin List";
 "group.members" = "Member List";
-"group.mutes" = "Mutes";
+"group.mutes" = "Mute List";
+"group.sharedfiles" = "Share Files";
+"group.announcement" = "Group Announcement";
+"group.ext" = "Group Extension";
+"group.ownerAdmin" = "Owner / Admin";
+"group.more" = "Load More";
+"group.remove" = "Remove";
+"group.block" = "Block";
+"group.mute" = "Mute";
+"group.upgrade" = "Upgrade";
+"group.degrade" = "Degrade";
 "group.occupantCount" = "Members count";
 "group.addingOccupant" = "Add a group member...";
 "group.fetchInfoFail" = "Failed to get the group details, please try again later";
@@ -188,7 +201,30 @@
 "group.removeAdmin" = "Remove from Admin";
 "group.toMute" = "Mute";
 "group.unmute" = "Unmute";
+"group.upload" = "Upload";
+"group.download" = "Downloading ...";
+"group.downloadFail" = "fail to download share file";
 "group.fetchMuteFail" = "fail to get mutes: %@";
+"group.fetchSharedFileFail" = "fail to get share files: %@";
+"group.fetchAnnouncementFail" = "fail to get announcement";
+"group.changeAnnouncementFail" = "fail to change announcement";
+"group.changeExtFail" = "fail to change ext";
+
+//Group Delegate
+
+"group.update" = "Group Update";
+"group.adminUpdate" = "Group Admin Update";
+"group.becomeAdmin" = "Become Admin";
+"group.beRemovedAdmin" = "is removed from admin list";
+"group.ownerUpdate" = "Group Owner Update";
+"group.membersUpdate" = "Group Members Update";
+"group.announcementUpdate" = "Group Announcement Update";
+"group.sharedFileUpdate" = "Group SharedFile Update";
+"group.changeOwnerTo" = "Change group owner %@ to %@";
+"group.clearAnnouncement" = "Group:%@ Announcement is clear";
+"group.updateAnnouncement" = "Group:%@ Announcement: %@";
+"group.uploadSharedFile" = "Group:%@ Upload file ID: %@";
+"group.removeSharedFile" = "Group:%@ Remove file ID: %@";
 
 //Group Setting
 "group.setting.receiveAndPrompt" = "Receive notifications of group message";
@@ -198,6 +234,8 @@
 "group.setting.success" = "Group setting saved";
 "group.setting.fail" = "Failed to save";
 "group.setting.subject" = "Please enter group name";
+"group.setting.announcement" = "Please input announcement";
+"group.setting.ext" = "Please input ext";
 
 //Chatroom detail
 "chatroom.somebodyInvite" = "%@ invite you to join chatroom \'%@\'";
@@ -209,6 +247,7 @@
 "chatroom.mutes" = "Mute List";
 "chatroom.onlineMembers" = "members count";
 "chatroom.description" = "Description";
+"chatroom.announcement" = "Announcement";
 "chatroom.joining" = "Joining...";
 "chatroom.fetchInfoFail" = "Failed to get the chatroom info, please try again later.";
 "chatroom.joinFailed" = "Failed to join chatroom \'%@\', please try again later.";
@@ -220,11 +259,27 @@
 "chatroom.create.ongoing" = "create a chatroom...";
 "chatroom.create.success" = "create chatroom success";
 "chatroom.create.fail" = "Failed to create a chatroom, please operate again";
+"chatroom.changeAnnouncementFail" = "Fail to change announcement";
+"chatroom.fetchAnnouncementFail" = "fail to get announcement";
 
 "chatroom.destroy" = "Destroy the chatroom";
 "chatroom.leave" = "Leave the chatroom";
 "chatroom.destroyFail" = "Destroy the chatroom failure";
 "chatroom.leaveFail" = "Leave the chatroom failure";
+
+//chatroom delegate
+
+"chatroom.update" = "Chatroom Update";
+"chatroom.mute" = "Mute";
+"chatroom.unmute" = "Unmute";
+"chatroom.adminUpdate" = "Admin Update";
+"chatroom.becomeAdmin" = "%@ become admin";
+"chatroom.beRemovedAdmin" = "%@ is removed from admin list";
+"chatroom.changeOwnerTo" = "Change Chatroom Owner %@ to %@";
+"chatroom.ownerUpdate" = "Chatroom Owner Update";
+"chatroom.announcementUpdate" = "Chatroom Announcement Update";
+"chatroom.clearAnnouncement" = "Chatroom:%@ Announcement is clear";
+"chatroom.updateAnnouncement" = "Chatroom:%@ Announcement: %@";
 
 //call
 "call.initFailed"="Failed to establish call";
@@ -291,6 +346,9 @@
 "message.startRecordFail" = "Failed to start recording";
 "message.noMessage" = "All messages are cleared";
 "message.forbiddenWords" = "Your message contains forbidden words";
+"message.recall" = "You recall a message";
+"message.recallByOthers" = "%@ recall a message";
+"message.autoTransfer" = "Please customize the transfer attachment method";
 
 //media
 "media.timeShort" = "The recording time is too short";
@@ -319,7 +377,7 @@
 "title.mychatroom" = "My Chatroom";
 "title.chooseContact" = "Choose a contact";
 "title.debug" = "Debug";
-"title.groupBlackList" = "Group blacklist";
+"title.groupBlackList" = "Blacklist";
 "title.createGroup" = "Create a group";
 "title.publicGroup" = "Public group";
 "title.groupSetting" = "Group Setting";
@@ -328,17 +386,23 @@
 "title.apply" = "Application and Notification";
 "title.groupApply" = "Group Notification";
 "title.groupSubjectChanging" = "Change Group Name";
+"title.groupAnnouncementChanging" = "Change Announcement";
+"title.groupExtChanging" = "Change Ext";
 "title.groupSearchMessage" = "Search Message from History";
+"title.groupInfo" = "Group Info";
 "title.chatroom" = "Chatroom";
 "title.robotlist" = "Robot List";
 "title.profile" = "Profile";
 "title.createChatroom" = "Create a chatroom";
+"title.customAttachments" = "The message attachment is uploaded to your own server";
+"title.autoDownloadThumbnail" = "Weather to Automatic download thumbnail";
 
 //setting
 "setting.autoLogin" = "Automatic Login";
 "setting.loginUser" = "Log out(%@)";
 "setting.logoutOngoing" = "Logging out...";
 "setting.sortbyservertime" = "Sort Message by Server Time";
+"setting.enableDeliveryAck" = "Whether to send delivery ack";
 
 "setting.notDisturb" = "Do Not Disturb";
 "setting.showDetail" = "Show Message Details on Lock Screen";
@@ -346,10 +410,13 @@
 "setting.nightOpen" = "Only Enable From 10pm to 7am";
 "setting.close" = "Off";
 "setting.sureNotDisturb" = "You will no longer receive push notification by turning it on, are you sure?";
+"setting.messageRource" = "The priority server gets the message";
 
 "setting.uploadLog" = "Upload Log";
 "setting.sdkVersion" = "SDK Version";
 "setting.emailLog" = "Email log";
+"setting.deviceResources" = "List of logged devices";
+"setting.kickAllDevices" = "KickAll";
 "setting.uploading" = "Uploading...";
 "setting.uploadSuccess" = "Uploaded successfully";
 "setting.uploadFail" = "Failed to upload";
@@ -400,3 +467,24 @@
 "NSDateCategory.text12" = "aa hh:mm";
 "NSDateCategory.text13" = "M-d HH:mm";
 "NSDateCategory.text14" = "today %@";
+
+//multi devices
+"alert.multi.contact" = "Contact Multi-devices";
+"alert.multi.group" = "Group Multi-devices";
+"alert.multi.tooManyDevices" = "Login too many devices";
+
+//multi call
+"title.conference.voice" = "Mutil Voice Conference";
+"title.conference.video" = "Mutil Video Conference";
+"alert.conference.createFail" = "Create or Join conference failed!";
+"alert.conference.pubFail" = "Pub stream failed!";
+"alert.conference.inviteFail" = "Invite failed!";
+"alert.conference.inviteSuccess" = "Invite successful!";
+"alert.conference.subFail" = "Sub stream-%@ failed!";
+"hint.conference.userJoin" = "User %@ has been joined to the conference";
+"hint.conference.userLeave" = "User %@ has been leaved from the conference";
+"alert.conference.closed" = "Conference has been closed";
+"network.conference.normal" = "Network changes: the network is normal";
+"network.conference.unstable" = "Network changes: the network is unstable";
+"network.conference.dis" = "Network changes: the network is disconnect";
+"title.conference.addUser" = "Add User";

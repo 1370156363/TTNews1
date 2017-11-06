@@ -42,8 +42,6 @@
 		01EC09F11F93A33B0002BEB8 /* DongtaiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EC09F01F93A33B0002BEB8 /* DongtaiModel.m */; };
 		01EC09F51F93A6C30002BEB8 /* DyqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EC09F31F93A6C30002BEB8 /* DyqCell.m */; };
 		01EC09F61F93A6C30002BEB8 /* DyqCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01EC09F41F93A6C30002BEB8 /* DyqCell.xib */; };
-		043062411FAEEE3C001113C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0430623C1FAEEE39001113C4 /* InfoPlist.strings */; };
-		043062421FAEEE3C001113C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0430623D1FAEEE3A001113C4 /* Localizable.strings */; };
 		043062431FAEEE3C001113C4 /* IMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430623F1FAEEE3C001113C4 /* IMViewController.m */; };
 		043062471FAF47A3001113C4 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043062461FAF47A3001113C4 /* AVOSCloud.framework */; };
 		0430624B1FAF47B2001113C4 /* EMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0430624A1FAF47B2001113C4 /* EMAlertView.m */; };
@@ -142,6 +140,16 @@
 		04B22DC31FAF5BDE00AFE149 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B22DC21FAF5BDE00AFE149 /* libicucore.tbd */; };
 		04B22DC81FAF621500AFE149 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DC71FAF621500AFE149 /* ContactListViewController.m */; };
 		04B22DCD1FAF674100AFE149 /* ConversationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DCC1FAF674100AFE149 /* ConversationListController.m */; };
+		04B22DD41FB0096800AFE149 /* AppDelegate+EaseMobDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DD11FB0096700AFE149 /* AppDelegate+EaseMobDebug.m */; };
+		04B22DD51FB0096800AFE149 /* AppDelegate+EaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DD31FB0096700AFE149 /* AppDelegate+EaseMob.m */; };
+		04B22DD91FB0539800AFE149 /* RealtimeSearchUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DD71FB0539700AFE149 /* RealtimeSearchUtil.m */; };
+		04B22DE31FB053CB00AFE149 /* ApplyFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DDB1FB053CB00AFE149 /* ApplyFriendCell.m */; };
+		04B22DE41FB053CB00AFE149 /* ApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DDC1FB053CB00AFE149 /* ApplyViewController.m */; };
+		04B22DE51FB053CB00AFE149 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DDE1FB053CB00AFE149 /* AddFriendViewController.m */; };
+		04B22DE61FB053CB00AFE149 /* AddFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DE01FB053CB00AFE149 /* AddFriendCell.m */; };
+		04B22DE91FB05C5500AFE149 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DE81FB05C5500AFE149 /* ChatViewController.m */; };
+		04B22DEA1FB065BA00AFE149 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04B22DEC1FB065BA00AFE149 /* Localizable.strings */; };
+		04E3DDA11FB068D4003EDC43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DD9E1FB068D4003EDC43 /* InfoPlist.strings */; };
 		1DC67303B4F8A6F87BEC546A /* libPods-TTNewsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92641E010C8FDC1389C15EF /* libPods-TTNewsTests.a */; };
 		6F1566DD1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566DB1FA3162D00EA9FD4 /* KGDynamicTableViewCell.m */; };
 		6F1566E31FA332AA00EA9FD4 /* DymamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1566E21FA332AA00EA9FD4 /* DymamicModel.m */; };
@@ -855,8 +863,6 @@
 		01EC09F21F93A6C30002BEB8 /* DyqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DyqCell.h; sourceTree = "<group>"; };
 		01EC09F31F93A6C30002BEB8 /* DyqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DyqCell.m; sourceTree = "<group>"; };
 		01EC09F41F93A6C30002BEB8 /* DyqCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DyqCell.xib; sourceTree = "<group>"; };
-		0430623C1FAEEE39001113C4 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
-		0430623D1FAEEE3A001113C4 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0430623E1FAEEE3B001113C4 /* ChatUIDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUIDefine.h; sourceTree = "<group>"; };
 		0430623F1FAEEE3C001113C4 /* IMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMViewController.m; sourceTree = "<group>"; };
 		043062401FAEEE3C001113C4 /* IMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMViewController.h; sourceTree = "<group>"; };
@@ -1039,6 +1045,27 @@
 		04B22DC71FAF621500AFE149 /* ContactListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
 		04B22DCB1FAF674100AFE149 /* ConversationListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConversationListController.h; sourceTree = "<group>"; };
 		04B22DCC1FAF674100AFE149 /* ConversationListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConversationListController.m; sourceTree = "<group>"; };
+		04B22DD01FB0096600AFE149 /* AppDelegate+EaseMobDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+EaseMobDebug.h"; sourceTree = "<group>"; };
+		04B22DD11FB0096700AFE149 /* AppDelegate+EaseMobDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+EaseMobDebug.m"; sourceTree = "<group>"; };
+		04B22DD21FB0096700AFE149 /* AppDelegate+EaseMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+EaseMob.h"; sourceTree = "<group>"; };
+		04B22DD31FB0096700AFE149 /* AppDelegate+EaseMob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+EaseMob.m"; sourceTree = "<group>"; };
+		04B22DD61FB041FF00AFE149 /* TTNews.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TTNews.entitlements; sourceTree = "<group>"; };
+		04B22DD71FB0539700AFE149 /* RealtimeSearchUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealtimeSearchUtil.m; sourceTree = "<group>"; };
+		04B22DD81FB0539800AFE149 /* RealtimeSearchUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealtimeSearchUtil.h; sourceTree = "<group>"; };
+		04B22DDB1FB053CB00AFE149 /* ApplyFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyFriendCell.m; sourceTree = "<group>"; };
+		04B22DDC1FB053CB00AFE149 /* ApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyViewController.m; sourceTree = "<group>"; };
+		04B22DDD1FB053CB00AFE149 /* AddFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendCell.h; sourceTree = "<group>"; };
+		04B22DDE1FB053CB00AFE149 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
+		04B22DDF1FB053CB00AFE149 /* ApplyFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyFriendCell.h; sourceTree = "<group>"; };
+		04B22DE01FB053CB00AFE149 /* AddFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendCell.m; sourceTree = "<group>"; };
+		04B22DE11FB053CB00AFE149 /* ApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyViewController.h; sourceTree = "<group>"; };
+		04B22DE21FB053CB00AFE149 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
+		04B22DE71FB05C5500AFE149 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		04B22DE81FB05C5500AFE149 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		04B22DEB1FB065BA00AFE149 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		04E3DD9A1FB0686D003EDC43 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/ChatUI/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		04E3DD9F1FB068D4003EDC43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/en.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		04E3DDA01FB068D4003EDC43 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		07E9D64488E92C60CF8D2B6B /* Pods-TTNewsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsUITests/Pods-TTNewsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		2BAF96C60E66025F03CAF1B4 /* Pods-TTNews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNews.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNews/Pods-TTNews.release.xcconfig"; sourceTree = "<group>"; };
 		4BD837B9395343B702E90E80 /* Pods-TTNewsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTNewsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTNewsTests/Pods-TTNewsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1960,6 +1987,10 @@
 		0430623B1FAEEE28001113C4 /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				04B22DD21FB0096700AFE149 /* AppDelegate+EaseMob.h */,
+				04B22DD31FB0096700AFE149 /* AppDelegate+EaseMob.m */,
+				04B22DD01FB0096600AFE149 /* AppDelegate+EaseMobDebug.h */,
+				04B22DD11FB0096700AFE149 /* AppDelegate+EaseMobDebug.m */,
 				04B22DC41FAF5CD400AFE149 /* Chat */,
 				04B22DC51FAF5CD400AFE149 /* Contacts */,
 				0430634C1FAF54D2001113C4 /* Core Data */,
@@ -1968,8 +1999,8 @@
 				0430623E1FAEEE3B001113C4 /* ChatUIDefine.h */,
 				043062401FAEEE3C001113C4 /* IMViewController.h */,
 				0430623F1FAEEE3C001113C4 /* IMViewController.m */,
-				0430623C1FAEEE39001113C4 /* InfoPlist.strings */,
-				0430623D1FAEEE3A001113C4 /* Localizable.strings */,
+				04E3DD9E1FB068D4003EDC43 /* InfoPlist.strings */,
+				04B22DEC1FB065BA00AFE149 /* Localizable.strings */,
 			);
 			path = IM;
 			sourceTree = "<group>";
@@ -2234,6 +2265,9 @@
 			children = (
 				04B22DC61FAF621500AFE149 /* ContactListViewController.h */,
 				04B22DC71FAF621500AFE149 /* ContactListViewController.m */,
+				04B22DDA1FB053CB00AFE149 /* FriendApply */,
+				04B22DD81FB0539800AFE149 /* RealtimeSearchUtil.h */,
+				04B22DD71FB0539700AFE149 /* RealtimeSearchUtil.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -2250,8 +2284,25 @@
 		04B22DCA1FAF672F00AFE149 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				04B22DE71FB05C5500AFE149 /* ChatViewController.h */,
+				04B22DE81FB05C5500AFE149 /* ChatViewController.m */,
 			);
 			path = ChatView;
+			sourceTree = "<group>";
+		};
+		04B22DDA1FB053CB00AFE149 /* FriendApply */ = {
+			isa = PBXGroup;
+			children = (
+				04B22DDB1FB053CB00AFE149 /* ApplyFriendCell.m */,
+				04B22DDC1FB053CB00AFE149 /* ApplyViewController.m */,
+				04B22DDD1FB053CB00AFE149 /* AddFriendCell.h */,
+				04B22DDE1FB053CB00AFE149 /* AddFriendViewController.m */,
+				04B22DDF1FB053CB00AFE149 /* ApplyFriendCell.h */,
+				04B22DE01FB053CB00AFE149 /* AddFriendCell.m */,
+				04B22DE11FB053CB00AFE149 /* ApplyViewController.h */,
+				04B22DE21FB053CB00AFE149 /* AddFriendViewController.h */,
+			);
+			path = FriendApply;
 			sourceTree = "<group>";
 		};
 		6F1566D91FA3128200EA9FD4 /* 动态 */ = {
@@ -2347,6 +2398,7 @@
 		EE4635C51CC72B8900DB248F /* TTNews */ = {
 			isa = PBXGroup;
 			children = (
+				04B22DD61FB041FF00AFE149 /* TTNews.entitlements */,
 				F8B5A6601F2841CC00AEBF39 /* Model */,
 				F832CE941F2772A90032C23D /* Tools */,
 				F832CE751F2765880032C23D /* SDK */,
@@ -3821,6 +3873,11 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = P59V3E9HH2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					EE4635DB1CC72B8A00DB248F = {
 						CreatedOnToolsVersion = 7.3;
@@ -3841,6 +3898,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = EE4635BA1CC72B8900DB248F;
 			productRefGroup = EE4635C41CC72B8900DB248F /* Products */;
@@ -3883,6 +3941,7 @@
 				F832CDAF1F2761B70032C23D /* shoucang.png in Resources */,
 				F832CE151F2761B80032C23D /* wo.png in Resources */,
 				6F8106C01FAEF02E00E00946 /* ApplyApproveController.xib in Resources */,
+				04E3DDA11FB068D4003EDC43 /* InfoPlist.strings in Resources */,
 				F832CE031F2761B80032C23D /* weixuan.png in Resources */,
 				F832CCF21F2761B70032C23D /* daifukuan.png in Resources */,
 				F832CE6B1F2761B80032C23D /* zitiGL@3x.png in Resources */,
@@ -4067,7 +4126,7 @@
 				F832CCE01F2761B70032C23D /* bianjiSC.png in Resources */,
 				F832CCE41F2761B70032C23D /* chakan@2x.png in Resources */,
 				F832CD4D1F2761B70032C23D /* jiahaoyou@2x.png in Resources */,
-				043062421FAEEE3C001113C4 /* Localizable.strings in Resources */,
+				04B22DEA1FB065BA00AFE149 /* Localizable.strings in Resources */,
 				F832CE551F2761B80032C23D /* zanX@2x.png in Resources */,
 				F832CE261F2761B80032C23D /* xiala@3x.png in Resources */,
 				F832CD681F2761B70032C23D /* pengyouquan@2x.png in Resources */,
@@ -4305,7 +4364,6 @@
 				F832CDFF1F2761B80032C23D /* weixinX@3x.png in Resources */,
 				01EC09F61F93A6C30002BEB8 /* DyqCell.xib in Resources */,
 				F832CE281F2761B80032C23D /* xialaXZ@2x.png in Resources */,
-				043062411FAEEE3C001113C4 /* InfoPlist.strings in Resources */,
 				F832CD661F2761B70032C23D /* paisheGL@3x.png in Resources */,
 				F832CE081F2761B80032C23D /* wenda@3x.png in Resources */,
 				F832CD3A1F2761B70032C23D /* guanbi.png in Resources */,
@@ -4541,6 +4599,7 @@
 				F8B5A64B1F2820E500AEBF39 /* IDMPhotoBrowser.m in Sources */,
 				043063AA1FAF5749001113C4 /* UIFont+YYAdd.m in Sources */,
 				EE79B12D1CC8C435001029EF /* AppDelegate.m in Sources */,
+				04B22DE51FB053CB00AFE149 /* AddFriendViewController.m in Sources */,
 				04AEF0331F9E41B6000BF3DE /* NewsInfoViewController.m in Sources */,
 				F8B5A64E1F2820E500AEBF39 /* IDMZoomingScrollView.m in Sources */,
 				F89E70AA1F28A798003965B1 /* CXHTMLDocument.m in Sources */,
@@ -4571,6 +4630,7 @@
 				F832CE921F2771A50032C23D /* XLChannelItem.m in Sources */,
 				04AEF0181F9E329A000BF3DE /* WenDaMessageTableViewCell.m in Sources */,
 				F832CE971F2772AD0032C23D /* UIView+Shadow.m in Sources */,
+				04B22DD91FB0539800AFE149 /* RealtimeSearchUtil.m in Sources */,
 				043063531FAF54D2001113C4 /* InvitationManager.m in Sources */,
 				6F1566E31FA332AA00EA9FD4 /* DymamicModel.m in Sources */,
 				EE79B1361CC8C435001029EF /* TTPictureComment.m in Sources */,
@@ -4600,6 +4660,7 @@
 				013A87F21F67893B0017175F /* GLBannerView.m in Sources */,
 				F89E70FB1F28A842003965B1 /* LSYCatalogViewController.m in Sources */,
 				F832CE861F2765920032C23D /* UITableView+CBTableViewDataSource.m in Sources */,
+				04B22DE61FB053CB00AFE149 /* AddFriendCell.m in Sources */,
 				0430624B1FAF47B2001113C4 /* EMAlertView.m in Sources */,
 				04AEF0151F9E329A000BF3DE /* WenDaInfoImgTableViewCell.m in Sources */,
 				04AEF0131F9E329A000BF3DE /* NewWenDaViewController.m in Sources */,
@@ -4644,6 +4705,7 @@
 				04AEEFE71F9E3200000BF3DE /* DongTaiTableViewCell.m in Sources */,
 				F89E712A1F28C218003965B1 /* UIView+Util.m in Sources */,
 				012D91CD1F88A3A600C8CDD8 /* WendaModel.m in Sources */,
+				04B22DD41FB0096800AFE149 /* AppDelegate+EaseMobDebug.m in Sources */,
 				04B22DCD1FAF674100AFE149 /* ConversationListController.m in Sources */,
 				F89E70C91F28A7AC003965B1 /* LSYNoteModel.m in Sources */,
 				EE79B11E1CC8C435001029EF /* NoPictureNewsTableViewCell.m in Sources */,
@@ -4743,7 +4805,10 @@
 				EE79B12B1CC8C435001029EF /* TTPictureFetchDataParameter.m in Sources */,
 				EE79B1131CC8C435001029EF /* SendFeedbackViewController.m in Sources */,
 				043063A21FAF5749001113C4 /* UITableView+YYAdd.m in Sources */,
+				04B22DE31FB053CB00AFE149 /* ApplyFriendCell.m in Sources */,
 				043063A61FAF5749001113C4 /* UIBarButtonItem+YYAdd.m in Sources */,
+				04B22DE91FB05C5500AFE149 /* ChatViewController.m in Sources */,
+				04B22DE41FB053CB00AFE149 /* ApplyViewController.m in Sources */,
 				F8B5A64C1F2820E500AEBF39 /* IDMTapDetectingImageView.m in Sources */,
 				012D91D01F88A7BC00C8CDD8 /* MessageCell.m in Sources */,
 				01B181D81F74F2B700D9F7AF /* CommentCell.m in Sources */,
@@ -4781,6 +4846,7 @@
 				043062431FAEEE3C001113C4 /* IMViewController.m in Sources */,
 				F89E70B41F28A798003965B1 /* CXMLUnsupportedNode.m in Sources */,
 				EE79B1311CC8C435001029EF /* TTJudgeNetworking.m in Sources */,
+				04B22DD51FB0096800AFE149 /* AppDelegate+EaseMob.m in Sources */,
 				043063551FAF54D2001113C4 /* UserCacheManager.m in Sources */,
 				043063431FAF521F001113C4 /* UIViewController+SearchController.m in Sources */,
 				F89E71151F28B318003965B1 /* LibraryController.m in Sources */,
@@ -4832,6 +4898,27 @@
 			targetProxy = EE4635E81CC72B8A00DB248F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		04B22DEC1FB065BA00AFE149 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04B22DEB1FB065BA00AFE149 /* en */,
+				04E3DD9A1FB0686D003EDC43 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		04E3DD9E1FB068D4003EDC43 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04E3DD9F1FB068D4003EDC43 /* en */,
+				04E3DDA01FB068D4003EDC43 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		EE4635EE1CC72B8A00DB248F /* Debug */ = {
@@ -4927,6 +5014,7 @@
 			baseConfigurationReference = D420E8E366C611F060CA6D28 /* Pods-TTNews.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TTNews/TTNews.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Di Wang (VX37MHVFD7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -4961,7 +5049,7 @@
 					"$(PROJECT_DIR)/TTNews/Classes/IM/3rdPart/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/TTNews/Classes/IM/3rdPart/DeviceHelper/VoiceConvert/opencore-amrnb",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xlq.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xwzx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4974,6 +5062,7 @@
 			baseConfigurationReference = 2BAF96C60E66025F03CAF1B4 /* Pods-TTNews.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TTNews/TTNews.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Di Wang (VX37MHVFD7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -5008,7 +5097,7 @@
 					"$(PROJECT_DIR)/TTNews/Classes/IM/3rdPart/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/TTNews/Classes/IM/3rdPart/DeviceHelper/VoiceConvert/opencore-amrnb",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xlq.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xwzx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -11,7 +11,12 @@
 #import "TTConst.h"
 #import "OWGuideView.h"
 
-@interface AppDelegate ()
+#import "AppDelegate+EaseMob.h"
+#import <UserNotifications/UserNotifications.h>
+
+
+@interface AppDelegate ()<UNUserNotificationCenterDelegate>
+
 
 @end
 
@@ -19,6 +24,34 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    }
+
+#warning Init SDK，detail in AppDelegate+EaseMob.m
+#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
+    NSString *apnsCertName = nil;
+#if DEBUG
+    apnsCertName = @"dev";
+#else
+    apnsCertName = @"dis";
+#endif
+
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *appkey = [ud stringForKey:@"identifier_appkey"];
+    if (!appkey) {
+        appkey = EaseMobAppKey;
+        [ud setObject:appkey forKey:appkey];
+    }
+
+    [self easemobApplication:application
+didFinishLaunchingWithOptions:launchOptions
+                      appkey:appkey
+                apnsCertName:apnsCertName
+                 otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
+    
+
     [self setupUserDefaults];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [[TTTabBarController alloc] init];
@@ -56,6 +89,37 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+//    if (_mainController) {
+//        [_mainController jumpToChatList];
+//    }
+//    [self easemobApplication:application didReceiveRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+//    if (_mainController) {
+//        [_mainController didReceiveLocalNotification:notification];
+//    }
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    [self easemobApplication:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+//    if (_mainController) {
+//        [_mainController didReceiveUserNotification:response.notification];
+//    }
+//    completionHandler();
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
