@@ -12,6 +12,10 @@
 
 #import "ConversationListController.h"
 
+static NSString *kConversationChatter = @"ConversationChatter";
+static NSString *kMessageType = @"MessageType";
+
+
 @interface IMViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,UIScrollViewDelegate>
 {
     UIPageViewController *_pageVC;
@@ -99,7 +103,6 @@
         [_viewControllers addObject:contact];
     }
 
-
     //添加分页滚动视图控制器
     if (!_pageVC) {
         _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -116,15 +119,13 @@
             }
         }
         ///第一个视图
-        _selectedIndex=1;
-
+        _selectedIndex=0;
+        [self setSelectedIndex:0];
     }
 
     [self.view addSubview:self.chatBtu];
     [self.view addSubview:self.contactsBtu];
     [self.view addSubview:_pageVC.view];
-
-
 
 
 }
@@ -156,6 +157,8 @@
     else
     {
         self.contactsBtu.selected=YES;
+        _selectedIndex=1;
+        [self setSelectedIndex:1];
     }
 }
 
@@ -170,6 +173,8 @@
     }
     else{
         self.chatBtu.selected=YES;
+        _selectedIndex=0;
+        [self setSelectedIndex:0];
     }
 }
 

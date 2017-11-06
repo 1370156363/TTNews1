@@ -108,4 +108,11 @@ static OWTool * instance = nil;
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     return  [ud objectForKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
 }
+
+//修改环信账号
+-(void)setHuanXin:(NSString *)str {
+
+}
+
+
 @end

@@ -8,8 +8,14 @@
 
 #import <EaseUI/EaseUI.h>
 
-//@interface ConversationListController : EaseConversationListViewController
-@interface ConversationListController : UIViewController
+@interface ConversationListController : EaseConversationListViewController
 
+@property (strong, nonatomic) NSMutableArray *conversationsArray;
+
+- (void)refresh;
+- (void)refreshDataSource;
+
+- (void)isConnect:(BOOL)isConnect;
+- (void)networkChanged:(EMConnectionState)connectionState;
 
 @end

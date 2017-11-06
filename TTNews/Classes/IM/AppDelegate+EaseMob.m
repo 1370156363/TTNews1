@@ -30,11 +30,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
               apnsCertName:(NSString *)apnsCertName
                otherConfig:(NSDictionary *)otherConfig
 {
-//    //注册登录状态监听
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(loginStateChange:)
-//                                                 name:KNOTIFICATION_LOGINCHANGE
-//                                               object:nil];
+    //注册登录状态监听
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginStateChange:)
+                                                 name:KNOTIFICATION_LOGINCHANGE
+                                               object:nil];
 
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     BOOL isHttpsOnly = [ud boolForKey:@"identifier_httpsonly"];
@@ -48,13 +48,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 //    [ChatUIHelper shareHelper];
 
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
-//    if (isAutoLogin){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
-//    }
-//    else
-//    {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
-//    }
+    if (isAutoLogin){
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+    }
 
     // 注册web缓存
     [UserWebManager config:launchOptions
@@ -110,5 +110,17 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     [alert show];
     
 }
+
+#pragma mark - login changed
+
+- (void)loginStateChange:(NSNotification *)notification
+{
+    BOOL loginSuccess = [notification.object boolValue];
+    if (!loginSuccess) {
+        [[OWTool Instance] set];
+    }
+
+}
+
 
 @end
