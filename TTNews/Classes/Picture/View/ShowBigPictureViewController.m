@@ -40,7 +40,7 @@
         self.scrollView.contentSize = CGSizeMake(0, imageHeight);
     }
     
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.picture.image1] placeholderImage:[UIImage imageNamed:@"defaultUserIcon"] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.picture.image1] placeholderImage:[UIImage imageNamed:@"defaultUserIcon"] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         self.progressView.hidden = NO;
         CGFloat progress = 1.0*receivedSize/expectedSize;
         NSString *text = [NSString stringWithFormat:@"%.0f%%", 100*progress];

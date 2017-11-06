@@ -28,39 +28,47 @@ PODS:
     - DKNightVersion/Core
   - DKNightVersion/UIKit (2.4.3):
     - DKNightVersion/Core
-  - FLAnimatedImage (1.0.12)
+  - EaseUI (3.3.4):
+    - Hyphenate (~> 3.3.4)
+    - MJRefresh (~> 3.1.0)
+    - MWPhotoBrowser (~> 2.1.1)
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
-  - MBProgressHUD (1.0.0)
+  - Hyphenate (3.3.5)
+  - MBProgressHUD (0.9.2)
   - MJExtension (3.0.13)
-  - MJRefresh (3.1.12)
+  - MJRefresh (3.1.15)
+  - MWPhotoBrowser (2.1.2):
+    - DACircularProgress (~> 2.3)
+    - MBProgressHUD (~> 0.9)
+    - SDWebImage (!= 3.7.2, ~> 3.7)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
     - NJKWebViewProgress/ProgressView (= 0.2.3)
   - NJKWebViewProgress/Core (0.2.3)
   - NJKWebViewProgress/ProgressView (0.2.3)
-  - pop (1.0.9)
-  - PYPhotoBrowser (1.5.0):
+  - pop (1.0.10)
+  - PYPhotoBrowser (1.4.0):
     - DACircularProgress
     - MBProgressHUD
-    - SDWebImage/GIF (~> 4.0.0)
-  - SDAutoLayout (2.1.8)
-  - SDWebImage (4.0.0):
-    - SDWebImage/Core (= 4.0.0)
-  - SDWebImage/Core (4.0.0)
-  - SDWebImage/GIF (4.0.0):
-    - FLAnimatedImage (~> 1.0)
-    - SDWebImage/Core
-  - SVProgressHUD (2.1.2)
-  - TZImagePickerController (1.8.1)
+    - SDWebImage (~> 3.8.2)
+  - SDAutoLayout (2.2.0)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SVProgressHUD (2.2.2)
+  - TZImagePickerController (1.9.3)
   - WHCategories (0.08)
 
 DEPENDENCIES:
   - AFNetworking
   - DACircularProgress
   - DKNightVersion
+  - EaseUI (from `https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git`)
   - FMDB
+  - Hyphenate
+  - MBProgressHUD
   - MJExtension
   - MJRefresh
   - NJKWebViewProgress
@@ -72,24 +80,35 @@ DEPENDENCIES:
   - TZImagePickerController
   - WHCategories
 
+EXTERNAL SOURCES:
+  EaseUI:
+    :git: https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git
+
+CHECKOUT OPTIONS:
+  EaseUI:
+    :commit: ff23286e3579c93e6385632b37df619d9f0cb35a
+    :git: https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git
+
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DKNightVersion: eaa80cc4014b4bae7d4b535fd87ecc6a3c2767b3
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  EaseUI: 7de4e15ed36bf8c8a0cfed1f4043def54a272a68
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  Hyphenate: 4ae44d5a328a84e2af27faea89a713304f7bb8b6
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
+  MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
-  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  PYPhotoBrowser: eb140689619b10843beaad9e532581825ad7f542
-  SDAutoLayout: 5a4b48d6b8a5172ae8d088d2879e40dd795e6251
-  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
-  TZImagePickerController: '086034156913375cb19c8e4103562f15322c3b36'
+  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  PYPhotoBrowser: 9b0655bf9b62faa96d94b06f7a452017e730ba4c
+  SDAutoLayout: c5509e77ae75735d9a39f7bc83dba6d3f75d49d8
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+  TZImagePickerController: 079ab986018c22793462e531045a75e366b18252
   WHCategories: 2d6f8ca5efe229842422cec68cd348bd20ced9a2
 
-PODFILE CHECKSUM: 7500ba9bb372f198f06676e20c4cb650a4f6ec1e
+PODFILE CHECKSUM: 3fb6b6e0664df1343f71bc3bce4fcebc364dd26b
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1
