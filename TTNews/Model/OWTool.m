@@ -110,9 +110,12 @@ static OWTool * instance = nil;
 }
 
 //修改环信账号
--(void)setHuanXin:(NSString *)str {
-
+-(void)setHuanXin:(NSString *)username {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:username forKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
+    [ud synchronize];
 }
+
 
 
 @end

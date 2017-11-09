@@ -12,6 +12,9 @@
 
 #import "ConversationListController.h"
 
+///专家团
+#import "ZhuanjiaController.h"
+
 static NSString *kConversationChatter = @"ConversationChatter";
 static NSString *kMessageType = @"MessageType";
 
@@ -126,7 +129,7 @@ static NSString *kMessageType = @"MessageType";
     [self.view addSubview:self.chatBtu];
     [self.view addSubview:self.contactsBtu];
     [self.view addSubview:_pageVC.view];
-
+    [self addChildViewController:_pageVC];
 
 }
 
@@ -141,8 +144,9 @@ static NSString *kMessageType = @"MessageType";
 ///确定按钮
 -(void)okAction{
     NSLog(@"111");
-
-
+    ZhuanjiaController *zhuanjia=[[ZhuanjiaController alloc] init];
+    [self.navigationController pushViewController:zhuanjia animated:YES];
+    
 }
 
 ///点击会话事件
@@ -164,7 +168,7 @@ static NSString *kMessageType = @"MessageType";
 
 ///点击通讯录事件
 - (void)contactsAction:(UIButton *)sender{
-    NSLog(@"111223333");
+//    NSLog(@"111223333");
     sender.selected=!sender.selected;
     if (sender.selected) {
         self.chatBtu.selected=NO;
@@ -186,6 +190,7 @@ static NSString *kMessageType = @"MessageType";
     UIViewController *vc;
     if (_selectedIndex + 1 < _viewControllers.count) {
         vc = _viewControllers[_selectedIndex + 1];
+//        vc.navigationController=self.navigationController;
         vc.view.bounds = pageViewController.view.bounds;
     }
     return vc;
@@ -196,6 +201,7 @@ static NSString *kMessageType = @"MessageType";
     UIViewController *vc;
     if (_selectedIndex - 1 >= 0) {
         vc = _viewControllers[_selectedIndex - 1];
+//        vc.navigationController=self.navigationController;
         vc.view.bounds = pageViewController.view.bounds;
     }
     return vc;

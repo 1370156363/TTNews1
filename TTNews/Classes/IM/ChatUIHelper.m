@@ -141,6 +141,7 @@ static ChatUIHelper *helper = nil;
 
 - (void)autoLoginDidCompleteWithError:(EMError *)error
 {
+
     if (error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"自动登录失败，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         alertView.tag = 100;

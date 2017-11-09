@@ -56,6 +56,7 @@
     _sectionTitles = [NSMutableArray array];
 
     [self setupSearchController];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -188,7 +189,9 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            [self.navigationController pushViewController:[ApplyViewController shareController] animated:YES];
+            ApplyViewController*apply= [ApplyViewController shareController];
+            [self.navigationController pushViewController:apply animated:YES];
+
         }
         else if (row == 1)
         {

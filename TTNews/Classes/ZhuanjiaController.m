@@ -166,7 +166,6 @@
     cell=[self.tableView dequeueReusableCellWithIdentifier:@"zhuanjia"];
     cell =[[NSBundle mainBundle] loadNibNamed:@"ZhuanJiaTableViewCell" owner:self options:nil][0];
     //                 cell=[];
-
     [cell.iconimage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]]];
     
     //                 cell.imageView.image=UIImageNamed(@"qq");
@@ -178,12 +177,10 @@
         cell.detailLab.text=@"这个人很懒,什么都没留下";
     }
 
-    
     if (mutarr.count!=0) {
         if ([mutarr containsObject:model.uid]) {
             cell.guanzhuBtu.selected=YES;
             [cell.guanzhuBtu setBackgroundColor:HexRGB(0xE4E4E4)];
-
         }
         else{
             cell.guanzhuBtu.layer.borderColor=[UIColor redColor].CGColor;
@@ -195,7 +192,8 @@
         cell.guanzhuBtu.layer.borderWidth=1;
     }
 
-    cell.guanzhuBtu.tag=[model.uid integerValue]+100;
+//    cell.guanzhuBtu.tag=[model.uid integerValue]+100;
+    cell.guanzhuBtu.tag=indexPath.section+100;
 
     cell.guanzhuBtu.layer.cornerRadius=5;
     cell.guanzhuBtu.userInteractionEnabled=YES;
@@ -231,10 +229,12 @@
 }
 
 
--(void)addGuanZhu:(BOOL)isAdd id:(NSInteger)Id{
+-(void)addGuanZhu:(BOOL)isAdd id:(NSInteger)Id {
+    UserModel *model=self.dataListArr[Id];
 
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)Id],@"uid", nil];
-
+     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)model.uid],@"uid", nil];
+    ///添加即时通讯好友
+    [self addContact:model.last_login_ip];
     ///接口没有调试
     if (isAdd) {
         ///添加关注
@@ -258,9 +258,22 @@
         } failure:^(NSError *error) {
 
         } visibleHUD:YES];
+    }
+
+}
+
+#pragma mark -添加好友
+///添加好友申请
+-(void)addContact:(NSString *)phoneStr{
+//    phoneStr=@"17762274010";
+    
+    EMError *error = [[EMClient sharedClient].contactManager addContact:phoneStr message:@"我想加您为好友"];
+    if (!error) {
+        NSLog(@"添加成功");
+    }
+    else
+    {
 
     }
 }
-
-
 @end

@@ -17,6 +17,7 @@
 //#import "LoginViewController.h"
 //#import "ChatUIHelper.h"
 #import "MBProgressHUD.h"
+#import "ChatUIHelper.h"
 
 /**
  *  本类中做了EaseMob初始化和推送等操作
@@ -45,7 +46,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                                      apnsCertName:apnsCertName
                                       otherConfig:@{@"httpsOnly":[NSNumber numberWithBool:isHttpsOnly], kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES],@"easeSandBox":[NSNumber numberWithBool:[self isSpecifyServer]]}];
     
-//    [ChatUIHelper shareHelper];
+    [ChatUIHelper shareHelper];
 
     BOOL isAutoLogin = [EMClient sharedClient].isAutoLogin;
     if (isAutoLogin){
@@ -117,9 +118,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     BOOL loginSuccess = [notification.object boolValue];
     if (!loginSuccess) {
-        [[OWTool Instance] set];
+        ///变成空
+        [[OWTool Instance] setHuanXin:@""];
     }
-
+    
 }
 
 

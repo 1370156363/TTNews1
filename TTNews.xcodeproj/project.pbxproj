@@ -2466,14 +2466,14 @@
 		04B22DDA1FB053CB00AFE149 /* FriendApply */ = {
 			isa = PBXGroup;
 			children = (
-				04B22DDB1FB053CB00AFE149 /* ApplyFriendCell.m */,
-				04B22DDC1FB053CB00AFE149 /* ApplyViewController.m */,
-				04B22DDD1FB053CB00AFE149 /* AddFriendCell.h */,
-				04B22DDE1FB053CB00AFE149 /* AddFriendViewController.m */,
 				04B22DDF1FB053CB00AFE149 /* ApplyFriendCell.h */,
+				04B22DDB1FB053CB00AFE149 /* ApplyFriendCell.m */,
+				04B22DDD1FB053CB00AFE149 /* AddFriendCell.h */,
 				04B22DE01FB053CB00AFE149 /* AddFriendCell.m */,
 				04B22DE11FB053CB00AFE149 /* ApplyViewController.h */,
+				04B22DDC1FB053CB00AFE149 /* ApplyViewController.m */,
 				04B22DE21FB053CB00AFE149 /* AddFriendViewController.h */,
+				04B22DDE1FB053CB00AFE149 /* AddFriendViewController.m */,
 			);
 			path = FriendApply;
 			sourceTree = "<group>";
