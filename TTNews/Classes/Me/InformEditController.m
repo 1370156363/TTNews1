@@ -139,7 +139,7 @@
                                   lab.text=_userModel.birthday;
                               }
                               else if (index == 5) {
-                                  lab.text=[NSString stringWithFormat:@"%@ %@ %@",_userModel.pos_province,_userModel.pos_city,_userModel.pos_district];
+                                  lab.text=@"北京市-东城区-东华门街道";//[NSString stringWithFormat:@"%@ %@ %@",_userModel.pos_province,_userModel.pos_city,_userModel.pos_district];
                               }
                               lab.font=[UIFont systemFontOfSize:14];
                               lab.textAlignment=2;
@@ -239,6 +239,9 @@
                                 lab.text=str;
                             };
                             edit.titleStr=@"签名";
+                            edit.SendTextBlock = ^(NSString *str) {
+                                lab.text=str;
+                            };
                             [ws.navigationController pushViewController:edit animated:YES];
                         }
                         else if (index==3)
@@ -265,7 +268,7 @@
                         }
                         else if (index==5)
                         {
-                            YYLocationPickerView *location = [[YYLocationPickerView alloc] initWithLevel:YYLocationPickerViewLevelCity andDelegate:self];
+                            YYLocationPickerView *location = [[YYLocationPickerView alloc] initWithLevel:YYLocationPickerViewLevelArea andDelegate:self];
                             location.tag = 2;
                             [location show];
                         }

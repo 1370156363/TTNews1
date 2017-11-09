@@ -44,7 +44,17 @@ typedef NS_ENUM(NSInteger,YYLocationPickerViewLevel){
  */
 - (void)show;
 
+/**
+ 功能：根据id获取对应的地址名称
+ @param ID:地址ID
+ */
++(NSString *) GetAddressName:(NSInteger)ID;
 
+/**
+ 功能：获取地址名称对应的ID
+ @param ID:地址ID
+ */
++(NSInteger) GetAddressID:(NSString* )addressName;
 
 @end
 

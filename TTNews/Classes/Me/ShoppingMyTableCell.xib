@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="93" id="KGk-i7-Jjw" customClass="ShoppingMyTableCell">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="300" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgQ-Tu-FdG">
+                        <rect key="frame" x="0.0" y="5" width="100" height="70"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="地址管理" image="dizhiguanli">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="btnButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qhd-uR-klw"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="300" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UMp-dU-0ff">
+                        <rect key="frame" x="200" y="5" width="100" height="70"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="我的收藏" image="shoucang">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="btnButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rRe-V7-ObF"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="syr-zq-RTO">
+                        <rect key="frame" x="100" y="5" width="100" height="70"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="我的订单" image="dingdan">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="btnButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RIA-j9-SK7"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="syr-zq-RTO" firstAttribute="leading" secondItem="WgQ-Tu-FdG" secondAttribute="trailing" id="0RC-0V-nc5"/>
+                    <constraint firstItem="UMp-dU-0ff" firstAttribute="width" secondItem="WgQ-Tu-FdG" secondAttribute="width" id="CfA-cK-KUb"/>
+                    <constraint firstAttribute="trailing" secondItem="UMp-dU-0ff" secondAttribute="trailing" id="GgV-vx-07q"/>
+                    <constraint firstItem="syr-zq-RTO" firstAttribute="width" secondItem="WgQ-Tu-FdG" secondAttribute="width" id="J9E-6I-b3g"/>
+                    <constraint firstItem="WgQ-Tu-FdG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Mfp-M9-Wxt"/>
+                    <constraint firstAttribute="bottom" secondItem="UMp-dU-0ff" secondAttribute="bottom" constant="4.5" id="PFx-wr-kxg"/>
+                    <constraint firstItem="syr-zq-RTO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="VIz-LP-Off"/>
+                    <constraint firstItem="UMp-dU-0ff" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="ga9-XV-IUu"/>
+                    <constraint firstItem="UMp-dU-0ff" firstAttribute="leading" secondItem="syr-zq-RTO" secondAttribute="trailing" id="hbN-R9-2De"/>
+                    <constraint firstItem="WgQ-Tu-FdG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="n5f-eY-zvt"/>
+                    <constraint firstAttribute="bottom" secondItem="syr-zq-RTO" secondAttribute="bottom" constant="4.5" id="nqn-Ay-Kqr"/>
+                    <constraint firstAttribute="bottom" secondItem="WgQ-Tu-FdG" secondAttribute="bottom" constant="4.5" id="wHY-uA-nAQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="btnDingdanManage" destination="WgQ-Tu-FdG" id="JOs-I9-E6T"/>
+                <outlet property="btnMyCollection" destination="UMp-dU-0ff" id="luw-m2-naM"/>
+                <outlet property="btnMyDingdan" destination="syr-zq-RTO" id="cex-KN-unx"/>
+            </connections>
+            <point key="canvasLocation" x="38" y="105.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dingdan" width="16" height="16"/>
+        <image name="dizhiguanli" width="16" height="16"/>
+        <image name="shoucang" width="16" height="16"/>
+    </resources>
+</document>

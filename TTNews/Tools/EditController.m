@@ -34,10 +34,10 @@
     {
         NSMutableDictionary *prms=[@{
                                      @"uid":[[OWTool Instance] getUid] ,
-                                     @"page":@1
+                                     @"nickname":self.descLab.text
                                      }mutableCopy];
         
-        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkmyDynamic withUserInfo:prms success:^(NSDictionary *message)
+        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:NNetworkUpdateUserInfo withUserInfo:prms success:^(NSDictionary *message)
          {
              self.SendTextBlock(_field.text);
              [SVProgressHUD showSuccessWithStatus:message[@"message"]];

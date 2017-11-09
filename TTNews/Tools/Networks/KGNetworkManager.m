@@ -364,6 +364,24 @@ static NSMutableArray *tasks;
         case NNetworkUpdateUserInfo:
             actionValue=@"api/user/editmyinfo";
             break;
+        case KNetworkGetShoppinglist:
+            actionValue = @"api/goods/goodslist";
+            break;
+        case KNetworkGetShopAddress:
+            actionValue = @"api/goods/address";
+            break;
+        case kNetworkGetAllAddress:
+            actionValue = @"api/goods/get_myaddress";
+            break;
+        case KNetworkGetDeleteAddress:
+            actionValue = @"api/goods/deladdress";
+            break;
+        case KnetworkGetMyDingdan:
+            actionValue = @"api/goods/get_myorder";
+            break;
+        case KNetworkGetDeleteDingdan:
+            actionValue = @"api/goods/delorder";
+            break;
         default:
             break;
     }

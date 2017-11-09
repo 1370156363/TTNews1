@@ -438,11 +438,15 @@
     [UIView animateWithDuration:0.35 animations:^{
         [topView layoutIfNeeded];
     }];
-    if (index==2) {
-        [self kg_hidden:NO];
+    if (index==0) {
+        [self BtnSelect:self.btnFensi];
+        //[self kg_hidden:NO];
+    }
+    else if (index == 1){
+        [self BtnSelect:self.BtnFocus];
     }
     else{
-        [self kg_hidden:YES];
+        [self BtnSelect:self.BtnGusts];
     }
 }
 

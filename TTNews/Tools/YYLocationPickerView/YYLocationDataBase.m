@@ -51,22 +51,50 @@ static YYLocationDataBase *_sharedDataBase;
     FMResultSet *res;
     if([pid integerValue] == 0)
     {
-        res = [self.dataBase executeQuery:@"select *from location where pid=? order by hot desc,key asc,id asc",pid];
+        res = [self.dataBase executeQuery:@"select *from location where level=1 order by id asc"];
     }
     else
     {
-        res = [self.dataBase executeQuery:@"select *from location where pid=?",pid];
+        res = [self.dataBase executeQuery:@"select *from location where upid=?",pid];
     }
     NSMutableArray *array = [[NSMutableArray alloc] init];
     while ([res next]) {
         YYLocationDataBaseModel *model = [[YYLocationDataBaseModel alloc] init];
         model.ID = [res stringForColumn:@"id"];
-        model.title = [res stringForColumn:@"title"];
-        model.pid = [res stringForColumn:@"pid"];
+        model.title = [res stringForColumn:@"name"];
+        model.pid = [res stringForColumn:@"upid"];
         [array addObject:model];
     }
     [self.dataBase close];
     return array;
+}
+
+-(NSString *)GetAddressName:(NSInteger)pid{
+    [self.dataBase open];
+    FMResultSet *res;
+    NSString* address = @"";
+    res = [self.dataBase executeQuery:@"select *from location where id=%@",pid];
+    while ([res next]) {
+        address = [res stringForColumn:@"name"];
+        break;
+    }
+    [self.dataBase close];
+    return address;
+}
+
+-(NSInteger) GetAddressID:(NSString* )addressName{
+    [self.dataBase open];
+    FMResultSet *res;
+    NSInteger ID = 0;
+    NSString * str = [NSString stringWithFormat:@"select * from location where name like \"%@\"",addressName];
+    res = [self.dataBase
+           executeQuery:str];
+    while ([res next]) {
+        ID = [[res stringForColumn:@"id"] integerValue];
+        break;
+    }
+    [self.dataBase close];
+    return ID;
 }
 
 @end
