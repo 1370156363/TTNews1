@@ -101,36 +101,36 @@
 {
     if (userPhone.text.length==0)
     {
-        [SVProgressHUD showImage:nil status:@"请填写11位手机号！"];
+        [SVProgressHUD showInfoWithStatus:@"请填写11位手机号！"];
        return false;
     }
     if (![userPhone.text wh_isMobileNumber])
     {
-        [SVProgressHUD showImage:nil status:@"请输入正确的手机号码！"];
+        [SVProgressHUD showInfoWithStatus:@"请输入正确的手机号码！"];
         return false;
     }
     
     if(userCode.text.length == 0){
-        [SVProgressHUD showImage:nil status:@"请输入验证码！"];
+        [SVProgressHUD showInfoWithStatus:@"请输入验证码！"];
         return false;
     }
     if (![userCode.text isEqualToString:_CodeStr]) {
-        [SVProgressHUD showImage:nil status:@"验证码错误！"];
+        [SVProgressHUD showInfoWithStatus:@"验证码错误！"];
         return false;
     }
     if (userPass.text.length==0)
     {
-        [SVProgressHUD showImage:nil status:@"请输入密码！"];
+        [SVProgressHUD showInfoWithStatus:@"请输入密码！"];
         return false;
     }
     if (![userPass.text isEqualToString:userPassConfim.text])
     {
-        [SVProgressHUD showImage:nil status:@"两次密码不一致！"];
+        [SVProgressHUD showInfoWithStatus:@"两次密码不一致！"];
         return false;
     }
     
     if (![userEmail.text wh_isEmailAddress]) {
-        [SVProgressHUD showImage:nil status:@"请输入正确的邮箱！"];
+        [SVProgressHUD showInfoWithStatus:@"请输入正确的邮箱！"];
         return false;
     }
     

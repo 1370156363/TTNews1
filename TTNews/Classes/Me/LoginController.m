@@ -78,12 +78,12 @@
 {
     if (phone.text.length==0)
     {
-        [SVProgressHUD showImage:nil status:@"请填写11位手机号！"];
+        [SVProgressHUD showInfoWithStatus:@"请填写11位手机号！"];
         return ;
     }
     if (![phone.text wh_isMobileNumber])
     {
-        [SVProgressHUD showImage:nil status:@"请输入正确的手机号码！"];
+        [SVProgressHUD showInfoWithStatus:@"请输入正确的手机号码！"];
         return;
     }
     
@@ -115,17 +115,17 @@
     [SVProgressHUD showWithStatus:@"发送中..."];
     if (![phone.text wh_isMobileNumber])
     {
-        [SVProgressHUD showImage:nil status:@"请输入正确的手机号码！"];
+        [SVProgressHUD showInfoWithStatus:@"请输入正确的手机号码！"];
         return;
     }
     if (isYzmLog)
     {if (pass.text.length==0||pass.text==nil)
         {
-            [SVProgressHUD showImage:nil status:@"请输入验证码！"];
+            [SVProgressHUD showInfoWithStatus:@"请输入验证码！"];
             return;
         }
         else if (![pass.text isEqualToString:self.CodeStr]){
-            [SVProgressHUD showImage:nil status:@"验证码错误！"];
+            [SVProgressHUD showInfoWithStatus:@"验证码错误！"];
             return;
         }
         NSMutableDictionary *prms=[@{
@@ -155,7 +155,7 @@
     {
         if (pass.text.length==0||pass.text==nil)
         {
-            [SVProgressHUD showImage:nil status:@"请输入密码！"];
+            [SVProgressHUD showInfoWithStatus:@"请输入密码！"];
             return;
         }
         
@@ -174,7 +174,7 @@
              }
              else
              {
-                 [SVProgressHUD showImage:nil status:message[@"message"]];
+                 [SVProgressHUD showInfoWithStatus:message[@"message"]];
                  [SVProgressHUD dismissWithDelay:2];
              }
          } failure:^(NSError *error) {

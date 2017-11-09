@@ -30,6 +30,7 @@
 #import "PublishManageViewController.h"
 #import "AddMessageViewController.h"
 #import "EditController.h"
+#import "ShoppingController.h"
 
 @interface MyController ()<TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) UISwitch                *shakeCanChangeSkinSwitch;
@@ -298,6 +299,9 @@
                         else if (index==1){
                             collectController *collect=[[collectController alloc] init];
                             [self.navigationController pushViewController:collect animated:YES];
+                        }
+                        else if(index == 4){
+                            [self.navigationController pushViewController:[ShoppingController new] animated:YES];
                         }
                         else if (index == 2){
                             AddMessageViewController *col = [[AddMessageViewController alloc]init];

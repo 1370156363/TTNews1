@@ -375,6 +375,15 @@
         }
     }
 }
+
++(NSString *) GetAddressName:(NSInteger)ID{
+    return [[YYLocationDataBase sharedDataBase] GetAddressName:ID];
+}
+
++(NSInteger) GetAddressID:(NSString* )addressName{
+    return [[YYLocationDataBase sharedDataBase] GetAddressID:addressName];
+}
+
 #pragma mark - function
 - (void)clearSeparatorWithView:(UIView * )view
 {
