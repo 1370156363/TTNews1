@@ -209,23 +209,20 @@
 }
 
 - (IBAction)IMAction:(UIButton *)sender {
-
     ///默认在这里登录
     if ([[OWTool Instance] getLastLoginUsername].length!=0) {
-
         IMViewController *im=[[IMViewController alloc] init];
         [self.navigationController pushViewController:im animated:YES];
     }
     else{
         ///登录进入
-
+        [self loginWithUsername:@"17762274010" password:@"1"];
     }
 
 }
 
 
 #pragma  mark - private
-
 //点击登陆后的操作
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
 {
@@ -240,16 +237,16 @@
             if (!error) {
                 //设置是否自动登录
                 [[EMClient sharedClient].options setIsAutoLogin:YES];
-
                 //保存最近一次登录用户名
                 [weakself saveLastLoginUsername];
                 //发送自动登陆状态通知
-
             } else {
                 switch (error.code)
                 {
                     case EMErrorUserNotFound:
-                        TTAlertNoTitle(NSLocalizedString(@"error.usernotExist", @"User not exist!"));
+                    {
+                        [self registUser:username password:password];
+                    }
                         break;
                     case EMErrorNetworkUnavailable:
                         TTAlertNoTitle(NSLocalizedString(@"error.connectNetworkFail", @"No network connection!"));
@@ -281,14 +278,22 @@
 
 - (void)saveLastLoginUsername
 {
-
     NSString *username = [[EMClient sharedClient] currentUsername];
     if (username && username.length > 0) {
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         [ud setObject:username forKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
         [ud synchronize];
     }
+}
 
+///注册
+-(void)registUser:(NSString *)username password:(NSString *)password{
+    [[EMClient sharedClient] registerWithUsername:username password:password completion:^(NSString *aUsername, EMError *aError) {
+        if (!aError) {
+            NSLog(@"注册成功");
+            [self loginWithUsername:username password:password];
+        }
+    }];
 }
 
 

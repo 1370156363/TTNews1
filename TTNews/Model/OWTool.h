@@ -24,5 +24,7 @@
 -(NSString *)getUid;
 ///获取环信账号
 - (NSString *)getLastLoginUsername;
+//修改环信账号
+-(void)setHuanXin:(NSString *)str;
 
 @end

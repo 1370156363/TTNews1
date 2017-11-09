@@ -54,6 +54,9 @@
 #import "UserWebManager.h"
 #import "YYCategories.h"
 
+
+#define APPKEY @"five#newsapp"
+
 #define DismissKeyboard                     [[[UIApplication sharedApplication] keyWindow] endEditing:YES]
 #define winsize                             [UIScreen mainScreen].bounds.size
 #define UIImageNamed(imgName)               [UIImage imageNamed:imgName]
