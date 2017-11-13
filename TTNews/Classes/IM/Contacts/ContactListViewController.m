@@ -138,9 +138,14 @@
         cell.indexPath = indexPath;
         cell.delegate = self;
         cell.model = model;
-
+        ///头像
+//        cell.imageView=;
+        ///昵称
+        
         return cell;
-    }}
+    }
+
+}
 
 #pragma mark - Table view delegate
 

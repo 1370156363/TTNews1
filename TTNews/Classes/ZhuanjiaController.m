@@ -30,7 +30,9 @@
 -(void)getguanzhu{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[[OWTool Instance] getUid],@"uid", nil];
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetGUANZHU withUserInfo:dict success:^(id message) {
+         [SVProgressHUD dismiss];
         if ([message[@"status"] integerValue]==1) {
+            [guanzhuNum removeAllObjects];
             NSMutableArray *newArr=[UserModel mj_objectArrayWithKeyValuesArray:message[@"data"]];
             [guanzhuNum addObjectsFromArray:newArr];
             [self getZhuanJia];
@@ -232,16 +234,20 @@
 -(void)addGuanZhu:(BOOL)isAdd id:(NSInteger)Id {
     UserModel *model=self.dataListArr[Id];
 
-     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)model.uid],@"uid", nil];
+     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:model.uid,@"uid", nil];
     ///添加即时通讯好友
-    [self addContact:model.last_login_ip];
+    [self addContact:model.username];
     ///接口没有调试
     if (isAdd) {
         ///添加关注
         [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkAddGUANZHU withUserInfo:dict success:^(id message) {
+            [SVProgressHUD dismiss];
             if ([message[@"status"] integerValue]==1) {
                 ///重新修改关注
                 [self getguanzhu];
+            }
+            else{
+                [SVProgressHUD showErrorWithStatus:message[@"msg"]];
             }
         } failure:^(NSError *error) {
 
@@ -251,6 +257,7 @@
     else{
         ///取消关注
         [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkDelGuanZhu withUserInfo:dict success:^(id message) {
+            [SVProgressHUD dismiss];
             if ([message[@"status"] integerValue]==1) {
                 ///重新修改关注
                 [self getguanzhu];

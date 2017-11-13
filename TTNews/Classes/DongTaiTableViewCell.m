@@ -7,6 +7,7 @@
 //
 
 #import "DongTaiTableViewCell.h"
+#import "UIImageView+Extension.h"
 
 @implementation DongTaiTableViewCell
 
@@ -61,8 +62,17 @@
                 CGFloat image_y=[self getImageWithY:num jianGe:jianGe hight:width];
 
                 UIImageView *image=[[UIImageView alloc] initWithFrame:CGRectMake(image_x, image_y, width, width)];
-                [image sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+                
+//                [image setBackgroundColor:[UIColor grayColor]];
+                [image TT_setImageWithURL:[NSURL URLWithString:imageUrl]];
+//                image.image.cornerRadius=0;
+
+//                [image sd_setImageWithURL:[NSURL URLWithString:imageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//                    NSLog(@"%@",image);
+//                }];
+
                 ///
+
                 [self.imagView addSubview:image];
                 num++;
             }

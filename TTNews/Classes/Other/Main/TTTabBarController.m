@@ -45,13 +45,10 @@
     NewWenDaViewController *wendaVc=[[NewWenDaViewController alloc] initWithNibName:@"NewWenDaViewController" bundle:nil];
     [self addChildViewController:wendaVc withImage:[UIImage imageNamed:@"wenda"] selectedImage:[UIImage imageNamed:@"wendaXZ"] withTittle:@"问答"];
 
-    
 //    dongtaiController *dongtaiVc=[[dongtaiController alloc] init];
     NewDongTaiViewController *dongtaiVc=[[NewDongTaiViewController alloc] initWithNibName:@"NewDongTaiViewController" bundle:nil];
     [self addChildViewController:dongtaiVc withImage:[UIImage imageNamed:@"dongtai"] selectedImage:[UIImage imageNamed:@"dongtaiXZ"] withTittle:@"动态"];
-    
 
-    
     MyController *vc4 = [[MyController alloc] init];
     _MeController = vc4;
     [self addChildViewController:vc4 withImage:[UIImage imageNamed:@"geren"] selectedImage:[UIImage imageNamed:@"gerenxz"] withTittle:@"我的"];
@@ -59,6 +56,7 @@
     vc4.delegate = self;
     
     [self setupBasic];
+
 }
 
 -(void)setupBasic {
@@ -71,6 +69,7 @@
     [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
     [self becomeFirstResponder];
     self.isShakeCanChangeSkin = [[NSUserDefaults standardUserDefaults] boolForKey:IsShakeCanChangeSkinKey];
+
 }
 
 -(void)dealloc {

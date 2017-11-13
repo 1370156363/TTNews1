@@ -62,6 +62,6 @@
 
 -(void)didReceiveMemoryWarning {
     [[SDImageCache sharedImageCache] clearMemory];
-    
 }
+
 @end

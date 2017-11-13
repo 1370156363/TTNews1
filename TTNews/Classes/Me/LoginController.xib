@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -228,9 +228,12 @@
                         <constraint firstItem="6nK-1K-CKe" firstAttribute="leading" secondItem="o3O-lT-tUS" secondAttribute="trailing" constant="30" id="trN-RO-hza"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vx7-NS-uWM">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vx7-NS-uWM">
                     <rect key="frame" x="249" y="313" width="106" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="106" id="KJF-ME-axR"/>
+                        <constraint firstAttribute="height" constant="30" id="g3C-OE-9YU"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="账号注册">
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -247,6 +250,7 @@
                 <constraint firstItem="ZJa-ts-xfe" firstAttribute="top" secondItem="VmG-is-Ad9" secondAttribute="bottom" constant="60" id="BNM-8m-CAd"/>
                 <constraint firstItem="WD3-Y6-Y8l" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="Fmr-qU-6ms"/>
                 <constraint firstItem="F2a-AK-ieB" firstAttribute="top" secondItem="cIS-2O-uPx" secondAttribute="bottom" constant="57" id="HLA-bX-c0S"/>
+                <constraint firstAttribute="trailing" secondItem="vx7-NS-uWM" secondAttribute="trailing" constant="20" id="J2M-C8-IkD"/>
                 <constraint firstItem="oA6-1k-RuV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="L9j-0z-kut"/>
                 <constraint firstItem="cIS-2O-uPx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Mn9-33-NwR"/>
                 <constraint firstItem="cIS-2O-uPx" firstAttribute="top" secondItem="ZJa-ts-xfe" secondAttribute="bottom" id="NJn-Rr-R0T"/>
@@ -259,6 +263,7 @@
                 <constraint firstItem="VmG-is-Ad9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="emU-v6-8FN"/>
                 <constraint firstItem="Kkg-yd-OYY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="fM4-gj-4jF"/>
                 <constraint firstItem="8EX-hL-O75" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="fxV-mb-C5Y"/>
+                <constraint firstItem="vx7-NS-uWM" firstAttribute="top" secondItem="VmG-is-Ad9" secondAttribute="bottom" constant="8" id="i1A-sP-x3N"/>
                 <constraint firstAttribute="trailing" secondItem="ZJa-ts-xfe" secondAttribute="trailing" id="iLC-jK-jJr"/>
                 <constraint firstItem="Elw-jY-o3W" firstAttribute="leading" secondItem="8EX-hL-O75" secondAttribute="trailing" id="kUu-4B-XfU"/>
                 <constraint firstItem="F2a-AK-ieB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="nfC-Zb-8Mf"/>

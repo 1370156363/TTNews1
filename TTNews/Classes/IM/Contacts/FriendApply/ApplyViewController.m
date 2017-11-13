@@ -49,19 +49,19 @@ static ApplyViewController *controller = nil;
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-//    self.title = NSLocalizedString(@"title.apply", @"Application and notification");
+    self.title = NSLocalizedString(@"title.apply", @"Application and notification");
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    backButton.accessibilityIdentifier = @"back";
-//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    [self.navigationItem setLeftBarButtonItem:backItem];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    backButton.accessibilityIdentifier = @"back";
+    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:backItem];
 
     [self loadDataSourceFromLocalDB];
-    [self setupBasic];
+//    [self setupBasic];
 }
 
 - (void)didReceiveMemoryWarning

@@ -112,17 +112,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     
 }
 
-#pragma mark - login changed
 
-- (void)loginStateChange:(NSNotification *)notification
-{
-    BOOL loginSuccess = [notification.object boolValue];
-    if (!loginSuccess) {
-        ///变成空
-        [[OWTool Instance] setHuanXin:@""];
-    }
-    
-}
 
 
 @end

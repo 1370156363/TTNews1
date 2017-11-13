@@ -85,10 +85,12 @@ static NSString * const VideoCell = @"VideoCell";
 -(void)setupBasic {
     
     self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+//    self.tableView.backgroundColor=[UIColor redColor];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(104, 0, 0, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([TopPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:topPictureCell];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([TopTextTableViewCell class]) bundle:nil] forCellReuseIdentifier:topTextPictureCell];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BigPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:bigPictureCell];
@@ -173,6 +175,7 @@ static NSString * const VideoCell = @"VideoCell";
     TTVideo *video=self.arrayList[indexPath.section];
 
     if ([video.model_id integerValue]==6) {
+        ///视频
         VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VideoCell];
         cell.video = video;
         cell.indexPath = indexPath;
@@ -189,7 +192,6 @@ static NSString * const VideoCell = @"VideoCell";
 
         NSArray *imagss=[video.fengmian componentsSeparatedByString:@","];
         if (imagss.count!=0) {
-            [cell.myImage1 setBackgroundColor:[UIColor redColor]];
           [cell.myImage1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,imagss[0]]] placeholderImage:nil];
             
         }
@@ -285,11 +287,13 @@ static NSString * const VideoCell = @"VideoCell";
         VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
 //        TTVideo *video=self.videoArray[indexPath.row];
         info.url=video.id;
+        info.video=video;
         [self.navigationController pushViewController:info animated:YES];
     }
     else{
         NewsInfoViewController *info=[[NewsInfoViewController alloc] init];
         info.url=video.id;
+        info.video=video;
         [self.navigationController pushViewController:info animated:YES];
         
     }

@@ -163,6 +163,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
     TTVideo *video=self.videoArray[indexPath.row];
     info.url=video.id;
+    info.video=video;
     [self.navigationController pushViewController:info animated:YES];
 }
 
