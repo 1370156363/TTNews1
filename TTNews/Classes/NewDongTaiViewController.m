@@ -18,6 +18,8 @@
 ///详情
 #import "DongTaiInfoViewController.h"
 #import "IMViewController.h"
+#import "LoginController.h"
+
 
 @interface NewDongTaiViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -209,14 +211,14 @@
 }
 
 - (IBAction)IMAction:(UIButton *)sender {
+    ///登录进入
     ///默认在这里登录
     if ([[OWTool Instance] getLastLoginUsername].length!=0) {
         IMViewController *im=[[IMViewController alloc] init];
         [self.navigationController pushViewController:im animated:YES];
     }
     else{
-        ///登录进入
-        [self loginWithUsername:@"17762274010" password:@"1"];
+        [self.navigationController pushViewController:[[LoginController alloc] init] animated:YES];
     }
 
 }

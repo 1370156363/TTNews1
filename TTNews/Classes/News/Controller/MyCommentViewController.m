@@ -11,8 +11,12 @@
 #import "NewsTableViewCell.h"
 
 #import "CommentTableViewCell.h"
+#import "WenDaComment.h"
 
-@interface MyCommentViewController ()<UITableViewDelegate,UITableViewDataSource>
+#define INTERVAL_KEYBOARD 0
+
+
+@interface MyCommentViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     NSArray *dataArr;
     ///评论数据
@@ -21,6 +25,10 @@
 
 
 @property (weak, nonatomic) IBOutlet UITableView *MainTabView;
+@property (weak, nonatomic) IBOutlet UITextField *textView;
+@property (weak, nonatomic) IBOutlet UIView *footView;
+@property (weak, nonatomic) IBOutlet UIButton *okBtu;
+- (IBAction)okAction:(UIButton *)sender;
 
 @end
 
@@ -29,17 +37,19 @@
 ///获取评论的网络连接
 -(void)getCommet{
 //KNetworkGetCommnet
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",@"4",@"model_id", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",self.video.model_id,@"model_id", nil];
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetCommnet withUserInfo:dict success:^(id message) {
-        if ([message[@"1"] isEqualToString:@"1"]) {
-            commentArr=message[@"data"];
-            if (commentArr) {
 
-                if (commentArr.count!=0) {
-                    [self.MainTabView reloadData];
-                }
-
+        NSNumber *num=message[@"status"];
+        if ([num integerValue]==1) {
+            if (!commentArr) {
+                commentArr=[[NSMutableArray alloc] init];
             }
+            commentArr=[WenDaComment mj_objectArrayWithKeyValuesArray:message[@"data"]];
+            if (commentArr.count!=0) {
+                [self.MainTabView reloadData];
+            }
+
         }
     } failure:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"网络错误"];
@@ -60,8 +70,15 @@
 
     self.MainTabView.delegate=self;
     self.MainTabView.dataSource=self;
+    [self.MainTabView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    self.okBtu.layer.cornerRadius=5;
+    self.textView.delegate=self;
+    self.textView.returnKeyType=UIReturnKeyDone;
+
     [self getCommet];
 
+    ///添加通知
+    [self addEventListening];
 }
 
 
@@ -147,7 +164,82 @@
 }
 
 
+#pragma mark -发送
+
+- (IBAction)okAction:(UIButton *)sender {
+
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+    ///发布消息
+    [self SendMessage];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    ///键盘落下
+    // 关闭键盘
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    // 关闭键盘
+    [self.textView resignFirstResponder];
+    return YES;
+}
 
 
+// 添加通知
+-(void)addEventListening
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+#pragma mark 键盘设置
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    //获取键盘高度，在不同设备上，以及中英文下是不同的
+    CGFloat kbHeight = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+
+    //计算出键盘顶端到inputTextView panel底端的距离(加上自定义的缓冲距离INTERVAL_KEYBOARD)
+    CGFloat offset = (self.footView.frame.origin.y+self.footView.frame.size.height+INTERVAL_KEYBOARD) - (self.view.frame.size.height - kbHeight);
+
+    // 取得键盘的动画时间，这样可以在视图上移的时候更连贯
+    double duration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+    //将视图上移计算好的偏移
+    if(offset > 0) {
+        [UIView animateWithDuration:duration animations:^{
+            self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }
+
+}
+
+- (void)keyboardWillHidden:(NSNotification *)notification
+{
+    // 键盘动画时间
+    double duration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+    //视图下沉恢复原状
+    [UIView animateWithDuration:duration animations:^{
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    }];
+}
+
+///发功消息事件
+-(void)SendMessage{
+    if (self.textView.text.length==0) {
+        return;
+    }
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",self.textView.text,@"title", nil];
+    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkAddPingLun withUserInfo:dict success:^(id message) {
+        [SVProgressHUD dismiss];
+        [self getCommet];
+        self.textView.text=@"";
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"网络错误"];
+    } visibleHUD:YES];
+}
 
 @end

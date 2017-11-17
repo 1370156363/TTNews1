@@ -83,6 +83,7 @@ static ChatUIHelper *helper = nil;
 #if DEMO_CALL == 1
     [DemoCallManager sharedManager];
 #endif
+
 }
 
 - (void)asyncPushOptions
@@ -141,13 +142,16 @@ static ChatUIHelper *helper = nil;
 
 - (void)autoLoginDidCompleteWithError:(EMError *)error
 {
+
     if (error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"自动登录失败，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         alertView.tag = 100;
         [alertView show];
     } else if([[EMClient sharedClient] isConnected]){
-        UIView *view = self.mainVC.view;
-        [MBProgressHUD showHUDAddedTo:view animated:YES];
+        
+//        UIView *view = self.mainVC.view;
+
+//        [MBProgressHUD showHUDAddedTo:view animated:YES];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             BOOL flag = [[EMClient sharedClient] migrateDatabaseToLatestSDK];
             if (flag) {
@@ -155,7 +159,7 @@ static ChatUIHelper *helper = nil;
                 [self asyncConversationFromDB];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:view animated:YES];
+//                [MBProgressHUD hideAllHUDsForView:view animated:YES];
             });
         });
     }
@@ -500,13 +504,11 @@ static ChatUIHelper *helper = nil;
     [_contactViewVC reloadDataSource];
 }
 
-- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername
-                                       message:(NSString *)aMessage
-{
+- (void)friendRequestDidReceiveFromUser:(NSString *)aUsername
+                                message:(NSString *)aMessage{
     if (!aUsername) {
         return;
     }
-    
     if (!aMessage) {
         aMessage = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
     }
@@ -516,7 +518,7 @@ static ChatUIHelper *helper = nil;
         NOTIFY_POST(kSetupUntreatedApplyCount);
 #if !TARGET_IPHONE_SIMULATOR
         [self playSoundAndVibration];
-        
+
         BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
         if (!isAppActivity) {
             //发送本地推送
@@ -534,6 +536,47 @@ static ChatUIHelper *helper = nil;
                 notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
                 notification.alertAction = NSLocalizedString(@"open", @"Open");
                 notification.timeZone = [NSTimeZone defaultTimeZone];
+            }
+        }
+#endif
+    }
+    [_contactViewVC reloadApplyView];
+
+}
+- (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername
+                                       message:(NSString *)aMessage
+{
+
+    if (!aUsername) {
+        return;
+    }
+    if (!aMessage) {
+        aMessage = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
+    }
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":aUsername, @"username":aUsername, @"applyMessage":aMessage, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleFriend]}];
+    [[ApplyViewController shareController] addNewApply:dic];
+    if (self.mainVC) {
+        NOTIFY_POST(kSetupUntreatedApplyCount);
+#if !TARGET_IPHONE_SIMULATOR
+        [self playSoundAndVibration];
+        BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
+        if (!isAppActivity) {
+            //发送本地推送
+            if (NSClassFromString(@"UNUserNotificationCenter")) {
+                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:0.01 repeats:NO];
+                UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+                content.sound = [UNNotificationSound defaultSound];
+                content.body =[NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
+                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:[[NSNumber numberWithDouble:[NSDate timeIntervalSinceReferenceDate] * 1000] stringValue] content:content trigger:trigger];
+                [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
+            }
+            else {
+                UILocalNotification *notification = [[UILocalNotification alloc] init];
+                notification.fireDate = [NSDate date]; //触发通知的时间
+                notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), aUsername];
+                notification.alertAction = NSLocalizedString(@"open", @"Open");
+                notification.timeZone = [NSTimeZone defaultTimeZone];
+
             }
         }
 #endif
@@ -820,6 +863,7 @@ static ChatUIHelper *helper = nil;
         [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
     }
     else {
+
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.fireDate = [NSDate date]; //触发通知的时间
         notification.alertBody = alertBody;

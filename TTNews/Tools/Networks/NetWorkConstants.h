@@ -49,7 +49,8 @@ typedef enum _NetWorkAction
     kNetworkGetAllAddress,                  //获取用户所有的地址列表
     KNetworkGetShopAddress,                 //获取用户地址
     KNetworkGetDeleteAddress,               //删除地址
-    
+    KNetWorkSearchMyInfo,   //根据手机号查
+    KNetworkGetCommnet,///获取评论
     
     KNetWrokGetVersion,                     //获取服务器版本号
     KNetWorkGetuserInfom,                   //获取用户资料
@@ -103,10 +104,12 @@ typedef enum _NetWorkAction
     KNetworkMyApprove,                      //我的认证状态
     KnetworkApplyApprove,                   //申请认证
     NNetworkUpdateUserInfo,                 //更新用户信息
-    
-    
-    
-    
+    KnetworkAddPingLun, //添加评论
+    KnetworkAddcollect,///添加收藏
+    KnetworkAdduserAction,///添加点赞
+
+
+
     KNetWorkMessageGet,                     //发送手机验证码
     kNetWorkActionRegister,                 //账号注册
     kNetWorkActionChangePassword,           //重设密码

@@ -51,6 +51,7 @@
         [window addSubview:guideView];
         [window bringSubviewToFront:guideView];
     }
+    
 }
 
 @end

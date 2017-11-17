@@ -9,6 +9,8 @@
 #import "LoginController.h"
 #import "ResignController.h"
 #import "forGetpassoneController.h"
+#import "TTTabBarController.h"
+#import "TTConst.h"
 
 @interface LoginController ()
 {
@@ -23,6 +25,8 @@
 }
 
 @property (nonatomic,retain) NSString *CodeStr;
+@property (nonatomic, assign) BOOL isShakeCanChangeSkin;
+
 
 @end
 
@@ -44,6 +48,7 @@
     [self.view wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
         DismissKeyboard;
     }];
+//    [self setupBasic];
 }
 
 -(IBAction)LoginStateChange:(UIButton *)sender
@@ -137,10 +142,20 @@
          {
              if ([message[@"status"] intValue]==1)
              {
+                 //
+                 [self loginWithUsername:phone.text password:@"123456"];
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
                  [[OWTool Instance] saveUid:message[@"uid"]];
-                 self.LoginSuccessBlock();
-                 [ws popToRootViewController];
+
+                 if (self.type==1) {
+                     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                     self.window.rootViewController=[[TTTabBarController alloc] init];
+                     [self.window makeKeyAndVisible];
+                 }
+                 else{
+                     self.LoginSuccessBlock();
+                     [ws popToRootViewController];
+                 }
              }
              else
              {
@@ -167,10 +182,19 @@
          {
              if ([message[@"message"] isEqualToString:@"登陆成功"])
              {
+                 [self loginWithUsername:phone.text password:@"123456"];
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
                  [[OWTool Instance] saveUid:message[@"uid"]];
-                 self.LoginSuccessBlock();
-                 [ws popToRootViewController];
+
+                 if (self.type==1) {
+                     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                     self.window.rootViewController=[[TTTabBarController alloc] init];
+                     [self.window makeKeyAndVisible];
+                 }
+                 else{
+                     self.LoginSuccessBlock();
+                     [ws popToRootViewController];
+                 }
              }
              else
              {
@@ -204,4 +228,88 @@
 {
     [self.navigationController pushViewController:[[ResignController alloc] init] animated:YES];
 }
+
+
+#pragma  mark - private
+//点击登陆后的操作
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password
+{
+    //    [self showHudInView:self.view hint:NSLocalizedString(@"login.ongoing", @"Is Login...")];
+    //异步登陆账号
+    __weak typeof(self) weakself = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:@"123456"];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //            [weakself hideHud];
+            if (!error) {
+                //设置是否自动登录
+                [[EMClient sharedClient].options setIsAutoLogin:YES];
+                //保存最近一次登录用户名
+                [weakself saveLastLoginUsername];
+                //发送自动登陆状态通知
+            } else {
+                switch (error.code)
+                {
+                    case EMErrorUserNotFound:
+                    {
+                        [self registUser:username password:password];
+                    }
+                        break;
+                    case EMErrorNetworkUnavailable:
+                        TTAlertNoTitle(NSLocalizedString(@"error.connectNetworkFail", @"No network connection!"));
+                        break;
+                    case EMErrorServerNotReachable:
+                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                        break;
+                    case EMErrorUserAuthenticationFailed:
+                        TTAlertNoTitle(error.errorDescription);
+                        break;
+                    case EMErrorServerTimeout:
+                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                        break;
+                    case EMErrorServerServingForbidden:
+                        TTAlertNoTitle(NSLocalizedString(@"servingIsBanned", @"Serving is banned"));
+                        break;
+                    case EMErrorUserLoginTooManyDevices:
+                        TTAlertNoTitle(NSLocalizedString(@"alert.multi.tooManyDevices", @"Login too many devices"));
+                        break;
+                    default:
+                        TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Login failure"));
+                        break;
+                }
+            }
+        });
+    });
+}
+
+
+- (void)saveLastLoginUsername
+{
+    NSString *username = [[EMClient sharedClient] currentUsername];
+    if (username && username.length > 0) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setObject:username forKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
+        [ud synchronize];
+    }
+}
+
+///注册
+-(void)registUser:(NSString *)username password:(NSString *)password{
+    [[EMClient sharedClient] registerWithUsername:username password:@"123456" completion:^(NSString *aUsername, EMError *aError) {
+        if (!aError) {
+            NSLog(@"注册成功");
+            [self loginWithUsername:username password:password];
+        }
+    }];
+}
+
+-(void)setupBasic {
+
+    [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
+    [self becomeFirstResponder];
+    self.isShakeCanChangeSkin = [[NSUserDefaults standardUserDefaults] boolForKey:IsShakeCanChangeSkinKey];
+    [self.navigationController setTitle:@"登录"];
+}
+
 @end

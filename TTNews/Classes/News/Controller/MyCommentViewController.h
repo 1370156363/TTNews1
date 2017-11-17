@@ -15,5 +15,4 @@
 
 @property(nonatomic,strong)TTVideo *video;
 
-
 @end

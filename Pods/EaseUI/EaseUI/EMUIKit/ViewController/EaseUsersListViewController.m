@@ -139,6 +139,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError *error = nil;
         NSArray *buddyList = [[EMClient sharedClient].contactManager getContactsFromServerWithError:&error];
+        
         if (!error) {
             NSMutableArray *contactsSource = [NSMutableArray arrayWithArray:buddyList];
             NSMutableArray *tempDataArray = [NSMutableArray array];

@@ -12,6 +12,10 @@
 
 @interface LoginController : UIViewController
 
+///type为1的时候是从login登录
+@property(nonatomic,assign)NSInteger type;
+
 @property (nonatomic, copy)void(^LoginSuccessBlock)();
 
+@property (strong, nonatomic) UIWindow *window;
 @end

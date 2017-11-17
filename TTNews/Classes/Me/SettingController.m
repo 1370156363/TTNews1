@@ -12,6 +12,8 @@
 #import "EditPwdController.h"
 #import "TTDataTool.h"
 #import "ApproveController.h"
+#import "LoginController.h"
+
 
 @interface SettingController ()
 @property (nonatomic, strong) UITableView    *tableview;
@@ -94,9 +96,18 @@
 }
 
 -(void)btnLoginOutClick{
+    ///点击退出
     [[OWTool Instance] saveUid:nil];
-    self.loginOutBlock();
-    [self popViewController];
+
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    ///点击退出
+    LoginController *login=[[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    login.type=1;
+    UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:login];
+    self.window.rootViewController = nav;
+    self.window.rootViewController=login;
+    [self.window makeKeyAndVisible];
+
 }
 
 -(void)SetTableviewMethod

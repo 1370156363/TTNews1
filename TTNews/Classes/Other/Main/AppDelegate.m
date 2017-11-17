@@ -13,6 +13,7 @@
 
 #import "AppDelegate+EaseMob.h"
 #import <UserNotifications/UserNotifications.h>
+#import "LoginController.h"
 
 
 @interface AppDelegate ()<UNUserNotificationCenterDelegate>
@@ -53,11 +54,6 @@ didFinishLaunchingWithOptions:launchOptions
     
 
     [self setupUserDefaults];
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[TTTabBarController alloc] init];
-     [OWGuideView push];
-    [self.window makeKeyAndVisible];
-//    [[OWTool Instance] saveUid:@"1"];
 
     
     return YES;
@@ -142,5 +138,32 @@ didFinishLaunchingWithOptions:launchOptions
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+#pragma mark - login changed
+///登录状态变化
+- (void)loginStateChange:(NSNotification *)notification
+{
+    BOOL loginSuccess = [notification.object boolValue];
+    if (!loginSuccess) {
+        ///变成空
+        [[OWTool Instance] setHuanXin:@""];
+        //重新跳转到登录页面
+        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        LoginController *login=[[LoginController alloc] init];
+        login.type=1;
+        UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:login];
+        self.window.rootViewController = nav;
+        [self.window makeKeyAndVisible];
+    }
+    else{
+        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        self.window.rootViewController = [[TTTabBarController alloc] init];
+        
+    }
+    [OWGuideView push];
+    [self.window makeKeyAndVisible];
+
+}
+
 
 @end
+

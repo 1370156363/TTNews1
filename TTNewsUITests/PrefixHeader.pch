@@ -60,6 +60,8 @@
 
 
 #define APPKEY @"five#newsapp"
+#define Appkey @"5a02aae38f4a9d0c650002a5"
+
 
 #define DismissKeyboard                     [[[UIApplication sharedApplication] keyWindow] endEditing:YES]
 #define winsize                             [UIScreen mainScreen].bounds.size

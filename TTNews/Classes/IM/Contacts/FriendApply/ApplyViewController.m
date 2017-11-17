@@ -41,6 +41,7 @@ static ApplyViewController *controller = nil;
     });
     
     return controller;
+
 }
 
 - (void)viewDidLoad
@@ -58,8 +59,9 @@ static ApplyViewController *controller = nil;
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
-    
+
     [self loadDataSourceFromLocalDB];
+//    [self setupBasic];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,6 +76,19 @@ static ApplyViewController *controller = nil;
     
 //    [self.tableView reloadData];
 }
+
+#pragma mark 基本设置
+///基本设置
+- (void)setupBasic
+{
+    [self initNavigationWithImgAndTitle:@"申请好友" leftBtton:@"" rightButImg:nil rightBut:nil navBackColor:navColor];
+//    [self.navigationItem.rightBarButtonItems[1] setAction:@selector(okAction)];
+
+//    self.MainTabView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+
+}
+
 
 #pragma mark - getter
 
@@ -319,5 +334,6 @@ static ApplyViewController *controller = nil;
     [_dataSource removeAllObjects];
     [self.tableView reloadData];
 }
+
 
 @end

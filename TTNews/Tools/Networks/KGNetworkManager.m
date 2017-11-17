@@ -224,7 +224,16 @@ static NSMutableArray *tasks;
         case KnetworkApplyApprove:
             actionValue = @"api/content/addrenzheng";
             break;
-
+        case KnetworkAddPingLun:
+            actionValue=@"api/content/addpinglun";
+            break;
+        case KnetworkAddcollect:
+            actionValue=@"api/content/addcollect";
+            break;
+        case KnetworkAdduserAction:
+            actionValue=@"api/content/adduseraction";
+            break;
+        
     }
     
     if (visible) {
@@ -384,6 +393,16 @@ static NSMutableArray *tasks;
             break;
         case KNetworkGetDeleteDingdan:
             actionValue = @"api/goods/delorder";
+            break;
+        case KNetWorkSearchMyInfo:
+        {
+            actionValue=@"api/user/searchmyinfo";
+            break;
+        }
+        case KNetworkGetCommnet:
+        {
+            actionValue=@"api/content/get_pinglun";
+        }
             break;
         default:
             break;

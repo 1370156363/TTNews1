@@ -69,30 +69,30 @@
     self.usernameLabel.text = comment.nicheng;
     self.likeCountLabel.text = [NSString stringWithFormat:@"%@", comment.articleid];
 }
-- (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL {
-
-    // NO代表透明
-    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0);
-    
-    // 获得上下文
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // 添加一个圆
-    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
-    CGContextAddEllipseInRect(context, rect);
-    
-    // 裁剪
-    CGContextClip(context);
-    
-    // 将图片画上去
-    [image drawInRect:rect];
-    
-    UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return resultImage;
-}
+//- (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL {
+//
+//    // NO代表透明
+//    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0);
+//    
+//    // 获得上下文
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    
+//    // 添加一个圆
+//    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+//    CGContextAddEllipseInRect(context, rect);
+//    
+//    // 裁剪
+//    CGContextClip(context);
+//    
+//    // 将图片画上去
+//    [image drawInRect:rect];
+//    
+//    UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
+//    
+//    UIGraphicsEndImageContext();
+//    
+//    return resultImage;
+//}
 
 -(IBAction)ZanAction:(id)sender
 {
