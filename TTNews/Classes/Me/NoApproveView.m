@@ -27,17 +27,25 @@
     self = [super init];
     if (self) {
         [self setupviews];
-        [self initSubviews];
     }
     return self;
 }
 
--(void)initSubviews{
+-(void)setupSubviews{
+    if(!_isApplyDone){
+        [self.imgViewNoApprove setImage:ImageNamed(@"weiwancheng")];
+        [self.labTitle setText:@"未提交认证!"];
+        [self.labDescript setText:@"进行用户认证可获取更高权限"];
+        [self.btnStartApprove setHidden:NO];
+        [self.btnStartApprove setTitle:@"开始认证" forState: UIControlStateNormal];
+    }
+    else{
+        [self.imgViewNoApprove setImage:ImageNamed(@"wancheng")];
+        [self.labTitle setText:@"用户认证审核中!"];
+        [self.labDescript setText:@"预计三个工作日内完成审核"];
+        [self.btnStartApprove setHidden:YES];
+    }
     
-    [self.imgViewNoApprove setImage:ImageNamed(@"weiwancheng")];
-    [self.labTitle setText:@"未提交认证!"];
-    [self.labDescript setText:@"进行用户认证可获取更高权限"];
-    [self.btnStartApprove setTitle:@"开始认证" forState: UIControlStateNormal];
 }
 
 -(void)setupviews{

@@ -105,7 +105,6 @@
     MyShoppongTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MyShoppongTableCellIdentify" forIndexPath:indexPath];
     NSInteger row = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.labTitle.text = @"ceshi";
     cell.labTitle.text = self.modelList[row][@"goods"][@"title"];
     cell.labPrice.text = [NSString stringWithFormat:@"￥%@",self.modelList[row][@"goods"][@"price"]];
     [cell.imgShopView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",self.modelList[row][@"goods"][@"fengmian"]]] placeholderImage:ImageNamed(@"tupianGL")];

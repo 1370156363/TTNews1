@@ -15,6 +15,7 @@
 #import "MyShopCollectController.h"
 #import "AddressManageController.h"
 #import "MyDingdanController.h"
+#import "ShoppingDetailController.h"
 
 #define Margion 5
 
@@ -165,9 +166,12 @@
                      })
             .event(^(NSUInteger index, ShoppingModel *model)
                    {
-                       VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
-                       info.url=model.category_id;
-                       [ws.navigationController pushViewController:info animated:YES];
+                       ShoppingDetailController *col = [ShoppingDetailController new];
+                       col.ID = model.category_id;
+                       [ws.navigationController pushViewController:col animated:YES];
+//                       VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
+//                       info.url=model.category_id;
+//                       [ws.navigationController pushViewController:info animated:YES];
                    })
             .height(200);
         }];

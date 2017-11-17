@@ -12,6 +12,9 @@ typedef void(^ApproveBtnClick)();
 
 @interface NoApproveView : UIView
 
+@property (nonatomic, assign) BOOL isApplyDone;
+    
+-(void)setupSubviews;
 @property (nonatomic, copy) ApproveBtnClick block;
 
 -(void)ApproveReturnBlock:(ApproveBtnClick)block;

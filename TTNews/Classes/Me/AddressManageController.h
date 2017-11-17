@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface AddressManageController : UIViewController
+//地址选择时的回调
+@property (nonatomic, copy) void (^AddressSelectBlock)(NSDictionary *model);
+@property (nonatomic,assign) BOOL isSelectAddress;
 
 @end

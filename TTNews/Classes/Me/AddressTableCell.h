@@ -16,6 +16,8 @@ typedef void(^AddressTableBlock)(NSInteger index);
 @property (weak, nonatomic) IBOutlet UILabel *labAddress;
 
 @property (nonatomic, copy) AddressTableBlock block;
+@property (weak, nonatomic) IBOutlet UIButton *btnEditAddress;
+@property (weak, nonatomic) IBOutlet UIButton *btnDeleteAddress;
 
 -(void)AddressTableReturn:(AddressTableBlock)block;
 

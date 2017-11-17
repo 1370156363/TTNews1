@@ -78,7 +78,11 @@
                      })
             .event(^(NSUInteger index, NSDictionary *model)
                    {
-                       
+                       //是地址选择的话回调
+                       if (_isSelectAddress) {
+                           ws.AddressSelectBlock(model);
+                           [ws popViewController];
+                       }
                    })
             .height(120);
         }];

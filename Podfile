@@ -21,6 +21,9 @@ pod 'SDAutoLayout'
 #图片选择器
 pod 'TZImagePickerController'
 
+#图文混排
+pod 'TYAttributedLabel'
+
 pod 'Hyphenate'
 pod 'MBProgressHUD'
 pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
