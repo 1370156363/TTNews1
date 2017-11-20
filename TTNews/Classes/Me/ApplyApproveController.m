@@ -9,6 +9,7 @@
 #import "ApplyApproveController.h"
 #import "KGTableviewCellModel.h"
 #import "ValuePickerView.h"
+#import "OperationController.h"
 
 @interface ApplyApproveController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 @property (nonatomic, strong) UITableView       * tableview;
@@ -197,26 +198,38 @@
     }];
 }
 -(void)btnNextStep{
-    weakSelf(ws)
+    
+//    weakSelf(ws)
+//    if([self checkPhoneInfo]){
+//        NSMutableDictionary *prms=[@{
+//                                     @"uid":[[OWTool Instance] getUid] ,
+//                                     @"avatar":@(_aproveImgId),
+//                                     @"category_fuid":@(_category_fuid),
+//                                     @"category_id":@(_category_id),
+//                                     @"description":_descriptionStr
+//                                         }mutableCopy];
+//
+//        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkApplyApprove withUserInfo:prms success:^(NSDictionary *message)
+//         {
+//             [SVProgressHUD showSuccessWithStatus:message[@"message"]];
+//
+//             [SVProgressHUD dismissWithDelay:2];
+//             [ws popViewController];
+//         } failure:^(NSError *error) {
+//
+//         } visibleHUD:NO];
+//    }
     if([self checkPhoneInfo]){
-        NSMutableDictionary *prms=[@{
-                                     @"uid":[[OWTool Instance] getUid] ,
-                                     @"avatar":@(_aproveImgId),
-                                     @"category_fuid":@(_category_fuid),
-                                     @"category_id":@(_category_id),
-                                     @"description":_descriptionStr
-                                         }mutableCopy];
-        
-        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkApplyApprove withUserInfo:prms success:^(NSDictionary *message)
-         {
-             [SVProgressHUD showSuccessWithStatus:message[@"message"]];
-             
-             [SVProgressHUD dismissWithDelay:2];
-             [ws popViewController];
-         } failure:^(NSError *error) {
-             
-         } visibleHUD:NO];
+        OperationController *col = [OperationController new];
+        col.prms = [NSMutableDictionary dictionaryWithDictionary:
+                                @{@"uid":[[OWTool Instance] getUid] ,
+                                  @"avatar":@(_aproveImgId),
+                                  @"category_fuid":@(_category_fuid),
+                                  @"category_id":@(_category_id),
+                                  @"description":_descriptionStr} ];
+        [self.navigationController pushViewController:col animated:YES];
     }
+    
 }
 -(BOOL)checkPhoneInfo
 {

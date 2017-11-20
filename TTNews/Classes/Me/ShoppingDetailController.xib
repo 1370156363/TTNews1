@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -11,14 +11,81 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShoppingDetailController">
             <connections>
+                <outlet property="labPrice" destination="rIp-ms-GxD" id="FQp-Cf-iSC"/>
+                <outlet property="labTitle" destination="URp-QC-bql" id="egZ-5F-fJu"/>
+                <outlet property="scrollView" destination="rB0-IA-xe1" id="eJ6-8w-RLl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewBack" destination="9Hn-XF-now" id="syb-z5-7y8"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Hn-XF-now">
+                    <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URp-QC-bql">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="ZlV-5O-F0G"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIp-ms-GxD">
+                            <rect key="frame" x="0.0" y="40" width="320" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="nPV-GJ-eUW"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jMt-ir-tyq">
+                            <rect key="frame" x="0.0" y="356" width="320" height="60"/>
+                            <color key="backgroundColor" red="0.074509803920000006" green="0.5568627451" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="gWb-iI-cUd"/>
+                            </constraints>
+                            <state key="normal" title="购买">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="btnPayClick:" destination="-1" eventType="touchUpInside" id="3kZ-2o-i3G"/>
+                            </connections>
+                        </button>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rB0-IA-xe1">
+                            <rect key="frame" x="0.0" y="60" width="320" height="296"/>
+                        </scrollView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="jMt-ir-tyq" firstAttribute="leading" secondItem="9Hn-XF-now" secondAttribute="leading" id="0qI-lr-TP9"/>
+                        <constraint firstAttribute="trailing" secondItem="rB0-IA-xe1" secondAttribute="trailing" id="5fh-zj-K9W"/>
+                        <constraint firstAttribute="trailing" secondItem="jMt-ir-tyq" secondAttribute="trailing" id="QZd-Xr-GyI"/>
+                        <constraint firstAttribute="bottom" secondItem="jMt-ir-tyq" secondAttribute="bottom" id="XOK-iH-ETN"/>
+                        <constraint firstAttribute="trailing" secondItem="rIp-ms-GxD" secondAttribute="trailing" id="Xet-Bw-b5F"/>
+                        <constraint firstAttribute="trailing" secondItem="URp-QC-bql" secondAttribute="trailing" id="ZXw-fr-fw3"/>
+                        <constraint firstItem="rB0-IA-xe1" firstAttribute="leading" secondItem="9Hn-XF-now" secondAttribute="leading" id="bKX-2q-6og"/>
+                        <constraint firstItem="URp-QC-bql" firstAttribute="leading" secondItem="9Hn-XF-now" secondAttribute="leading" id="bps-ql-kMG"/>
+                        <constraint firstItem="jMt-ir-tyq" firstAttribute="top" secondItem="rB0-IA-xe1" secondAttribute="bottom" id="eFu-90-kbd"/>
+                        <constraint firstItem="rB0-IA-xe1" firstAttribute="top" secondItem="rIp-ms-GxD" secondAttribute="bottom" id="oiq-M0-uf9"/>
+                        <constraint firstItem="URp-QC-bql" firstAttribute="top" secondItem="9Hn-XF-now" secondAttribute="top" id="sRL-Pi-SFL"/>
+                        <constraint firstItem="rIp-ms-GxD" firstAttribute="top" secondItem="URp-QC-bql" secondAttribute="bottom" id="yjl-k2-OUB"/>
+                        <constraint firstItem="rIp-ms-GxD" firstAttribute="leading" secondItem="9Hn-XF-now" secondAttribute="leading" id="zxK-px-Tc1"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="9Hn-XF-now" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="H8G-kP-SqX"/>
+                <constraint firstAttribute="bottom" secondItem="9Hn-XF-now" secondAttribute="bottom" id="Hng-OM-03S"/>
+                <constraint firstItem="9Hn-XF-now" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="P4O-st-lKJ"/>
+                <constraint firstAttribute="trailing" secondItem="9Hn-XF-now" secondAttribute="trailing" id="mTG-ol-ViD"/>
+            </constraints>
         </view>
     </objects>
 </document>

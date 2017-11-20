@@ -99,6 +99,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="btnDeleteAddress" destination="yGP-mW-4ig" id="dP5-ww-jK0"/>
+                <outlet property="btnEditAddress" destination="cHt-XJ-4qw" id="3OP-Jz-Wh1"/>
                 <outlet property="labAddress" destination="Onb-xr-4J8" id="2C6-N4-frd"/>
                 <outlet property="labPhoneNum" destination="bgY-bH-sB4" id="rBy-yt-lRp"/>
                 <outlet property="labTitle" destination="ID3-mx-Chm" id="NGw-2Z-Zxn"/>

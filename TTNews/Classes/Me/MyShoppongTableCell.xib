@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,10 +36,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6Y-3e-tNI">
-                        <rect key="frame" x="70" y="30" width="100" height="20"/>
+                        <rect key="frame" x="70" y="30" width="234" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="Skp-PX-hhM"/>
-                            <constraint firstAttribute="width" constant="100" id="xcz-8t-scq"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.074509803920000006" green="0.5568627451" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -89,6 +89,7 @@
                     <constraint firstItem="kU3-wf-XG4" firstAttribute="top" secondItem="c6Y-3e-tNI" secondAttribute="bottom" constant="5" id="K0g-uN-1v6"/>
                     <constraint firstItem="yMD-Cs-4ko" firstAttribute="leading" secondItem="Cux-Mm-2IO" secondAttribute="trailing" constant="5" id="Ncp-Jl-Nsy"/>
                     <constraint firstItem="zis-Rp-u1B" firstAttribute="leading" secondItem="QJZ-7H-JCD" secondAttribute="leading" constant="5" id="PLF-JD-1sB"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="c6Y-3e-tNI" secondAttribute="trailing" id="SnR-wk-Rhj"/>
                     <constraint firstAttribute="bottom" secondItem="Cux-Mm-2IO" secondAttribute="bottom" constant="8.5" id="T4i-Qn-cou"/>
                     <constraint firstItem="c6Y-3e-tNI" firstAttribute="leading" secondItem="zis-Rp-u1B" secondAttribute="trailing" constant="5" id="YEU-gi-BeK"/>
                     <constraint firstItem="2Kr-aU-VQ4" firstAttribute="top" secondItem="QJZ-7H-JCD" secondAttribute="top" constant="5" id="eHC-ep-C23"/>

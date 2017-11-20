@@ -37,10 +37,18 @@
      {
          if ([message[@"status"] intValue] == -2) {
              //未认证
-             [ws.view addSubview:self.noApproveView];
+             [ws.view addSubview:ws.noApproveView];
+             ws.noApproveView.isApplyDone = NO;
+             [ws.noApproveView setupSubviews];
          }
          else if ([message[@"status"] intValue] == 1){
              //认证完成
+         }
+         else if ([message[@"status"] intValue] == 0){
+             //认证中
+             [ws.view addSubview:ws.noApproveView];
+             ws.noApproveView.isApplyDone = YES;
+             [ws.noApproveView setupSubviews];
          }
          else{
              [SVProgressHUD showSuccessWithStatus:message[@"msg"]];

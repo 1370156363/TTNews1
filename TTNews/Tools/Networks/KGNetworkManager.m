@@ -379,6 +379,9 @@ static NSMutableArray *tasks;
         case KNetworkGetShoppinglist:
             actionValue = @"api/goods/goodslist";
             break;
+        case KNetworkGetShoppingDetail:
+            actionValue = @"api/goods/goodsdetail";
+            break;
         case KNetworkGetShopAddress:
             actionValue = @"api/goods/address";
             break;

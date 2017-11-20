@@ -43,6 +43,7 @@ typedef enum _NetWorkAction
     KNetworGetUserINfo,///用户信息
     KNetworkGetMyApprove,                   //获取我的认证信息
     KNetworkGetShoppinglist,                //获取商品列表
+    KNetworkGetShoppingDetail,              //获取商品详情
     KnetworkGetMyDingdan,                   //获取我的订单
     KNetworkGetDeleteDingdan,               //删除订单
     kNetworkGetAllAddress,                  //获取用户所有的地址列表
