@@ -38,5 +38,8 @@
 @property (nonatomic, strong) NSNumber * style;
 @property (nonatomic, strong) NSString * groupId;
 @property (nonatomic, strong) NSString * groupSubject;
+///增加的头像
+@property (nonatomic,strong)NSString *ApplyImag;
+
 
 @end

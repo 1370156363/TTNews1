@@ -11,7 +11,7 @@
 #import "SinglePictureNewsTableViewCell.h"
 
 
-@interface SearchInfoViewController ()<UIScrollViewDelegate>
+@interface SearchInfoViewController ()<UIScrollViewDelegate,UITextFieldDelegate>
 
 //@property(nonatomic,strong)
 @property (weak, nonatomic) IBOutlet UITextField *searchTextfield;
@@ -25,6 +25,8 @@
 
 @property(nonatomic,strong)UIView           *line;
 
+@property (weak, nonatomic) IBOutlet UITextField *textView;
+
 @end
 
 @implementation SearchInfoViewController
@@ -35,7 +37,9 @@
     self.searchTextfield.layer.cornerRadius=5;
     [self setupBasic];
     self.line.backgroundColor=navColor;
-    
+    self.textView.delegate=self;
+    self.textView.returnKeyType=UIReturnKeyDone;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -265,8 +269,25 @@
 
 ///确定搜索按钮
 - (IBAction)okAction:(UIButton *)sender {
-    
+    [self SendMessage];
 }
 
+///发功消息事件
+-(void)SendMessage{
+
+    if (self.textView.text.length==0) {
+        return;
+    }
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.textView.text,@"keyword", nil];
+
+    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkSearch withUserInfo:dict success:^(id message) {
+        [SVProgressHUD dismiss];
+
+//        [self getCommet];
+        self.textView.text=@"";
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"网络错误"];
+    } visibleHUD:NO];
+}
 
 @end

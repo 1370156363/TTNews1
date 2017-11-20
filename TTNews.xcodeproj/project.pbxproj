@@ -96,6 +96,15 @@
 		043063B61FAF5749001113C4 /* NSObject+YYAddForKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = 043063941FAF5749001113C4 /* NSObject+YYAddForKVO.m */; };
 		043063B71FAF5749001113C4 /* YYCGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 043063971FAF5749001113C4 /* YYCGUtilities.m */; };
 		043063B81FAF5749001113C4 /* CALayer+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 043063981FAF5749001113C4 /* CALayer+YYAdd.m */; };
+		045356BC1FBA90E700682387 /* EMCreateChatroomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356AD1FBA90E700682387 /* EMCreateChatroomController.m */; };
+		045356BD1FBA90E700682387 /* ChatroomListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356AE1FBA90E700682387 /* ChatroomListViewController.m */; };
+		045356BE1FBA90E700682387 /* ChatroomDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356B31FBA90E700682387 /* ChatroomDetailViewController.m */; };
+		045356BF1FBA90E700682387 /* EMChatroomMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356B41FBA90E700682387 /* EMChatroomMembersViewController.m */; };
+		045356C01FBA90E700682387 /* EMChatroomBansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356B51FBA90E700682387 /* EMChatroomBansViewController.m */; };
+		045356C11FBA90E700682387 /* EMChatroomMutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356B61FBA90E700682387 /* EMChatroomMutesViewController.m */; };
+		045356C21FBA90E700682387 /* EMChatroomAdminsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045356B81FBA90E700682387 /* EMChatroomAdminsViewController.m */; };
+		04A7539A1FC27C3C005F903B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04A753981FC27C3B005F903B /* InfoPlist.strings */; };
+		04A7539F1FC27CD7005F903B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04A7539C1FC27CD6005F903B /* Localizable.strings */; };
 		04AEEFC91F9E3196000BF3DE /* SearchInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEEFC31F9E3196000BF3DE /* SearchInfoViewController.m */; };
 		04AEEFCA1F9E3196000BF3DE /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AEEFC51F9E3196000BF3DE /* CommentTableViewCell.m */; };
 		04AEEFCB1F9E3196000BF3DE /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AEEFC71F9E3196000BF3DE /* CommentTableViewCell.xib */; };
@@ -147,8 +156,6 @@
 		04B22DE51FB053CB00AFE149 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DDE1FB053CB00AFE149 /* AddFriendViewController.m */; };
 		04B22DE61FB053CB00AFE149 /* AddFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DE01FB053CB00AFE149 /* AddFriendCell.m */; };
 		04B22DE91FB05C5500AFE149 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B22DE81FB05C5500AFE149 /* ChatViewController.m */; };
-		04B22DEA1FB065BA00AFE149 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04B22DEC1FB065BA00AFE149 /* Localizable.strings */; };
-		04E3DDA11FB068D4003EDC43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DD9E1FB068D4003EDC43 /* InfoPlist.strings */; };
 		04E3DDAD1FB09243003EDC43 /* group_participant_addHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DDA31FB09243003EDC43 /* group_participant_addHL@2x.png */; };
 		04E3DDAE1FB09243003EDC43 /* newFriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DDA41FB09243003EDC43 /* newFriends@2x.png */; };
 		04E3DDAF1FB09243003EDC43 /* nav_createGroup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DDA51FB09243003EDC43 /* nav_createGroup@2x.png */; };
@@ -212,13 +219,6 @@
 		04E3DE391FB09AB7003EDC43 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE281FB09AB7003EDC43 /* GroupListViewController.m */; };
 		04E3DE3A1FB09AB7003EDC43 /* PublicGroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE291FB09AB7003EDC43 /* PublicGroupDetailViewController.m */; };
 		04E3DE3B1FB09AB8003EDC43 /* PublicGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE2C1FB09AB7003EDC43 /* PublicGroupListViewController.m */; };
-		04E3DE4C1FB09ABE003EDC43 /* EMCreateChatroomController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE3D1FB09ABE003EDC43 /* EMCreateChatroomController.m */; };
-		04E3DE4D1FB09ABE003EDC43 /* ChatroomListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE3E1FB09ABE003EDC43 /* ChatroomListViewController.m */; };
-		04E3DE4E1FB09ABE003EDC43 /* ChatroomDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE431FB09ABE003EDC43 /* ChatroomDetailViewController.m */; };
-		04E3DE4F1FB09ABE003EDC43 /* EMChatroomMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE441FB09ABE003EDC43 /* EMChatroomMembersViewController.m */; };
-		04E3DE501FB09ABE003EDC43 /* EMChatroomBansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE451FB09ABE003EDC43 /* EMChatroomBansViewController.m */; };
-		04E3DE511FB09ABE003EDC43 /* EMChatroomMutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE461FB09ABE003EDC43 /* EMChatroomMutesViewController.m */; };
-		04E3DE521FB09ABE003EDC43 /* EMChatroomAdminsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE481FB09ABE003EDC43 /* EMChatroomAdminsViewController.m */; };
 		04E3DE551FB09EB4003EDC43 /* ChatUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3DE531FB09EB3003EDC43 /* ChatUIHelper.m */; };
 		04E3DE771FB3FA4D003EDC43 /* ShoppingTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DE561FB3FA44003EDC43 /* ShoppingTableCell.xib */; };
 		04E3DE781FB3FA4D003EDC43 /* MyShopCollectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E3DE581FB3FA45003EDC43 /* MyShopCollectController.xib */; };
@@ -1108,6 +1108,24 @@
 		043063981FAF5749001113C4 /* CALayer+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+YYAdd.m"; sourceTree = "<group>"; };
 		043063991FAF5749001113C4 /* CALayer+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+YYAdd.h"; sourceTree = "<group>"; };
 		0430639A1FAF5749001113C4 /* YYCGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCGUtilities.h; sourceTree = "<group>"; };
+		045356AD1FBA90E700682387 /* EMCreateChatroomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCreateChatroomController.m; sourceTree = "<group>"; };
+		045356AE1FBA90E700682387 /* ChatroomListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatroomListViewController.m; sourceTree = "<group>"; };
+		045356B01FBA90E700682387 /* EMChatroomBansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomBansViewController.h; sourceTree = "<group>"; };
+		045356B11FBA90E700682387 /* EMChatroomMutesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomMutesViewController.h; sourceTree = "<group>"; };
+		045356B21FBA90E700682387 /* EMChatroomAdminsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomAdminsViewController.h; sourceTree = "<group>"; };
+		045356B31FBA90E700682387 /* ChatroomDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatroomDetailViewController.m; sourceTree = "<group>"; };
+		045356B41FBA90E700682387 /* EMChatroomMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomMembersViewController.m; sourceTree = "<group>"; };
+		045356B51FBA90E700682387 /* EMChatroomBansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomBansViewController.m; sourceTree = "<group>"; };
+		045356B61FBA90E700682387 /* EMChatroomMutesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomMutesViewController.m; sourceTree = "<group>"; };
+		045356B71FBA90E700682387 /* ChatroomDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatroomDetailViewController.h; sourceTree = "<group>"; };
+		045356B81FBA90E700682387 /* EMChatroomAdminsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomAdminsViewController.m; sourceTree = "<group>"; };
+		045356B91FBA90E700682387 /* EMChatroomMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomMembersViewController.h; sourceTree = "<group>"; };
+		045356BA1FBA90E700682387 /* ChatroomListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatroomListViewController.h; sourceTree = "<group>"; };
+		045356BB1FBA90E700682387 /* EMCreateChatroomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCreateChatroomController.h; sourceTree = "<group>"; };
+		04A753991FC27C3B005F903B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		04A7539B1FC27C8B005F903B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		04A7539D1FC27CD6005F903B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		04A7539E1FC27CD7005F903B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		04AEEFC31F9E3196000BF3DE /* SearchInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInfoViewController.m; sourceTree = "<group>"; };
 		04AEEFC41F9E3196000BF3DE /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		04AEEFC51F9E3196000BF3DE /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
@@ -1196,10 +1214,6 @@
 		04B22DE21FB053CB00AFE149 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		04B22DE71FB05C5500AFE149 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		04B22DE81FB05C5500AFE149 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		04B22DEB1FB065BA00AFE149 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		04E3DD9A1FB0686D003EDC43 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/ChatUI/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		04E3DD9F1FB068D4003EDC43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/en.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		04E3DDA01FB068D4003EDC43 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		04E3DDA31FB09243003EDC43 /* group_participant_addHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group_participant_addHL@2x.png"; sourceTree = "<group>"; };
 		04E3DDA41FB09243003EDC43 /* newFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newFriends@2x.png"; sourceTree = "<group>"; };
 		04E3DDA51FB09243003EDC43 /* nav_createGroup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_createGroup@2x.png"; sourceTree = "<group>"; };
@@ -1278,20 +1292,6 @@
 		04E3DE2A1FB09AB7003EDC43 /* SearchChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchChatViewController.h; sourceTree = "<group>"; };
 		04E3DE2B1FB09AB7003EDC43 /* ContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactView.h; sourceTree = "<group>"; };
 		04E3DE2C1FB09AB7003EDC43 /* PublicGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicGroupListViewController.m; sourceTree = "<group>"; };
-		04E3DE3D1FB09ABE003EDC43 /* EMCreateChatroomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCreateChatroomController.m; sourceTree = "<group>"; };
-		04E3DE3E1FB09ABE003EDC43 /* ChatroomListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatroomListViewController.m; sourceTree = "<group>"; };
-		04E3DE401FB09ABE003EDC43 /* EMChatroomBansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomBansViewController.h; sourceTree = "<group>"; };
-		04E3DE411FB09ABE003EDC43 /* EMChatroomMutesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomMutesViewController.h; sourceTree = "<group>"; };
-		04E3DE421FB09ABE003EDC43 /* EMChatroomAdminsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomAdminsViewController.h; sourceTree = "<group>"; };
-		04E3DE431FB09ABE003EDC43 /* ChatroomDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatroomDetailViewController.m; sourceTree = "<group>"; };
-		04E3DE441FB09ABE003EDC43 /* EMChatroomMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomMembersViewController.m; sourceTree = "<group>"; };
-		04E3DE451FB09ABE003EDC43 /* EMChatroomBansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomBansViewController.m; sourceTree = "<group>"; };
-		04E3DE461FB09ABE003EDC43 /* EMChatroomMutesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomMutesViewController.m; sourceTree = "<group>"; };
-		04E3DE471FB09ABE003EDC43 /* ChatroomDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatroomDetailViewController.h; sourceTree = "<group>"; };
-		04E3DE481FB09ABE003EDC43 /* EMChatroomAdminsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatroomAdminsViewController.m; sourceTree = "<group>"; };
-		04E3DE491FB09ABE003EDC43 /* EMChatroomMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatroomMembersViewController.h; sourceTree = "<group>"; };
-		04E3DE4A1FB09ABE003EDC43 /* ChatroomListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatroomListViewController.h; sourceTree = "<group>"; };
-		04E3DE4B1FB09ABE003EDC43 /* EMCreateChatroomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCreateChatroomController.h; sourceTree = "<group>"; };
 		04E3DE531FB09EB3003EDC43 /* ChatUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatUIHelper.m; sourceTree = "<group>"; };
 		04E3DE541FB09EB4003EDC43 /* ChatUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatUIHelper.h; sourceTree = "<group>"; };
 		04E3DE561FB3FA44003EDC43 /* ShoppingTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoppingTableCell.xib; sourceTree = "<group>"; };
@@ -2291,13 +2291,15 @@
 		0430623B1FAEEE28001113C4 /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				04A7539C1FC27CD6005F903B /* Localizable.strings */,
+				04A753981FC27C3B005F903B /* InfoPlist.strings */,
 				04B22DD21FB0096700AFE149 /* AppDelegate+EaseMob.h */,
 				04B22DD31FB0096700AFE149 /* AppDelegate+EaseMob.m */,
 				04B22DD01FB0096600AFE149 /* AppDelegate+EaseMobDebug.h */,
 				04B22DD11FB0096700AFE149 /* AppDelegate+EaseMobDebug.m */,
 				04E3DE541FB09EB4003EDC43 /* ChatUIHelper.h */,
 				04E3DE531FB09EB3003EDC43 /* ChatUIHelper.m */,
-				04E3DE3C1FB09ABE003EDC43 /* Chatroom */,
+				045356AC1FBA90E700682387 /* Chatroom */,
 				04E3DE0D1FB09AB7003EDC43 /* ChatGroup */,
 				04B22DC41FAF5CD400AFE149 /* Chat */,
 				04B22DC51FAF5CD400AFE149 /* Contacts */,
@@ -2307,8 +2309,6 @@
 				0430623E1FAEEE3B001113C4 /* ChatUIDefine.h */,
 				043062401FAEEE3C001113C4 /* IMViewController.h */,
 				0430623F1FAEEE3C001113C4 /* IMViewController.m */,
-				04E3DD9E1FB068D4003EDC43 /* InfoPlist.strings */,
-				04B22DEC1FB065BA00AFE149 /* Localizable.strings */,
 			);
 			path = IM;
 			sourceTree = "<group>";
@@ -2546,14 +2546,43 @@
 			path = Quartz;
 			sourceTree = "<group>";
 		};
+		045356AC1FBA90E700682387 /* Chatroom */ = {
+			isa = PBXGroup;
+			children = (
+				045356AD1FBA90E700682387 /* EMCreateChatroomController.m */,
+				045356AE1FBA90E700682387 /* ChatroomListViewController.m */,
+				045356AF1FBA90E700682387 /* Info */,
+				045356BA1FBA90E700682387 /* ChatroomListViewController.h */,
+				045356BB1FBA90E700682387 /* EMCreateChatroomController.h */,
+			);
+			path = Chatroom;
+			sourceTree = "<group>";
+		};
+		045356AF1FBA90E700682387 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				045356B01FBA90E700682387 /* EMChatroomBansViewController.h */,
+				045356B11FBA90E700682387 /* EMChatroomMutesViewController.h */,
+				045356B21FBA90E700682387 /* EMChatroomAdminsViewController.h */,
+				045356B31FBA90E700682387 /* ChatroomDetailViewController.m */,
+				045356B41FBA90E700682387 /* EMChatroomMembersViewController.m */,
+				045356B51FBA90E700682387 /* EMChatroomBansViewController.m */,
+				045356B61FBA90E700682387 /* EMChatroomMutesViewController.m */,
+				045356B71FBA90E700682387 /* ChatroomDetailViewController.h */,
+				045356B81FBA90E700682387 /* EMChatroomAdminsViewController.m */,
+				045356B91FBA90E700682387 /* EMChatroomMembersViewController.h */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 		04AEEFC21F9E3196000BF3DE /* 公共 */ = {
 			isa = PBXGroup;
 			children = (
-				04AEEFC31F9E3196000BF3DE /* SearchInfoViewController.m */,
 				04AEEFC41F9E3196000BF3DE /* CommentTableViewCell.h */,
 				04AEEFC51F9E3196000BF3DE /* CommentTableViewCell.m */,
-				04AEEFC61F9E3196000BF3DE /* SearchInfoViewController.h */,
 				04AEEFC71F9E3196000BF3DE /* CommentTableViewCell.xib */,
+				04AEEFC61F9E3196000BF3DE /* SearchInfoViewController.h */,
+				04AEEFC31F9E3196000BF3DE /* SearchInfoViewController.m */,
 				04AEEFC81F9E3196000BF3DE /* SearchInfoViewController.xib */,
 			);
 			path = "公共";
@@ -2748,36 +2777,6 @@
 				04E3DE241FB09AB7003EDC43 /* EMGroupBansViewController.m */,
 				04E3DE251FB09AB7003EDC43 /* EMGroupMutesViewController.m */,
 				04E3DE261FB09AB7003EDC43 /* ChatGroupDetailViewController.h */,
-			);
-			path = Info;
-			sourceTree = "<group>";
-		};
-		04E3DE3C1FB09ABE003EDC43 /* Chatroom */ = {
-			isa = PBXGroup;
-			children = (
-				04E3DE4B1FB09ABE003EDC43 /* EMCreateChatroomController.h */,
-				04E3DE3D1FB09ABE003EDC43 /* EMCreateChatroomController.m */,
-				04E3DE4A1FB09ABE003EDC43 /* ChatroomListViewController.h */,
-				04E3DE3E1FB09ABE003EDC43 /* ChatroomListViewController.m */,
-				04E3DE3F1FB09ABE003EDC43 /* Info */,
-			);
-			name = Chatroom;
-			path = "../../../../../Downloads/ChatDemo-UI3.00-Simple/ChatDemo-UI3.0/ChatDemo-UI3.0/ChatUI/Class/Chatroom";
-			sourceTree = "<group>";
-		};
-		04E3DE3F1FB09ABE003EDC43 /* Info */ = {
-			isa = PBXGroup;
-			children = (
-				04E3DE401FB09ABE003EDC43 /* EMChatroomBansViewController.h */,
-				04E3DE411FB09ABE003EDC43 /* EMChatroomMutesViewController.h */,
-				04E3DE421FB09ABE003EDC43 /* EMChatroomAdminsViewController.h */,
-				04E3DE431FB09ABE003EDC43 /* ChatroomDetailViewController.m */,
-				04E3DE441FB09ABE003EDC43 /* EMChatroomMembersViewController.m */,
-				04E3DE451FB09ABE003EDC43 /* EMChatroomBansViewController.m */,
-				04E3DE461FB09ABE003EDC43 /* EMChatroomMutesViewController.m */,
-				04E3DE471FB09ABE003EDC43 /* ChatroomDetailViewController.h */,
-				04E3DE481FB09ABE003EDC43 /* EMChatroomAdminsViewController.m */,
-				04E3DE491FB09ABE003EDC43 /* EMChatroomMembersViewController.h */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -4514,7 +4513,6 @@
 				F832CE151F2761B80032C23D /* wo.png in Resources */,
 				04E3DE031FB0924E003EDC43 /* imageDownloadFail@2x.png in Resources */,
 				6F8106C01FAEF02E00E00946 /* ApplyApproveController.xib in Resources */,
-				04E3DDA11FB068D4003EDC43 /* InfoPlist.strings in Resources */,
 				F832CE031F2761B80032C23D /* weixuan.png in Resources */,
 				F832CCF21F2761B70032C23D /* daifukuan.png in Resources */,
 				F832CE6B1F2761B80032C23D /* zitiGL@3x.png in Resources */,
@@ -4612,6 +4610,7 @@
 				F832CDB31F2761B70032C23D /* shoucangjia@2x.png in Resources */,
 				F832CD701F2761B70032C23D /* pinglunGL.png in Resources */,
 				04E3DDB51FB09243003EDC43 /* group_participant_add@2x.png in Resources */,
+				04A7539F1FC27CD7005F903B /* Localizable.strings in Resources */,
 				F832CD3F1F2761B70032C23D /* guanzhu@3x.png in Resources */,
 				F832CDCB1F2761B70032C23D /* sousuo@2x.png in Resources */,
 				04F73DF41FB82454001AC571 /* dashang_2@3x.png in Resources */,
@@ -4738,7 +4737,6 @@
 				04F73DF81FB82454001AC571 /* shoucang_2.png in Resources */,
 				F832CCE41F2761B70032C23D /* chakan@2x.png in Resources */,
 				F832CD4D1F2761B70032C23D /* jiahaoyou@2x.png in Resources */,
-				04B22DEA1FB065BA00AFE149 /* Localizable.strings in Resources */,
 				F832CE551F2761B80032C23D /* zanX@2x.png in Resources */,
 				F832CE261F2761B80032C23D /* xiala@3x.png in Resources */,
 				F832CD681F2761B70032C23D /* pengyouquan@2x.png in Resources */,
@@ -4784,6 +4782,7 @@
 				F832CE591F2761B80032C23D /* zhifubaoLogo@3x.png in Resources */,
 				F832CD2B1F2761B70032C23D /* glshouze.png in Resources */,
 				F832CD3C1F2761B70032C23D /* guanbi@3x.png in Resources */,
+				04A7539A1FC27C3C005F903B /* InfoPlist.strings in Resources */,
 				04F73DF61FB82454001AC571 /* shoucang_2@3x.png in Resources */,
 				F832CCEB1F2761B70032C23D /* chazhao@3x.png in Resources */,
 				F832CCE11F2761B70032C23D /* bianjiSC@2x.png in Resources */,
@@ -5292,7 +5291,6 @@
 				F89E70F01F28A83B003965B1 /* LSYReadConfig.m in Sources */,
 				04AEEFF81F9E3256000BF3DE /* TiWenTableViewCell.m in Sources */,
 				EE79B1491CC8C435001029EF /* VideoTableViewCell.m in Sources */,
-				04E3DE4D1FB09ABE003EDC43 /* ChatroomListViewController.m in Sources */,
 				F8B5A6231F281EEC00AEBF39 /* DynamicCell.m in Sources */,
 				043063A71FAF5749001113C4 /* UIGestureRecognizer+YYAdd.m in Sources */,
 				043063A31FAF5749001113C4 /* UIScrollView+YYAdd.m in Sources */,
@@ -5319,8 +5317,10 @@
 				F89E70A91F28A798003965B1 /* CXMLNode_CreationExtensions.m in Sources */,
 				F89E70AF1F28A798003965B1 /* CXMLElement_ElementTreeExtensions.m in Sources */,
 				04E3DE801FB3FA4D003EDC43 /* MyShopCollectController.m in Sources */,
+				045356BC1FBA90E700682387 /* EMCreateChatroomController.m in Sources */,
 				F8B5A6241F281EEC00AEBF39 /* DynamicItem.m in Sources */,
 				EE79B1321CC8C435001029EF /* PictureCommentViewController.m in Sources */,
+				045356BD1FBA90E700682387 /* ChatroomListViewController.m in Sources */,
 				04AEF01D1F9E329A000BF3DE /* WenDaComment.m in Sources */,
 				043063B01FAF5749001113C4 /* NSKeyedUnarchiver+YYAdd.m in Sources */,
 				F85051B21F2C8E5C00159B12 /* LSYReadView.m in Sources */,
@@ -5350,6 +5350,7 @@
 				043063AE1FAF5749001113C4 /* NSObject+YYAdd.m in Sources */,
 				0430639D1FAF5749001113C4 /* UITextField+YYAdd.m in Sources */,
 				EEE3E81E1CD5AD3E00D699E0 /* ChannelsSectionHeaderView.m in Sources */,
+				045356C11FBA90E700682387 /* EMChatroomMutesViewController.m in Sources */,
 				F8B5A64D1F2820E500AEBF39 /* IDMTapDetectingView.m in Sources */,
 				6FFC46311FA811E200C57D90 /* AddMessageView.m in Sources */,
 				EE79B13A1CC8C435001029EF /* PictureTableViewCell.m in Sources */,
@@ -5389,9 +5390,7 @@
 				04B22DCD1FAF674100AFE149 /* ConversationListController.m in Sources */,
 				F89E70C91F28A7AC003965B1 /* LSYNoteModel.m in Sources */,
 				EE79B11E1CC8C435001029EF /* NoPictureNewsTableViewCell.m in Sources */,
-				04E3DE521FB09ABE003EDC43 /* EMChatroomAdminsViewController.m in Sources */,
 				0430639C1FAF5749001113C4 /* YYClassInfo.m in Sources */,
-				04E3DE501FB09ABE003EDC43 /* EMChatroomBansViewController.m in Sources */,
 				EE79B1471CC8C435001029EF /* VideoCommentCell.m in Sources */,
 				EE79B1291CC8C435001029EF /* TTDataTool.m in Sources */,
 				F89E70FA1F28A842003965B1 /* LSYReadViewController.m in Sources */,
@@ -5399,7 +5398,6 @@
 				01EC09F11F93A33B0002BEB8 /* DongtaiModel.m in Sources */,
 				F832CEC11F27813C0032C23D /* MASLayoutConstraint.m in Sources */,
 				F89E70A71F28A798003965B1 /* NSString+HTML.m in Sources */,
-				04E3DE4E1FB09ABE003EDC43 /* ChatroomDetailViewController.m in Sources */,
 				04E3DE551FB09EB4003EDC43 /* ChatUIHelper.m in Sources */,
 				EE79B1201CC8C435001029EF /* SinglePictureNewsTableViewCell.m in Sources */,
 				6FDF358C1FA409C400670E18 /* fensiTableViewCell.m in Sources */,
@@ -5432,6 +5430,7 @@
 				F8B5A60C1F2817B600AEBF39 /* UIViewController+KGNoResultTip.m in Sources */,
 				EE4635C81CC72B8900DB248F /* main.m in Sources */,
 				F8B5A6191F281B3800AEBF39 /* huidaController.m in Sources */,
+				045356BE1FBA90E700682387 /* ChatroomDetailViewController.m in Sources */,
 				04E3DE2D1FB09AB7003EDC43 /* ContactSelectionViewController.m in Sources */,
 				F89E70B91F28A798003965B1 /* unzip.c in Sources */,
 				F857B9141F28CFEC00301B2D /* KGDynamicsController.m in Sources */,
@@ -5448,6 +5447,7 @@
 				F8B5A6511F28211500AEBF39 /* LCActionSheet.m in Sources */,
 				01D153F81F7F9DED0033CCF1 /* forGetpassoneController.m in Sources */,
 				043063A81FAF5749001113C4 /* UIImage+YYAdd.m in Sources */,
+				045356BF1FBA90E700682387 /* EMChatroomMembersViewController.m in Sources */,
 				04E3DE7B1FB3FA4D003EDC43 /* AddressTableCell.m in Sources */,
 				EE79B1231CC8C435001029EF /* NSDate+Extension.m in Sources */,
 				F89E706B1F28A78D003965B1 /* LSYMarkVC.m in Sources */,
@@ -5463,6 +5463,7 @@
 				0430634B1FAF535B001113C4 /* UIResponder+Router.m in Sources */,
 				0430633B1FAF521F001113C4 /* XHMessageTextView.m in Sources */,
 				EEB3DFA11D8F92010039ABF5 /* TopPictureTableViewCell.m in Sources */,
+				045356C01FBA90E700682387 /* EMChatroomBansViewController.m in Sources */,
 				04AEEFD21F9E31A8000BF3DE /* CategoryModel.m in Sources */,
 				EE79B1261CC8C435001029EF /* UIImageView+Extension.m in Sources */,
 				EE79B1441CC8C435001029EF /* FullViewController.m in Sources */,
@@ -5498,6 +5499,7 @@
 				04E3DE391FB09AB7003EDC43 /* GroupListViewController.m in Sources */,
 				EE79B1451CC8C435001029EF /* VideoPlayView.m in Sources */,
 				04E3DE821FB3FA4D003EDC43 /* ShoppingMyTableCell.m in Sources */,
+				045356C21FBA90E700682387 /* EMChatroomAdminsViewController.m in Sources */,
 				01B181ED1F750CC900D9F7AF /* EditController.m in Sources */,
 				EE79B12B1CC8C435001029EF /* TTPictureFetchDataParameter.m in Sources */,
 				EE79B1131CC8C435001029EF /* SendFeedbackViewController.m in Sources */,
@@ -5511,7 +5513,6 @@
 				012D91D01F88A7BC00C8CDD8 /* MessageCell.m in Sources */,
 				01B181D81F74F2B700D9F7AF /* CommentCell.m in Sources */,
 				EE79B12A1CC8C435001029EF /* TTNormalNewsFetchDataParameter.m in Sources */,
-				04E3DE511FB09ABE003EDC43 /* EMChatroomMutesViewController.m in Sources */,
 				01D153FD1F7F9E010033CCF1 /* forGetpassTwpController.m in Sources */,
 				F832CE831F2765920032C23D /* CBDataSourceSection.m in Sources */,
 				F89E70B81F28A798003965B1 /* mztools.c in Sources */,
@@ -5535,14 +5536,12 @@
 				012D91CA1F87E18A00C8CDD8 /* NSObject+NullConfig.m in Sources */,
 				F89E70F91F28A842003965B1 /* LSYReadPageViewController.m in Sources */,
 				043063B31FAF5749001113C4 /* NSString+YYAdd.m in Sources */,
-				04E3DE4F1FB09ABE003EDC43 /* EMChatroomMembersViewController.m in Sources */,
 				F89E70D91F28A7B4003965B1 /* LSYMenuView.m in Sources */,
 				EE79B1221CC8C435001029EF /* Foundation+Log.m in Sources */,
 				F857B90A1F28C8CF00301B2D /* fensiController.m in Sources */,
 				043063AC1FAF5749001113C4 /* NSNumber+YYAdd.m in Sources */,
 				01D154061F7FA5950033CCF1 /* NetWorkMessage.m in Sources */,
 				043063451FAF521F001113C4 /* EMNavigationController.m in Sources */,
-				04E3DE4C1FB09ABE003EDC43 /* EMCreateChatroomController.m in Sources */,
 				F89E70B31F28A798003965B1 /* CXMLNode_XPathExtensions.m in Sources */,
 				EEB3DF9C1D8F913A0039ABF5 /* BigPictureTableViewCell.m in Sources */,
 				04F73E051FB8264D001AC571 /* NewsInfoViewController.m in Sources */,
@@ -5605,22 +5604,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		04B22DEC1FB065BA00AFE149 /* Localizable.strings */ = {
+		04A753981FC27C3B005F903B /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				04B22DEB1FB065BA00AFE149 /* en */,
-				04E3DD9A1FB0686D003EDC43 /* zh-Hans */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		04E3DD9E1FB068D4003EDC43 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04E3DD9F1FB068D4003EDC43 /* en */,
-				04E3DDA01FB068D4003EDC43 /* zh-Hans */,
+				04A753991FC27C3B005F903B /* en */,
+				04A7539B1FC27C8B005F903B /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		04A7539C1FC27CD6005F903B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04A7539D1FC27CD6005F903B /* en */,
+				04A7539E1FC27CD7005F903B /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

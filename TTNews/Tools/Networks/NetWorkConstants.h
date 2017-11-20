@@ -50,6 +50,8 @@ typedef enum _NetWorkAction
     KNetworkGetDeleteAddress,               //删除地址
     KNetWorkSearchMyInfo,   //根据手机号查
     KNetworkGetCommnet,///获取评论
+    KNetworkSearch,///根据关键词搜索
+
     
     KNetWrokGetVersion,                     //获取服务器版本号
     KNetWorkGetuserInfom,                   //获取用户资料
@@ -106,6 +108,7 @@ typedef enum _NetWorkAction
     KnetworkAddPingLun, //添加评论
     KnetworkAddcollect,///添加收藏
     KnetworkAdduserAction,///添加点赞
+
 
 
 

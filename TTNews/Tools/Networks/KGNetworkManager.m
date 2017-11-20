@@ -233,6 +233,9 @@ static NSMutableArray *tasks;
         case KnetworkAdduserAction:
             actionValue=@"api/content/adduseraction";
             break;
+        case KNetworkSearch:
+            actionValue=@"api/content/search";
+            break;
         
     }
     
