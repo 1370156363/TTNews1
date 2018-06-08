@@ -16,7 +16,7 @@
 #define INTERVAL_KEYBOARD 0
 
 
-@interface MyCommentViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface MyCommentViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>
 {
     NSArray *dataArr;
     ///评论数据
@@ -25,7 +25,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UITableView *MainTabView;
-@property (weak, nonatomic) IBOutlet UITextField *textView;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIView *footView;
 @property (weak, nonatomic) IBOutlet UIButton *okBtu;
 - (IBAction)okAction:(UIButton *)sender;
@@ -37,7 +37,7 @@
 ///获取评论的网络连接
 -(void)getCommet{
 //KNetworkGetCommnet
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",self.video.model_id,@"model_id", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.ID,@"id",self.video.model_id,@"model_id", nil];
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetCommnet withUserInfo:dict success:^(id message) {
 
         NSNumber *num=message[@"status"];
@@ -70,13 +70,19 @@
 
     self.MainTabView.delegate=self;
     self.MainTabView.dataSource=self;
-    [self.MainTabView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    self.MainTabView.estimatedRowHeight =50;
+    self.MainTabView.tableFooterView = [UIView new];
+    self.MainTabView.rowHeight = UITableViewAutomaticDimension;
     self.okBtu.layer.cornerRadius=5;
     self.textView.delegate=self;
     self.textView.returnKeyType=UIReturnKeyDone;
-
+    [self.MainTabView registerNib:[UINib nibWithNibName:@"CommentTableViewCell" bundle:nil] forCellReuseIdentifier:@"commentCell"];
+    [self.MainTabView registerClass:[NewsTableViewCell class] forCellReuseIdentifier:@"NewsTableViewCellIdentify"];
     [self getCommet];
-
+    self.MainTabView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     ///添加通知
     [self addEventListening];
 }
@@ -88,12 +94,8 @@
     self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
 
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
-
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
 
 #pragma mark - TableView DataSource
 
@@ -115,52 +117,32 @@
     return 0;
 }
 
-//每个section头部的标题－Header
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-//    return [NSString stringWithFormat:@"共有%lu辆车",(unsigned long)dataArr.count];
-//}
-
--(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([view isMemberOfClass:[UITableViewHeaderFooterView class]]) {
-        ((UITableViewHeaderFooterView *)view).backgroundView.backgroundColor = [UIColor clearColor];
+    if (indexPath.section == 0) {
+        TTVideo *model = self.video;
+        return [tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[NewsTableViewCell class] contentViewWidth:SCREEN_WIDTH];
     }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    if ([view isMemberOfClass:[UITableViewHeaderFooterView class]]) {
-        ((UITableViewHeaderFooterView *)view).backgroundView.backgroundColor = [UIColor clearColor];
+    else{
+        WenDaComment *comment = commentArr[indexPath.section-1];
+        return [tableView cellHeightForIndexPath:indexPath model:comment keyPath:@"comment" cellClass:[CommentTableViewCell class] contentViewWidth:SCREEN_WIDTH];
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ///支付
-    NSString *cellId;
 
     if (indexPath.section==0) {
-        NewsTableViewCell *cell;
-        cell=[tableView dequeueReusableCellWithIdentifier:@"news"];
-        cell =[[NSBundle mainBundle] loadNibNamed:@"NewsTableViewCell" owner:self options:nil][0];
-        cell.txtLab.text=self.video.title;
-
-        NSArray *imagss=[self.video.fengmian componentsSeparatedByString:@","];
-        if (imagss.count!=0) {
-            [cell.myImage1 setBackgroundColor:[UIColor redColor]];
-            [cell.myImage1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,imagss[0]]] placeholderImage:nil];
-        }
+        NewsTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCellIdentify" forIndexPath:indexPath];
+        cell.model=self.video;
         return cell;
     }
     else{
-        ///commnet cell
         CommentTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"commentCell"];
-        cell =[[NSBundle mainBundle] loadNibNamed:@"CommentTableViewCell" owner:self options:nil][0];
         cell.comment=commentArr[indexPath.section-1];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [cell setBackgroundColor:[UIColor whiteColor]];
-
         return cell;
     }
-
+    
 }
 
 
@@ -232,7 +214,7 @@
     if (self.textView.text.length==0) {
         return;
     }
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",self.textView.text,@"title", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.ID,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",self.textView.text,@"title", nil];
     [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkAddPingLun withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
         [self getCommet];

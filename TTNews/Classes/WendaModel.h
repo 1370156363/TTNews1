@@ -24,7 +24,7 @@
 
 @property (nonatomic, copy) NSString *fengmian;
 
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *ID;
 
 @property (nonatomic, copy) NSString *is_top;
 
@@ -41,6 +41,9 @@
 @property (nonatomic, copy) NSString *update_time;
 
 @property (nonatomic, copy) NSString *view;
+
+@property (nonatomic, copy) NSArray *pic;
+@property (nonatomic, assign) BOOL is_guanzhu;
 
 //@property (nonatomic,copy) NSString *description;
 

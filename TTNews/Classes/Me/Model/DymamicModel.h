@@ -30,7 +30,10 @@
 /**@brief 动态标题*/
 @property (nonatomic , copy) NSString                * create_time;
 /**@brief 描述*/
-@property (nonatomic , copy) NSString                * description;
+@property (nonatomic , copy) NSString                * description1;
+
+/**@brief 描述*/
+@property (nonatomic , copy) NSString                * desc;
 /**@brief 发布时间*/
 @property (nonatomic , copy) NSString                * fengmian;
 

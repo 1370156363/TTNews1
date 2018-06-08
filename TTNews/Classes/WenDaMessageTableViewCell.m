@@ -13,48 +13,51 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
 }
 
 ///问答
 -(void)setComment:(WendaModel *)comment{
-
-    CGSize constraint = CGSizeMake(winsize.width-30, 20000.0f);
-    CGSize size = [comment.des sizeWithFont:[UIFont systemFontOfSize:15]
-                            constrainedToSize:constraint
-                                lineBreakMode:1];
-
-    NSAttributedString *attributedText =[[NSAttributedString alloc] initWithString:comment.des attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}];
-
-    CGRect rect=[attributedText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-
-    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make)
-     {
-         make.height.mas_equalTo(rect.size.height);
-     }];
-
+    _comment = comment;
     self.titleLab.text=comment.des;
 }
 
 -(void)setDongtai:(DongtaiModel *)dongtai{
-    CGSize constraint = CGSizeMake(winsize.width-30, 20000.0f);
-
-    NSAttributedString *attributedText =[[NSAttributedString alloc] initWithString:dongtai.desc attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}];
-
-    CGRect rect=[attributedText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-
-    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make)
-     {
-         make.height.mas_equalTo(rect.size.height);
-     }];
-
+//    CGSize constraint = CGSizeMake(winsize.width-30, 20000.0f);
+//
+//    NSAttributedString *attributedText =[[NSAttributedString alloc] initWithString:dongtai.desc attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}];
+//
+//    CGRect rect=[attributedText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+//
+//    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make)
+//     {
+//         make.height.mas_equalTo(rect.size.height);
+//     }];
+    _dongtai = dongtai;
     self.titleLab.text=dongtai.desc;
-
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self = [[NSBundle mainBundle] loadNibNamed:@"WenDaMessageTableViewCell" owner:self options:nil][0];
+        [self setupviews];
+    }
+    return self;
+}
 
-
+-(void)setupviews{
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setBackgroundColor:[UIColor whiteColor]];
+    
+    self.titleLab.sd_layout
+    .leftSpaceToView(self.contentView, 5)
+    .rightSpaceToView(self.contentView, 5)
+    .topEqualToView(self.contentView)
+    .autoHeightRatio(0);
+    [self setupAutoHeightWithBottomView:self.titleLab bottomMargin:5];
 }
 
 @end

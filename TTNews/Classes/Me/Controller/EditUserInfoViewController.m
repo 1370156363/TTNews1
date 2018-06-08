@@ -7,7 +7,6 @@
 //
 
 #import "EditUserInfoViewController.h"
-#import "UIImage+Extension.h"
 #import "TTConst.h"
 #import <DKNightVersion.h>
 
@@ -22,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
 
     [self setupBasic];
 }
@@ -62,7 +60,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo  {
-    self.headerImageView.image = [image circleImage];
+    self.headerImageView.image = image;
     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"headerImage"];
     [UIImagePNGRepresentation(self.headerImageView.image) writeToFile:path atomically:YES];
     [self dismissViewControllerAnimated:YES completion:nil];

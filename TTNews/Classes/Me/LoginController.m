@@ -11,6 +11,7 @@
 #import "forGetpassoneController.h"
 #import "TTTabBarController.h"
 #import "TTConst.h"
+#import <UMShare/UMShare.h>
 
 @interface LoginController ()
 {
@@ -25,7 +26,6 @@
 }
 
 @property (nonatomic,retain) NSString *CodeStr;
-@property (nonatomic, assign) BOOL isShakeCanChangeSkin;
 
 
 @end
@@ -48,7 +48,6 @@
     [self.view wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
         DismissKeyboard;
     }];
-//    [self setupBasic];
 }
 
 -(IBAction)LoginStateChange:(UIButton *)sender
@@ -81,27 +80,28 @@
 
 -(IBAction)Btn3Select:(id)sender
 {
-    if (phone.text.length==0)
-    {
-        [SVProgressHUD showInfoWithStatus:@"请填写11位手机号！"];
-        return ;
-    }
-    if (![phone.text wh_isMobileNumber])
-    {
-        [SVProgressHUD showInfoWithStatus:@"请输入正确的手机号码！"];
-        return;
-    }
+    
     
     if (isYzmLog)
     {
+        if (phone.text.length==0)
+        {
+            [SVProgressHUD showInfoWithStatus:@"请填写11位手机号！"];
+            return ;
+        }
+        if (![phone.text wh_isMobileNumber])
+        {
+            [SVProgressHUD showInfoWithStatus:@"请输入正确的手机号码！"];
+            return;
+        }
         NSMutableDictionary *prms=[@{
                                      @"mobile":phone.text
                                      }mutableCopy];
         //获取验证码
         [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetWorkYzmAction withUserInfo:prms success:^(NSDictionary* message) {
             
-            NSDictionary *CodeDic = [message objectForKey:@"data"];
-            self.CodeStr = [CodeDic objectForKey:@"verify"];
+            //NSDictionary *CodeDic = [message objectForKey:@"data"];
+            self.CodeStr = ((NSNumber*)[message objectForKey:@"code"]).stringValue;
             [SVProgressHUD dismiss];
         } failure:^(NSError *error)
          {
@@ -142,24 +142,15 @@
          {
              if ([message[@"status"] intValue]==1)
              {
-                 //
-                 [self loginWithUsername:phone.text password:@"123456"];
+                 [ws loginWithUsername:phone.text password:pass.text];
+                 NSDictionary *data = [message objectForKey:@"data"];
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
-                 [[OWTool Instance] saveUid:message[@"uid"]];
-
-                 if (self.type==1) {
-                     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                     self.window.rootViewController=[[TTTabBarController alloc] init];
-                     [self.window makeKeyAndVisible];
-                 }
-                 else{
-                     self.LoginSuccessBlock();
-                     [ws popToRootViewController];
-                 }
+                 [[OWTool Instance] saveUid:data[@"uid"]];
+                 [ws popToRootViewController];
              }
              else
              {
-                 [SVProgressHUD showImage:nil status:message[@"message"]];
+                 [SVProgressHUD showErrorWithStatus:message[@"message"]];
                  [SVProgressHUD dismissWithDelay:2];
              }
          } failure:^(NSError *error) {
@@ -182,19 +173,11 @@
          {
              if ([message[@"message"] isEqualToString:@"登陆成功"])
              {
-                 [self loginWithUsername:phone.text password:@"123456"];
+                 
                  [SVProgressHUD showSuccessWithStatus:@"登录成功!"];
+                 [ws loginWithUsername:phone.text password:pass.text];
                  [[OWTool Instance] saveUid:message[@"uid"]];
-
-                 if (self.type==1) {
-                     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                     self.window.rootViewController=[[TTTabBarController alloc] init];
-                     [self.window makeKeyAndVisible];
-                 }
-                 else{
-                     self.LoginSuccessBlock();
-                     [ws popToRootViewController];
-                 }
+                 [ws popToRootViewController];
              }
              else
              {
@@ -207,75 +190,54 @@
     }
 }
 
--(IBAction)OtherLogin:(UIButton *)sender
-{
-    NSInteger tag=sender.tag;
-    if (tag==100)
-    {
-        
-    }
-    else if (tag==200)
-    {
-    
-    }
-    else if (tag==300)
-    {
-    
-    }
-}
-
--(IBAction)ResignPass:(id)sender
-{
-    [self.navigationController pushViewController:[[ResignController alloc] init] animated:YES];
-}
-
-
-#pragma  mark - private
+#pragma mark 环信登录
 //点击登陆后的操作
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
 {
-    //    [self showHudInView:self.view hint:NSLocalizedString(@"login.ongoing", @"Is Login...")];
+    [SVProgressHUD showInfoWithStatus:@"登录中..."];
     //异步登陆账号
     __weak typeof(self) weakself = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:@"123456"];
-
+        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            //            [weakself hideHud];
+            [weakself hideHud];
             if (!error) {
                 //设置是否自动登录
                 [[EMClient sharedClient].options setIsAutoLogin:YES];
+                
                 //保存最近一次登录用户名
                 [weakself saveLastLoginUsername];
                 //发送自动登陆状态通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:[NSNumber numberWithBool:YES]];
+                
             } else {
+                
                 switch (error.code)
                 {
                     case EMErrorUserNotFound:
-                    {
-                        [self registUser:username password:password];
-                    }
+                        [self showAlertColTitle:@"提示" Message:@"用户不存在"];
                         break;
                     case EMErrorNetworkUnavailable:
-                        TTAlertNoTitle(NSLocalizedString(@"error.connectNetworkFail", @"No network connection!"));
+                        [self showAlertColTitle:@"提示" Message:@"没有可用的网络"];
                         break;
                     case EMErrorServerNotReachable:
-                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                        [self showAlertColTitle:@"提示" Message:@"服务器连接失败"];
                         break;
                     case EMErrorUserAuthenticationFailed:
-                        TTAlertNoTitle(error.errorDescription);
+                        [self showAlertColTitle:@"提示" Message:error.errorDescription];
                         break;
                     case EMErrorServerTimeout:
-                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                        [self showAlertColTitle:@"提示" Message:@"连接超时"];
                         break;
                     case EMErrorServerServingForbidden:
-                        TTAlertNoTitle(NSLocalizedString(@"servingIsBanned", @"Serving is banned"));
+                        [self showAlertColTitle:@"提示" Message:@"服务器异常"];
                         break;
                     case EMErrorUserLoginTooManyDevices:
-                        TTAlertNoTitle(NSLocalizedString(@"alert.multi.tooManyDevices", @"Login too many devices"));
+                        [self showAlertColTitle:@"提示" Message:@"多设备登录"];
                         break;
                     default:
-                        TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Login failure"));
+                        [self showAlertColTitle:@"提示" Message:@"登录失败"];
                         break;
                 }
             }
@@ -283,6 +245,8 @@
     });
 }
 
+
+#pragma  mark - private
 
 - (void)saveLastLoginUsername
 {
@@ -294,22 +258,70 @@
     }
 }
 
-///注册
--(void)registUser:(NSString *)username password:(NSString *)password{
-    [[EMClient sharedClient] registerWithUsername:username password:@"123456" completion:^(NSString *aUsername, EMError *aError) {
-        if (!aError) {
-            NSLog(@"注册成功");
-            [self loginWithUsername:username password:password];
-        }
-    }];
+
+#pragma mark 提示信息
+/** 提示信息*/
+-(void)showAlertColTitle:(NSString*)title Message:(NSString*)message{
+    
+    UIAlertController *alertCol = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * actionOK = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:nil];
+    
+    [alertCol addAction:actionOK];
+    [self presentViewController:alertCol animated:YES completion:nil];
 }
 
--(void)setupBasic {
+-(IBAction)OtherLogin:(UIButton *)sender
+{
+    NSInteger tag=sender.tag;
+    if (tag==300)
+    {
+        //QQ
+        //[self getUserInfoForPlatform:platformType];
+    }
+    else if (tag==400)
+    {
+        //微信
+        [self getUserInfoForPlatform:UMSocialPlatformType_WechatSession];
+        
+    }
+    else if (tag==500)
+    {
+        //微博
+        [self getUserInfoForPlatform:UMSocialPlatformType_Sina];
+        
+        
+    }
+}
 
-    [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
-    [self becomeFirstResponder];
-    self.isShakeCanChangeSkin = [[NSUserDefaults standardUserDefaults] boolForKey:IsShakeCanChangeSkinKey];
-    [self.navigationController setTitle:@"登录"];
+-(IBAction)ResignPass:(id)sender
+{
+    [self.navigationController pushViewController:[[ResignController alloc] init] animated:YES];
+}
+
+
+
+- (void)getUserInfoForPlatform:(UMSocialPlatformType)platformType
+{
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:platformType currentViewController:self completion:^(id result, NSError *error) {
+        
+        UMSocialUserInfoResponse *resp = result;
+        
+        // 第三方登录数据(为空表示平台未提供)
+        // 授权数据
+        NSLog(@" uid: %@", resp.uid);
+        NSLog(@" openid: %@", resp.openid);
+        NSLog(@" accessToken: %@", resp.accessToken);
+        NSLog(@" refreshToken: %@", resp.refreshToken);
+        NSLog(@" expiration: %@", resp.expiration);
+        
+        // 用户数据
+        NSLog(@" name: %@", resp.name);
+        NSLog(@" iconurl: %@", resp.iconurl);
+        NSLog(@" gender: %@", resp.unionGender);
+        
+        // 第三方平台SDK原始数据
+        NSLog(@" originalResponse: %@", resp.originalResponse);
+    }];
 }
 
 @end

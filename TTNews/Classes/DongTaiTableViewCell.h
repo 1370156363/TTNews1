@@ -9,18 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "DongtaiModel.h"
 
-
 @interface DongTaiTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconImg;
-@property (weak, nonatomic) IBOutlet UILabel *nickNameLab;
-@property (weak, nonatomic) IBOutlet UILabel *timeLab;
-@property (weak, nonatomic) IBOutlet UILabel *jieshaoLab;
-@property (weak, nonatomic) IBOutlet UILabel *contentLab;
-@property (weak, nonatomic) IBOutlet UIView *imagView;
+@property (nonatomic, strong)DongtaiModel  *model;
 
-
-@property (nonatomic, strong)DongtaiModel  *comment;
+@property (nonatomic, assign)NSInteger row;
 
 
 @end

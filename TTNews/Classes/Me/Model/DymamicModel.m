@@ -9,5 +9,10 @@
 #import "DymamicModel.h"
 
 @implementation DymamicModel
-
++(NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"desc":@"description",
+             @"description1":@"description",
+             @"ID":@"id"
+             };
+}
 @end

@@ -24,6 +24,10 @@
     [self.view addSubview:self.tableview];
     [self.tableview.mj_header beginRefreshing];
     [self.tableview registerNib:[UINib nibWithNibName:@"MyShoppongTableCell" bundle:nil] forCellReuseIdentifier:@"MyShoppongTableCellIdentify"];
+    self.tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    [self request];
 }
 
 -(void)loadData{

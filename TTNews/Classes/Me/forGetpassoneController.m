@@ -30,6 +30,8 @@
 
 -(IBAction)nextStep:(id)sender
 {
-    [self.navigationController pushViewController:[[forGetpassTwpController alloc] init] animated:YES];
+    forGetpassTwpController*col = [[forGetpassTwpController alloc] init];
+    col.phoneStr = field2.text;
+    [self.navigationController pushViewController:col animated:YES];
 }
 @end

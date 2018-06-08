@@ -10,4 +10,6 @@
 
 @interface forGetpassTwpController : UIViewController
 
+@property (nonatomic, strong) NSString *phoneStr;
+
 @end

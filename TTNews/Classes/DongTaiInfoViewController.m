@@ -18,7 +18,7 @@
 #import "WenDaComment.h"
 #import "UIView+Extension.h"
 
-#import "IDMPhotoBrowser.h"
+#import "LoginController.h"
 
 #define INTERVAL_KEYBOARD 0
 
@@ -68,7 +68,7 @@
     if (self.textView.text.length==0) {
         return;
     }
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.id,@"id",[[OWTool Instance] getUid],@"uid",self.textView.text,@"title", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.ID,@"id",[[OWTool Instance] getUid],@"uid",self.textView.text,@"title", nil];
     [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkADDDongTaiComment withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
         [self getAnswer];
@@ -80,7 +80,7 @@
 
 ///刷新评论
 -(void)getAnswer{
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.id,@"id", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.ID,@"id", nil];
     //获取验证码
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkDongTaiComment withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
@@ -118,18 +118,22 @@
     [self.dataListArr addObject:self.wenda.desc];
 
     NSArray *imags=[self.wenda.fengmian componentsSeparatedByString:@","];
-    for (NSString *url in imags) {
-        NSString *urls=[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,url];
-        [self.dataListArr addObject:urls];
+    if(imags && imags.count ==1 && [((NSString*)imags[0]) containsString:@"default"]){
+        
+    }
+    else{
+        for (NSString *url in imags) {
+            NSString *urls=[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,url];
+            [self.dataListArr addObject:urls];
+        }
     }
 
-    //    CGIMAGEGETIMAGEWIDTH(image)
 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initNavigationWithImgAndTitle:@"详情" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
+    [self initNavigationWithImgAndTitle:@"动态" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
     self.TitleLab.text=self.wenda.title;
     self.timeLab.text=self.wenda.create_time;
     
@@ -147,16 +151,16 @@
 
     self.textView.delegate=self;
     self.textView.returnKeyType=UIReturnKeyDone;
+    
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 
     self.OkAction.layer.cornerRadius=5;
 
     ///添加通知
     [self addEventListening];}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - TableView DataSource
 
@@ -187,11 +191,6 @@
     return 0;
 }
 
-//每个section头部的标题－Header
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-//    return [NSString stringWithFormat:@"共有%lu辆车",(unsigned long)dataArr.count];
-//}
-
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     // Background color
@@ -208,7 +207,6 @@
         ((UITableViewHeaderFooterView *)view).backgroundView.backgroundColor = [UIColor clearColor];
     }
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellId;
@@ -244,33 +242,6 @@
 
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//
-//    if (indexPath.section==0) {
-//        ///标题
-//        return [tableView fd_heightForCellWithIdentifier:@"titleLab" configuration:^(WenDaMessageTableViewCell *cell) {
-//            // 配置 cell 的数据源，和 "cellForRow" 干的事一致，比如：
-//            cell.comment=self.wenda;
-//        }];
-//    }
-//    else if(indexPath.section+1==self.dataListArr.count &&
-//            [(NSString *)[self.dataListArr lastObject] isEqualToString:@"pinglun"])
-//    {
-//        return [tableView fd_heightForCellWithIdentifier:@"commentCell" configuration:^(CommentTableViewCell *cell) {
-//            cell.comment=commentArr[indexPath.row];
-//        }];
-//    }
-//    else{
-//        return [tableView fd_heightForCellWithIdentifier:@"imageCell" configuration:^(WenDaInfoImgTableViewCell *cell) {
-//            NSString *str =self.dataListArr[indexPath.section];
-//            ///图片
-//            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:str]];
-//            UIImage *image=[UIImage imageWithData:data];
-//            cell.Image=image;
-//        }];
-//    }
-//}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[WenDaInfoImgTableViewCell class]]) {
@@ -280,10 +251,20 @@
 #pragma mark -发送
 
 - (IBAction)okAction:(UIButton *)sender {
-
-    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-    ///发布消息
-    [self SendMessage];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        UIAlertController *alertCol = [UIAlertController alertControllerWithTitle:@"提示" message:@"用户未登录！" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertCol addAction:okAction];
+        [self presentViewController:alertCol animated:YES completion:nil];
+    }
+    else{
+        [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+        ///发布消息
+        [self SendMessage];
+    }
+    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{

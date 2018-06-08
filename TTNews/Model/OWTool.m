@@ -95,7 +95,7 @@ static OWTool * instance = nil;
 {
     NSUserDefaults *personInformation = [NSUserDefaults standardUserDefaults];
     NSNumber* uId = [personInformation objectForKey:@"userUid"];
-    if (uId) {
+    if (uId && [uId intValue]!= 0) {
         return [NSString stringWithFormat:@"%d",[uId intValue]];
     }
     return nil;

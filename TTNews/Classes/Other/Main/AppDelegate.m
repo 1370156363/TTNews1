@@ -7,17 +7,17 @@
 //
 
 #import "AppDelegate.h"
-#import "TTTabBarController.h"
+
 #import "TTConst.h"
 #import "OWGuideView.h"
-
 #import "AppDelegate+EaseMob.h"
-#import <UserNotifications/UserNotifications.h>
+
 #import "LoginController.h"
+#import "ChatDemoHelper.h"
+#import <UMCommon/UMCommon.h>           // 公共组件是所有友盟产品的基础组件，必选
 
 
-@interface AppDelegate ()<UNUserNotificationCenterDelegate>
-
+@interface AppDelegate ()
 
 @end
 
@@ -29,141 +29,126 @@
     if (NSClassFromString(@"UNUserNotificationCenter")) {
         [UNUserNotificationCenter currentNotificationCenter].delegate = self;
     }
-
-#warning Init SDK，detail in AppDelegate+EaseMob.m
-#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
-    NSString *apnsCertName = nil;
-#if DEBUG
-    apnsCertName = @"dev";
-#else
-    apnsCertName = @"dis";
-#endif
-
+    
+    //    //AppKey:注册的AppKey，详细见下面注释。
+    //    //apnsCertName:推送证书名（不需要加后缀），详细见下面注释。
+    //    EMOptions *options = [EMOptions optionsWithAppkey:EaseMobAppKey];
+    //    options.apnsCertName = APNSCertName;
+    //    [[EMClient sharedClient] initializeSDKWithOptions:options];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *appkey = [ud stringForKey:@"identifier_appkey"];
     if (!appkey) {
         appkey = EaseMobAppKey;
-        [ud setObject:appkey forKey:appkey];
+        [ud setObject:appkey forKey:@"identifier_appkey"];
     }
+    
+    
 
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _mainController = [[TTTabBarController alloc] init];
+    self.window.rootViewController = _mainController;
+    [self.window makeKeyAndVisible];
+    
+   
+    
     [self easemobApplication:application
 didFinishLaunchingWithOptions:launchOptions
                       appkey:appkey
-                apnsCertName:apnsCertName
+                apnsCertName:APNSCertName
                  otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
     
-
-    [self setupUserDefaults];
-
+    // 配置友盟SDK产品并并统一初始化
+    // [UMConfigure setEncryptEnabled:YES]; // optional: 设置加密传输, 默认NO.
+    // [UMConfigure setLogEnabled:YES]; // 开发调试时可在console查看友盟日志显示，发布产品必须移除。
+    [UMConfigure initWithAppkey:@"5aafa0a2a40fa33f6a000116" channel:nil];
+    /* appkey: 开发者在友盟后台申请的应用获得（可在统计后台的 “统计分析->设置->应用信息” 页面查看）*/
+    
+    // U-Share 平台设置
+    [self configUSharePlatforms];
+    [self confitUShareSettings];
     
     return YES;
 }
 
--(void)setupUserDefaults {
+- (void)confitUShareSettings
+{
+    /*
+     * 打开图片水印
+     */
+    //[UMSocialGlobal shareInstance].isUsingWaterMark = YES;
     
-    BOOL isShakeCanChangeSkin = [[NSUserDefaults standardUserDefaults] boolForKey:IsShakeCanChangeSkinKey];
-    if (!isShakeCanChangeSkin) {
-        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:IsShakeCanChangeSkinKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+    /*
+     * 关闭强制验证https，可允许http图片分享，但需要在info.plist设置安全域名
+     <key>NSAppTransportSecurity</key>
+     <dict>
+     <key>NSAllowsArbitraryLoads</key>
+     <true/>
+     </dict>
+     */
+    //[UMSocialGlobal shareInstance].isUsingHttpsWhenShareContent = NO;
     
-    BOOL isDownLoadNoImageIn3G = [[NSUserDefaults standardUserDefaults] boolForKey:IsDownLoadNoImageIn3GKey];
-    if (!isDownLoadNoImageIn3G) {
-        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:IsDownLoadNoImageIn3GKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:UserNameKey];
-    if (userName==nil) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"TTNews" forKey:UserNameKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    NSString *userSignature = [[NSUserDefaults standardUserDefaults] stringForKey:UserSignatureKey];
-    if (userSignature==nil) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"这个家伙很懒,什么也没有留下" forKey:UserSignatureKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
 }
+
+- (void)configUSharePlatforms
+{
+    /* 设置微信的appKey和appSecret */
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxee2e8ac4b706b0f5" appSecret:@"09a263025df116f8e1bb0674bfcf1dc6" redirectURL:@"http://mobile.umeng.com/social"];
+    
+    /* 设置分享到QQ互联的appID
+     * U-Share SDK为了兼容大部分平台命名，统一用appKey和appSecret进行参数设置，而QQ平台仅需将appID作为U-Share的appKey参数传进即可。
+     */
+    //[[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105821097"/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
+    
+    /* 设置新浪的appKey和appSecret */
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"395675688"  appSecret:@"422b8e10077e63ed42dc0225574a86b1" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
+    
+    
+    
+}
+
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-//    if (_mainController) {
-//        [_mainController jumpToChatList];
-//    }
-//    [self easemobApplication:application didReceiveRemoteNotification:userInfo];
+    if (_mainController) {
+        //[_mainController jumpToChatList];
+    }
+    [self easemobApplication:application didReceiveRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-//    if (_mainController) {
-//        [_mainController didReceiveLocalNotification:notification];
-//    }
+    if (_mainController) {
+        [_mainController didReceiveLocalNotification:notification];
+    }
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
     NSDictionary *userInfo = notification.request.content.userInfo;
     [self easemobApplication:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
+    //功能：可设置是否在应用内弹出通知
+    completionHandler(UNNotificationPresentationOptionAlert);
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
 {
-//    if (_mainController) {
-//        [_mainController didReceiveUserNotification:response.notification];
-//    }
-//    completionHandler();
+    if (_mainController) {
+        [_mainController didReceiveUserNotification:response.notification];
+    }
+    completionHandler();
 }
 
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-#pragma mark - login changed
-///登录状态变化
-- (void)loginStateChange:(NSNotification *)notification
+// 支持所有iOS系统
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    BOOL loginSuccess = [notification.object boolValue];
-    if (!loginSuccess) {
-        ///变成空
-        [[OWTool Instance] setHuanXin:@""];
-        //重新跳转到登录页面
-        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        LoginController *login=[[LoginController alloc] init];
-        login.type=1;
-        UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:login];
-        self.window.rootViewController = nav;
-        [self.window makeKeyAndVisible];
+    //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+    if (!result) {
+        // 其他如支付等SDK的回调
     }
-    else{
-        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        self.window.rootViewController = [[TTTabBarController alloc] init];
-        
-    }
-    [OWGuideView push];
-    [self.window makeKeyAndVisible];
-
+    return result;
 }
-
 
 @end
 

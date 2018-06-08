@@ -17,6 +17,7 @@
 
 -(void)clickVideoButton:(NSIndexPath *)indexPath;
 -(void)clickCommentButton:(NSIndexPath *)indexPath;
+-(void)clickShareButton:(NSIndexPath *)indexPath;
 
 @end
 

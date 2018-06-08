@@ -16,7 +16,8 @@
 
 +(NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{@"ID":@"id",
-             @"top_cmt":@"top_cmt[0]"
+             @"top_cmt":@"top_cmt[0]",
+             @"description_01":@"description"
              };
 }
 //

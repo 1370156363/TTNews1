@@ -32,5 +32,9 @@
 @property (nonatomic , copy) NSString              * title;
 /**@brief 文章详细信息*/
 @property (nonatomic , copy) NSString                * info;
+/**@brief 评论 */
+@property (nonatomic , copy) NSString                *pinglunnum;
+/**@brief 点赞 */
+@property (nonatomic , copy) NSString                *up;
 
 @end

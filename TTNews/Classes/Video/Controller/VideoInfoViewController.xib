@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,57 +17,47 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oWS-1x-6mM">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="430"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </webView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMs-ev-ezg">
-                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HRF-RW-QAG">
-                            <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                            <rect key="frame" x="0.0" y="5" width="80" height="40"/>
                             <inset key="imageEdgeInsets" minX="10" minY="10" maxX="15" maxY="10"/>
-                            <state key="normal" image="zan_1.png"/>
-                            <state key="selected" image="zan_2.png"/>
+                            <state key="normal" image="zan_1"/>
+                            <state key="selected" image="zan_2"/>
                             <connections>
                                 <action selector="zanAction:" destination="-1" eventType="touchUpInside" id="AzI-Bg-738"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHz-el-BBR">
-                            <rect key="frame" x="150" y="0.0" width="75" height="50"/>
-                            <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                            <state key="normal" image="dashang_1.png"/>
-                            <state key="selected" image="dashang_2.png"/>
-                            <connections>
-                                <action selector="dashangAction:" destination="-1" eventType="touchUpInside" id="W0m-7K-Kex"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rf-oW-QwF">
-                            <rect key="frame" x="75" y="0.0" width="75" height="50"/>
+                            <rect key="frame" x="80" y="5" width="80" height="40"/>
                             <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                            <state key="normal" image="shoucang_1.png"/>
-                            <state key="selected" image="shoucang_2.png"/>
+                            <state key="normal" image="shoucang_1"/>
+                            <state key="selected" image="shoucang_2"/>
                             <connections>
                                 <action selector="shoucangAction:" destination="-1" eventType="touchUpInside" id="hHh-gt-GJV"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kfc-P6-Je1">
-                            <rect key="frame" x="225" y="0.0" width="75" height="50"/>
+                            <rect key="frame" x="160" y="5" width="80" height="40"/>
                             <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                            <state key="normal" image="pinglun_1.png"/>
+                            <state key="normal" image="pinglun_1"/>
                             <state key="selected" image="pinglun_2.png"/>
                             <connections>
                                 <action selector="pinglunAction:" destination="-1" eventType="touchUpInside" id="9pO-a3-2yA"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m71-gW-xBT">
-                            <rect key="frame" x="300" y="0.0" width="75" height="50"/>
+                            <rect key="frame" x="240" y="5" width="80" height="40"/>
                             <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                            <state key="normal" image="zhuanfa_1.png"/>
-                            <state key="selected" image="zhuanfa_2.png"/>
+                            <state key="normal" image="zhuanfa_1"/>
                             <connections>
                                 <action selector="zhuanfaAction:" destination="-1" eventType="touchUpInside" id="k1R-ib-C9Y"/>
                             </connections>
@@ -75,57 +65,49 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="5nR-ob-TGf"/>
-                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="leading" secondItem="uHz-el-BBR" secondAttribute="trailing" id="9NU-iw-xvy"/>
-                        <constraint firstItem="0rf-oW-QwF" firstAttribute="leading" secondItem="HRF-RW-QAG" secondAttribute="trailing" id="AeC-69-hfb"/>
-                        <constraint firstAttribute="bottom" secondItem="uHz-el-BBR" secondAttribute="bottom" id="EoZ-Au-neV"/>
-                        <constraint firstItem="0rf-oW-QwF" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" id="Gc0-OD-jUi"/>
-                        <constraint firstItem="m71-gW-xBT" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" id="NMo-xc-rD2"/>
-                        <constraint firstItem="HRF-RW-QAG" firstAttribute="leading" secondItem="yMs-ev-ezg" secondAttribute="leading" id="NrH-ap-jw3"/>
-                        <constraint firstAttribute="bottom" secondItem="HRF-RW-QAG" secondAttribute="bottom" id="O2l-fX-BeB"/>
-                        <constraint firstAttribute="height" constant="50" id="REL-jf-hOT"/>
-                        <constraint firstItem="m71-gW-xBT" firstAttribute="leading" secondItem="Kfc-P6-Je1" secondAttribute="trailing" id="Tg8-Jb-ZDF"/>
-                        <constraint firstItem="HRF-RW-QAG" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" id="Wlz-A6-F0Z"/>
-                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" id="YDP-Lj-wxw"/>
-                        <constraint firstItem="m71-gW-xBT" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="anc-zP-UXX"/>
-                        <constraint firstItem="0rf-oW-QwF" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="bPY-rD-KNj"/>
-                        <constraint firstItem="uHz-el-BBR" firstAttribute="leading" secondItem="0rf-oW-QwF" secondAttribute="trailing" id="dLs-Vn-N3f"/>
-                        <constraint firstItem="uHz-el-BBR" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="f1r-06-Ibx"/>
-                        <constraint firstItem="uHz-el-BBR" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="gTU-Hf-4uw"/>
-                        <constraint firstItem="0rf-oW-QwF" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="iXM-RL-xDI"/>
-                        <constraint firstAttribute="trailing" secondItem="m71-gW-xBT" secondAttribute="trailing" id="ksi-ro-xsy"/>
-                        <constraint firstItem="uHz-el-BBR" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" id="mnO-Rt-VHo"/>
-                        <constraint firstAttribute="bottom" secondItem="0rf-oW-QwF" secondAttribute="bottom" id="oOi-HR-Uty"/>
-                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="xfd-4G-vue"/>
-                        <constraint firstItem="m71-gW-xBT" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="xfk-88-Rm2"/>
-                        <constraint firstAttribute="bottom" secondItem="Kfc-P6-Je1" secondAttribute="bottom" id="xjt-fB-uSN"/>
-                        <constraint firstAttribute="bottom" secondItem="m71-gW-xBT" secondAttribute="bottom" id="xqD-du-1Z6"/>
+                        <constraint firstAttribute="bottom" secondItem="m71-gW-xBT" secondAttribute="bottom" constant="5" id="1Ax-cP-nmQ"/>
+                        <constraint firstItem="m71-gW-xBT" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" constant="5" id="4Yf-2m-sCg"/>
+                        <constraint firstItem="HRF-RW-QAG" firstAttribute="leading" secondItem="yMs-ev-ezg" secondAttribute="leading" id="5ON-a2-YZg"/>
+                        <constraint firstAttribute="height" constant="50" id="9dT-kr-pdR"/>
+                        <constraint firstAttribute="trailing" secondItem="m71-gW-xBT" secondAttribute="trailing" id="A4K-9w-4uL"/>
+                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="D8c-o5-SGy"/>
+                        <constraint firstAttribute="bottom" secondItem="0rf-oW-QwF" secondAttribute="bottom" constant="5" id="GTJ-tm-F8x"/>
+                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="leading" secondItem="0rf-oW-QwF" secondAttribute="trailing" id="M6t-Nv-HBX"/>
+                        <constraint firstItem="0rf-oW-QwF" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="RPy-f1-YPM"/>
+                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="SHB-LI-0WY"/>
+                        <constraint firstItem="0rf-oW-QwF" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="aih-Sw-NUc"/>
+                        <constraint firstItem="m71-gW-xBT" firstAttribute="width" secondItem="HRF-RW-QAG" secondAttribute="width" id="hrZ-49-2Vg"/>
+                        <constraint firstItem="0rf-oW-QwF" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" constant="5" id="hvH-Hu-Rzu"/>
+                        <constraint firstItem="m71-gW-xBT" firstAttribute="height" secondItem="HRF-RW-QAG" secondAttribute="height" id="iij-Bu-Q8p"/>
+                        <constraint firstItem="0rf-oW-QwF" firstAttribute="leading" secondItem="HRF-RW-QAG" secondAttribute="trailing" id="jKQ-bR-MD2"/>
+                        <constraint firstAttribute="bottom" secondItem="HRF-RW-QAG" secondAttribute="bottom" constant="5" id="jXL-AI-cTN"/>
+                        <constraint firstItem="m71-gW-xBT" firstAttribute="leading" secondItem="Kfc-P6-Je1" secondAttribute="trailing" id="kAe-9d-GFz"/>
+                        <constraint firstItem="HRF-RW-QAG" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" constant="5" id="rf9-V4-Jxc"/>
+                        <constraint firstAttribute="bottom" secondItem="Kfc-P6-Je1" secondAttribute="bottom" constant="5" id="tPJ-91-H6a"/>
+                        <constraint firstItem="Kfc-P6-Je1" firstAttribute="top" secondItem="yMs-ev-ezg" secondAttribute="top" constant="5" id="vzf-aA-RxM"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="yMs-ev-ezg" secondAttribute="bottom" id="2pR-D7-abj"/>
+                <constraint firstAttribute="bottom" secondItem="yMs-ev-ezg" secondAttribute="bottom" id="96l-Iq-PXA"/>
+                <constraint firstItem="yMs-ev-ezg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GV0-UU-N3V"/>
                 <constraint firstAttribute="trailing" secondItem="oWS-1x-6mM" secondAttribute="trailing" id="OCh-Xv-r2r"/>
                 <constraint firstItem="oWS-1x-6mM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Rek-dY-cv0"/>
-                <constraint firstItem="yMs-ev-ezg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b1m-vQ-BAG"/>
+                <constraint firstItem="yMs-ev-ezg" firstAttribute="top" secondItem="oWS-1x-6mM" secondAttribute="bottom" id="buc-FA-I6F"/>
                 <constraint firstItem="oWS-1x-6mM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fZC-72-3Cs"/>
-                <constraint firstAttribute="trailing" secondItem="yMs-ev-ezg" secondAttribute="trailing" id="hFc-Za-Wq4"/>
-                <constraint firstItem="yMs-ev-ezg" firstAttribute="top" secondItem="oWS-1x-6mM" secondAttribute="bottom" id="ydn-wI-uug"/>
+                <constraint firstAttribute="trailing" secondItem="yMs-ev-ezg" secondAttribute="trailing" id="ff7-V3-acd"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>
     </objects>
     <resources>
-        <image name="dashang_1.png" width="35" height="35"/>
-        <image name="dashang_2.png" width="35" height="35"/>
-        <image name="pinglun_1.png" width="35" height="35"/>
+        <image name="pinglun_1" width="16" height="16"/>
         <image name="pinglun_2.png" width="35" height="35"/>
-        <image name="shoucang_1.png" width="36" height="35"/>
-        <image name="shoucang_2.png" width="36" height="35"/>
-        <image name="zan_1.png" width="16" height="16"/>
-        <image name="zan_2.png" width="35" height="35"/>
-        <image name="zhuanfa_1.png" width="39" height="35"/>
-        <image name="zhuanfa_2.png" width="39" height="35"/>
+        <image name="shoucang_1" width="16" height="16"/>
+        <image name="shoucang_2" width="16" height="16"/>
+        <image name="zan_1" width="16" height="16"/>
+        <image name="zan_2" width="16" height="16"/>
+        <image name="zhuanfa_1" width="16" height="16"/>
     </resources>
 </document>

@@ -13,6 +13,7 @@
 @interface LibraryController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *mainCollectionView;
+    NSMutableArray *arrayList;
 }
 @end
 
@@ -22,9 +23,22 @@
 {
     [super viewDidLoad];
     self.title=@"图书馆";
+    arrayList = [[NSMutableArray alloc] init];
     //1.初始化layout
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, winsize.width, self.view.frame.size.height) collectionViewLayout:layout];
+//    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KThirdJHNetworkGetBook withUserInfo:nil success:^(id message) {
+//        
+//        if([message[@"resultcode"] intValue] == 200){
+//            [arrayList addObjectsFromArray:message[@"result"]];
+//        }
+//        else{
+//            [SVProgressHUD showInfoWithStatus:@"接口错误"];
+//        }
+//            
+//    } failure:^(NSError *error) {
+//        
+//    } visibleHUD:NO];
     //4.设置代理
     mainCollectionView.delegate = self;
     mainCollectionView.dataSource = self;
@@ -75,17 +89,33 @@
 {
     LSYReadPageViewController *pageView = [[LSYReadPageViewController alloc] init];
     
-    pageView.resourceURL =[NSURL URLWithString:@"http://123.56.151.112/taojin/liangzishihua.txt"];
+    //pageView.resourceURL =[NSURL URLWithString:@"http://123.56.151.112/taojin/liangzishihua.txt"];
+    
+    
+    NSURL *fileURL = [NSURL fileURLWithPath:@"http://123.56.151.112/taojin/liangzishihua.txt"];
+    
+    pageView.resourceURL = fileURL;    //文件位置
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        pageView.model = [LSYReadModel getLocalModelWithURL:pageView.resourceURL];
+        pageView.model = [LSYReadModel getLocalModelWithURL:fileURL];
         
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           [self presentViewController:pageView animated:YES completion:nil];
-                       });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self presentViewController:pageView animated:YES completion:nil];
+        });
     });
+    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//
+//        pageView.model = [LSYReadModel getLocalModelWithURL:pageView.resourceURL];
+//
+//        dispatch_async(dispatch_get_main_queue(), ^
+//                       {
+//                           [self presentViewController:pageView animated:YES completion:nil];
+//                           //[self.navigationController pushViewController:pageView animated:YES];
+//                       });
+//    });
 
 }
 

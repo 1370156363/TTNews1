@@ -13,6 +13,7 @@
 #import "EditController.h"
 #import "YYLocation.h"
 #import "UserModel.h"
+#import "KGDynamicsController.h"
 
 @interface InformEditController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,YYLocationPickerViewDelegate>
 @property(nonatomic,strong)NSMutableArray *arrayDataItems;
@@ -28,7 +29,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title=@"编辑个人资料";
+    if (_userID) {
+        self.title = @"用户中心";
+    }
+    else
+        self.title=@"编辑个人资料";
+    
     self.tableView.tableFooterView = [UIView new];
     self.arrayDataItems=[NSMutableArray array];
     
@@ -37,9 +43,18 @@
 }
 
 -(void)requestURL{
-    NSMutableDictionary *prms=[@{
-                                 @"uid":[[OWTool Instance] getUid]
-                                 }mutableCopy];
+    NSMutableDictionary *prms;
+    
+    if(_userID!= nil){
+        prms=[@{
+                @"uid":_userID
+                }mutableCopy];
+    }
+    else{
+        prms=[@{
+                @"uid":[[OWTool Instance] getUid]
+                }mutableCopy];
+    }
     weakSelf(ws)
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworGetUserINfo withUserInfo:prms success:^(NSDictionary *message)
      {
@@ -51,7 +66,7 @@
          }
          else
          {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD showInfoWithStatus:message[@"message"]];
              [SVProgressHUD dismissWithDelay:2];
          }
      } failure:^(NSError *error) {
@@ -89,10 +104,10 @@
     [self.arrayDataItems addObject:model];
     
     model=[[KGTableviewCellModel alloc] init];
-    model.title=@"完成";
+    model.title=@"动态";
     [self.arrayDataItems addObject:model];
-
     [self SetTableviewMethod];
+    [self.tableView reloadData];
 }
 
 
@@ -103,32 +118,30 @@
     [self.tableView cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
         [make makeSection:^(CBTableViewSectionMaker *section)
          {
-             section.data(self.arrayDataItems)
+             section.data(_arrayDataItems)
              .cell([UITableViewCell class])
              .adapter(^(UITableViewCell *cell,KGTableviewCellModel *model,NSUInteger index)
                       {
-                          cell=[cell initWithStyle:UITableViewStylePlain reuseIdentifier:@"identify"];
+                          cell=[cell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"identify"];
                           cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-                          if (index != 6) {
-                              cell.textLabel.text=model.title;
-                          }
+                          cell.textLabel.text=model.title;
                           
                           cell.textLabel.font=[UIFont systemFontOfSize:16];
                           cell.detailTextLabel.text=model.detail;
                           cell.detailTextLabel.font=[UIFont systemFontOfSize:13];
                           cell.detailTextLabel.textColor=[UIColor colorWithHexString:@"#848484"];
                           
-                          //清理缓存
-                          if (index!=0 && index <6)
+                         
+                          if (index!=0)
                           {
                               UILabel *lab=[[UILabel alloc] init];
                               [cell.contentView addSubview:lab];
                               
                               if (index == 1) {
-                                  lab.text=_userModel.nicheng;
+                                  lab.text=_userModel.nicheng?_userModel.nicheng:@"暂无数据";
                               }
                               else if (index == 2) {
-                                  lab.text=_userModel.signature;
+                                  lab.text=_userModel.signature?_userModel.signature:@"暂无数据";
                               }
                               else if (index == 3) {
                                   NSArray * sexList = @[@"男",@"女",@"保密"];
@@ -139,6 +152,7 @@
                                   lab.text=_userModel.birthday;
                               }
                               else if (index == 5) {
+                                  ;
                                   lab.text=@"北京市-东城区-东华门街道";//[NSString stringWithFormat:@"%@ %@ %@",_userModel.pos_province,_userModel.pos_city,_userModel.pos_district];
                               }
                               lab.font=[UIFont systemFontOfSize:14];
@@ -169,19 +183,20 @@
                               }];
                           }
                           else if (index == 6){
-                              UIButton * btn =[UIButton buttonWithType:UIButtonTypeSystem];
-                              [cell.contentView addSubview:btn];
-                              cell.selectionStyle = UITableViewCellAccessoryNone;
-                              cell.accessoryType = UITableViewCellAccessoryNone;
-                              [btn setTitle:model.title forState:UIControlStateNormal];
-                              [btn.titleLabel setFont:[UIFont systemFontOfSize:17]];
-                              [btn setTitleColor:navColor forState:UIControlStateNormal];
-                              [btn addTarget:self action:@selector(btnNextStep) forControlEvents:UIControlEventTouchUpInside];
-                              btn.sd_layout
-                              .leftEqualToView(cell.contentView)
-                              .rightEqualToView(cell.contentView)
-                              .topEqualToView(cell.contentView)
-                              .bottomEqualToView(cell.contentView);
+                              
+//                              UIButton * btn =[UIButton buttonWithType:UIButtonTypeSystem];
+//                              [cell.contentView addSubview:btn];
+//                              cell.selectionStyle = UITableViewCellAccessoryNone;
+//                              cell.accessoryType = UITableViewCellAccessoryNone;
+//                              [btn setTitle:model.title forState:UIControlStateNormal];
+//                              [btn.titleLabel setFont:[UIFont systemFontOfSize:17]];
+//                              [btn setTitleColor:navColor forState:UIControlStateNormal];
+//                              [btn addTarget:self action:@selector(btnNextStep) forControlEvents:UIControlEventTouchUpInside];
+//                              btn.sd_layout
+//                              .leftEqualToView(cell.contentView)
+//                              .rightEqualToView(cell.contentView)
+//                              .topEqualToView(cell.contentView)
+//                              .bottomEqualToView(cell.contentView);
                           }
                           
                       })
@@ -189,88 +204,98 @@
                     {
                         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
                         UILabel *lab=(UILabel *)[cell viewWithTag:1000];
-                        if(index==0)
-                        {
-                            CKAlertViewController *alert=[CKAlertViewController alertControllerWithTitle:@"更换照片" message:@""];
-                            CKAlertAction *camera=[CKAlertAction actionWithTitle:@"相机" handler:^(CKAlertAction *action)
-                             {
-                                 UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-                                 imagePicker.delegate = ws;
-                                 imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                 imagePicker.allowsEditing = YES;
-                                 imagePicker.showsCameraControls = YES;
-                                 [ws dismissViewController];
-                                 [ws presentViewController:imagePicker animated:YES completion:^{}];
-                             }];
-                            CKAlertAction *phont=[CKAlertAction actionWithTitle:@"相册" handler:^(CKAlertAction *action)
-                             {
-                                 UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-                                 imagePicker.navigationBar.barTintColor=[UIColor redColor];
-                                 imagePicker.navigationBar.tintColor=[UIColor whiteColor];
-                                 imagePicker.delegate = ws;
-                                 imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                                 imagePicker.allowsEditing = YES;
-                                 [imagePicker.navigationBar setTitleTextAttributes:
-                                  @{NSFontAttributeName:[UIFont systemFontOfSize:15],
-                                    NSForegroundColorAttributeName:[UIColor whiteColor]}];
-                                 imagePicker.title=@"相机胶卷";
-                                 [ws dismissViewController];
-                                 [ws presentViewController:imagePicker animated:YES completion:^{}];
-                             }];
-                            CKAlertAction *canCel=[CKAlertAction actionWithTitle:@"取消" handler:nil];
-                            [alert addAction:camera];
-                            [alert addAction:phont];
-                            [alert addAction:canCel];
-                            [ws presentViewController:alert animated:NO completion:nil];
-                        }
-                        else if (index==1)
-                        {
-                            EditController *edit=[[EditController alloc] init];
-                            edit.SendTextBlock = ^(NSString *str) {
-                                lab.text=str;
-                            };
-                            edit.titleStr=@"昵称";
-                            [ws.navigationController pushViewController:edit animated:YES];
-                        }
-                        else if (index==2)
-                        {
-                            EditController *edit=[[EditController alloc] init];
-                            edit.SendTextBlock = ^(NSString *str) {
-                                lab.text=str;
-                            };
-                            edit.titleStr=@"签名";
-                            edit.SendTextBlock = ^(NSString *str) {
-                                lab.text=str;
-                            };
-                            [ws.navigationController pushViewController:edit animated:YES];
-                        }
-                        else if (index==3)
-                        {
-                            ValuePickerView *picker=[[ValuePickerView alloc] init];
-                            picker.dataSource=@[@"男",@"女",@"保密"];
-                            picker.pickerTitle=@"性别选择";
-                            picker.valueDidSelect=^(NSString *value)
+                         //非本人信息不可编辑
+                        if (_userID == nil && index != 6) {
+                            if(index==0)
                             {
-                                lab.text=value;
-                                _sexIndex =  [picker.dataSource indexOfObject:value];
-                            };
-                            [picker show];
-                        }
-                        else if (index==4)
-                        {
-                            UserDatePicker *datePick=[UserDatePicker UserDatePicker];
-                            [datePick setTitle:@"时间选择"];
-                            datePick.UserDateBlock=^(UserDatePicker *picker, NSString *date, NSString *udate)
+                                CKAlertViewController *alert=[CKAlertViewController alertControllerWithTitle:@"更换照片" message:@""];
+                                CKAlertAction *camera=[CKAlertAction actionWithTitle:@"相机" handler:^(CKAlertAction *action)
+                                                       {
+                                                           UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+                                                           imagePicker.delegate = ws;
+                                                           imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                                           imagePicker.allowsEditing = YES;
+                                                           imagePicker.showsCameraControls = YES;
+                                                           [ws dismissViewController];
+                                                           [ws presentViewController:imagePicker animated:YES completion:^{}];
+                                                       }];
+                                CKAlertAction *phont=[CKAlertAction actionWithTitle:@"相册" handler:^(CKAlertAction *action)
+                                                      {
+                                                          UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+                                                          imagePicker.navigationBar.barTintColor=[UIColor redColor];
+                                                          imagePicker.navigationBar.tintColor=[UIColor whiteColor];
+                                                          imagePicker.delegate = ws;
+                                                          imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                          imagePicker.allowsEditing = YES;
+                                                          [imagePicker.navigationBar setTitleTextAttributes:
+                                                           @{NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                                             NSForegroundColorAttributeName:[UIColor whiteColor]}];
+                                                          imagePicker.title=@"相机胶卷";
+                                                          [ws dismissViewController];
+                                                          [ws presentViewController:imagePicker animated:YES completion:^{}];
+                                                      }];
+                                CKAlertAction *canCel=[CKAlertAction actionWithTitle:@"取消" handler:nil];
+                                [alert addAction:camera];
+                                [alert addAction:phont];
+                                [alert addAction:canCel];
+                                [ws presentViewController:alert animated:NO completion:nil];
+                            }
+                            else if (index==1)
                             {
-                                lab.text=date;
-                                _birthdayIndex =date;
-                            };
+                                EditController *edit=[[EditController alloc] init];
+                                edit.SendTextBlock = ^(NSString *str) {
+                                    lab.text=str;
+                                };
+                                edit.titleStr=@"昵称";
+                                [ws.navigationController pushViewController:edit animated:YES];
+                            }
+                            else if (index==2)
+                            {
+                                EditController *edit=[[EditController alloc] init];
+                                edit.SendTextBlock = ^(NSString *str) {
+                                    lab.text=str;
+                                };
+                                edit.titleStr=@"签名";
+                                edit.SendTextBlock = ^(NSString *str) {
+                                    lab.text=str;
+                                };
+                                [ws.navigationController pushViewController:edit animated:YES];
+                            }
+                            else if (index==3)
+                            {
+                                ValuePickerView *picker=[[ValuePickerView alloc] init];
+                                picker.dataSource=@[@"男",@"女",@"保密"];
+                                picker.pickerTitle=@"性别选择";
+                                picker.valueDidSelect=^(NSString *value)
+                                {
+                                    lab.text=value;
+                                    _sexIndex =  [picker.dataSource indexOfObject:value];
+                                };
+                                [picker show];
+                            }
+                            else if (index==4)
+                            {
+                                UserDatePicker *datePick=[UserDatePicker UserDatePicker];
+                                [datePick setTitle:@"时间选择"];
+                                datePick.UserDateBlock=^(UserDatePicker *picker, NSString *date, NSString *udate)
+                                {
+                                    lab.text=date;
+                                    _birthdayIndex =date;
+                                };
+                            }
+                            else if (index==5)
+                            {
+                                YYLocationPickerView *location = [[YYLocationPickerView alloc] initWithLevel:YYLocationPickerViewLevelArea andDelegate:self];
+                                location.tag = 2;
+                                [location show];
+                            }
                         }
-                        else if (index==5)
-                        {
-                            YYLocationPickerView *location = [[YYLocationPickerView alloc] initWithLevel:YYLocationPickerViewLevelArea andDelegate:self];
-                            location.tag = 2;
-                            [location show];
+                        if (index == 6){
+                            KGDynamicsController *KGDynamicCol = [[KGDynamicsController alloc] init];
+                            if(_userID){
+                                KGDynamicCol.userID = _userID;
+                            }
+                            [self.navigationController pushViewController:KGDynamicCol animated:YES];
                         }
                     })
              .height(60);
@@ -286,7 +311,7 @@
                                  @"birthday":_birthdayIndex
                                  }mutableCopy];
     
-    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:NNetworkUpdateUserInfo withUserInfo:prms success:^(NSDictionary *message)
+    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:NNetworkUpdateUserInfo withUserInfo:prms success:^(NSDictionary *message)
      {
          [SVProgressHUD showSuccessWithStatus:message[@"message"]];
          
@@ -303,7 +328,7 @@
     UIImageView *img=[cell viewWithTag:1000];
     img.image=info[UIImagePickerControllerEditedImage];
     weakSelf(ws)
-    [KGNetworkManager uploadImageWithArray:@[img.image] parameter:nil success:^(NSData* data) {
+    [[KGNetworkManager sharedInstance] uploadImageWithArray:[@[img.image] copy] parameter:nil success:^(NSData* data) {
         NSError *err;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
                                                             options:NSJSONReadingMutableContainers

@@ -16,14 +16,18 @@
 #define TITLELENGTH 20
 
 @interface AddMessageView()<PYPhotosViewDelegate,UITextViewDelegate>
+///发布动态时不显示标题，发布问题显示
+@property (nonatomic, assign) BOOL isShowTitleView;
 
 @end
 
 @implementation AddMessageView
 
--(instancetype)init{
-    self = [super init];
+
+-(instancetype)initWithState:(BOOL)state{
+    self = [self init];
     if (self) {
+        _isShowTitleView = state;
         [self setupViews];
     }
     return self;
@@ -32,22 +36,29 @@
 -(void)setupViews
 {
     [self setBackgroundColor:[UIColor whiteColor]];
-    // 1. 常见一个发布图片时的photosView
-    PYPhotosView *publishPhotosView = [PYPhotosView photosView];
-    // 2. 添加本地图片
-    NSMutableArray *imagesM = [NSMutableArray array];
-    publishPhotosView.photoWidth = (SCREEN_WIDTH-20)/3;
-    publishPhotosView.photoHeight = (SCREEN_WIDTH-20)/3;
-    publishPhotosView.imagesMaxCountWhenWillCompose = 3;
-    // 2.1 设置本地图片
-    publishPhotosView.images = imagesM;
-    // 3. 设置代理
-    publishPhotosView.delegate = self;
-    self.publishPhotosView = publishPhotosView;
-    // 4. 添加photosView
-    [self sd_addSubviews:@[self.publishPhotosView,self.textContentView,self.textTitleView]];
-    
-    //    添加监听方法
+//    // 1. 常见一个发布图片时的photosView
+//    PYPhotosView *publishPhotosView = [PYPhotosView photosView];
+//    // 2. 添加本地图片
+//    NSMutableArray *imagesM = [[NSMutableArray alloc] initWithArray:_selectedPhotos];
+//    publishPhotosView.photoWidth = (SCREEN_WIDTH-40)/3;
+//    publishPhotosView.photoHeight = (SCREEN_WIDTH-40)/3;
+//    publishPhotosView.photoMargin = 10;
+////    publishPhotosView.imagesMaxCountWhenWillCompose = 3;
+//    // 2.1 设置本地图片
+//    publishPhotosView.images = imagesM;
+//    // 3. 设置代理
+//    publishPhotosView.delegate = self;
+//    self.publishPhotosView = publishPhotosView;
+//    // 4. 添加photosView
+    //self.textTitleView
+    if(!_isShowTitleView){
+        [self sd_addSubviews:@[self.textContentView]];
+    }
+    else{
+        [self sd_addSubviews:@[self.textContentView,self.textTitleView]];
+    }
+//
+//    //    添加监听方法
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:nil];
     
     [self setNeedsUpdateConstraints];
@@ -70,25 +81,25 @@
     .topSpaceToView(self.textTitleView, 20)
     .heightIs(200);
     
-    self.publishPhotosView.sd_layout
-    .topSpaceToView(self.textContentView, 5)
-    .leftSpaceToView(self, 5);
+//    self.publishPhotosView.sd_layout
+//    .topSpaceToView(self.textContentView, 5)
+//    .leftSpaceToView(self, 5);
     
 }
 
 
--(void)returnAddMorePhotoBlock:(addMorePhotoBlock)block
-{
-    self.block = block;
-}
-#pragma mark - PYPhotosViewDelegate
-- (void)photosView:(PYPhotosView *)photosView didAddImageClickedWithImages:(NSMutableArray *)images
-{
-    NSLog(@"点击了添加图片按钮 --- 添加前有%zd张图片", images.count);
-    if (self.block) {
-        self.block();
-    }
-}
+//-(void)returnAddMorePhotoBlock:(addMorePhotoBlock)block
+//{
+//    self.block = block;
+//}
+//#pragma mark - PYPhotosViewDelegate
+//- (void)photosView:(PYPhotosView *)photosView didAddImageClickedWithImages:(NSMutableArray *)images
+//{
+//    NSLog(@"点击了添加图片按钮 --- 添加前有%zd张图片", images.count);
+//    if (self.block) {
+//        self.block();
+//    }
+//}
 
 -(void)dealloc
 {
@@ -146,12 +157,12 @@
     }
     if (textView.tag ==100 && toBeString.length > CONTENTTLENGTH) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showImage:nil status:@"内容最多只能输入200个字!请您合理安排内容!"];
+        [SVProgressHUD showWithStatus:@"内容最多只能输入200个字!请您合理安排内容!"];
         [SVProgressHUD dismissWithDelay:2];
     }
     else if (textView.tag ==200 && toBeString.length > TITLELENGTH) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showImage:nil status:@"标题最多只能输入20个字!请您合理安排内容!"];
+        [SVProgressHUD showWithStatus:@"标题最多只能输入20个字!请您合理安排内容!"];
         [SVProgressHUD dismissWithDelay:2];
     }
     

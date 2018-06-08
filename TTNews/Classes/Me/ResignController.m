@@ -49,12 +49,12 @@
     
     if (userPhone.text.length==0)
     {
-        [SVProgressHUD showImage:nil status:@"请填写11位手机号"];
+        [SVProgressHUD showErrorWithStatus:@"请填写11位手机号"];
         return ;
     }
     if (![userPhone.text wh_isMobileNumber])
     {
-        [SVProgressHUD showImage:nil status:@"请输入正确的手机号码"];
+        [SVProgressHUD showErrorWithStatus:@"请输入正确的手机号码"];
         return;
     }
     NSMutableDictionary *prms=[@{
@@ -63,8 +63,9 @@
     //获取验证码
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetWorkYzmAction withUserInfo:prms success:^(NSDictionary* message) {
         
-        NSDictionary *CodeDic = [message objectForKey:@"data"];
-        self.CodeStr = [CodeDic objectForKey:@"verify"];
+        self.CodeStr = ((NSNumber*)[message objectForKey:@"code"]).stringValue;
+        NSLog(@"%d",(long)self.CodeStr.intValue);
+        [SVProgressHUD dismiss];
         [SVProgressHUD dismiss];
     } failure:^(NSError *error)
      {
@@ -77,19 +78,21 @@
                                      @"username":userPhone.text,
                                      @"password":userPass.text,
                                      @"repassword":userPassConfim.text,
-                                     @"email":userEmail.text,
+                                     @"email":@"no_email@163.com",
                                      @"verify":userEmail.text
                                      }mutableCopy];
         [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:kNetWorkActionRegister withUserInfo:prms success:^(NSDictionary *message)
          {
+             
              if ([message[@"status"] intValue]==1)
              {
-                 [SVProgressHUD showSuccessWithStatus:@"注册成功!"];
-                 [ws popViewController];
+                 [self registerUser:userPhone.text Pass:userPass.text];
+                 //[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
+                 
              }
              else
              {
-                 [SVProgressHUD showImage:nil status:message[@"message"]];
+                 [SVProgressHUD showErrorWithStatus:message[@"message"]];
                  [SVProgressHUD dismissWithDelay:2];
              }
          } failure:^(NSError *error) {
@@ -97,6 +100,58 @@
          } visibleHUD:NO];
     }
 }
+
+//注册环信账号
+//Registered account
+- (void)registerUser:(NSString*)userName Pass:(NSString*)pass
+{
+    weakSelf(ws)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = [[EMClient sharedClient] registerWithUsername:userName password:pass];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                
+                //                [self showAlertColTitle:@"提示" Message:@"注册成功，请登录"];
+                [ws popViewController];
+            }else{
+                switch (error.code) {
+                    case EMErrorServerNotReachable:
+                        [self showAlertColTitle:@"提示" Message:@"连接服务器失败"];
+                        break;
+                    case EMErrorUserAlreadyExist:
+                        [self showAlertColTitle:@"提示" Message:@"用户已存在"];
+                        break;
+                    case EMErrorNetworkUnavailable:
+                        [self showAlertColTitle:@"提示" Message:@"无可用网络"];
+                        break;
+                    case EMErrorServerTimeout:
+                        [self showAlertColTitle:@"提示" Message:@"连接超时"];
+                        break;
+                    case EMErrorServerServingForbidden:
+                        [self showAlertColTitle:@"提示" Message:@"服务器异常"];
+                    case EMErrorExceedServiceLimit:
+                        [self showAlertColTitle:@"提示" Message:@"超过使用极限"];
+                        break;
+                    default:
+                        [self showAlertColTitle:@"提示" Message:@"注册失败"];
+                        break;
+                }
+            }
+        });
+    });
+}
+
+#pragma mark 提示信息
+/** 提示信息*/
+-(void)showAlertColTitle:(NSString*)title Message:(NSString*)message{
+    
+    UIAlertController *alertCol = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * actionOK = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleCancel handler:nil];
+    
+    [alertCol addAction:actionOK];
+    [self presentViewController:alertCol animated:YES completion:nil];
+}
+
 -(BOOL)checkPhoneInfo
 {
     if (userPhone.text.length==0)
@@ -129,10 +184,10 @@
         return false;
     }
     
-    if (![userEmail.text wh_isEmailAddress]) {
-        [SVProgressHUD showInfoWithStatus:@"请输入正确的邮箱！"];
-        return false;
-    }
+//    if (![userEmail.text wh_isEmailAddress]) {
+//        [SVProgressHUD showInfoWithStatus:@"请输入正确的邮箱！"];
+//        return false;
+//    }
     
     return true;
 }

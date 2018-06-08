@@ -7,19 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WendaModel.h"
 
 @interface WenDaTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UILabel *oneTitleLab;
-@property (strong, nonatomic) IBOutlet UIImageView *oneImg;
-@property (strong, nonatomic) IBOutlet UILabel *countLab;
-
-///2个模式
-@property (weak, nonatomic) IBOutlet UILabel *twotitleLab;
-@property (weak, nonatomic) IBOutlet UIImageView *imag1;
-@property (weak, nonatomic) IBOutlet UIImageView *img2;
-@property (weak, nonatomic) IBOutlet UILabel *twoCountLab;
-
-
+@property (nonatomic, strong) WendaModel *wendaModel;
 
 @end

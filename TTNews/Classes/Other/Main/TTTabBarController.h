@@ -7,7 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewWenDaViewController.h"
+#import "NewDongTaiViewController.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface TTTabBarController : UITabBarController
+@property (nonatomic,strong) NewWenDaViewController *wendaVc;
+@property (nonatomic, strong)NewDongTaiViewController* dongtaiVc;
+
+
+- (void)setupUntreatedApplyCount;
+
+- (void)setupUnreadMessageCount;
+
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification;
+
+- (void)didReceiveUserNotification:(UNNotification *)notification;
+
+- (void)playSoundAndVibration;
+
+- (void)showNotificationWithMessage:(EMMessage *)message;
 
 @end

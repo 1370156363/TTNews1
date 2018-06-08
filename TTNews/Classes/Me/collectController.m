@@ -58,27 +58,29 @@
     indexType = 1;
     //初次加载数据
     [self.L_tableview.mj_header beginRefreshing];
+    self.L_tableview.estimatedRowHeight =50;
+    self.L_tableview.rowHeight = UITableViewAutomaticDimension;
 }
 
 //网络请求
 -(void)requestURL:(int)index withType:(NetWorkAction)type{
-    NSMutableDictionary *prms;
-    if (KNetWorkMyCollection == type){
-        prms=[@{
-                @"uid":[[OWTool Instance] getUid],
-                @"limit":@(index)
-                
-                }mutableCopy];
-    }
-    else{
-        prms=[@{
-                @"uid":[[OWTool Instance] getUid],
-                
-                }mutableCopy];
-    }
-    
+    NSMutableDictionary *prms = [@{
+                                   @"uid":[[OWTool Instance] getUid],
+                                   
+                                   }mutableCopy];
+//    if (KNetWorkMyCollection == type){
+//        prms=[@{
+//                @"uid":[[OWTool Instance] getUid],
+//                @"limit":@(index)
+//
+//                }mutableCopy];
+//    }
+//    else{
+//        prms=;
+//    }
+//
     weakSelf(ws)
-    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:type withUserInfo:prms success:^(NSDictionary *message)
+    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:type withUserInfo:prms success:^(NSDictionary *message)
      {
          if ([message[@"status"] intValue]==1)
          {
@@ -98,7 +100,7 @@
          }
          else
          {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD showInfoWithStatus:message[@"message"]];
              [SVProgressHUD dismissWithDelay:2];
          }
      } failure:^(NSError *error) {
@@ -248,19 +250,25 @@
             .adapter(^(NewsTableViewCell * cell,MyCollectionModel * data,NSUInteger index)
                      {
                          cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-                         cell.txtLab.text=data.title;
-                         
-                         NSArray *imagss=[data.fengmian componentsSeparatedByString:@","];
-                         if (imagss.count!=0) {
-                             [cell.myImage1 setBackgroundColor:[UIColor redColor]];
-                             [cell.myImage1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,imagss[0]]] placeholderImage:nil];
-                             
-                         }
+                         cell.collectionModel = data;
                      })
             .event(^(NSUInteger index, MyCollectionModel *model)
                    {
                        NewsInfoViewController *col =  [[NewsInfoViewController alloc]init];
-                       col.url = [NSString stringWithFormat:@"%d",model.article_id.intValue];
+                       col.url=[NSString stringWithFormat:@"%d",model.article_id.intValue];
+                       TTVideo *video = [TTVideo new];
+                       video.ID = [NSString stringWithFormat:@"%d",[model.article_id intValue]];
+                       video.uid = [NSString stringWithFormat:@"%d",[model.uid intValue]];
+                       video.model_id = [NSString stringWithFormat:@"%d",[model.model_id intValue]];
+                       video.title = model.title;
+                       video.fengmian = model.fengmian;
+                       video.create_time = model.create_time;
+                       video.content = model.info;
+                       video.avatar = model.avatar;
+                       video.up = model.up;
+                       video.pinglunnum = model.pinglunnum;
+                       col.video=video;
+                      
                        [ws.navigationController pushViewController:col animated:YES];
                    })
             .height(150);
@@ -275,21 +283,24 @@
             .data(_R_modelList)
             .adapter(^(NewsTableViewCell * cell,MyCollectionModel * data,NSUInteger index)
                      {
-                         cell.txtLab.text=data.title;
-                         
-                         NSArray *imagss=[data.fengmian componentsSeparatedByString:@","];
-                         if (imagss.count!=0) {
-                             [cell.myImage1 setBackgroundColor:[UIColor redColor]];
-                             [cell.myImage1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,imagss[0]]] placeholderImage:nil];
-                             
-                         }
-                         //cell.model = _R_modelList[index];
+                         cell.collectionModel = data;
                          
                      })
             .event(^(NSUInteger index, MyCollectionModel *model)
                    {
                        NewsInfoViewController *col =  [[NewsInfoViewController alloc]init];
-                       col.url = [NSString stringWithFormat:@"%d",model.article_id.intValue];
+                       col.url=[NSString stringWithFormat:@"%d",model.article_id.intValue];
+                       TTVideo *video = [TTVideo new];
+                       video.ID = [NSString stringWithFormat:@"%d",[model.article_id intValue]];
+                       video.uid = [NSString stringWithFormat:@"%d",[model.uid intValue]];
+                       video.model_id = [NSString stringWithFormat:@"%d",[model.model_id intValue]];
+                       video.title = model.title;
+                       video.fengmian = model.fengmian;
+                       video.create_time = model.create_time;
+                       video.content = model.info;
+                       video.avatar = model.avatar;
+                       col.video=video;
+                      
                        [ws.navigationController pushViewController:col animated:YES];
                    })
             .height(150);

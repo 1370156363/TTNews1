@@ -18,10 +18,10 @@
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
-    if (self==[super initWithFrame:frame])
+    if (self=[super initWithFrame:frame])
     {
         self=[[NSBundle mainBundle] loadNibNamed:@"KGMPersonalHeaderView" owner:self options:nil][0];
-        self.frame=frame;
+        self.frame = frame;
         weakSelf(ws)
         [_headImageView wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
             ws.KGPersonalCheckBlock(50);
@@ -31,6 +31,9 @@
         }];
         [_contenttext wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
             ws.KGPersonalCheckBlock(70);
+        }];
+        [_name wh_addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            ws.KGPersonalCheckBlock(80);
         }];
         [self updateSubView];
     }
@@ -43,12 +46,14 @@
         _headImageView.userInteractionEnabled = YES;
         _headerImg.userInteractionEnabled = NO;
         _contenttext.userInteractionEnabled = NO;
+        _name.userInteractionEnabled = NO;
         [self updateSubViewData];
     }
     else{
         _headImageView.userInteractionEnabled = NO;
         _headerImg.userInteractionEnabled = YES;
         _contenttext.userInteractionEnabled = YES;
+        _name.userInteractionEnabled = YES;
         [self requestURL];
         
        
@@ -71,7 +76,7 @@
          }
          else
          {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD showWithStatus:message[@"message"]];
              [SVProgressHUD dismissWithDelay:2];
          }
      } failure:^(NSError *error) {
@@ -90,7 +95,7 @@
         _fangwen.text = @"0";
     }else{
         UserModel *userModel = [UserModel mj_objectWithKeyValues:[[OWTool Instance] getUserInfo]];
-        [_headerImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",userModel.avatar]]];
+        [_headerImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,userModel.avatar]]];
         _name.text = userModel.nickname;
         _contenttext.text = userModel.signature?userModel.signature:@"这个家伙很懒，什么都没有留下！";
         _dongtai.text = userModel.dtnum;

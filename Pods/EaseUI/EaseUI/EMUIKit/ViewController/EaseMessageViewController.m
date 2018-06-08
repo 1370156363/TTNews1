@@ -16,6 +16,8 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#import "UIImage+GIF.h"
+
 #import "NSDate+Category.h"
 #import "EaseUsersListViewController.h"
 #import "EaseMessageReadManager.h"
@@ -23,7 +25,6 @@
 #import "EaseEmoji.h"
 #import "EaseEmotionEscape.h"
 #import "EaseCustomMessageCell.h"
-#import "UIImage+GIF.h"
 #import "EaseLocalDefine.h"
 #import "EaseSDKHelper.h"
 
@@ -109,7 +110,7 @@ typedef enum : NSUInteger {
     //Initialization
     CGFloat chatbarHeight = [EaseChatToolbar defaultHeight];
     EMChatToolbarType barType = self.conversation.type == EMConversationTypeChat ? EMChatToolbarTypeChat : EMChatToolbarTypeGroup;
-    self.chatToolbar = [[EaseChatToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - chatbarHeight, self.view.frame.size.width, chatbarHeight) type:barType];
+    self.chatToolbar = [[EaseChatToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - chatbarHeight - iPhoneX_BOTTOM_HEIGHT, self.view.frame.size.width, chatbarHeight) type:barType];
     self.chatToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     //Initializa the gesture recognizer
@@ -137,11 +138,11 @@ typedef enum : NSUInteger {
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
-    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[[UIImage easeImageNamed:@"EaseUIResource.bundle/chat_sender_bg"] stretchableImageWithLeftCapWidth:5 topCapHeight:35]];
-    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage easeImageNamed:@"EaseUIResource.bundle/chat_receiver_bg"] stretchableImageWithLeftCapWidth:35 topCapHeight:35]];
+    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[[UIImage imageNamed:@"EaseUIResource.bundle/chat_sender_bg"] stretchableImageWithLeftCapWidth:5 topCapHeight:35]];
+    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@"EaseUIResource.bundle/chat_receiver_bg"] stretchableImageWithLeftCapWidth:35 topCapHeight:35]];
     
-    [[EaseBaseMessageCell appearance] setSendMessageVoiceAnimationImages:@[[UIImage easeImageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_full"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_000"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_001"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_002"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_003"]]];
-    [[EaseBaseMessageCell appearance] setRecvMessageVoiceAnimationImages:@[[UIImage easeImageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing_full"],[UIImage easeImageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing000"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing001"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing002"], [UIImage easeImageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing003"]]];
+    [[EaseBaseMessageCell appearance] setSendMessageVoiceAnimationImages:@[[UIImage imageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_full"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_000"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_001"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_002"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_sender_audio_playing_003"]]];
+    [[EaseBaseMessageCell appearance] setRecvMessageVoiceAnimationImages:@[[UIImage imageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing_full"],[UIImage imageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing000"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing001"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing002"], [UIImage imageNamed:@"EaseUIResource.bundle/chat_receiver_audio_playing003"]]];
     
     [[EaseBaseMessageCell appearance] setAvatarSize:40.f];
     [[EaseBaseMessageCell appearance] setAvatarCornerRadius:20.f];
@@ -150,6 +151,10 @@ typedef enum : NSUInteger {
     
     [self tableViewDidTriggerHeaderRefresh];
     [self setupEmotion];
+    
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
 }
 
 /*!
@@ -170,7 +175,7 @@ typedef enum : NSUInteger {
             [emotions addObject:emotion];
         }
         EaseEmotion *emotion = [emotions objectAtIndex:0];
-        EaseEmotionManager *manager= [[EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:7 emotions:emotions tagImage:[UIImage easeImageNamed:emotion.emotionId]];
+        EaseEmotionManager *manager= [[EaseEmotionManager alloc] initWithType:EMEmotionDefault emotionRow:3 emotionCol:7 emotions:emotions tagImage:[UIImage imageNamed:emotion.emotionId]];
         [self.faceView setEmotionManagers:@[manager]];
     }
 }
@@ -350,7 +355,7 @@ typedef enum : NSUInteger {
     }
     
     CGRect tableFrame = self.tableView.frame;
-    tableFrame.size.height = self.view.frame.size.height - _chatToolbar.frame.size.height;
+    tableFrame.size.height = self.view.frame.size.height - _chatToolbar.frame.size.height - iPhoneX_BOTTOM_HEIGHT;
     self.tableView.frame = tableFrame;
     if ([chatToolbar isKindOfClass:[EaseChatToolbar class]]) {
         [(EaseChatToolbar *)self.chatToolbar setDelegate:self];
@@ -393,24 +398,24 @@ typedef enum : NSUInteger {
  @method
  @brief 当前设备是否可以录音
  @discussion
- @param aComplation 判断结果
+ @param aCompletion 判断结果
  @result
  */
-- (void)_canRecordComplation:(void(^)(EMRecordResponse))aComplation
+- (void)_canRecordCompletion:(void(^)(EMRecordResponse))aCompletion
 {
     AVAuthorizationStatus videoAuthStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
     if (videoAuthStatus == AVAuthorizationStatusNotDetermined) {
         [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-            if (aComplation) {
-                aComplation(EMRequestRecord);
-            }
         }];
+        if (aCompletion) {
+            aCompletion(EMRequestRecord);
+        }
     }
     else if(videoAuthStatus == AVAuthorizationStatusRestricted || videoAuthStatus == AVAuthorizationStatusDenied) {
-        aComplation(EMCanNotRecord);
+        aCompletion(EMCanNotRecord);
     }
     else{
-        aComplation(EMCanRecord);
+        aCompletion(EMCanRecord);
     }
 }
 
@@ -538,6 +543,14 @@ typedef enum : NSUInteger {
     return type;
 }
 
+- (void)_customDownloadMessageFile:(EMMessage *)aMessage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"message.autoTransfer", @"Please customize the  transfer attachment method") delegate:nil cancelButtonTitle:NSLocalizedString(@"sure", @"OK") otherButtonTitles:nil, nil];
+        [alertView show];
+    });
+}
+
 /*!
  @method
  @brief 下载消息附件
@@ -559,13 +572,21 @@ typedef enum : NSUInteger {
         }
     };
     
+    BOOL isCustomDownload = !([EMClient sharedClient].options.isAutoTransferMessageAttachments);
+    BOOL isAutoDownloadThumbnail = ([EMClient sharedClient].options.isAutoDownloadThumbnail);
     EMMessageBody *messageBody = message.body;
     if ([messageBody type] == EMMessageBodyTypeImage) {
         EMImageMessageBody *imageBody = (EMImageMessageBody *)messageBody;
         if (imageBody.thumbnailDownloadStatus > EMDownloadStatusSuccessed)
         {
             //download the message thumbnail
-            [[[EMClient sharedClient] chatManager] downloadMessageThumbnail:message progress:nil completion:completion];
+            if (isCustomDownload) {
+                [self _customDownloadMessageFile:message];
+            } else {
+                if (isAutoDownloadThumbnail) {
+                    [[[EMClient sharedClient] chatManager] downloadMessageThumbnail:message progress:nil completion:completion];
+                }
+            }
         }
     }
     else if ([messageBody type] == EMMessageBodyTypeVideo)
@@ -574,7 +595,13 @@ typedef enum : NSUInteger {
         if (videoBody.thumbnailDownloadStatus > EMDownloadStatusSuccessed)
         {
             //download the message thumbnail
-            [[[EMClient sharedClient] chatManager] downloadMessageThumbnail:message progress:nil completion:completion];
+            if (isCustomDownload) {
+                [self _customDownloadMessageFile:message];
+            } else {
+                if (isAutoDownloadThumbnail) {
+                    [[[EMClient sharedClient] chatManager] downloadMessageThumbnail:message progress:nil completion:completion];
+                }
+            }
         }
     }
     else if ([messageBody type] == EMMessageBodyTypeVoice)
@@ -583,14 +610,20 @@ typedef enum : NSUInteger {
         if (voiceBody.downloadStatus > EMDownloadStatusSuccessed)
         {
             //download the message attachment
-            [[EMClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(EMMessage *message, EMError *error) {
-                if (!error) {
-                    [weakSelf _reloadTableViewDataWithMessage:message];
+            if (isCustomDownload) {
+                [self _customDownloadMessageFile:message];
+            } else {
+                if (isAutoDownloadThumbnail) {
+                    [[EMClient sharedClient].chatManager downloadMessageAttachment:message progress:nil completion:^(EMMessage *message, EMError *error) {
+                        if (!error) {
+                            [weakSelf _reloadTableViewDataWithMessage:message];
+                        }
+                        else {
+                            [weakSelf showHint:NSEaseLocalizedString(@"message.voiceFail", @"voice for failure!")];
+                        }
+                    }];
                 }
-                else {
-                    [weakSelf showHint:NSEaseLocalizedString(@"message.voiceFail", @"voice for failure!")];
-                }
-            }];
+            }
         }
     }
 }
@@ -606,7 +639,6 @@ typedef enum : NSUInteger {
 - (BOOL)shouldSendHasReadAckForMessage:(EMMessage *)message
                                   read:(BOOL)read
 {
-    NSString *account = [[EMClient sharedClient] currentUsername];
     if (message.chatType != EMChatTypeChat || message.isReadAcked || message.direction == EMMessageDirectionSend || ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) || !self.isViewDidAppear)
     {
         return NO;
@@ -728,6 +760,7 @@ typedef enum : NSUInteger {
         [self presentMoviePlayerViewControllerAnimated:moviePlayerController];
     };
     
+    BOOL isCustomDownload = !([EMClient sharedClient].options.isAutoTransferMessageAttachments);
     __weak typeof(self) weakSelf = self;
     void (^completion)(EMMessage *aMessage, EMError *error) = ^(EMMessage *aMessage, EMError *error) {
         if (!error)
@@ -742,7 +775,11 @@ typedef enum : NSUInteger {
     
     if (videoBody.thumbnailDownloadStatus == EMDownloadStatusFailed || ![[NSFileManager defaultManager] fileExistsAtPath:videoBody.thumbnailLocalPath]) {
         [self showHint:@"begin downloading thumbnail image, click later"];
-        [[EMClient sharedClient].chatManager downloadMessageThumbnail:model.message progress:nil completion:completion];
+        if (isCustomDownload) {
+            [self _customDownloadMessageFile:model.message];
+        } else {
+            [[EMClient sharedClient].chatManager downloadMessageThumbnail:model.message progress:nil completion:completion];
+        }
         return;
     }
     
@@ -753,14 +790,18 @@ typedef enum : NSUInteger {
     }
     
     [self showHudInView:self.view hint:NSEaseLocalizedString(@"message.downloadingVideo", @"downloading video...")];
-    [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:^(EMMessage *message, EMError *error) {
-        [weakSelf hideHud];
-        if (!error) {
-            block();
-        }else{
-            [weakSelf showHint:NSEaseLocalizedString(@"message.videoFail", @"video for failure!")];
-        }
-    }];
+    if (isCustomDownload) {
+        [self _customDownloadMessageFile:model.message];
+    } else {
+        [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:^(EMMessage *message, EMError *error) {
+            [weakSelf hideHud];
+            if (!error) {
+                block();
+            }else{
+                [weakSelf showHint:NSEaseLocalizedString(@"message.videoFail", @"video for failure!")];
+            }
+        }];
+    }
 }
 
 /*!
@@ -775,6 +816,7 @@ typedef enum : NSUInteger {
     __weak EaseMessageViewController *weakSelf = self;
     EMImageMessageBody *imageBody = (EMImageMessageBody*)[model.message body];
     
+    BOOL isCustomDownload = !([EMClient sharedClient].options.isAutoTransferMessageAttachments);
     if ([imageBody type] == EMMessageBodyTypeImage) {
         if (imageBody.thumbnailDownloadStatus == EMDownloadStatusSuccessed) {
             if (imageBody.downloadStatus == EMDownloadStatusSuccessed)
@@ -792,15 +834,16 @@ typedef enum : NSUInteger {
             }
             
             [weakSelf showHudInView:weakSelf.view hint:NSEaseLocalizedString(@"message.downloadingImage", @"downloading a image...")];
-            [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:^(EMMessage *message, EMError *error) {
+
+            void (^completion)(EMMessage *aMessage, EMError *error) = ^(EMMessage *aMessage, EMError *error) {
                 [weakSelf hideHud];
                 if (!error) {
                     //send the acknowledgement
                     [weakSelf _sendHasReadResponseForMessages:@[model.message] isRead:YES];
-                    NSString *localPath = message == nil ? model.fileLocalPath : [(EMImageMessageBody*)message.body localPath];
+                    NSString *localPath = aMessage == nil ? model.fileLocalPath : [(EMImageMessageBody*)aMessage.body localPath];
                     if (localPath && localPath.length > 0) {
                         UIImage *image = [UIImage imageWithContentsOfFile:localPath];
-                        //                                weakSelf.isScrollToBottom = NO;
+//                        weakSelf.isScrollToBottom = NO;
                         if (image)
                         {
                             [[EaseMessageReadManager defaultManager] showBrowserWithImages:@[image]];
@@ -813,16 +856,26 @@ typedef enum : NSUInteger {
                     }
                 }
                 [weakSelf showHint:NSEaseLocalizedString(@"message.imageFail", @"image for failure!")];
-            }];
+            };
+            
+            if (isCustomDownload) {
+                [self _customDownloadMessageFile:model.message];
+            } else {
+                [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:completion];
+            }
         }else{
             //get the message thumbnail
-            [[EMClient sharedClient].chatManager downloadMessageThumbnail:model.message progress:nil completion:^(EMMessage *message, EMError *error) {
-                if (!error) {
-                    [weakSelf _reloadTableViewDataWithMessage:model.message];
-                }else{
-                    [weakSelf showHint:NSEaseLocalizedString(@"message.thumImageFail", @"thumbnail for failure!")];
-                }
-            }];
+            if (isCustomDownload) {
+                [self _customDownloadMessageFile:model.message];
+            } else {
+                [[EMClient sharedClient].chatManager downloadMessageThumbnail:model.message progress:nil completion:^(EMMessage *message, EMError *error) {
+                    if (!error) {
+                        [weakSelf _reloadTableViewDataWithMessage:model.message];
+                    }else{
+                        [weakSelf showHint:NSEaseLocalizedString(@"message.thumImageFail", @"thumbnail for failure!")];
+                    }
+                }];
+            }
         }
     }
 }
@@ -843,10 +896,16 @@ typedef enum : NSUInteger {
         [self showHint:NSEaseLocalizedString(@"message.downloadingAudio", @"downloading voice, click later")];
         return;
     }
-    else if (downloadStatus == EMDownloadStatusFailed)
+    else if (downloadStatus == EMDownloadStatusFailed || downloadStatus == EMDownloadStatusPending)
     {
         [self showHint:NSEaseLocalizedString(@"message.downloadingAudio", @"downloading voice, click later")];
-        [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:nil];
+        BOOL isCustomDownload = !([EMClient sharedClient].options.isAutoTransferMessageAttachments);
+        if (isCustomDownload) {
+            [self _customDownloadMessageFile:model.message];
+        } else {
+            [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:nil];
+        }
+        
         return;
     }
     
@@ -1031,61 +1090,60 @@ typedef enum : NSUInteger {
         timeCell.title = object;
         return timeCell;
     }
-    else{
-        id<IMessageModel> model = object;
-        if (_delegate && [_delegate respondsToSelector:@selector(messageViewController:cellForMessageModel:)]) {
-            UITableViewCell *cell = [_delegate messageViewController:tableView cellForMessageModel:model];
-            if (cell) {
-                if ([cell isKindOfClass:[EaseMessageCell class]]) {
-                    EaseMessageCell *emcell= (EaseMessageCell*)cell;
-                    if (emcell.delegate == nil) {
-                        emcell.delegate = self;
-                    }
+    
+    id<IMessageModel> model = object;
+    if (_delegate && [_delegate respondsToSelector:@selector(messageViewController:cellForMessageModel:)]) {
+        UITableViewCell *cell = [_delegate messageViewController:tableView cellForMessageModel:model];
+        if (cell) {
+            if ([cell isKindOfClass:[EaseMessageCell class]]) {
+                EaseMessageCell *emcell= (EaseMessageCell*)cell;
+                if (emcell.delegate == nil) {
+                    emcell.delegate = self;
                 }
-                return cell;
             }
+            return cell;
         }
-        
-        if (_dataSource && [_dataSource respondsToSelector:@selector(isEmotionMessageFormessageViewController:messageModel:)]) {
-            BOOL flag = [_dataSource isEmotionMessageFormessageViewController:self messageModel:model];
-            if (flag) {
-                NSString *CellIdentifier = [EaseCustomMessageCell cellIdentifierWithModel:model];
-                //send cell
-                EaseCustomMessageCell *sendCell = (EaseCustomMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-                
-                // Configure the cell...
-                if (sendCell == nil) {
-                    sendCell = [[EaseCustomMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];
-                    sendCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                }
-                
-                if (_dataSource && [_dataSource respondsToSelector:@selector(emotionURLFormessageViewController:messageModel:)]) {
-                    EaseEmotion *emotion = [_dataSource emotionURLFormessageViewController:self messageModel:model];
-                    if (emotion) {
-                        model.image = [UIImage sd_animatedGIFNamed:emotion.emotionOriginal];
-                        model.fileURLPath = emotion.emotionOriginalURL;
-                    }
-                }
-                sendCell.model = model;
-                sendCell.delegate = self;
-                return sendCell;
-            }
-        }
-        
-        NSString *CellIdentifier = [EaseMessageCell cellIdentifierWithModel:model];
-        
-        EaseBaseMessageCell *sendCell = (EaseBaseMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
-        // Configure the cell...
-        if (sendCell == nil) {
-            sendCell = [[EaseBaseMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];
-            sendCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            sendCell.delegate = self;
-        }
-        
-        sendCell.model = model;
-        return sendCell;
     }
+    
+    if (_dataSource && [_dataSource respondsToSelector:@selector(isEmotionMessageFormessageViewController:messageModel:)]) {
+        BOOL flag = [_dataSource isEmotionMessageFormessageViewController:self messageModel:model];
+        if (flag) {
+            NSString *CellIdentifier = [EaseCustomMessageCell cellIdentifierWithModel:model];
+            //send cell
+            EaseCustomMessageCell *sendCell = (EaseCustomMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            // Configure the cell...
+            if (sendCell == nil) {
+                sendCell = [[EaseCustomMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];
+                sendCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            if (_dataSource && [_dataSource respondsToSelector:@selector(emotionURLFormessageViewController:messageModel:)]) {
+                EaseEmotion *emotion = [_dataSource emotionURLFormessageViewController:self messageModel:model];
+                if (emotion) {
+                    model.image = [UIImage sd_animatedGIFNamed:emotion.emotionOriginal];
+                    model.fileURLPath = emotion.emotionOriginalURL;
+                }
+            }
+            sendCell.model = model;
+            sendCell.delegate = self;
+            return sendCell;
+        }
+    }
+    
+    NSString *CellIdentifier = [EaseMessageCell cellIdentifierWithModel:model];
+    
+    EaseBaseMessageCell *sendCell = (EaseBaseMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    // Configure the cell...
+    if (sendCell == nil) {
+        sendCell = [[EaseBaseMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];
+        sendCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        sendCell.delegate = self;
+    }
+    
+    sendCell.model = model;
+    return sendCell;
 }
 
 #pragma mark - Table view delegate
@@ -1270,7 +1328,7 @@ typedef enum : NSUInteger {
     [UIView animateWithDuration:0.3 animations:^{
         CGRect rect = self.tableView.frame;
         rect.origin.y = 0;
-        rect.size.height = self.view.frame.size.height - toHeight;
+        rect.size.height = self.view.frame.size.height - toHeight - iPhoneX_BOTTOM_HEIGHT;
         self.tableView.frame = rect;
     }];
     
@@ -1372,26 +1430,28 @@ typedef enum : NSUInteger {
 
 - (void)didStartRecordingVoiceAction:(UIView *)recordView
 {
-    if ([self.delegate respondsToSelector:@selector(messageViewController:didSelectRecordView:withEvenType:)]) {
-        [self.delegate messageViewController:self didSelectRecordView:recordView withEvenType:EaseRecordViewTypeTouchDown];
-    } else {
-        if ([self.recordView isKindOfClass:[EaseRecordView class]]) {
-            [(EaseRecordView *)self.recordView recordButtonTouchDown];
-        }
-    }
-    
-    [self _canRecordComplation:^(EMRecordResponse recordResponse) {
+    __weak typeof(self) weakSelf = self;
+    [self _canRecordCompletion:^(EMRecordResponse recordResponse) {
         switch (recordResponse) {
             case EMRequestRecord:
                 
                 break;
             case EMCanRecord:
             {
+                if ([weakSelf.delegate respondsToSelector:@selector(messageViewController:didSelectRecordView:withEvenType:)]) {
+                    [weakSelf.delegate messageViewController:weakSelf
+                                         didSelectRecordView:recordView
+                                                withEvenType:EaseRecordViewTypeTouchDown];
+                } else {
+                    if ([weakSelf.recordView isKindOfClass:[EaseRecordView class]]) {
+                        [(EaseRecordView *)weakSelf.recordView recordButtonTouchDown];
+                    }
+                }
                 _isRecording = YES;
                 EaseRecordView *tmpView = (EaseRecordView *)recordView;
                 tmpView.center = self.view.center;
-                [self.view addSubview:tmpView];
-                [self.view bringSubviewToFront:recordView];
+                [weakSelf.view addSubview:tmpView];
+                [weakSelf.view bringSubviewToFront:recordView];
                 int x = arc4random() % 100000;
                 NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
                 NSString *fileName = [NSString stringWithFormat:@"%d%d",(int)time,x];
@@ -1565,7 +1625,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - EMChatManagerDelegate
 
-- (void)didReceiveMessages:(NSArray *)aMessages
+- (void)messagesDidReceive:(NSArray *)aMessages
 {
     for (EMMessage *message in aMessages) {
         if ([self.conversation.conversationId isEqualToString:message.conversationId]) {
@@ -1582,7 +1642,7 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)didReceiveCmdMessages:(NSArray *)aCmdMessages
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages
 {
     for (EMMessage *message in aCmdMessages) {
         if ([self.conversation.conversationId isEqualToString:message.conversationId]) {
@@ -1763,7 +1823,7 @@ typedef enum : NSUInteger {
         }
         else{
             model = [[EaseMessageModel alloc] initWithMessage:message];
-            model.avatarImage = [UIImage easeImageNamed:@"EaseUIResource.bundle/user"];
+            model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
             model.failImageName = @"imageDownloadFail";
         }
         
@@ -1835,7 +1895,7 @@ typedef enum : NSUInteger {
                 [self.dataArray removeAllObjects];
                 [self.dataArray addObjectsFromArray:formattedMessages];
                 [self.tableView reloadData];
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.dataArray count] - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.dataArray count] - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
                 return;
             }
         }
@@ -1843,7 +1903,7 @@ typedef enum : NSUInteger {
     [self.tableView reloadData];
 }
 
-- (void)_sendMessage:(EMMessage *)message
+- (void)sendMessage:(EMMessage *)message isNeedUploadFile:(BOOL)isUploadFile
 {
     if (self.conversation.type == EMConversationTypeGroupChat){
         message.chatType = EMChatTypeGroupChat;
@@ -1852,22 +1912,27 @@ typedef enum : NSUInteger {
         message.chatType = EMChatTypeChatRoom;
     }
     
-    [self addMessageToDataSource:message
-                        progress:nil];
-    
     __weak typeof(self) weakself = self;
-    [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
-        if (weakself.dataSource && [weakself.dataSource respondsToSelector:@selector(messageViewController:updateProgress:messageModel:messageBody:)]) {
-            [weakself.dataSource messageViewController:weakself updateProgress:progress messageModel:nil messageBody:message.body];
-        }
-    } completion:^(EMMessage *aMessage, EMError *aError) {
-        if (!aError) {
-            [weakself _refreshAfterSentMessage:aMessage];
-        }
-        else {
-            [weakself.tableView reloadData];
-        }
-    }];
+    if (!([EMClient sharedClient].options.isAutoTransferMessageAttachments) && isUploadFile) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"message.autoTransfer", @"Please customize the transfer attachment method") delegate:nil cancelButtonTitle:NSLocalizedString(@"sure", @"OK") otherButtonTitles:nil, nil];
+        [alertView show];
+    } else {
+        [self addMessageToDataSource:message
+                            progress:nil];
+        
+        [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
+            if (weakself.dataSource && [weakself.dataSource respondsToSelector:@selector(messageViewController:updateProgress:messageModel:messageBody:)]) {
+                [weakself.dataSource messageViewController:weakself updateProgress:progress messageModel:nil messageBody:message.body];
+            }
+        } completion:^(EMMessage *aMessage, EMError *aError) {
+            if (!aError) {
+                [weakself _refreshAfterSentMessage:aMessage];
+            }
+            else {
+                [weakself.tableView reloadData];
+            }
+        }];
+    }
 }
 
 - (void)sendTextMessage:(NSString *)text
@@ -1896,24 +1961,16 @@ typedef enum : NSUInteger {
 
 - (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
 {
-    EMMessage *message = [EaseSDKHelper sendTextMessage:text
-                                                     to:self.conversation.conversationId
-                                            messageType:[self _messageTypeFromConversationType]
-                                             messageExt:ext];
-    [self _sendMessage:message];
+    EMMessage *message = [EaseSDKHelper getTextMessage:text to:self.conversation.conversationId messageType:[self _messageTypeFromConversationType] messageExt:ext];
+    [self sendMessage:message isNeedUploadFile:NO];
 }
 
 - (void)sendLocationMessageLatitude:(double)latitude
                           longitude:(double)longitude
                          andAddress:(NSString *)address
 {
-    EMMessage *message = [EaseSDKHelper sendLocationMessageWithLatitude:latitude
-                                                              longitude:longitude
-                                                                address:address
-                                                                     to:self.conversation.conversationId
-                                                            messageType:[self _messageTypeFromConversationType]
-                                                             messageExt:nil];
-    [self _sendMessage:message];
+    EMMessage *message = [EaseSDKHelper getLocationMessageWithLatitude:latitude longitude:longitude address:address to:self.conversation.conversationId messageType:[self _messageTypeFromConversationType] messageExt:nil];
+    [self sendMessage:message isNeedUploadFile:NO];
 }
 
 - (void)sendImageMessageWithData:(NSData *)imageData
@@ -1926,11 +1983,8 @@ typedef enum : NSUInteger {
         progress = self;
     }
     
-    EMMessage *message = [EaseSDKHelper sendImageMessageWithImageData:imageData
-                                                                   to:self.conversation.conversationId
-                                                          messageType:[self _messageTypeFromConversationType]
-                                                           messageExt:nil];
-    [self _sendMessage:message];
+    EMMessage *message = [EaseSDKHelper getImageMessageWithImageData:imageData to:self.conversation.conversationId messageType:[self _messageTypeFromConversationType] messageExt:nil];
+    [self sendMessage:message isNeedUploadFile:YES];
 }
 
 - (void)sendImageMessage:(UIImage *)image
@@ -1943,11 +1997,8 @@ typedef enum : NSUInteger {
         progress = self;
     }
     
-    EMMessage *message = [EaseSDKHelper sendImageMessageWithImage:image
-                                                               to:self.conversation.conversationId
-                                                      messageType:[self _messageTypeFromConversationType]
-                                                       messageExt:nil];
-    [self _sendMessage:message];
+    EMMessage *message = [EaseSDKHelper getImageMessageWithImage:image to:self.conversation.conversationId messageType:[self _messageTypeFromConversationType] messageExt:nil];
+    [self sendMessage:message isNeedUploadFile:YES];
 }
 
 - (void)sendVoiceMessageWithLocalPath:(NSString *)localPath
@@ -1961,12 +2012,8 @@ typedef enum : NSUInteger {
         progress = self;
     }
     
-    EMMessage *message = [EaseSDKHelper sendVoiceMessageWithLocalPath:localPath
-                                                             duration:duration
-                                                                   to:self.conversation.conversationId
-                                                          messageType:[self _messageTypeFromConversationType]
-                                                           messageExt:nil];
-    [self _sendMessage:message];
+    EMMessage *message = [EaseSDKHelper getVoiceMessageWithLocalPath:localPath duration:duration to:self.conversation.conversationId messageType:[self _messageTypeFromConversationType] messageExt:nil];
+    [self sendMessage:message isNeedUploadFile:YES];
 }
 
 - (void)sendVideoMessageWithURL:(NSURL *)url
@@ -1979,15 +2026,12 @@ typedef enum : NSUInteger {
         progress = self;
     }
     
-    EMMessage *message = [EaseSDKHelper sendVideoMessageWithURL:url
-                                                             to:self.conversation.conversationId
-                                                    messageType:[self _messageTypeFromConversationType]
-                                                     messageExt:nil];
-    [self _sendMessage:message];
+    EMMessage *message = [EaseSDKHelper getVideoMessageWithURL:url to:self.conversation.conversationId messageType:[self _messageTypeFromConversationType] messageExt:nil];
+    [self sendMessage:message isNeedUploadFile:YES];
 }
 
 - (void)sendFileMessageWith:(EMMessage *)message {
-    [self _sendMessage:message];
+    [self sendMessage:message isNeedUploadFile:YES];
 }
 
 #pragma mark - notifycation
@@ -2042,7 +2086,7 @@ typedef enum : NSUInteger {
                     }
                     else{
                         model = [[EaseMessageModel alloc] initWithMessage:message];
-                        model.avatarImage = [UIImage easeImageNamed:@"EaseUIResource.bundle/user"];
+                        model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
                         model.failImageName = @"imageDownloadFail";
                     }
                     
@@ -2067,7 +2111,7 @@ typedef enum : NSUInteger {
         }
         else{
             model = [[EaseMessageModel alloc] initWithMessage:aMessage];
-            model.avatarImage = [UIImage easeImageNamed:@"EaseUIResource.bundle/user"];
+            model.avatarImage = [UIImage imageNamed:@"EaseUIResource.bundle/user"];
             model.failImageName = @"imageDownloadFail";
         }
         if (model) {

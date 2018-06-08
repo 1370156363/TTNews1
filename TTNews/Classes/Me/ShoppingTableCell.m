@@ -33,7 +33,7 @@
 -(void) setModel:(ShoppingModel *)model
 {
     _model = model;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",model.fengmian]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.fengmian]];
 //    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
     //[self.imgShopView setImage:[UIImage imageWithData:data]];
     [self.imgShopView sd_setImageWithURL:url placeholderImage:ImageNamed(@"tupianGL.png")];

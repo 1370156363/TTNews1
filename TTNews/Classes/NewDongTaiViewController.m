@@ -6,6 +6,8 @@
 //  Copyright © 2017年 瑞文戴尔. All rights reserved.
 //
 
+
+
 #import "NewDongTaiViewController.h"
 
 #import "DongtaiModel.h"
@@ -14,109 +16,108 @@
 
 #import "ZhuanjiaController.h"
 
-#import "tiwenController.h"
 ///详情
 #import "DongTaiInfoViewController.h"
-#import "IMViewController.h"
+#import "LoginController.h"
+#import "AddMessageViewController.h"
 #import "LoginController.h"
 
 
+
+
+#import "MLBasePageViewController.h"
+
 @interface NewDongTaiViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-
+    UIBarButtonItem *_addFriendItem;
+    
 }
-
 - (IBAction)sendAction:(UIButton *)sender;
 - (IBAction)IMAction:(UIButton *)sender;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, strong) NSMutableArray    *dataListArr;
 @property (weak, nonatomic) IBOutlet UITableView *MainTabView;
+///当点击发布的时候  刷新页面
+@property (assign ,nonatomic) BOOL shouldRefresh;
 
 
+@property (strong, nonatomic)MLBasePageViewController   * vc;///segmentCiewCol
 
 @end
 
 @implementation NewDongTaiViewController
 
-#pragma mark -懒加载
-
-
-#pragma mark -网络传输
-- (void)getNewList
-{
-    AFHTTPSessionManager *manager = [[KGNetworkManager sharedInstance] baseHtppRequest];
-    NSString *urlStr = [[NSString stringWithFormat:@"%@/%@/%d",kNewWordBaseURLString,@"api/content/dynamiclists/page",self.currentPage] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray  *_Nullable message)
-     {
-         NSMutableArray *newArr=[DongtaiModel mj_objectArrayWithKeyValuesArray:message];
-         if (self.currentPage==1)
-         {
-             [self.dataListArr removeAllObjects];
-         }
-         [self.dataListArr addObjectsFromArray:newArr];
-
-         if (newArr.count==0) {
-             [self.MainTabView.mj_footer endRefreshingWithNoMoreData];
-         }
-         else{
-             [self.MainTabView reloadData];
-         }
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-     }];
-    [self.MainTabView.mj_header endRefreshing];
-    [self.MainTabView.mj_footer endRefreshing];
-
-}
-
-#pragma mark -界面
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-    [self getNewList];
-
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (!self.dataListArr) {
-        self.dataListArr=[NSMutableArray array];
-    }
-
-    self.MainTabView.delegate=self;
-    self.MainTabView.dataSource=self;
-
     [self setupBasic];
     [self setupRefresh];
-
-    self.MainTabView.contentInset=UIEdgeInsetsMake(0, 0, 40, 0);
-
-    // 注册
-    [self.MainTabView registerNib:[UINib nibWithNibName:NSStringFromClass([DongTaiTableViewCell class]) bundle:nil] forCellReuseIdentifier:@"dongtai"];
-
-
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 #pragma mark 基本设置
 - (void)setupBasic
 {
-
     [self initNavigationWithImgAndTitle:@"动态" leftBtton:@"" rightButImg:[UIImage imageNamed:@"jiahaoyou"] rightBut:nil navBackColor:navColor];
     [self.navigationItem.rightBarButtonItems[1] setAction:@selector(okAction)];
     
     self.MainTabView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    
+    if (!self.dataListArr) {
+        self.dataListArr=[NSMutableArray array];
+    }
+    
+    self.MainTabView.delegate=self;
+    self.MainTabView.dataSource=self;
+    [self.MainTabView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    self.MainTabView.tableFooterView = [UIView new];
+    
+    [self.MainTabView registerClass:[DongTaiTableViewCell class] forCellReuseIdentifier:@"DongTaiTableViewCellIdentify"];
+    
+    _badgeView = [[RKNotificationHub alloc]initWithView:self.BtnChat];
+    [_badgeView moveCircleByX:-20 Y:15];
+    [_badgeView scaleCircleSizeBy:0.7];
+    
+}
 
+// 统计未读消息数
+-(void)setupUnreadMessageCount
+{
+    NSArray *conversations = [[EMClient sharedClient].chatManager getAllConversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    if (_badgeView) {
+        if (unreadCount > 0) {
+            
+            [_badgeView setCount:(int)unreadCount];
+            [_badgeView pop];
+        }else{
+            [_badgeView setCount:0];
+        }
+    }
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //主动刷新数据
+    if(self.MainTabView.mj_header && _shouldRefresh){
+        _shouldRefresh = NO;
+        [self.MainTabView.mj_header beginRefreshing];
+    }
+     [self setupUnreadMessageCount];
 }
 -(void)setupRefresh {
 
     self.MainTabView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    self.MainTabView.mj_header.automaticallyChangeAlpha = YES;
+    
     [self.MainTabView.mj_header beginRefreshing];
-    self.MainTabView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
+    self.MainTabView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    
     self.currentPage = 1;
 }
 #pragma mark - /************************* 刷新数据 ***************************/
@@ -125,7 +126,6 @@
 {
     self.currentPage=1;
     [self getNewList];
-
 }
 
 - (void)loadMoreData
@@ -135,62 +135,66 @@
 
 }
 
+#pragma mark -网络传输
+- (void)getNewList
+{
+    NSMutableDictionary *dict =[[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(self.currentPage)}] ;
+    weakSelf(ws)
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkAllDynamic withUserInfo:dict success:^(id message) {
+        NSMutableArray *newArr=[DongtaiModel mj_objectArrayWithKeyValuesArray:message];
+        if (ws.currentPage==1)
+        {
+            [ws.dataListArr removeAllObjects];
+        }
+        [ws.dataListArr addObjectsFromArray:newArr];
+        
+        if (newArr.count==0) {
+            [ws.MainTabView.mj_footer endRefreshingWithNoMoreData];
+        }
+        else{
+            [ws.MainTabView reloadData];
+            [ws.MainTabView.mj_footer endRefreshing];
+        }
+        [ws.MainTabView.mj_header endRefreshing];
+    } failure:^(NSError *error) {
+        
+    } visibleHUD:NO];
+}
+
 #pragma mark - TableView DataSource
 
 // Default is 1 if not implemented
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.dataListArr.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-//每个section头部标题高度（实现这个代理方法后前面 sectionFooterHeight 设定的高度无效）
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 1;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0;
+    return self.dataListArr.count;
 }
 
-//每个section头部的标题－Header
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-//    return [NSString stringWithFormat:@"共有%lu辆车",(unsigned long)dataArr.count];
-//}
-
--(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
-    // Background color
-    //    view.tintColor = [UIColor blackColor];
-
-    if ([view isMemberOfClass:[UITableViewHeaderFooterView class]]) {
-        ((UITableViewHeaderFooterView *)view).backgroundView.backgroundColor = [UIColor clearColor];
-    }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    DongtaiModel *model = _dataListArr[indexPath.row];
+    float height = [tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[DongTaiTableViewCell class] contentViewWidth:SCREEN_WIDTH];
+    NSLog(@"当前列表是%ld，高度是%.2f",(long)indexPath.row,height);
+    return height;
 }
-
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-
-    if ([view isMemberOfClass:[UITableViewHeaderFooterView class]]) {
-        ((UITableViewHeaderFooterView *)view).backgroundView.backgroundColor = [UIColor clearColor];
-    }
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellId=@"dongtai";
-    DongtaiModel *wenda=self.dataListArr[indexPath.section];
-
-    DongTaiTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId];
-    cell.comment=wenda;
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setBackgroundColor:[UIColor whiteColor]];
-
+    
+    DongTaiTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"DongTaiTableViewCellIdentify" forIndexPath:indexPath];
+    cell.row = indexPath.row;
+    cell.model=self.dataListArr[indexPath.row];
+    
+    ////// 此步设置用于实现cell的frame缓存，可以让tableview滑动更加流畅 //////
+    
+//    [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+    
+    ///////////////////////////////////////////////////////////////////////
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DongtaiModel *wenda=self.dataListArr[indexPath.section];
+    DongtaiModel *wenda=self.dataListArr[indexPath.row];
     NSLog(@"点击的是%ld",(long)indexPath.row);
     DongTaiInfoViewController *tickInfo=[[DongTaiInfoViewController alloc] initWithNibName:@"DongTaiInfoViewController" bundle:nil];
     tickInfo.wenda=wenda;
@@ -200,103 +204,81 @@
 #pragma mark
 ///确定添加关注
 -(void)okAction{
-    ZhuanjiaController *zhuanVc=[[ZhuanjiaController alloc] init];
-    [self.navigationController pushViewController:zhuanVc animated:YES];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }
+    else{
+        ZhuanjiaController *zhuanVc=[[ZhuanjiaController alloc] init];
+        [self.navigationController pushViewController:zhuanVc animated:YES];
+    }
 }
 
 - (IBAction)sendAction:(UIButton *)sender {
-    tiwenController *tiwen=[[tiwenController alloc] init];
-    tiwen.type=DongTaiType;
-    [self.navigationController pushViewController:tiwen animated:YES];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }
+    else{
+        _shouldRefresh = YES;
+        AddMessageViewController *col = [[AddMessageViewController alloc]init];
+        [self.navigationController pushViewController:col animated:YES];
+    }
 }
 
 - (IBAction)IMAction:(UIButton *)sender {
-    ///登录进入
-    ///默认在这里登录
-    if ([[OWTool Instance] getLastLoginUsername].length!=0) {
-        IMViewController *im=[[IMViewController alloc] init];
-        [self.navigationController pushViewController:im animated:YES];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }else{
+        [self.navigationController pushViewController:self.vc animated:YES];
     }
-    else{
-        [self.navigationController pushViewController:[[LoginController alloc] init] animated:YES];
-    }
-
+    
 }
 
+#pragma mark LazyLoad
 
-#pragma  mark - private
-//点击登陆后的操作
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password
-{
-    //    [self showHudInView:self.view hint:NSLocalizedString(@"login.ongoing", @"Is Login...")];
-    //异步登陆账号
-    __weak typeof(self) weakself = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        EMError *error = [[EMClient sharedClient] loginWithUsername:username password:password];
+-(ContactListViewController *)contactListCol{
+    if (_contactListCol == nil) {
+        _contactListCol = [ContactListViewController new];
+        
+    }
+    return _contactListCol;
+}
+-(ChatListViewController *)chatListCol{
+    
+    if (_chatListCol == nil) {
+        _chatListCol = [ChatListViewController new];
+        
+    }
+    return _chatListCol;
+}
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //            [weakself hideHud];
-            if (!error) {
-                //设置是否自动登录
-                [[EMClient sharedClient].options setIsAutoLogin:YES];
-                //保存最近一次登录用户名
-                [weakself saveLastLoginUsername];
-                //发送自动登陆状态通知
-            } else {
-                switch (error.code)
-                {
-                    case EMErrorUserNotFound:
-                    {
-                        [self registUser:username password:password];
-                    }
-                        break;
-                    case EMErrorNetworkUnavailable:
-                        TTAlertNoTitle(NSLocalizedString(@"error.connectNetworkFail", @"No network connection!"));
-                        break;
-                    case EMErrorServerNotReachable:
-                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-                        break;
-                    case EMErrorUserAuthenticationFailed:
-                        TTAlertNoTitle(error.errorDescription);
-                        break;
-                    case EMErrorServerTimeout:
-                        TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-                        break;
-                    case EMErrorServerServingForbidden:
-                        TTAlertNoTitle(NSLocalizedString(@"servingIsBanned", @"Serving is banned"));
-                        break;
-                    case EMErrorUserLoginTooManyDevices:
-                        TTAlertNoTitle(NSLocalizedString(@"alert.multi.tooManyDevices", @"Login too many devices"));
-                        break;
-                    default:
-                        TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Login failure"));
-                        break;
-                }
+-(MLBasePageViewController*)vc{
+    if (_vc == nil) {
+        _vc = [[MLBasePageViewController alloc] init];
+        _vc.VCArray = @[ self.chatListCol,self.contactListCol];
+        _vc.sectionTitles = @[ @"消息", @"联系人"];
+        UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+        [addButton addTarget:self.contactListCol action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
+        _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+        weakSelf(ws);
+        _vc.MLBasePageViewBlock = ^(int index) {
+            if (index == 0) {
+                ws.vc.navigationItem.rightBarButtonItem = nil;
             }
-        });
-    });
-}
-
-
-- (void)saveLastLoginUsername
-{
-    NSString *username = [[EMClient sharedClient] currentUsername];
-    if (username && username.length > 0) {
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        [ud setObject:username forKey:[NSString stringWithFormat:@"em_lastLogin_username"]];
-        [ud synchronize];
+            else{
+                ws.vc.navigationItem.rightBarButtonItem = _addFriendItem;
+            }
+        };
+        
     }
+    return _vc;
 }
 
-///注册
--(void)registUser:(NSString *)username password:(NSString *)password{
-    [[EMClient sharedClient] registerWithUsername:username password:password completion:^(NSString *aUsername, EMError *aError) {
-        if (!aError) {
-            NSLog(@"注册成功");
-            [self loginWithUsername:username password:password];
-        }
-    }];
-}
+
+
 
 
 @end

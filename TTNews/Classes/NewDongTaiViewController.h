@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ContactListViewController.h"
+#import "ChatListViewController.h"
+
 @interface NewDongTaiViewController : UIViewController
+
+@property (strong, nonatomic)ChatListViewController     * chatListCol;
+@property (strong, nonatomic)ContactListViewController  * contactListCol;
+
+@property (weak, nonatomic) IBOutlet UIButton *BtnChat;
+
+@property (nonatomic, strong) RKNotificationHub * badgeView;
+
+
 
 @end

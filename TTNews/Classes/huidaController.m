@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initNavigationWithImgAndTitle:@"问答" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
+    [self initNavigationWithImgAndTitle:@"回答" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
     
     if (!self.dataListArr) {
         self.dataListArr=[NSMutableArray array];
@@ -37,21 +37,21 @@
     self.MainTabView.separatorStyle=UITableViewCellSeparatorStyleNone;
 
     [self.MainTabView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 
     ///下拉刷新
     [self setupRefresh];
     self.currentPage = 1;
-    
-    [self loadList];
-
-
 }
 
 -(void)setupRefresh {
     self.MainTabView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    self.MainTabView.mj_header.automaticallyChangeAlpha = YES;
+    
     [self.MainTabView.mj_header beginRefreshing];
-    self.MainTabView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    self.MainTabView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     self.currentPage = 1;
 }
 
@@ -75,22 +75,21 @@
 {
     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self.currentPage],@"page", nil];
     //获取验证码
+    weakSelf(ws)
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkWenDaContent withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
-        if (self.currentPage==1)
+        if (ws.currentPage==1)
         {
-            [self.dataListArr removeAllObjects];
+            [ws.dataListArr removeAllObjects];
         }
         NSMutableArray *newArr=[WendaModel mj_objectArrayWithKeyValuesArray:message];
-        [self.dataListArr addObjectsFromArray:newArr];
+        [ws.dataListArr addObjectsFromArray:newArr];
         if (newArr.count==0) {
-            [self.MainTabView.mj_footer endRefreshingWithNoMoreData];
+            [ws.MainTabView.mj_footer endRefreshingWithNoMoreData];
         }
         else{
-            [self.MainTabView reloadData];
+            [ws.MainTabView reloadData];
         }
-
-
     } failure:^(NSError *error)
      {
          [SVProgressHUD showErrorWithStatus:@"网络错误"];

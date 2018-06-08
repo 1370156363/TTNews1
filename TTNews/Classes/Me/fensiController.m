@@ -11,6 +11,7 @@
 #import "MyFensiController.h"
 #import "fensiTableViewCell.h"
 #import "MyFensiModel.h"
+#import "InformEditController.h"
 #define  Margion 5
 
 @interface fensiController ()<UIScrollViewDelegate>
@@ -36,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *BtnGusts;
 @property (weak, nonatomic) IBOutlet UIButton *BtnFocus;
 @property (weak, nonatomic) IBOutlet UIButton *btnFensi;
+@property (weak, nonatomic) IBOutlet UIButton *btnAddFocus;
 
 @end
 
@@ -49,9 +51,16 @@
     self.C_tableview.backgroundColor=[UIColor clearColor];
     self.R_tableview.backgroundColor=[UIColor clearColor];
     self.line.backgroundColor=RGB(240, 240, 240);
-    self.title=@"粉丝";
+    self.title=@"我的关注";
     [self setupBasic];
-    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //主动刷新一次数据
+    if(self.L_tableview.mj_header){
+        [self.L_tableview.mj_header beginRefreshing];
+    }
 }
 
 #pragma mark 基本设置
@@ -60,7 +69,6 @@
     self.L_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.C_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
     self.R_tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    
     [MyFensiModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
         return @{@"ID":@"id"};
     }];
@@ -73,21 +81,7 @@
 }
 //网络请求
 -(void)requestURL:(int)index withType:(NetWorkAction)type{
-    NSMutableDictionary *prms;
-    if (KNetworkGetGUANZHU == type){
-        prms=[@{
-                @"uid":[[OWTool Instance] getUid],
-                @"limit":@(index)
-                
-                }mutableCopy];
-    }
-    else{
-        prms=[@{
-                @"uid":[[OWTool Instance] getUid],
-                @"page":@(index)
-                
-                }mutableCopy];
-    }
+    NSMutableDictionary *prms = [@{@"uid":[[OWTool Instance] getUid] }mutableCopy];
     
     weakSelf(ws)
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:type withUserInfo:prms success:^(NSDictionary *message)
@@ -95,6 +89,7 @@
          if ([message[@"status"] intValue]==1)
          {
              if (KNetworkMyFensi == type) {
+                 
                  [ws updateCtableViewModel:index dic:message];
              }
              else if (KNetworkGetGUANZHU == type){
@@ -103,11 +98,10 @@
              else if (KNetworkGetMyFangwen == type){
                  [ws updateRtableViewModel:index dic:message];
              }
-             
          }
          else
          {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD showErrorWithStatus:message[@"message"]];
              [SVProgressHUD dismissWithDelay:2];
          }
      } failure:^(NSError *error) {
@@ -124,7 +118,6 @@
 }
 //更新数据
 -(void)updateLtableViewModel:(int)index dic:(NSDictionary*)dic{
-    
     if (index == 1) {
         _L_modelList = [MyFensiModel mj_objectArrayWithKeyValuesArray:dic[@"data"]];
     }
@@ -153,9 +146,10 @@
 }
 //上拉刷新下拉加载
 -(void)setupRefresh:(UITableView*)tableView {
+    
     tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     tableView.mj_header.automaticallyChangeAlpha = YES;
-    tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    //tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
 }
 
 #pragma mark - /************************* 刷新数据 ***************************/
@@ -202,7 +196,7 @@
     UIView *topView=[self.view viewWithTag:1000];
     CGFloat lineWidth=topView.frame.size.width/3;
     [self.line mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(topView).offset(tag*lineWidth);
+        make.left.equalTo(topView).offset(tag*(lineWidth)+20);
     }];
     [UIView animateWithDuration:0.35 animations:^{
         [topView layoutIfNeeded];
@@ -211,18 +205,21 @@
         self.BtnGusts.selected = NO;
         self.BtnFocus.selected = NO;
         self.btnFensi.selected = YES;
+        self.title=@"我的关注";
         indexType = 1;
     }
     else if (tag == 1){
         self.BtnGusts.selected = NO;
         self.BtnFocus.selected = YES;
         self.btnFensi.selected = NO;
+        self.title=@"我的粉丝";
         indexType = 2;
     }
     else if (tag == 2){
         self.BtnGusts.selected = YES;
         self.BtnFocus.selected = NO;
         self.btnFensi.selected = NO;
+        self.title=@"我的访客";
         indexType = 3;
     }
     if(_L_modelList == nil){
@@ -248,12 +245,12 @@
     {
         _line=[UIView new];
         UIView *topView=[self.view viewWithTag:1000];
-        CGFloat lineWidth=topView.frame.size.width/3;
+        CGFloat lineWidth=(topView.frame.size.width-self.btnAddFocus.frame.size.width)/3;
         [topView addSubview:_line];
         [_line mas_makeConstraints:^(MASConstraintMaker *make)
          {
              make.width.mas_equalTo(lineWidth);
-             make.left.equalTo(topView);
+             make.left.equalTo(topView).offset(20);
              make.height.mas_equalTo(2);
              make.bottom.equalTo(topView);
          }];
@@ -345,8 +342,14 @@
             .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                      {
                          cell.model = _L_modelList[index];
+                         weakSelf(ws)
+                         cell.ImageBlock = ^{
+                             InformEditController *userInfoCol =  [[InformEditController alloc] init];
+                             userInfoCol.userID = [NSString stringWithFormat:@"%d",[cell.userID intValue]];
+                             [ws.navigationController pushViewController:userInfoCol animated:NO];
+                         };
                      })
-            .height(100);
+            .height(80);
         }];
     }];
 }
@@ -387,8 +390,15 @@
             .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                      {
                          cell.model = _C_modelList[index];
+                         weakSelf(ws)
+                         cell.ImageBlock = ^{
+                             InformEditController *userInfoCol =  [[InformEditController alloc] init];
+                             userInfoCol.userID = [NSString stringWithFormat:@"%d",[cell.userID intValue]];
+                             [ws.navigationController pushViewController:userInfoCol animated:NO];
+                         };
                      })
-            .height(100);
+            
+            .height(80);
         }];
     }];
 }
@@ -419,8 +429,14 @@
             .adapter(^(fensiTableViewCell * cell,NSDictionary * data,NSUInteger index)
                      {
                          cell.model = _R_modelList[index];
+                         weakSelf(ws)
+                         cell.ImageBlock = ^{
+                             InformEditController *userInfoCol =  [[InformEditController alloc] init];
+                             userInfoCol.userID = [NSString stringWithFormat:@"%d",[cell.userID intValue]];
+                             [ws.navigationController pushViewController:userInfoCol animated:NO];
+                         };
                      })
-            .height(100);
+            .height(80);
         }];
     }];
 }
@@ -431,16 +447,15 @@
     NSInteger index = (NSInteger) (offsetX/(winsize.width-2*Margion));
     NSLog(@"-index=%zi",index);
     UIView *topView=[self.view viewWithTag:1000];
-    CGFloat lineWidth=topView.frame.size.width/3;
+    CGFloat lineWidth=(topView.frame.size.width-self.btnAddFocus.frame.size.width)/3;
     [self.line mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(topView).offset(index *lineWidth);
+        make.left.equalTo(topView).offset(index *lineWidth+20);
     }];
     [UIView animateWithDuration:0.35 animations:^{
         [topView layoutIfNeeded];
     }];
     if (index==0) {
         [self BtnSelect:self.btnFensi];
-        //[self kg_hidden:NO];
     }
     else if (index == 1){
         [self BtnSelect:self.BtnFocus];

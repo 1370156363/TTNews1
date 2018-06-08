@@ -9,16 +9,30 @@
 #import "AddMessageViewController.h"
 #import "AddMessageView.h"
 
+#import "TZTestCell.h"
+
 #define ADDTITLESTR @"标题不超过20个字"
 #define ADDMESSAGESTR @"内容不超过200个字"
 
-@interface AddMessageViewController ()<TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
+@interface AddMessageViewController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate> 
+{
+    NSMutableArray *_selectedPhotos;
+    NSMutableArray *_selectedAssets;
+    
+    CGFloat _itemWH;
+    CGFloat _margin;
+}
 
 @property (nonatomic,strong) AddMessageView *addMessageView;
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 
 @property (nonatomic, assign)  NSInteger maxCountTF;  ///< 照片最大可选张数
+
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (strong, nonatomic) UICollectionViewFlowLayout *layout;
+@property (strong, nonatomic) CLLocation *location;
+
 
 @end
 
@@ -28,11 +42,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupviews];
+    
+    [self configCollectionView];
     // Do any additional setup after loading the view.
 }
 
 -(void)setupviews
 {
+    _selectedPhotos = [NSMutableArray array];
+    _selectedAssets = [NSMutableArray array];
     _maxCountTF = 9;
     self.title = @"发布动态";
     //提交按钮
@@ -52,21 +70,84 @@
     
     [self.view addSubview:self.addMessageView];
 }
+- (void)configCollectionView {
+    // 如不需要长按排序效果，将LxGridViewFlowLayout类改成UICollectionViewFlowLayout即可
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    _margin = 4;
+    _itemWH = (self.view.tz_width - 2 * _margin - 4) / 3 - _margin;
+    layout.itemSize = CGSizeMake(_itemWH, _itemWH);
+    layout.minimumInteritemSpacing = _margin;
+    layout.minimumLineSpacing = _margin;
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 320, self.view.tz_width, self.view.tz_height - 320) collectionViewLayout:layout];
+    CGFloat rgb = 244 / 255.0;
+    _collectionView.alwaysBounceVertical = YES;
+    _collectionView.backgroundColor = [UIColor colorWithRed:rgb green:rgb blue:rgb alpha:1.0];
+    _collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    [self.view addSubview:_collectionView];
+    [_collectionView registerClass:[TZTestCell class] forCellWithReuseIdentifier:@"TZTestCell"];
+}
+
+
+#pragma mark UICollectionView
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return _selectedPhotos.count + 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    TZTestCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TZTestCell" forIndexPath:indexPath];
+    cell.videoImageView.hidden = YES;
+    if (indexPath.row == _selectedPhotos.count) {
+        cell.imageView.image = [UIImage imageNamed:@"AlbumAddBtn.png"];
+        cell.deleteBtn.hidden = YES;
+        cell.gifLable.hidden = YES;
+    } else {
+        cell.imageView.image = _selectedPhotos[indexPath.row];
+        cell.asset = _selectedAssets[indexPath.row];
+        cell.deleteBtn.hidden = NO;
+    }
+    
+    cell.deleteBtn.tag = indexPath.row;
+    [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == _selectedPhotos.count) {
+        [self pushImagePickerController];
+    } else{
+        // preview photos or video / 预览照片或者视频
+        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:_selectedAssets selectedPhotos:_selectedPhotos index:indexPath.row];
+        imagePickerVc.maxImagesCount = _maxCountTF;
+        
+        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+            _selectedPhotos = [NSMutableArray arrayWithArray:photos];
+            _selectedAssets = [NSMutableArray arrayWithArray:assets];
+            [_collectionView reloadData];
+            _collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
+        }];
+        [self presentViewController:imagePickerVc animated:YES completion:nil];
+    }
+    
+}
 
 -(void)saveMessage
 {
-    if (self.addMessageView.textTitleView.text.length == 0 || [ADDTITLESTR isEqualToString:self.addMessageView.textTitleView.text]) {
-        NSString *Vermessage = @"请输入标题";
-        UIAlertController * ac = [UIAlertController alertControllerWithTitle:@"提示" message:Vermessage preferredStyle:UIAlertControllerStyleAlert];
-        
-        //UIAlertAction给警告控制器添加一个事件按钮
-        UIAlertAction * action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        }];
-        //把action时间按钮安装到ac上
-        [ac addAction:action];
-        [self presentViewController:ac animated:YES completion:nil];
-        return;
-    }
+//    if (self.addMessageView.textTitleView.text.length == 0 || [ADDTITLESTR isEqualToString:self.addMessageView.textTitleView.text]) {
+//        NSString *Vermessage = @"请输入标题";
+//        UIAlertController * ac = [UIAlertController alertControllerWithTitle:@"提示" message:Vermessage preferredStyle:UIAlertControllerStyleAlert];
+//
+//        //UIAlertAction给警告控制器添加一个事件按钮
+//        UIAlertAction * action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        }];
+//        //把action时间按钮安装到ac上
+//        [ac addAction:action];
+//        [self presentViewController:ac animated:YES completion:nil];
+//        return;
+//    }
     if (self.addMessageView.textContentView.text.length == 0 || [ADDMESSAGESTR isEqualToString:self.addMessageView.textContentView.text]) {
         NSString *Vermessage = @"请输入内容";
         UIAlertController * ac = [UIAlertController alertControllerWithTitle:@"提示" message:Vermessage preferredStyle:UIAlertControllerStyleAlert];
@@ -79,26 +160,24 @@
         [self presentViewController:ac animated:YES completion:nil];
         return;
     }
-    if (self.addMessageView.selectedPhotos && self.addMessageView.selectedPhotos.count > 0) {
+    if (_selectedPhotos.count > 0) {
         weakSelf(ws)
-        [KGNetworkManager uploadImageWithArray:self.addMessageView.selectedPhotos parameter:nil success:^(NSData* data) {
-            NSError *err;
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
-                                                                options:NSJSONReadingMutableContainers
-                                                                  error:&err];
-            if(err == nil) {
-                [ws upLoadDymanic:dic[@"info"][@"id"]];
-            }
+        [[KGNetworkManager sharedInstance] POST:@"" parameters:@"" uploadImages:_selectedPhotos uploadName:@"file[]" success:^(NSDictionary* message) {
+            NSArray* arrayImgList = message[@"info"];
+            __block NSString *urlList = nil;
+            [arrayImgList enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (urlList == nil) {
+                    urlList = [NSString stringWithFormat:@"%@",obj[@"id"]];
+                }
+                else
+                    urlList = [NSString stringWithFormat:@"%@,%@",urlList,obj[@"id"]];
+            }];
+           [ws upLoadDymanic:urlList];
             
-//            if ([dict[@"status"] intValue]==1){
-//                NSLog(dict[@"Info"]);
-//
-//            }
+        } failure:^(NSError *error) {
             
-            //[ws upLoadDymanic:]
-        } fail:^(NSError *error) {
-            
-        }];
+        } visibleHUD:YES];
+       
     }
     else{
         [self upLoadDymanic:nil];
@@ -110,7 +189,7 @@
     NSMutableDictionary *prms=[@{
                                  @"uid":[[OWTool Instance] getUid],
                                  @"description":self.addMessageView.textContentView.text,
-                                 @"title":self.addMessageView.textTitleView.text
+                                 @"title": @" ",/*self.addMessageView.textTitleView.text*/
                                  }mutableCopy];
     if (cover_id) {
         [prms setValue:cover_id forKey:@"cover_id"];
@@ -120,13 +199,13 @@
      {
          if ([message[@"status"] intValue]==1)
          {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD showWithStatus:message[@"message"]];
              [SVProgressHUD dismissWithDelay:2];
              [ws popToRootViewController];
          }
          else
          {
-             [SVProgressHUD showImage:nil status:message[@"message"]];
+             [SVProgressHUD showErrorWithStatus:message[@"message"]];
              [SVProgressHUD dismissWithDelay:2];
          }
      } failure:^(NSError *error) {
@@ -186,18 +265,17 @@
 #pragma mark - TZImagePickerController
 
 - (void)pushImagePickerController {
-    if (self.maxCountTF <= 0) {
+    if (_maxCountTF <= 0) {
         return;
     }
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:self.maxCountTF columnNumber:3 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:_maxCountTF columnNumber:3 delegate:self pushPhotoPickerVc:YES];
     
     
 #pragma mark - 四类个性化设置，这些参数都可以不传，此时会走默认设置
-    imagePickerVc.isSelectOriginalPhoto = NO;
     
-    if (self.maxCountTF > 1) {
+    if (_maxCountTF > 1) {
         // 1.设置目前已经选中的图片数组
-        imagePickerVc.selectedAssets = self.addMessageView.selectedAssets; // 目前已经选中的图片数组
+        imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
     }
     imagePickerVc.allowTakePicture = NO; // 在内部显示拍照按钮
     
@@ -210,13 +288,13 @@
     
     // 3. Set allow picking video & photo & originalPhoto or not
     // 3. 设置是否可以选择视频/图片/原图
-    imagePickerVc.allowPickingVideo = NO;
-    imagePickerVc.allowPickingImage = YES;
-    imagePickerVc.allowPickingOriginalPhoto = NO;
-    imagePickerVc.allowPickingGif = NO;
+//    imagePickerVc.allowPickingVideo = self.allowPickingVideoSwitch.isOn;
+//    imagePickerVc.allowPickingImage = self.allowPickingImageSwitch.isOn;
+//    imagePickerVc.allowPickingOriginalPhoto = self.allowPickingOriginalPhotoSwitch.isOn;
+//    imagePickerVc.allowPickingGif = self.allowPickingGifSwitch.isOn;
     
     // 4. 照片排列按修改时间升序
-    imagePickerVc.sortAscendingByModificationDate = YES;
+//    imagePickerVc.sortAscendingByModificationDate = self.sortAscendingSwitch.isOn;
     
     // imagePickerVc.minImagesCount = 3;
     // imagePickerVc.alwaysEnableDoneBtn = YES;
@@ -242,10 +320,6 @@
     // You can get the photos by block, the same as by delegate.
     // 你可以通过block或者代理，来得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        self.addMessageView.selectedPhotos = [NSMutableArray arrayWithArray:photos];
-        self.addMessageView.selectedAssets = [NSMutableArray arrayWithArray:assets];
-        [self.addMessageView.publishPhotosView reloadDataWithImages:self.addMessageView.selectedPhotos];
-        NSLog(@"添加图片 --- 添加后有%zd张图片", self.addMessageView.selectedPhotos.count);
         
     }];
     
@@ -265,21 +339,70 @@
                 [tzImagePickerVc hideProgressHUD];
                 NSLog(@"图片保存失败 %@",error);
             } else {
-                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES completion:^(TZAlbumModel *model) {
+                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES needFetchAssets:YES completion:^(TZAlbumModel *model) {
                     [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
                         [tzImagePickerVc hideProgressHUD];
                         TZAssetModel *assetModel = [models firstObject];
                         if (tzImagePickerVc.sortAscendingByModificationDate) {
                             assetModel = [models lastObject];
                         }
-                        self.addMessageView.selectedPhotos = [NSMutableArray arrayWithArray:@[image]];
-                        self.addMessageView.selectedAssets = [NSMutableArray arrayWithArray:@[assetModel.asset]];
-                        [self.addMessageView.publishPhotosView reloadDataWithImages:self.addMessageView.selectedPhotos];
+//                        if (self.allowCropSwitch.isOn) { // 允许裁剪,去裁剪
+//                            TZImagePickerController *imagePicker = [[TZImagePickerController alloc] initCropTypeWithAsset:assetModel.asset photo:image completion:^(UIImage *cropImage, id asset) {
+//                                [self refreshCollectionViewWithAddedAsset:asset image:cropImage];
+//                            }];
+//                            imagePicker.needCircleCrop = self.needCircleCropSwitch.isOn;
+//                            imagePicker.circleCropRadius = 100;
+//                            [self presentViewController:imagePicker animated:YES completion:nil];
+//                        } else
+                        {
+                            [self refreshCollectionViewWithAddedAsset:assetModel.asset image:image];
+                        }
                     }];
                 }];
             }
         }];
     }
+}
+
+// The picker should dismiss itself; when it dismissed these handle will be called.
+// If isOriginalPhoto is YES, user picked the original photo.
+// You can get original photo with asset, by the method [[TZImageManager manager] getOriginalPhotoWithAsset:completion:].
+// The UIImage Object in photos default width is 828px, you can set it by photoWidth property.
+// 这个照片选择器会自己dismiss，当选择器dismiss的时候，会执行下面的代理方法
+// 如果isSelectOriginalPhoto为YES，表明用户选择了原图
+// 你可以通过一个asset获得原图，通过这个方法：[[TZImageManager manager] getOriginalPhotoWithAsset:completion:]
+// photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
+    _selectedPhotos = [NSMutableArray arrayWithArray:photos];
+    _selectedAssets = [NSMutableArray arrayWithArray:assets];
+    [_collectionView reloadData];
+    // _collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
+    
+}
+
+- (void)refreshCollectionViewWithAddedAsset:(id)asset image:(UIImage *)image {
+    [_selectedAssets addObject:asset];
+    [_selectedPhotos addObject:image];
+    [_collectionView reloadData];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    if ([picker isKindOfClass:[UIImagePickerController class]]) {
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+#pragma mark - Click Event
+
+- (void)deleteBtnClik:(UIButton *)sender {
+    [_selectedPhotos removeObjectAtIndex:sender.tag];
+    [_selectedAssets removeObjectAtIndex:sender.tag];
+    
+    [_collectionView performBatchUpdates:^{
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    } completion:^(BOOL finished) {
+        [_collectionView reloadData];
+    }];
 }
 
 #pragma clang diagnostic push
@@ -305,18 +428,15 @@
     return _imagePickerVc;
 }
 
-#pragma mark lazyLoad 
+#pragma mark lazyLoad
 -(AddMessageView *) addMessageView
 {
     if (_addMessageView == nil) {
-        _addMessageView = [[AddMessageView alloc]init];
+        _addMessageView = [[AddMessageView alloc]initWithState:NO];
         _addMessageView.frame = CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64);
-        [_addMessageView returnAddMorePhotoBlock:^{
-            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"去相册选择", nil];
-            [sheet showInView:self.view];
-        }];
     }
     return _addMessageView;
 }
+
 
 @end

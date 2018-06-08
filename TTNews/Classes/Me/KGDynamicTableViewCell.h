@@ -12,5 +12,7 @@
 @interface KGDynamicTableViewCell : UITableViewCell
 //数据模型
 @property (nonatomic,strong) DymamicModel   * model;
+///图像
+@property (nonatomic,strong) UIImageView * imgHeaderView;//图像
 
 @end

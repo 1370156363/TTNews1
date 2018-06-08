@@ -52,7 +52,7 @@
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (self==[super initWithStyle:style reuseIdentifier:reuseIdentifier])
+    if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
         self=[[NSBundle mainBundle] loadNibNamed:@"SinglePictureNewsTableViewCell" owner:self options:nil][0];
     }

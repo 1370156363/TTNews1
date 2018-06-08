@@ -14,6 +14,7 @@
     IBOutlet UIButton *img1;
     IBOutlet UIButton *img2;
     IBOutlet UIButton *img3;
+    IBOutlet UILabel *txtLitle;
 }
 @end
 
@@ -22,6 +23,12 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    
+    self.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.contentView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+    txtLitle.dk_textColorPicker = DKColorPickerWithKey(TEXT);
+    
 }
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

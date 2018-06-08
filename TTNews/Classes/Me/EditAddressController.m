@@ -56,6 +56,11 @@
     self.textDetailAddress.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.textDetailAddress.backgroundColor = [UIColor whiteColor];
     self.textDetailAddress.tag = 100;
+    
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    
     //有内容时该设置才生效，需要切记
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
     paragraphStyle.lineSpacing = 8;

@@ -51,6 +51,8 @@
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [UIImage imageNamed:@"mainCellBackground"];
     self.backgroundView = imageView;
+    
+    self.videoImageView.clipsToBounds = YES;
     [SDWebImageManager sharedManager].delegate = self;
 }
 
@@ -129,7 +131,9 @@
 //}
 //
 - (IBAction)repost:(id)sender {
-
+    if ([self.delegate respondsToSelector:@selector(clickShareButton:)]) {
+        [self.delegate clickShareButton:self.indexPath];
+    }
 }
 
 - (IBAction)comment:(id)sender {

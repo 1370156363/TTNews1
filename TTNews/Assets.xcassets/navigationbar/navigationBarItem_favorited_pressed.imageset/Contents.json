@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "navigationBarItem_favorited_pressed.png",
       "scale" : "1x"
     },
     {

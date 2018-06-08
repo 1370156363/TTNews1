@@ -88,7 +88,7 @@
     
     self.imgPhoto.image=info[UIImagePickerControllerEditedImage];
     weakSelf(ws)
-    [KGNetworkManager uploadImageWithArray:[NSMutableArray arrayWithObject:self.imgPhoto.image] parameter:nil success:^(NSData* data) {
+    [[KGNetworkManager sharedInstance] uploadImageWithArray:[NSMutableArray arrayWithObject:self.imgPhoto.image] parameter:nil success:^(NSData* data) {
         NSError *err;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
                                                             options:NSJSONReadingMutableContainers

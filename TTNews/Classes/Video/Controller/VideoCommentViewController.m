@@ -14,13 +14,13 @@
 #import "TTVideoComment.h"
 #import <MJExtension.h>
 #import "VideoCommentCell.h"
-#import "UIBarButtonItem+Extension.h"
 #import "TTConst.h"
 #import "UIView+Extension.h"
 #import "FullViewController.h"
 #import <DKNightVersion.h>
-#import "TTNetworkManager.h"
 #import "VideoDetailModel.h"
+#import "MyCommentViewController.h"
+#import "LoginController.h"
 
 static NSString * const VideoCommentCellID = @"VideoCommentCell";
 
@@ -182,7 +182,6 @@ static NSString * const VideoCommentCellID = @"VideoCommentCell";
             }
             [self.latestComments addObjectsFromArray:newArr];
             [self.tableView reloadData];
-            VideoDetailModel *mode=self.latestComments[0];
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
         }
@@ -396,6 +395,20 @@ static NSString * const VideoCommentCellID = @"VideoCommentCell";
     self.playView.delegate = self;
     AVPlayerItem *item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,self.video.videourl]]];
     self.playView.playerItem = item;
+}
+-(void)clickCommentButton:(NSIndexPath *)indexPath
+{
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+        
+    }
+    else{
+        MyCommentViewController *MyCommentViewControlle=[[MyCommentViewController alloc] initWithNibName:@"MyCommentViewController" bundle:nil];
+        MyCommentViewControlle.video=self.video;
+        
+        [self.navigationController pushViewController:MyCommentViewControlle animated:YES];
+    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)aTextfield

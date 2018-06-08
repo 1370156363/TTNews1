@@ -7,152 +7,140 @@
 //
 
 #import "DongTaiTableViewCell.h"
-#import "UIImageView+Extension.h"
+@interface DongTaiTableViewCell()
+
+@property (strong, nonatomic) UIImageView *iconImg;///图像
+@property (strong, nonatomic) UILabel *nickNameLab;///昵称
+@property (strong, nonatomic) UILabel *timeLab;///时间
+@property (strong, nonatomic) UILabel *contentLab;///详情
+@property (strong, nonatomic) PYPhotosView *flowPhotosView;///图片数组
+
+@end
 
 @implementation DongTaiTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self setupView];
+    }
+    return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+-(void)setupView{
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UIImageView *imgView = [[UIImageView alloc] init];
+    imgView.clipsToBounds = YES;
+    imgView.contentMode = UIViewContentModeScaleAspectFill;
+    _iconImg = imgView;
+    
+    UILabel * nickNameLab = [[UILabel alloc] init];
+    nickNameLab.textColor = [UIColor blackColor];
+    nickNameLab.font = [UIFont systemFontOfSize:17];
+    _nickNameLab = nickNameLab;
+    
+    UILabel * timeLab = [[UILabel alloc] init];
+    timeLab.textColor = [UIColor lightGrayColor];
+    timeLab.font = [UIFont systemFontOfSize:14];
+    _timeLab = timeLab;
+   
+    UILabel * contentLab = [[UILabel alloc] init];
+    contentLab.textColor = [UIColor lightGrayColor];
+    contentLab.font = [UIFont systemFontOfSize:14];
+    _contentLab = contentLab;
+    
+    [self.contentView sd_addSubviews:@[_iconImg,_nickNameLab,_timeLab,_contentLab]];
+    
+    //日间夜间切换
+    self.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+    self.contentView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+    _nickNameLab.dk_textColorPicker = DKColorPickerWithKey(TEXT);
+    
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+}
 
+-(void)updateConstraints{
+    [super updateConstraints];
+    
+    float margin = 5;
+    
+    
+    _iconImg.sd_layout
+    .leftSpaceToView(self.contentView, margin)
+    .topSpaceToView(self.contentView, margin)
+    .heightIs(40).widthIs(40);
+    _iconImg.layer.cornerRadius = 20;
+    
+    _timeLab.sd_layout
+    .rightSpaceToView(self.contentView, 10)
+    .centerYEqualToView(_nickNameLab)
+    .topSpaceToView(self.contentView, 10);
+    [_timeLab setSingleLineAutoResizeWithMaxWidth:100];
+    
+    _nickNameLab.sd_layout
+    .leftSpaceToView(_iconImg, margin)
+    .topSpaceToView(self.contentView, 10)
+    .rightSpaceToView(_timeLab, margin)
+    .autoHeightRatio(0);
+    _nickNameLab.numberOfLines = 1;
+    
+    _contentLab.sd_layout
+    .leftSpaceToView(_iconImg, margin)
+    .topSpaceToView(_nickNameLab, margin)
+    .rightSpaceToView(_timeLab, margin)
+    .autoHeightRatio(0);
+    [_contentLab setMaxNumberOfLinesToShow:3];
 }
 
 ///填入数据
--(void)setComment:(DongtaiModel *)comment{
+-(void)setModel:(DongtaiModel *)model{
+    _model = model;
     //头像
-    [self.iconImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,comment.avatar]]];
-//    self.iconImg.layer.cornerRadius=self.iconImg.wh_height/2;
-//    self.iconImg.layer.cornerRadius=5;
+    [_iconImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]]];
 
-    self.nickNameLab.text=comment.nicheng;
-    self.jieshaoLab.text=comment.title;
-    self.timeLab.text=[self getTimeFromCurrentTime:comment.create_time];
-    ///文字自适应
-    CGSize constraint = CGSizeMake(winsize.width-93, 20000.0f);
-    NSAttributedString *attributedText =[[NSAttributedString alloc] initWithString:comment.desc attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}];
-    CGRect rect=[attributedText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+    _nickNameLab.text=model.nicheng;
+    _timeLab.text=[self getTimeFromCurrentTime:model.create_time];
+   
+    _contentLab.text=model.desc;
     
-    [self.contentLab mas_updateConstraints:^(MASConstraintMaker *make)
-     {
-         make.height.mas_equalTo(rect.size.height);
-     }];
-    self.contentLab.text=comment.desc;
-
+    [_flowPhotosView removeFromSuperview];
     //图片
-    NSArray *imagesArr=[comment.fengmian componentsSeparatedByString:@","];
-
-    if (imagesArr.count!=0) {
-        ///封面图片最多显示9个
-        CGFloat jianGe=15;
-        CGFloat width =(winsize.width-88-5-2*jianGe)/3;
-
-        CGFloat totlHight=[self getImgaeViewHight:imagesArr.count jianGe:jianGe width:width];
-        [self.imagView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(totlHight);
-            [self.imagView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
-            NSInteger num=0;
-            for (NSString *url in imagesArr) {
-                NSString *imageUrl=[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,url];
-                CGFloat image_x=[self getImageWithX:num jianGe:jianGe width:width];
-                CGFloat image_y=[self getImageWithY:num jianGe:jianGe hight:width];
-
-                UIImageView *image=[[UIImageView alloc] initWithFrame:CGRectMake(image_x, image_y, width, width)];
-                
-//                [image setBackgroundColor:[UIColor grayColor]];
-                [image TT_setImageWithURL:[NSURL URLWithString:imageUrl]];
-//                image.image.cornerRadius=0;
-
-//                [image sd_setImageWithURL:[NSURL URLWithString:imageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//                    NSLog(@"%@",image);
-//                }];
-
-                ///
-
-                [self.imagView addSubview:image];
-                num++;
-            }
+    NSArray *imagesArr=[model.fengmian componentsSeparatedByString:@","];
+    if(imagesArr && imagesArr.count ==1 && [((NSString*)imagesArr[0]) containsString:@"default"]){
+        [self setupAutoHeightWithBottomView:_contentLab bottomMargin:10];
+    }
+    else if (imagesArr && imagesArr.count>0) {
+        NSMutableArray *arrayList = [NSMutableArray new];
+        
+        [imagesArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [arrayList addObject:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,obj]];
         }];
-//        [self.imagView setBackgroundColor:[UIColor redColor]];
-    }
+         [_contentLab updateLayout];
+        
+        // 2.1 创建一个流水布局photosView(默认为流水布局)
+        _flowPhotosView = [PYPhotosView photosView];
+        // 设置原图地址
+        _flowPhotosView.originalUrls = arrayList;
+        
+        _flowPhotosView.py_y = _contentLab.origin.y+_contentLab.size.height+10;
+        _flowPhotosView.py_x = _iconImg.origin.x+_iconImg.size.width + 10;
+        _flowPhotosView.photoMargin = 10;
+        _flowPhotosView.photosMaxCol = 3;
+        _flowPhotosView.photosState = PYPhotosViewStateDidCompose;
+        _flowPhotosView.pageType = PYPhotosViewPageTypeLabel;
+        _flowPhotosView.photoHeight = (SCREEN_WIDTH-_iconImg.origin.x-_iconImg.size.width-40)/3;
+        _flowPhotosView.photoWidth = (SCREEN_WIDTH-_iconImg.origin.x-_iconImg.size.width-40)/3;
+        
+        [self.contentView addSubview:_flowPhotosView];
 
-}
-
-///根据排列位置计算出相应的y点
--(CGFloat)getImageWithY:(NSInteger)num jianGe:(CGFloat)jiange hight:(CGFloat)hight
-{
-    switch (num/3) {
-        case 0:
-        {
-            return jiange;
-        }
-            break;
-        case 1:
-        {
-            return jiange+hight+jiange;
-        }
-            break;
-        case 2:
-        {
-            return 3*jiange+2*hight;
-        }
-            break;
-        default:
-        {
-            return 0;
-        }
-            break;
-    }
-}
-
-///根据排列位置计算出相应的x点
--(CGFloat)getImageWithX:(NSInteger )num jianGe:(CGFloat)jiange width:(CGFloat)width
-{
-
-    switch (num%3) {
-        case 0:
-        {
-            return 0;
-        }
-            break;
-        case 1:
-        {
-            return 0+width+jiange;
-        }
-            break;
-        case 2:
-        {
-            return 0+2*width+2*jiange;
-        }
-            break;
-        default:
-        {
-            return 0;
-        }
-            break;
-    }
-
-}
-
-///计算imageView的总高
--(CGFloat )getImgaeViewHight:(NSInteger )count jianGe:(CGFloat)jiange width:(CGFloat)width{
-    CGFloat hight=0;
-    if (count<=3) {
-        hight=width+2*jiange;
-    }
-    else if(count>3 && count<=6)
-    {
-        hight=2*width+3*jiange;
+       [self setupAutoHeightWithBottomView:_flowPhotosView bottomMargin:10];
     }
     else{
-        hight=3*width+4*jiange;
+        [self setupAutoHeightWithBottomView:_contentLab bottomMargin:10];
     }
-
-    return hight;
 }
 
 ///计算时间

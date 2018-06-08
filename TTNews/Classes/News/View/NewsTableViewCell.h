@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TTVideo.h"
+#import "MyCollectionModel.h"
+
 @interface NewsTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *txtLab;
+// 该Model对应的Cell高度
+@property (nonatomic, assign) CGFloat cellHeight;
 
-@property (weak, nonatomic) IBOutlet UIImageView *myImage1;
+@property (nonatomic,strong)TTVideo *model;
+@property (nonatomic, strong)MyCollectionModel *collectionModel;
 
 @end

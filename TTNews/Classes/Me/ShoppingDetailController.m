@@ -26,6 +26,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    
     [self request];
     // Do any additional setup after loading the view from its nib.
 }
@@ -73,10 +77,10 @@
     for (int index = 0; index < imgs.count; index ++) {
         UIImageView *imageView = [[UIImageView alloc]init];
         [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://xinwen.52jszhai.com",imgs[index]]] placeholderImage:ImageNamed(@"tupianGL")];
-        imageView.frame = CGRectMake(20, 10, SCREEN_WIDTH-20, SCREEN_WIDTH*0.3);
+        imageView.frame = CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_WIDTH*0.3);
         [label appendView:imageView];
     }
-    [label setFrameWithOrign:CGPointMake(0,0) Width:SCREEN_WIDTH];
+    [label setFrameWithOrign:CGPointMake(5,0) Width:SCREEN_WIDTH-10];
     [self.scrollView setContentSize:CGSizeMake(SCREEN_WIDTH, label.size.height+20)];
 }
 

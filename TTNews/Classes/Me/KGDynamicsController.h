@@ -9,4 +9,7 @@
 
 @interface KGDynamicsController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
+///当传递时查看的是别人的个人动态
+@property (nonatomic, strong) NSString* userID;
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "HuiDaTableViewCell.h"
-
+ 
 @implementation HuiDaTableViewCell
 
 - (void)awakeFromNib {

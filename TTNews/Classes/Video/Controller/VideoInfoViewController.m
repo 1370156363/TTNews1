@@ -8,7 +8,7 @@
 
 #import "VideoInfoViewController.h"
 #import "MyCommentViewController.h"
-
+#import "LoginController.h"
 
 @interface VideoInfoViewController ()
 
@@ -37,7 +37,6 @@
 
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-
 }
 
 
@@ -53,60 +52,125 @@
 - (IBAction)shoucangAction:(UIButton *)sender{
      [self AddCollect:sender];
 }
-- (IBAction)dashangAction:(UIButton *)sender{
-    sender.selected=!sender.selected;
-
-}
+//- (IBAction)dashangAction:(UIButton *)sender{
+//    sender.selected=!sender.selected;
+//
+//}
 - (IBAction)pinglunAction:(UIButton *)sender{
-
-    MyCommentViewController *MyCommentViewControlle=[[MyCommentViewController alloc] initWithNibName:@"MyCommentViewController" bundle:nil];
-    MyCommentViewControlle.video=self.video;
-    
-    [self.navigationController pushViewController:MyCommentViewControlle animated:YES];
-
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+        
+    }
+    else{
+        MyCommentViewController *MyCommentViewControlle=[[MyCommentViewController alloc] initWithNibName:@"MyCommentViewController" bundle:nil];
+        MyCommentViewControlle.video=self.video;
+        
+        [self.navigationController pushViewController:MyCommentViewControlle animated:YES];
+    }
 }
 
 - (IBAction)zhuanfaAction:(UIButton *)sender{
-    sender.selected=!sender.selected;
-
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }else{
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+            // 根据获取的platformType确定所选平台进行下一步操作
+            [self shareWebPageToPlatformType:platformType];
+        }];
+    }
 }
-
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    
+    //创建网页内容对象
+    NSString* thumbURL = [NSString stringWithFormat:@"%@/index/news/detail/id/%@/model_id/6",kNewWordBaseURLString,self.url];
+    
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"新闻分享" descr:_video.title thumImage:[UIImage imageNamed:@"shareIcon.png"]];
+    //设置网页地址
+    shareObject.webpageUrl = thumbURL;//@"http://mobile.umeng.com/social";
+    //图片url
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_userDetailInfo.icon]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //shareObject.thumbImage = [UIImage imageWithData:data];
+            //分享消息对象设置分享内容对象
+            messageObject.shareObject = shareObject;
+            
+            //调用分享接口
+            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self  completion:^(id data, NSError *error) {
+                if (error) {
+                    UMSocialLogInfo(@"************Share fail with error %@*********",error);
+                }else{
+                    if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                        UMSocialShareResponse *resp = data;
+                        //分享结果消息
+                        UMSocialLogInfo(@"response message is %@",resp.message);
+                        //第三方原始返回的数据
+                        UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                        
+                    }else{
+                        UMSocialLogInfo(@"response data is %@",data);
+                    }
+                }
+            }];
+        });
+    });
+    
+}
 #pragma mark 添加事件
 ///添加收藏
 -(void)AddCollect:(UIButton *)sender{
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }
+    else{
+        NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.ID,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",nil];
+        
+        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkAddcollect withUserInfo:dict success:^(id message) {
+            [SVProgressHUD dismiss];
+            NSNumber *num=message[@"status"];
+            if ([num integerValue]==1) {
+                sender.selected=!sender.selected;
+            }
+            else{
+                [SVProgressHUD showErrorWithStatus:message[@"data"]];
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"网络错误"];
+        } visibleHUD:YES];
+    }
 
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",nil];
-
-    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkAddcollect withUserInfo:dict success:^(id message) {
-        [SVProgressHUD dismiss];
-        NSNumber *num=message[@"status"];
-        if ([num integerValue]==1) {
-            sender.selected=!sender.selected;
-        }
-        else{
-            [SVProgressHUD showErrorWithStatus:message[@"data"]];
-        }
-    } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"网络错误"];
-    } visibleHUD:YES];
+    
 }
 
 ///添加点赞
 -(void)AddUserAction:(UIButton *)sender{
 
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.id,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",nil];
-    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkAdduserAction withUserInfo:dict success:^(id message) {
-        [SVProgressHUD dismiss];
-        NSNumber *num=message[@"status"];
-        if ([num integerValue]==1) {
-            sender.selected=!sender.selected;
-        }
-        else{
-            [SVProgressHUD showErrorWithStatus:message[@"data"]];
-        }
-    } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"网络错误"];
-    } visibleHUD:YES];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }
+    else{
+        NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.video.ID,@"id",[[OWTool Instance] getUid],@"uid",self.video.model_id,@"model_id",nil];
+        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KnetworkAdduserAction withUserInfo:dict success:^(id message) {
+            [SVProgressHUD dismiss];
+            NSNumber *num=message[@"status"];
+            if ([num integerValue]==1) {
+                sender.selected=!sender.selected;
+            }
+            else{
+                [SVProgressHUD showErrorWithStatus:message[@"data"]];
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"网络错误"];
+        } visibleHUD:YES];
+    }
 }
 
 @end

@@ -10,7 +10,6 @@
 #import <SDImageCache.h>
 #import <SVProgressHUD.h>
 #import "TTConst.h"
-#import "TTJudgeNetworking.h"
 #import <DKNightVersion.h>
 
 @interface DetailViewController ()<UIWebViewDelegate>
@@ -30,11 +29,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if([TTJudgeNetworking judge] == NO) {
-        [SVProgressHUD showErrorWithStatus:@"无网络连接"];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x343434, 0xfafafa);
+   
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 
     [self setupWebView];
     [self setupNaigationBar];

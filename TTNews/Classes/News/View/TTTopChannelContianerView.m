@@ -35,6 +35,12 @@ static CGFloat buttonWidth = 65;
 #pragma mark channelNameArray的setter方法，channelNameArray
 - (void)setChannelNameArray:(NSArray *)channelNameArray {
     _channelNameArray = channelNameArray;
+    //移除再增加
+    [self.scrollView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            [obj removeFromSuperview];
+        }
+    }];
 //    CGFloat buttonWidth = self.scrollView.frame.size.width/5;
     self.scrollView.contentSize = CGSizeMake(buttonWidth * channelNameArray.count, 0);
     for (NSInteger i = 0; i < channelNameArray.count; i++) {

@@ -12,13 +12,13 @@
 #import <SDImageCache.h>
 #import "ContentTableViewController.h"
 #import "ChannelCollectionViewCell.h"
-#import "TTJudgeNetworking.h"
 #import "TTConst.h"
 #import "TTTopChannelContianerView.h"
 #import "ChannelsSectionHeaderView.h"
 #import "TTNormalNews.h"
 #import <DKNightVersion.h>
 #import "XLChannelControl.h"
+#import "SearchResultControl.h"
 
 @interface NewsViewController()<UIScrollViewDelegate,TTTopChannelContianerViewDelegate>
 {
@@ -85,7 +85,9 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
         CategorySetArr=[[NSMutableArray alloc] init];
     }
     [self getFenlei];
-
+    
+    [self addRightItemViews];
+    
     self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
 
     self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
@@ -94,28 +96,83 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 
 }
 
+-(void)addRightItemViews
+{
+    
+    //搜索
+    UIButton *rightSearch = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightSearch.frame = CGRectMake(10, 50, SCREEN_WIDTH-100, 25);
+    [rightSearch setImage:[UIImage imageNamed:@"ico-search"] forState:UIControlStateNormal];
+    [rightSearch setTitle:@"搜索" forState:UIControlStateNormal];
+    rightSearch.backgroundColor = [UIColor whiteColor];
+    rightSearch.layer.cornerRadius = 5;
+    
+    [rightSearch.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [rightSearch setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [rightSearch setTintColor:[UIColor whiteColor]];
+    [rightSearch addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *searchBtn = [[UIBarButtonItem alloc]initWithCustomView:rightSearch];
+    [self.navigationItem setTitleView:rightSearch];
+}
+
+-(void)searchBtnClick{
+    //搜索
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:nil searchBarPlaceholder:@"请输入搜索内容" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        if ( searchText== nil || searchText.length == 0) {
+            [SVProgressHUD showInfoWithStatus:@"请输入内容"];
+            [SVProgressHUD dismissWithDelay:1];
+        }else{
+            SearchResultControl *col = [[SearchResultControl alloc] init];
+            col.searchStr = searchText;
+            [searchViewController.navigationController pushViewController:col animated:YES];
+        }
+        
+        
+    }];
+    // 3. present the searchViewController
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    nav.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    [nav.view setBackgroundColor:[UIColor lightGrayColor]];
+    [self presentViewController:nav  animated:NO completion:nil];
+}
+
 -(void)AddChannelSelect
 {
     ///搜索页面
     
-//    NSArray *arr1 = @[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
-//
+    NSArray *arr1 = self.CategoryArr;//@[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
+
 //    NSArray *arr2 = @[@"有声",@"家居",@"电竞",@"美容",@"电视剧",@"搏击",@"健康",@"摄影",@"生活",@"旅游",@"韩流",@"探索",@"综艺",@"美食",@"育儿"];
-//
-//    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:arr2 finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
-//        NSLog(@"inUseTitles = %@",inUseTitles);
-//        NSLog(@"unUseTitles = %@",unUseTitles);
-//    }];
+
+    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:nil finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
+        NSLog(@"inUseTitles = %@",inUseTitles);
+        self.CategoryArr = [[NSMutableArray alloc] initWithArray:inUseTitles];
+        self.topContianerView.channelNameArray = self.CategoryArr;
+        for (NSInteger i = 0; i<self.CategoryArr.count; i++) {
+            [CategorySetArr enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([self.CategoryArr[i] isEqualToString:[obj objectForKey:@"title_show"]]) {
+                    ((ContentTableViewController*)self.childViewControllers[i]).channelId = CategorySetArr[i][@"id"];
+                    *stop = YES;
+                }
+            }];
+            
+        }
+        NSLog(@"unUseTitles = %@",unUseTitles);
+    }];
 
 }
 
 #pragma mark --private Method--初始化子控制器
 -(void)setupChildController {
 
-    for (NSInteger i = 0; i<CategorySetArr.count; i++) {
+    for (NSInteger i = 0; i<self.CategoryArr.count; i++) {
         ContentTableViewController *viewController = [[ContentTableViewController alloc] init];
-        viewController.channelId=CategorySetArr[i][@"id"];
-
+        [CategorySetArr enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([self.CategoryArr[i] isEqualToString:[obj objectForKey:@"title_show"]]) {
+                viewController.channelId=CategorySetArr[i][@"id"];
+                *stop = YES;
+            }
+        }];
         [self addChildViewController:viewController];
     }
 }
@@ -138,7 +195,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     ///右边添加
     UIButton *addBtn=[[UIButton alloc] initWithFrame:CGRectMake(winsize.width-40, 64, 40, 30)];
 
-    [addBtn setImage:[UIImage imageNamed:@"sousuoB"] forState:UIControlStateNormal];
+    [addBtn setImage:[UIImage imageNamed:@"tianjiaRZ"] forState:UIControlStateNormal];
 
 
     [self.view addSubview:addBtn];
@@ -155,6 +212,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     UIScrollView *contentScrollView = [[UIScrollView alloc] init];
     self.contentScrollView = contentScrollView;
     contentScrollView.frame = self.view.bounds;
+    
     contentScrollView.contentSize = CGSizeMake(contentScrollView.frame.size.width* self.currentChannelsArray.count, 0);
     contentScrollView.pagingEnabled = YES;
     contentScrollView.delegate = self;
@@ -169,7 +227,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
         NSInteger index = scrollView.contentOffset.x/self.contentScrollView.frame.size.width;
         ContentTableViewController *vc = self.childViewControllers[index];
         vc.view.frame = CGRectMake(scrollView.contentOffset.x, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
-        vc.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame)+self.topContianerView.scrollView.frame.size.height, 0, self.tabBarController.tabBar.frame.size.height, 0);
+        vc.tableView.contentInset = UIEdgeInsetsMake(self.topContianerView.scrollView.frame.size.height, 0, self.tabBarController.tabBar.frame.size.height, 0);
         [scrollView addSubview:vc.view];
         for (int i = 0; i<self.contentScrollView.subviews.count; i++) {
             NSInteger currentIndex = vc.tableView.frame.origin.x/self.contentScrollView.frame.size.width;
@@ -209,6 +267,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 #pragma mark --TTTopChannelContianerViewDelegate--选择了某个新闻频道，更新scrollView的contenOffset
 - (void)chooseChannelWithIndex:(NSInteger)index {
     [self.contentScrollView setContentOffset:CGPointMake(self.contentScrollView.frame.size.width * index, 0) animated:YES];
+    
 }
 
 #pragma mark --private Method--存储更新后的currentChannelsArray到偏好设置中

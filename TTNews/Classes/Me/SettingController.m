@@ -10,7 +10,6 @@
 #import "InformEditController.h"
 #import "KGTableviewCellModel.h"
 #import "EditPwdController.h"
-#import "TTDataTool.h"
 #import "ApproveController.h"
 #import "LoginController.h"
 
@@ -98,15 +97,15 @@
 -(void)btnLoginOutClick{
     ///点击退出
     [[OWTool Instance] saveUid:nil];
-
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    ///点击退出
-    LoginController *login=[[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
-    login.type=1;
-    UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:login];
-    self.window.rootViewController = nav;
-    self.window.rootViewController=login;
-    [self.window makeKeyAndVisible];
+    [self.navigationController popViewControllerAnimated:YES];
+//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    ///点击退出
+//    LoginController *login=[[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+//    login.type=1;
+//    UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:login];
+//    self.window.rootViewController = nav;
+//    self.window.rootViewController=login;
+//    [self.window makeKeyAndVisible];
 
 }
 
@@ -205,6 +204,7 @@
         [_btnLoginOut.titleLabel setTextColor:[UIColor redColor]];
         [_btnLoginOut addTarget:self action:@selector(btnLoginOutClick) forControlEvents:UIControlEventTouchUpInside];
         [_btnLoginOut setBackgroundColor:[UIColor whiteColor]];
+        [[EMClient sharedClient] logout:YES];
     }
     return _btnLoginOut;
 }

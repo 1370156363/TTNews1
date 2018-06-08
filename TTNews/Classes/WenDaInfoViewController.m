@@ -14,10 +14,10 @@
 //图片
 #import "WenDaInfoImgTableViewCell.h"
 
+#import "MyFensiController.h"
+
 #import "WenDaComment.h"
 #import "UIView+Extension.h"
-
-#import "IDMPhotoBrowser.h"
 
 
 #define INTERVAL_KEYBOARD 0
@@ -33,10 +33,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *TitleLab;
 @property (weak, nonatomic) IBOutlet UILabel *timeLab;
 
+///关注
+@property (weak, nonatomic) IBOutlet UIButton *btnAction;
+///邀请问答
+@property (weak, nonatomic) IBOutlet UIButton *btnInvite;
+
 @property (weak, nonatomic) IBOutlet UITableView *MainTabView;
 
 @property (weak, nonatomic) IBOutlet UIView *footView;
-@property (weak, nonatomic) IBOutlet UITextField *textView;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 ///发送
 @property (weak, nonatomic) IBOutlet UIButton *OkAction;
@@ -70,7 +75,7 @@
     if (self.textView.text.length==0) {
         return;
     }
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.id,@"id",[[OWTool Instance] getUid],@"uid",self.textView.text,@"title", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.ID,@"id",[[OWTool Instance] getUid],@"uid",self.textView.text,@"title", nil];
     [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkWenAddWenDaComment withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
         [self getAnswer];
@@ -82,8 +87,8 @@
 
 
 -(void)getAnswer{
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.id,@"id", nil];
-        //获取验证码
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.ID,@"id", nil];
+        //获取验证码showTabview
 	[[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkWenDaComment withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
         ///每一次都重置
@@ -91,12 +96,12 @@
             commentArr=[[NSMutableArray alloc] init];
         }
         else{
-            [self.dataListArr removeAllObjects];
+            [self.dataListArr removeObject:@"pinglun"];
             [commentArr removeAllObjects];
         }
 
         NSNumber *num=message[@"status"];
-        [self showTabview];
+        
         
         if ([num integerValue]==1) {
             commentArr=[WenDaComment mj_objectArrayWithKeyValuesArray:message[@"data"]];
@@ -117,27 +122,61 @@
 
 }
 
+///网络请求
+-(void)loadList
+{
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:self.wenda.ID,@"answer_id", nil];
+    if ([[OWTool Instance] getUid] != nil) {
+        [dict setValue:[[OWTool Instance] getUid] forKey:@"uid"];
+    }
+    WS(weakSelf)
+    [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkWendaDetailInfo withUserInfo:dict success:^(NSDictionary* message) {
+        [SVProgressHUD dismiss];
+       
+        NSDictionary *dic = [message objectForKey:@"data"];
+        _wenda=[WendaModel mj_objectWithKeyValues:dic];
+        if (_wenda) {
+            
+            [weakSelf showTabview];
+            [weakSelf getAnswer];
+        }
+        
+    } failure:^(NSError *error)
+     {
+         [SVProgressHUD showErrorWithStatus:@"网络错误"];
+     } visibleHUD:YES];
+}
+
 -(void)showTabview{
+    
+    self.TitleLab.text=self.wenda.title;
+    self.timeLab.text=self.wenda.create_time;
+    if (self.wenda.is_guanzhu) {
+        [self.btnAction setTitle:@"已关注" forState:UIControlStateNormal];
+        [self.btnAction setUserInteractionEnabled:NO];
+        [self.btnAction setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }
     ///文字
     [self.dataListArr addObject:self.wenda.description];
 
-    NSArray *imags=[self.wenda.fengmian componentsSeparatedByString:@","];
-    for (NSString *url in imags) {
-        NSString *urls=[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,url];
-        [self.dataListArr addObject:urls];
+    //NSArray *imags=[self.wenda.fengmian componentsSeparatedByString:@","];
+    if (self.wenda.pic) {
+        for (NSString *url in self.wenda.pic) {
+            NSString *urls=[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,url];
+            [self.dataListArr addObject:urls];
+        }
     }
-
-//    CGIMAGEGETIMAGEWIDTH(image)
 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO];
-    [self initNavigationWithImgAndTitle:@"详情" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
-    self.TitleLab.text=self.wenda.title;
-    self.timeLab.text=self.wenda.create_time;
-    [self getAnswer];
+    [self initNavigationWithImgAndTitle:@"问答" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
+    [self loadList];
+    //self.TitleLab.text=self.wenda.title;
+    //self.timeLab.text=self.wenda.create_time;
+    
     self.MainTabView.delegate=self;
     self.MainTabView.dataSource=self;
     // 去掉分割线
@@ -152,10 +191,42 @@
     self.textView.delegate=self;
     self.textView.returnKeyType=UIReturnKeyDone;
 
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     self.OkAction.layer.cornerRadius=5;
+    
+    [self.btnAction addTarget:self action:@selector(btnActionClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnInvite addTarget:self action:@selector(btnInviteClick) forControlEvents:UIControlEventTouchUpInside];
 
     ///添加通知
     [self addEventListening];
+}
+
+///关注按钮被点击
+-(void)btnActionClick{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithDictionary:@{@"uid":[[OWTool Instance] getUid],@"answer_id":self.wenda.ID}];
+    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkAddQuestionGuanzhu withUserInfo:dict success:^(NSDictionary* message) {
+        ;
+        if ([((NSString*)[message objectForKey:@"message"]) isEqualToString:@"添加关注成功"] ) {
+            [self.btnAction setTitle:@"已关注" forState:UIControlStateNormal];
+            [self.btnAction setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            [self.btnAction setUserInteractionEnabled:NO];
+        }
+        [SVProgressHUD showInfoWithStatus:[message objectForKey:@"message"]];
+        
+    } failure:^(NSError *error) {
+        
+    } visibleHUD:NO];
+    
+}
+
+///邀请按钮被点击
+-(void)btnInviteClick{
+    MyFensiController *fensiCol = [MyFensiController new];
+    fensiCol.isShowBtnInvite = YES;
+    fensiCol.answerID = _wenda.ID;
+    [self.navigationController pushViewController:fensiCol animated:YES ];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -216,20 +287,17 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellId;
 
     NSString *str =self.dataListArr[indexPath.section];
     if (indexPath.section==0) {
-        WenDaMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleLab"];
+        WenDaMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"titleLab" forIndexPath:indexPath];
         cell.comment=self.wenda;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setBackgroundColor:[UIColor whiteColor]];
+        
 
         return cell;
     }
     else if(indexPath.section+1==self.dataListArr.count &&
             [(NSString *)[self.dataListArr lastObject] isEqualToString:@"pinglun"]){
-
         CommentTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"commentCell"];
         cell.comment=commentArr[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -249,32 +317,27 @@
 
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//
-//    if (indexPath.section==0) {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.section==0) {
 //        ///标题
-//        return [tableView fd_heightForCellWithIdentifier:@"titleLab" configuration:^(WenDaMessageTableViewCell *cell) {
-//            // 配置 cell 的数据源，和 "cellForRow" 干的事一致，比如：
-//            cell.comment=self.wenda;
-//        }];
-//    }
-//    else if(indexPath.section+1==self.dataListArr.count &&
-//            [(NSString *)[self.dataListArr lastObject] isEqualToString:@"pinglun"])
-//    {
-//        return [tableView fd_heightForCellWithIdentifier:@"commentCell" configuration:^(CommentTableViewCell *cell) {
-//            cell.comment=commentArr[indexPath.row];
-//        }];
-//    }
-//    else{
-//        return [tableView fd_heightForCellWithIdentifier:@"imageCell" configuration:^(WenDaInfoImgTableViewCell *cell) {
-//            NSString *str =self.dataListArr[indexPath.section];
-//            ///图片
-//            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:str]];
-//            UIImage *image=[UIImage imageWithData:data];
-//            cell.Image=image;
-//        }];
-//    }
-//}
+        return [tableView cellHeightForIndexPath:indexPath model:self.wenda keyPath:@"comment" cellClass:[WenDaMessageTableViewCell class] contentViewWidth:SCREEN_WIDTH];
+    }
+    else if(indexPath.section+1==self.dataListArr.count &&
+            [(NSString *)[self.dataListArr lastObject] isEqualToString:@"pinglun"])
+    {
+        return [tableView cellHeightForIndexPath:indexPath model:commentArr[indexPath.row] keyPath:@"comment" cellClass:[CommentTableViewCell class] contentViewWidth:SCREEN_WIDTH];
+    }
+    else{
+        return [tableView fd_heightForCellWithIdentifier:@"imageCell" configuration:^(WenDaInfoImgTableViewCell *cell) {
+            NSString *str =self.dataListArr[indexPath.section];
+            ///图片
+            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:str]];
+            UIImage *image=[UIImage imageWithData:data];
+            cell.Image=image;
+        }];
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
@@ -286,10 +349,19 @@
 #pragma mark -发送
 
 - (IBAction)okAction:(UIButton *)sender {
-    
-    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
-    ///发布消息
-    [self SendMessage];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        UIAlertController *alertCol = [UIAlertController alertControllerWithTitle:@"提示" message:@"用户未登录！" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertCol addAction:okAction];
+        [self presentViewController:alertCol animated:YES completion:nil];
+    }else{
+        [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+        ///发布消息
+        [self SendMessage];
+    }
+   
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{

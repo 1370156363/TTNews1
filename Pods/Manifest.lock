@@ -1,18 +1,18 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
-  - AFNetworking/NSURLSession (3.1.0):
+  - AFNetworking (3.2.0):
+    - AFNetworking/NSURLSession (= 3.2.0)
+    - AFNetworking/Reachability (= 3.2.0)
+    - AFNetworking/Security (= 3.2.0)
+    - AFNetworking/Serialization (= 3.2.0)
+    - AFNetworking/UIKit (= 3.2.0)
+  - AFNetworking/NSURLSession (3.2.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
+  - AFNetworking/Reachability (3.2.0)
+  - AFNetworking/Security (3.2.0)
+  - AFNetworking/Serialization (3.2.0)
+  - AFNetworking/UIKit (3.2.0):
     - AFNetworking/NSURLSession
   - DACircularProgress (2.3.1)
   - DKNightVersion (2.4.3):
@@ -28,17 +28,17 @@ PODS:
     - DKNightVersion/Core
   - DKNightVersion/UIKit (2.4.3):
     - DKNightVersion/Core
-  - EaseUI (3.3.4):
-    - Hyphenate (~> 3.3.4)
+  - EaseUI (3.3.9):
+    - Hyphenate (~> 3.3.9)
     - MJRefresh (~> 3.1.0)
     - MWPhotoBrowser (~> 2.1.1)
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
-  - Hyphenate (3.3.5)
+  - Hyphenate (3.3.9)
   - MBProgressHUD (0.9.2)
   - MJExtension (3.0.13)
-  - MJRefresh (3.1.15)
+  - MJRefresh (3.1.15.3)
   - MWPhotoBrowser (2.1.2):
     - DACircularProgress (~> 2.3)
     - MBProgressHUD (~> 0.9)
@@ -53,12 +53,30 @@ PODS:
     - DACircularProgress
     - MBProgressHUD
     - SDWebImage (~> 3.8.2)
+  - PYSearch (0.8.8)
+  - RKNotificationHub (2.0.5)
   - SDAutoLayout (2.2.0)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - SVProgressHUD (2.2.2)
-  - TZImagePickerController (1.9.3)
+  - SVProgressHUD (2.2.5)
+  - TYAttributedLabel (2.6.6)
+  - TZImagePickerController (2.0.0.6)
+  - UMCCommon (1.4.2)
+  - UMCShare/Core (6.8.2):
+    - UMCCommon
+  - UMCShare/Social/ReducedQQ (6.8.2):
+    - UMCCommon
+    - UMCShare/Core
+  - UMCShare/Social/ReducedSina (6.8.2):
+    - UMCCommon
+    - UMCShare/Core
+  - UMCShare/Social/ReducedWeChat (6.8.2):
+    - UMCCommon
+    - UMCShare/Core
+  - UMCShare/UI (6.8.2):
+    - UMCCommon
+    - UMCShare/Core
   - WHCategories (0.08)
 
 DEPENDENCIES:
@@ -67,17 +85,23 @@ DEPENDENCIES:
   - DKNightVersion
   - EaseUI (from `https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git`)
   - FMDB
-  - Hyphenate
   - MBProgressHUD
   - MJExtension
   - MJRefresh
   - NJKWebViewProgress
   - pop
   - PYPhotoBrowser
+  - PYSearch
+  - RKNotificationHub
   - SDAutoLayout
   - SDWebImage
   - SVProgressHUD
+  - TYAttributedLabel
   - TZImagePickerController
+  - UMCShare/Social/ReducedQQ
+  - UMCShare/Social/ReducedSina
+  - UMCShare/Social/ReducedWeChat
+  - UMCShare/UI
   - WHCategories
 
 EXTERNAL SOURCES:
@@ -86,29 +110,34 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   EaseUI:
-    :commit: ff23286e3579c93e6385632b37df619d9f0cb35a
+    :commit: ac94164cade517e4473f6b311992cf65ac0376aa
     :git: https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AFNetworking: 8ac6017b94ea105479f7776e5288e48ae9c59bb4
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DKNightVersion: eaa80cc4014b4bae7d4b535fd87ecc6a3c2767b3
-  EaseUI: 7de4e15ed36bf8c8a0cfed1f4043def54a272a68
+  EaseUI: d7282984f5cbb5cc9544a36197190bf0c08aef6c
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
-  Hyphenate: 4ae44d5a328a84e2af27faea89a713304f7bb8b6
+  Hyphenate: 1adbccbee1d2b7aac8090a096974183d150e9f5f
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   PYPhotoBrowser: 9b0655bf9b62faa96d94b06f7a452017e730ba4c
+  PYSearch: aa3704f283c67667808de6df514c24df03f5f116
+  RKNotificationHub: e926748820d719f21ff374657a47fceefa1796b4
   SDAutoLayout: c5509e77ae75735d9a39f7bc83dba6d3f75d49d8
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
-  TZImagePickerController: 079ab986018c22793462e531045a75e366b18252
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  TYAttributedLabel: cb8fc910d97eb5224936d4f692a78e042af691b2
+  TZImagePickerController: 028d1670cd46b2d35769503dd36a6b2d21eee563
+  UMCCommon: 19f09b4c67b6007837f70f321fe091e5814d49b1
+  UMCShare: ab74e3c818cd305846609b15b0daf36872213c28
   WHCategories: 2d6f8ca5efe229842422cec68cd348bd20ced9a2
 
-PODFILE CHECKSUM: 3fb6b6e0664df1343f71bc3bce4fcebc364dd26b
+PODFILE CHECKSUM: 3e5f58f49bd0cd6888f9f5f51ad91e770a29e1c5
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

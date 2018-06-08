@@ -10,7 +10,7 @@
 
 @interface DongtaiModel : NSObject
 
-@property(nonatomic,copy)NSString     *id;
+@property(nonatomic,copy)NSString     *ID;
 @property(nonatomic,copy)NSString     *title;
 @property(nonatomic,copy)NSString     *uid;
 @property(nonatomic,copy)NSString     *cover_id;

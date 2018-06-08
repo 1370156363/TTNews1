@@ -179,7 +179,11 @@ static CGFloat CellMarginY = 10.0f;
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    if (_unUseTitles == nil || _unUseTitles.count == 0) {
+        return 1;
+    }
     return 2;
+    
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -214,8 +218,8 @@ static CGFloat CellMarginY = 10.0f;
         if (indexPath.row  == 0) {return;}
         id obj = [_inUseTitles objectAtIndex:indexPath.row];
         [_inUseTitles removeObject:obj];
-        [_unUseTitles insertObject:obj atIndex:0];
-        [_collectionView moveItemAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+        [_inUseTitles insertObject:obj atIndex:1];
+        [_collectionView moveItemAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     }else{
         id obj = [_unUseTitles objectAtIndex:indexPath.row];
         [_unUseTitles removeObject:obj];

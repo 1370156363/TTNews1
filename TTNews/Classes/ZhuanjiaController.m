@@ -8,6 +8,9 @@
 
 #import "ZhuanjiaController.h"
 #import "UserModel.h"
+#import "MyFensiModel.h"
+#import "AddUserInfoModel.h"
+#import "ZhuanjiaSearchController.h"
 
 #import "ZhuanJiaTableViewCell.h"
 
@@ -28,16 +31,16 @@
 @implementation ZhuanjiaController
 
 -(void)getguanzhu{
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[[OWTool Instance] getUid],@"uid", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[[OWTool Instance] getUid],@"uid",[[OWTool Instance] getUid],@"id", nil];
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetGUANZHU withUserInfo:dict success:^(id message) {
          [SVProgressHUD dismiss];
         if ([message[@"status"] integerValue]==1) {
             [guanzhuNum removeAllObjects];
-            NSMutableArray *newArr=[UserModel mj_objectArrayWithKeyValuesArray:message[@"data"]];
+            NSMutableArray *newArr=[MyFensiModel mj_objectArrayWithKeyValuesArray:message[@"data"]];
             [guanzhuNum addObjectsFromArray:newArr];
             [self getZhuanJia];
-            for (UserModel *user in guanzhuNum) {
-                [mutarr addObject:user.id];
+            for (MyFensiModel *user in guanzhuNum) {
+                [mutarr addObject:user.friend_id];
             }
         }
 
@@ -48,7 +51,7 @@
 
 -(void)getZhuanJia{
 
-    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self.currentPage],@"page", nil];
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",self.currentPage],@"page",[[OWTool Instance]getUid],@"uid", nil];
 
     [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkGetUser withUserInfo:dict success:^(id message) {
         [SVProgressHUD dismiss];
@@ -57,7 +60,7 @@
                 [self.dataListArr removeAllObjects];
             }
 
-            NSMutableArray *newArr=[UserModel mj_objectArrayWithKeyValuesArray:message[@"info"]];
+            NSMutableArray *newArr=[AddUserInfoModel mj_objectArrayWithKeyValuesArray:message[@"info"]];
 
             [self.dataListArr addObjectsFromArray:newArr];
             if (newArr.count==0) {
@@ -89,14 +92,8 @@
     if (!mutarr) {
         mutarr=[[NSMutableArray alloc] init];
     }
-
-
-    [self getguanzhu];
     [self setupBasic];
-    [self setupRefresh];
-
-    self.tableView.backgroundColor=HexRGB(0xE4E4E4);
-
+    [self getguanzhu];
 }
 
 #pragma mark 基本设置
@@ -106,17 +103,56 @@
     [self initNavigationWithImgAndTitle:@"专家团" leftBtton:nil rightButImg:nil rightBut:nil navBackColor:navColor];
 
     self.currentPage = 1;
-}
-
--(void)setupRefresh {
+    
+    self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.backgroundColor=HexRGB(0xE4E4E4);
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_header.automaticallyChangeAlpha = YES;
     [self.tableView.mj_header beginRefreshing];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    self.currentPage = 1;
+    [self addRightItemViews];
 }
 
+-(void)addRightItemViews
+{
+    //搜索
+    UIButton *rightSearch = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightSearch.frame = CGRectMake(10, 50, SCREEN_WIDTH-100, 25);
+    [rightSearch setImage:[UIImage imageNamed:@"ico-search"] forState:UIControlStateNormal];
+    [rightSearch setTitle:@"搜索" forState:UIControlStateNormal];
+    rightSearch.backgroundColor = [UIColor whiteColor];
+    rightSearch.layer.cornerRadius = 5;
+    
+    [rightSearch.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [rightSearch setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [rightSearch setTintColor:[UIColor whiteColor]];
+    [rightSearch addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationItem setTitleView:rightSearch];
+}
 
+-(void)searchBtnClick{
+    //搜索
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:nil searchBarPlaceholder:@"请输入搜索内容" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        if ( searchText== nil || searchText.length == 0) {
+            [SVProgressHUD showInfoWithStatus:@"请输入内容"];
+            [SVProgressHUD dismissWithDelay:1];
+        }else{
+            ZhuanjiaSearchController *col = [[ZhuanjiaSearchController alloc] init];
+            col.searchStr = searchText;
+            [searchViewController.navigationController pushViewController:col animated:YES];
+        }
+        
+        
+    }];
+    // 3. present the searchViewController
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    nav.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
+    [nav.view setBackgroundColor:[UIColor lightGrayColor]];
+    [self presentViewController:nav  animated:NO completion:nil];
+}
 
 #pragma mark - TableView DataSource
 
@@ -161,16 +197,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UserModel *model=self.dataListArr[indexPath.section];
+    AddUserInfoModel *model=self.dataListArr[indexPath.section];
 
     ZhuanJiaTableViewCell *cell;
 
     cell=[self.tableView dequeueReusableCellWithIdentifier:@"zhuanjia"];
     cell =[[NSBundle mainBundle] loadNibNamed:@"ZhuanJiaTableViewCell" owner:self options:nil][0];
-    //                 cell=[];
-    [cell.iconimage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setBackgroundColor:[UIColor whiteColor]];
     
-    //                 cell.imageView.image=UIImageNamed(@"qq");
+    [cell.iconimage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.avatar]]];
     cell.title.text=model.nicheng;
     if (model.signature.length!=0) {
         cell.detailLab.text=model.signature;
@@ -182,27 +218,30 @@
     if (mutarr.count!=0) {
         if ([mutarr containsObject:model.uid]) {
             cell.guanzhuBtu.selected=YES;
+            cell.guanzhuBtu.userInteractionEnabled = NO;
             [cell.guanzhuBtu setBackgroundColor:HexRGB(0xE4E4E4)];
+            [cell.guanzhuBtu setTitle:@"已关注" forState:UIControlStateNormal];
         }
         else{
             cell.guanzhuBtu.layer.borderColor=[UIColor redColor].CGColor;
+            cell.guanzhuBtu.userInteractionEnabled = YES;
             cell.guanzhuBtu.layer.borderWidth=1;
+            [cell.guanzhuBtu setTitle:@"关注+" forState:UIControlStateNormal];
         }
     }
     else{
         cell.guanzhuBtu.layer.borderColor=[UIColor redColor].CGColor;
+        cell.guanzhuBtu.userInteractionEnabled = YES;
         cell.guanzhuBtu.layer.borderWidth=1;
+        [cell.guanzhuBtu setTitle:@"关注+" forState:UIControlStateNormal];
     }
-
-//    cell.guanzhuBtu.tag=[model.uid integerValue]+100;
+    
     cell.guanzhuBtu.tag=indexPath.section+100;
-
     cell.guanzhuBtu.layer.cornerRadius=5;
-    cell.guanzhuBtu.userInteractionEnabled=YES;
     [cell.guanzhuBtu addTarget:self action:@selector(guanzhu:) forControlEvents:UIControlEventTouchUpInside];
 
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setBackgroundColor:[UIColor whiteColor]];
+    
+    
 
     return cell;
 }
@@ -234,13 +273,13 @@
 -(void)addGuanZhu:(BOOL)isAdd id:(NSInteger)Id {
     UserModel *model=self.dataListArr[Id];
 
-     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:model.uid,@"uid", nil];
+     NSMutableDictionary * dict=[[NSMutableDictionary alloc] initWithObjectsAndKeys:model.uid,@"uid",[[OWTool Instance] getUid],@"id", nil];
     ///添加即时通讯好友
-    [self addContact:model.username];
+//    [self addContact:model.username];
     ///接口没有调试
     if (isAdd) {
         ///添加关注
-        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkAddGUANZHU withUserInfo:dict success:^(id message) {
+        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkAddGUANZHU withUserInfo:dict success:^(id message) {
             [SVProgressHUD dismiss];
             if ([message[@"status"] integerValue]==1) {
                 ///重新修改关注
@@ -256,7 +295,7 @@
     }
     else{
         ///取消关注
-        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkDelGuanZhu withUserInfo:dict success:^(id message) {
+        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkDelGuanZhu withUserInfo:dict success:^(id message) {
             [SVProgressHUD dismiss];
             if ([message[@"status"] integerValue]==1) {
                 ///重新修改关注
@@ -269,18 +308,5 @@
 
 }
 
-#pragma mark -添加好友
-///添加好友申请
--(void)addContact:(NSString *)phoneStr{
-//    phoneStr=@"17762274010";
-    
-    EMError *error = [[EMClient sharedClient].contactManager addContact:phoneStr message:@"我想加您为好友"];
-    if (!error) {
-        NSLog(@"添加成功");
-    }
-    else
-    {
 
-    }
-}
 @end

@@ -10,12 +10,12 @@
 @class TTVideoComment;
 
 @interface TTVideo : NSObject<NSCoding>
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *ID;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *category_id;
 @property (nonatomic, copy) NSString *uid;
 @property (nonatomic, copy) NSString *cover_id;
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *description_01;
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *is_top;
 @property (nonatomic, copy) NSString *view;
@@ -33,4 +33,5 @@
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, copy) NSString *fengmian;
 @property (nonatomic, copy) NSString *videourl;
+@property (nonatomic, assign) CGFloat cellHeight;//cell高度
 @end

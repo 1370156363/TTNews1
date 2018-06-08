@@ -26,6 +26,11 @@
     self.tableview.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.title = @"地址管理";
     self.modelList=[NSMutableArray array];
+    
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    self.tableview.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
     [self request];
     // Do any additional setup after loading the view from its nib.
 }
@@ -40,6 +45,7 @@
          if (message.count> 0) {
              _modelList = [[NSMutableArray alloc]initWithArray:message];
              [ws setModel_tableView];
+             [ws.tableview reloadData];
          }
          else
          {
@@ -65,7 +71,7 @@
     [self.tableview cb_makeDataSource:^(CBTableViewDataSourceMaker *make) {
         [make makeSection:^(CBTableViewSectionMaker *section) {
             section.cell([AddressTableCell class])
-            .data(self.modelList)
+            .data(_modelList)
             .adapter(^(AddressTableCell * cell,NSDictionary * data,NSUInteger index)
                      {
                          cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -10,20 +10,17 @@
 
 
 #import "TTVideo.h"
-#import "TTVideoFetchDataParameter.h"
 #import "VideoTableViewCell.h"
 #import "VideoPlayView.h"
 #import "FullViewController.h"
-#import "VideoCommentViewController.h"
-#import "TTDataTool.h"
 #import "TTConst.h"
-#import "TTJudgeNetworking.h"
 #import <DKNightVersion.h>
 
 #import "VideoInfoViewController.h"
 #import "TTTopChannelContianerView.h"
 #import "XLChannelControl.h"
-
+#import "MyCommentViewController.h"
+#import "LoginController.h"
 
 @interface VideoContentTableViewController ()<VideoTableViewCellDelegate, VideoPlayViewDelegate>
 
@@ -73,6 +70,9 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
+    self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 
 }
 
@@ -90,22 +90,25 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     AFHTTPSessionManager *manager = [[KGNetworkManager sharedInstance] baseHtppRequest];
 
     NSString *urlStr = [[NSString stringWithFormat:@"%@/api/content/shipinlists/id/%@/page/%d/catid/%@",kNewWordBaseURLString,[[OWTool Instance] getUid],self.currentPage,self.channelId] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
+    weakSelf(ws)
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray  *_Nullable message)
      {
          NSMutableArray *newArr=[TTVideo mj_objectArrayWithKeyValuesArray:message];
-         if (self.currentPage==1)
+         if (ws.currentPage==1)
          {
-             [self.videoArray removeAllObjects];
+             [ws.videoArray removeAllObjects];
          }
-         [self.videoArray addObjectsFromArray:newArr];
-         [self.tableView.mj_header endRefreshing];
-         [self.tableView.mj_footer endRefreshing];
-         [self.tableView reloadData];
+         [ws.videoArray addObjectsFromArray:newArr];
+         if(newArr.count == 0){
+             [ws.tableView.mj_footer endRefreshingWithNoMoreData];
+         }
+         else{
+             [ws.tableView.mj_footer endRefreshing];
+             [ws.tableView reloadData];
+         }
+         [ws.tableView.mj_header endRefreshing];
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
-         [self.tableView.mj_header endRefreshing];
-         [self.tableView.mj_footer endRefreshing];
      }];
 
 
@@ -162,16 +165,27 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     //    [self pushToVideoCommentViewControllerWithIndexPath:indexPath];
     VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
     TTVideo *video=self.videoArray[indexPath.row];
-    info.url=video.id;
+    info.url=video.ID;
     info.video=video;
     [self.navigationController pushViewController:info animated:YES];
 }
 
 #pragma mark 点击某个Cell或点击评论按钮跳转到评论页面
 -(void)pushToVideoCommentViewControllerWithIndexPath:(NSIndexPath *)indexPath {
-    VideoCommentViewController *vc = [[VideoCommentViewController alloc] init];
-    vc.video = self.videoArray[indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
+//    VideoCommentViewController *vc = [[VideoCommentViewController alloc] init];
+//    vc.video = self.videoArray[indexPath.row];
+//    [self.navigationController pushViewController:vc animated:YES];
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+        
+    }
+    else{
+        MyCommentViewController *MyCommentViewControlle=[[MyCommentViewController alloc] initWithNibName:@"MyCommentViewController" bundle:nil];
+        MyCommentViewControlle.video=self.videoArray[indexPath.row];
+        
+        [self.navigationController pushViewController:MyCommentViewControlle animated:YES];
+    }
 }
 
 #pragma mark VideoPlayViewDelegate 视频播放时窗口模式与全屏模式切换
@@ -225,6 +239,61 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 #pragma mark VideoTableViewCell的代理方法
 -(void)clickCommentButton:(NSIndexPath *)indexPath {
     [self pushToVideoCommentViewControllerWithIndexPath:indexPath];
+}
+
+-(void)clickShareButton:(NSIndexPath *)indexPath{
+    
+    if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+        
+        LoginController* login = [[LoginController alloc] init];
+        [self.navigationController pushViewController:login animated:NO];
+    }else{
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+            // 根据获取的platformType确定所选平台进行下一步操作
+            [self shareWebPageToPlatformType:platformType indexPath:indexPath];
+        }];
+    }
+}
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType indexPath:(NSIndexPath*)indexPath
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    TTVideo* video = self.videoArray[indexPath.row];
+    
+    //创建网页内容对象
+    NSString* thumbURL = [NSString stringWithFormat:@"%@/index/news/detail/id/%@/model_id/6",kNewWordBaseURLString,video.ID];
+    
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"新闻分享" descr:video.title thumImage:[UIImage imageNamed:@"shareIcon.png"]];
+    //设置网页地址
+    shareObject.webpageUrl = thumbURL;//@"http://mobile.umeng.com/social";
+    //图片url
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_userDetailInfo.icon]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //shareObject.thumbImage = [UIImage imageWithData:data];
+            //分享消息对象设置分享内容对象
+            messageObject.shareObject = shareObject;
+            
+            //调用分享接口
+            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self  completion:^(id data, NSError *error) {
+                if (error) {
+                    UMSocialLogInfo(@"************Share fail with error %@*********",error);
+                }else{
+                    if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                        UMSocialShareResponse *resp = data;
+                        //分享结果消息
+                        UMSocialLogInfo(@"response message is %@",resp.message);
+                        //第三方原始返回的数据
+                        UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                        
+                    }else{
+                        UMSocialLogInfo(@"response data is %@",data);
+                    }
+                }
+            }];
+        });
+    });
+    
 }
 
 -(NSMutableArray *)videoArray {

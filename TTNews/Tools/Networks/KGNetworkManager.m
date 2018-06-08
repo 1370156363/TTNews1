@@ -36,11 +36,33 @@ static NSMutableArray *tasks;
 
 -(AFHTTPSessionManager *)baseHtppRequest
 {
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setTimeoutInterval:TIMEOUT];
-
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"text/html", @"application/json", nil];
+    // 超时时间
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    
+    // 声明上传的是json格式的参数，需要你和后台约定好，不然会出现后台无法获取到你上传的参数问题
+    //manager.requestSerializer = [AFHTTPRequestSerializer serializer]; // 上传普通格式
+    manager.requestSerializer = [AFJSONRequestSerializer serializer]; // 上传JSON格式
+    
+    // 声明获取到的数据格式
+    //manager.responseSerializer = [AFHTTPResponseSerializer serializer]; // AFN不会解析,数据是data，需要自己解析
+    manager.responseSerializer = [AFJSONResponseSerializer serializer]; // AFN会JSON解析返回的数据
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"application/json",
+                                                                              @"text/html",
+                                                                              @"text/json",
+                                                                              @"text/plain",
+                                                                              @"text/javascript",
+                                                                              @"text/xml",
+                                                                              @"image/*"]];
+    // 个人建议还是自己解析的比较好，有时接口返回的数据不合格会报3840错误，大致是AFN无法解析返回来的数据
     return manager;
+    
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [manager.requestSerializer setTimeoutInterval:TIMEOUT];
+//
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"text/html", @"application/json", nil];
+//    return manager;
 }
 
 ///POST请求
@@ -90,7 +112,7 @@ static NSMutableArray *tasks;
             actionValue=@"api/member/getUserInfo";
             break;
         case KNetWorkResetPassword:
-            actionValue=@"api/member/modifyPassword";
+            actionValue=@"api/login/forgetpassword";
             break;
         case KNetWorkGetYZM:
             actionValue=@"api/member/checkMobileAndSend";
@@ -114,7 +136,7 @@ static NSMutableArray *tasks;
             actionValue=@"api/cms/channel/getAllChannel";
             break;
         case KNetWorkLanMuData:
-            actionValue=@"api/cms/channel/channleListData";
+            actionValue=@"api/content/lists";
             break;
         case KNetWorkZuzhijigou:
             actionValue=@"api/common/getAllOrg";
@@ -233,6 +255,47 @@ static NSMutableArray *tasks;
         case KnetworkAdduserAction:
             actionValue=@"api/content/adduseraction";
             break;
+        case KNetworkSearch:
+            actionValue=@"api/content/searcharticle";
+            break;
+        case KNetworkSearchQuesion:
+            actionValue=@"index/search/searchAnswer";
+            break;
+        case KNetworkMySign:
+            ///我的签名
+            actionValue = @"api/user/qianming";
+            break;
+        case kNetWorkIsOnFocuseLike:
+            actionValue = @"api/user/isfocuselike";
+            break;
+        case KNetworkAddGUANZHU:
+            ///添加关注
+            actionValue=@"api/user/addfriend";
+            break;
+        case KNetworkAddIQuestionNivite:
+            actionValue=@"api/index/answerYaoqing";
+            break;
+        case KNetworkAddQuestionGuanzhu:
+            actionValue=@"api/index/addguanzhu";
+            break;
+        case NNetworkUpdateUserInfo:
+            actionValue=@"api/user/editmyinfo";
+            break;
+        case NNetworkUpdateUserAvatar:
+            actionValue = @"api/user/avatar";
+            break;
+            break;
+        case KNetworkDelGuanZhu:
+            ///删除关注:
+            actionValue=@"api/user/delfriend";
+            break;
+            
+        case KNetWorkMyCollection:
+            actionValue=@"api/index/getCollect";
+            break;
+        case KNetWorkMyHistory:
+            actionValue = @"api/index/readHistory";
+            break;
         
     }
     
@@ -297,13 +360,16 @@ static NSMutableArray *tasks;
             break;
         case KNetWorkYzmAction:
             //获取验证码
-            actionValue=@"api/content/get_mobileverify.html";
+            actionValue=@"api/sms/sendsms";
             break;
         case KNetWorkYzmLogin:
             actionValue=@"api/login/index";
             break;
         case KNetWorkgetVideolist:
             actionValue=@"api/content/shipinlists/id/1/page/1";
+            break;
+        case KNetworkAllDynamic:
+            actionValue=@"api/content/dynamiclists";
             break;
         case KNetworGetUserINfo:
             actionValue=@"api/user/get_myinfo";
@@ -316,6 +382,12 @@ static NSMutableArray *tasks;
 
         }
             break;
+        case KNetworkQuestionAnswerPush:
+            actionValue= @"api/index/pushMessage";
+            break;
+        case KNetworkFavQUestionPush:
+            actionValue= @"api/index/pushMessage";
+            break;
         case KNetworkWenDaComment:
         {
              actionValue=@"api/content/answerpinglun/";
@@ -323,40 +395,25 @@ static NSMutableArray *tasks;
             break;
         case KNetworkGetUser:
         {
-            actionValue=@"api/user/tuijianuser/";
+            actionValue=@"api/user/vipuser";
         }
+            break;
+        case KNetworkSearchUser:
+            actionValue = @"api/content/usersearch";
             break;
         case KNetworkMyFensi:
             actionValue=@"api/user/get_myfensi";
             break;
         case KNetworkGetGUANZHU:
         {
-            actionValue=@"api/user/get_myguanzhu/";
+            actionValue=@"api/user/get_myguanzhu";
         }
             break;
         case KNetworkGetMyFangwen:
             actionValue=@"api/user/get_myfangwen";
             break;
-        case KNetWorkMyCollection:
-            actionValue=@"api/user/get_mycollect";
-            break;
-        case KNetWorkMyHistory:
-            actionValue = @"api/user/get_myyuedu";
-            break;
-        case KNetworkMySign:
-            ///我的签名
-            actionValue = @"api/user/qianming";
-            break;
-        case KNetworkAddGUANZHU:{
-            ///添加关注
-            actionValue=@"api/user/addfriend";
-        }
-            break;
-        case KNetworkDelGuanZhu:{
-            ///删除关注:
-            actionValue=@"api/user/delfriend";
-        }
-            break;
+        
+        
         case KNetworkDongTaiComment:{
             ///
             actionValue=@"api/content/dtpinglun/";
@@ -370,9 +427,7 @@ static NSMutableArray *tasks;
         case KNetworkGetMyApprove:
             actionValue=@"api/user/getmyrenzheng";
             break;
-        case NNetworkUpdateUserInfo:
-            actionValue=@"api/user/editmyinfo";
-            break;
+        
         case KNetworkGetShoppinglist:
             actionValue = @"api/goods/goodslist";
             break;
@@ -404,6 +459,11 @@ static NSMutableArray *tasks;
             actionValue=@"api/content/get_pinglun";
         }
             break;
+        case KNetworkWendaDetailInfo:
+            actionValue = @"api/content/readAnswer";
+            break;
+        case KThirdJHNetworkGetBook:
+            actionValue = @"http://apis.juhe.cn/goodbook/catalog?key=60b128ad78986087bed5c895bc03f342";
         default:
             break;
     }
@@ -413,15 +473,17 @@ static NSMutableArray *tasks;
     NSLog(@"post parameter == %@",params);
     
     AFHTTPSessionManager *manager = [self baseHtppRequest];
-    NSString *urlStr = [[NSString stringWithFormat:@"%@/%@",baseUrl,actionValue] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlStr ;
+    if (action != KThirdJHNetworkGetBook) {
+       urlStr = [[NSString stringWithFormat:@"%@/%@",baseUrl,actionValue] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    else{
+        urlStr = actionValue;
+    }
 
     [manager GET:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
-        if (!responseObject) {
-            [SVProgressHUD dismiss];
-            return;
-        }
-
+        [SVProgressHUD dismiss];
         if (successBlock) {
             
             successBlock(responseObject);
@@ -441,59 +503,71 @@ static NSMutableArray *tasks;
 
 #pragma mark - 网络检测
 
-//检查网络状态
--(BOOL)checkedNetworkStatus{
-    
-    if (([Reachability reachabilityForInternetConnection].currentReachabilityStatus == NotReachable) &&
-        ([Reachability reachabilityForLocalWiFi].currentReachabilityStatus == NotReachable)) {
-        return NO;
-    }
-    return YES;
-}
+////检查网络状态
+//-(BOOL)checkedNetworkStatus{
+//
+//    if (([Reachability reachabilityForInternetConnection].currentReachabilityStatus == NotReachable) &&
+//        ([Reachability reachabilityForLocalWiFi].currentReachabilityStatus == NotReachable)) {
+//        return NO;
+//    }
+//    return YES;
+//}
 
-//获取网络类型
-- (NetworkStatus)networkStatus{
+- (void)AFNetworkStatus{
     
-    if ([Reachability reachabilityForLocalWiFi].currentReachabilityStatus == ReachableViaWiFi) {
-        return ReachableViaWiFi;
-    }else if([Reachability reachabilityForInternetConnection].currentReachabilityStatus == ReachableViaWWAN){
-        return ReachableViaWWAN;
-    }else{
-        return NotReachable;
-    }
+    //1.创建网络监测者
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    
+    /*枚举里面四个状态  分别对应 未知 无网络 数据 WiFi
+     typedef NS_ENUM(NSInteger, AFNetworkReachabilityStatus) {
+     AFNetworkReachabilityStatusUnknown          = -1,      未知
+     AFNetworkReachabilityStatusNotReachable     = 0,       无网络
+     AFNetworkReachabilityStatusReachableViaWWAN = 1,       蜂窝数据网络
+     AFNetworkReachabilityStatusReachableViaWiFi = 2,       WiFi
+     };
+     */
+    
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        //这里是监测到网络改变的block  可以写成switch方便
+        //在里面可以随便写事件
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"未知网络状态");
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"无网络");
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"蜂窝数据网");
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"WiFi网络");
+                
+                break;
+                
+            default:
+                break;
+        }
+        
+    }] ;
 }
 
 #pragma mark 上传照片
 ///上传照片接口
-+(void)uploadImageWithArray:(NSMutableArray *)imageArray parameter:(NSDictionary *)parameter success:(void(^)(id response)) success fail:(void(^) (NSError *error))fail
+-(void)uploadImageWithArray:(NSMutableArray *)imageArray parameter:(NSDictionary *)parameter success:(void(^)(id response)) success fail:(void(^) (NSError *error))fail
 {
     //    [SVProgressHUD show];
 
     UIImage *image = imageArray[0];
     //组合成url
     NSString *url=[NSString stringWithFormat:@"%@index/upload/upload.html",kNewWordBaseURLString];
-    //检查地址中是否有中文
-    NSString *urlStr=[NSURL URLWithString:url]?url:[self strUTF8Encoding:url];
     parameter=[[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"flash",@"service",@"fileType",@"images",@"filename", nil];
 
-    AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
-    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-    [manager setResponseSerializer:responseSerializer];
-
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
-    manager.requestSerializer.stringEncoding = NSUTF8StringEncoding;
-    manager.requestSerializer.timeoutInterval=15;
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"application/json",
-                                                                              @"text/html",
-                                                                              @"text/json",
-                                                                              @"text/plain",
-                                                                              @"text/javascript",
-                                                                              @"text/xml",
-                                                                              @"image/*"]];
-
-
-    NSURLSessionTask *sessionTask=[manager POST:urlStr parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    AFHTTPSessionManager *manager=[self baseHtppRequest];
+    
+    [manager POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
         ///压缩图片
         NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
@@ -505,7 +579,7 @@ static NSMutableArray *tasks;
         NSString *imageFileName=[NSString stringWithFormat:@"%@.jpg", name];
 
         if(imageData){
-            [formData appendPartWithFileData:imageData name:@"file" fileName:imageFileName mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData name:@"file[]" fileName:imageFileName mimeType:@"image/jpeg"];
         }
         // 上传图片，以文件流的格式
         //        [formData appendPartWithFileData:imageData name:name fileName:imageFileName mimeType:@"image/jpeg"];
@@ -529,8 +603,6 @@ static NSMutableArray *tasks;
             success(responseObject);
         }
 
-        [[self tasks] removeObject:sessionTask];
-
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error=%@",error);
         if (fail) {
@@ -538,17 +610,57 @@ static NSMutableArray *tasks;
             //            [SVProgressHUD dismiss];
 
         }
-
-        [[self tasks] removeObject:sessionTask];
     }];
 
-    if (sessionTask) {
-        [[self tasks] addObject:sessionTask];
+}
+
+-(void)POST:(NSString *)URLString
+ parameters:(id)parameters
+uploadImages:(NSArray <UIImage*>*)uploadImages
+ uploadName:(NSString *)uploadName
+    success:(HJMNetWorkSuccessBlock)successBlock failure:(HJMFailureBlock)failureBlock visibleHUD:(BOOL)visible
+{
+    if (visible) {
+        [SVProgressHUD showWithStatus:@"发送中..."];
     }
-
-
-    [sessionTask resume];
-
+    NSDictionary *parameter=[[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"flash",@"service",@"fileType",@"images",@"filename", nil];
+    AFHTTPSessionManager *manager = [self baseHtppRequest];
+    [manager POST:[NSString stringWithFormat:@"%@index/upload/upload.html",kNewWordBaseURLString] parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        for (int i=0; i < uploadImages.count; i++) {
+            //图片转data
+            NSData *data = UIImageJPEGRepresentation(uploadImages[i], 0.3);
+            
+            //获取当前时间
+            NSDate * today = [NSDate date];
+            //转换时间格式
+            NSDateFormatter *df = [[NSDateFormatter alloc] init];//格式化
+            [df setDateFormat:@"yyyyMMddHHmmss"];
+            NSString * curentTimeStr = [df stringFromDate:today];
+            
+            [formData appendPartWithFileData:data
+                                        name:uploadName
+                                    fileName:[NSString stringWithFormat:@"%@%d",curentTimeStr,i]
+                                    mimeType:@"image/png"];
+        }
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        NSLog(@"%@",uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         [SVProgressHUD dismiss];
+         if (successBlock) {
+             
+             successBlock(responseObject);
+         }
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         
+         NSLog(@"error == %@",error);
+         if (failureBlock) {
+             failureBlock(error);
+         }
+     }];
 }
 
 ///修改编码

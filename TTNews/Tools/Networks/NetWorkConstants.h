@@ -24,18 +24,26 @@ typedef enum _NetWorkAction
      */
     kNetWorkActionLogin = 0,                //登录
     KNetWorkYzmAction,                      //获取手机短信验证码
+    
     KNetWorkYzmLogin,                       //手机验证码登录
     KNetWorkgetVideolist,                   //根据栏目获取视频信息（获取视频列表）
+    kNetWorkIsOnFocuseLike,                 //根据栏目获取是否已关注已收藏
     KNetWorkgetVideoDetaillist,             //获取我的文章图片视频评论
     KNetworkWenDaContent,            //获取问答列表
+    KNetworkQuestionAnswerPush,         //回答问题推送
+    KNetworkFavQUestionPush,            //关注问题的推送
+    KNetworkWendaDetailInfo,            //问答详情页面
     KNetworkWenDaComment,            //获取问答评论列表
     KNetworkWenAddWenDaComment,      //添加问答评论
     KNetworkWenAddWenDa,      //添加问答
     KNetworkWenAddDongTai,      //添加动态
     KNetworkGetUser,      //推荐用户
+    KNetworkSearchUser, //搜索用户
     KNetworkGetMyFangwen,//我的访问
     KNetworkGetGUANZHU, ///获取我的关注
     KNetworkAddGUANZHU,///添加关注
+    KNetworkAddIQuestionNivite,//邀请问答
+    KNetworkAddQuestionGuanzhu,///添加关注问题
     KNetworkDelGuanZhu,///删除关注
     KNetworkDongTaiComment,            //获取动态评论列表
     KNetworkADDDongTaiComment,  ///添加动态评论
@@ -51,6 +59,9 @@ typedef enum _NetWorkAction
     KNetworkGetDeleteAddress,               //删除地址
     KNetWorkSearchMyInfo,   //根据手机号查
     KNetworkGetCommnet,///获取评论
+    KNetworkSearch,///根据关键词搜索
+    KNetworkSearchQuesion,///搜索问题
+
     
     KNetWrokGetVersion,                     //获取服务器版本号
     KNetWorkGetuserInfom,                   //获取用户资料
@@ -100,10 +111,12 @@ typedef enum _NetWorkAction
     KNetworkQunzuInformation,               //依据部门id获取聊天群组
     KNetworkMyFensi,                        //我的粉丝
     KNetworkmyDynamic,                      //我的动态
+    KNetworkAllDynamic,                     //获取所有动态列表
     KNetworkMySign,                         //我的签名
     KNetworkMyApprove,                      //我的认证状态
     KnetworkApplyApprove,                   //申请认证
     NNetworkUpdateUserInfo,                 //更新用户信息
+    NNetworkUpdateUserAvatar,               //更新用户图像
     KnetworkAddPingLun, //添加评论
     KnetworkAddcollect,///添加收藏
     KnetworkAdduserAction,///添加点赞
@@ -145,6 +158,8 @@ typedef enum _NetWorkAction
     KThirdJHNetworkTocityTime,              //我的行程中到达城市时间
     KThirdJHNetworkGetDynamicDetail,        //聚合数据-航班动态-航班查询
     KThirdJHNetworkGetAirportInform,        //聚合数据-航班动态-机场简介
+    KThirdJHNetworkGetBook,                 //聚合电子书接口
+    
 }NetWorkAction;
 
 

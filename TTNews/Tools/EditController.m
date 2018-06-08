@@ -30,14 +30,19 @@
 
 -(void)finishAction
 {
+    
     if ([_titleStr isEqualToString:@"昵称"])
     {
+        if(self.field.text.length == 0){
+            [SVProgressHUD showInfoWithStatus:@"请输入昵称"];
+            return ;
+        }
         NSMutableDictionary *prms=[@{
                                      @"uid":[[OWTool Instance] getUid] ,
-                                     @"nickname":self.descLab.text
+                                     @"nickname":self.field.text
                                      }mutableCopy];
         
-        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:NNetworkUpdateUserInfo withUserInfo:prms success:^(NSDictionary *message)
+        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:NNetworkUpdateUserInfo withUserInfo:prms success:^(NSDictionary *message)
          {
              self.SendTextBlock(_field.text);
              [SVProgressHUD showSuccessWithStatus:message[@"message"]];
@@ -48,12 +53,16 @@
          } visibleHUD:NO];
     }
     else if ([_titleStr isEqualToString:@"签名"]){
+        if(self.field.text.length == 0){
+            [SVProgressHUD showInfoWithStatus:@"请输入签名"];
+            return ;
+        }
         NSMutableDictionary *prms=[@{
                                      @"uid":[[OWTool Instance] getUid] ,
-                                     @"signstr":self.descLab.text
+                                     @"signstr":self.field.text
                                      }mutableCopy];
         
-        [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkMySign withUserInfo:prms success:^(NSDictionary *message)
+        [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetworkMySign withUserInfo:prms success:^(NSDictionary *message)
          {
              self.SendTextBlock(_field.text);
              [SVProgressHUD showSuccessWithStatus:message[@"message"]];

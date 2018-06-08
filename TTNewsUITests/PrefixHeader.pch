@@ -8,6 +8,7 @@
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
+#ifdef __OBJC__
 
 #import <DKNightVersion.h>
 #import "UITableView+CBTableViewDataSource.h"
@@ -45,21 +46,30 @@
 ///图文混排
 #import "TYAttributedLabel.h"
 
-///即时通讯
-#import "EMAlertView.h"
-#import "TTGlobalUICommon.h"
-#import "EaseUI.h"
+///搜索
+#import <PYSearch.h>
+
+//Full版本
 #import <Hyphenate/Hyphenate.h>
-#import "ChatUIDefine.h"
-
-#import "AVOSCloud/AVOSCloud.h"// 后端云LeanCloud
-#import "UserCacheManager.h"
-#import "UserWebManager.h"
-#import "YYCategories.h"
+#import <EaseUI.h>
 
 
+#import "YMHXTool.h"
 
-#define APPKEY @"five#newsapp"
+#import "HMSegmentedControl.h"
+
+#import <RKNotificationHub.h>
+
+#import <UMShare/UMShare.h>
+#import <UShareUI/UShareUI.h>
+
+
+
+///warning Init SDK，detail in AppDelegate+EaseMob.m
+///warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
+
+#define EaseMobAppKey @"1108180226228976#beijingnews"
+#define APNSCertName  @"IOSPush"
 #define Appkey @"5a02aae38f4a9d0c650002a5"
 
 
@@ -68,7 +78,7 @@
 #define UIImageNamed(imgName)               [UIImage imageNamed:imgName]
 #define weakSelf(ws)                         __weak typeof(self) ws = self;
 
-#define  kNewWordBaseURLString              @"http://xinwen.52jszhai.com/"
+#define  kNewWordBaseURLString              @"http://ceshi.tosdk.cn/"//@"http://39.106.176.112/"//@"http://xinwen.52jszhai.com/"//@"http://www.jiuyizhongcheng.cn/"
 
 
 
@@ -118,4 +128,6 @@
 #import "LSYReadParser.h"
 #define MinFontSize 11.0f
 #define MaxFontSize 20.0f
+
+#endif
 #endif

@@ -40,6 +40,10 @@
     
     [_btnTuikuan setTitleEdgeInsets:UIEdgeInsetsMake(30, -30, 0, 0)];
     [_btnTuikuan setImageEdgeInsets:UIEdgeInsetsMake(0, 30, 30, 0)];
+    
+    self.view.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 }
 
 

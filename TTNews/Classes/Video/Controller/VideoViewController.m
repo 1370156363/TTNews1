@@ -11,14 +11,11 @@
 #import <SVProgressHUD.h>
 #import <SDImageCache.h>
 #import "TTVideo.h"
-#import "TTVideoFetchDataParameter.h"
 #import "VideoTableViewCell.h"
 #import "VideoPlayView.h"
 #import "FullViewController.h"
 #import "VideoCommentViewController.h"
-#import "TTDataTool.h"
 #import "TTConst.h"
-#import "TTJudgeNetworking.h"
 #import <DKNightVersion.h>
 
 #import "VideoInfoViewController.h"
@@ -140,7 +137,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
     ///右边添加
     UIButton *addBtn=[[UIButton alloc] initWithFrame:CGRectMake(winsize.width-40,64, 40, 30)];
 
-    [addBtn setImage:[UIImage imageNamed:@"sousuoB"] forState:UIControlStateNormal];
+    [addBtn setImage:[UIImage imageNamed:@"tianjiaRZ"] forState:UIControlStateNormal];
 
 
     [self.view addSubview:addBtn];
@@ -158,15 +155,23 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 -(void)AddChannelSelect
 {
 
-    ///搜索接口
-//    NSArray *arr1 = @[@"要闻",@"河北",@"财经",@"娱乐",@"体育",@"社会",@"NBA",@"视频",@"汽车",@"图片",@"科技",@"军事",@"国际",@"数码",@"星座",@"电影",@"时尚",@"文化",@"游戏",@"教育",@"动漫",@"政务",@"纪录片",@"房产",@"佛学",@"股票",@"理财"];
-//
-//    NSArray *arr2 = @[@"有声",@"家居",@"电竞",@"美容",@"电视剧",@"搏击",@"健康",@"摄影",@"生活",@"旅游",@"韩流",@"探索",@"综艺",@"美食",@"育儿"];
-//
-//    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:arr2 finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
-//        NSLog(@"inUseTitles = %@",inUseTitles);
-//        NSLog(@"unUseTitles = %@",unUseTitles);
-//    }];
+    NSArray *arr1 = self.CategoryArr;
+    
+    [[XLChannelControl shareControl] showChannelViewWithInUseTitles:arr1 unUseTitles:nil finish:^(NSArray *inUseTitles, NSArray *unUseTitles) {
+        NSLog(@"inUseTitles = %@",inUseTitles);
+        self.CategoryArr = [[NSMutableArray alloc] initWithArray:inUseTitles];
+        self.topContianerView.channelNameArray = self.CategoryArr;
+        for (NSInteger i = 0; i<self.CategoryArr.count; i++) {
+            [CategorySetArr enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([self.CategoryArr[i] isEqualToString:[obj objectForKey:@"title_show"]]) {
+                    ((VideoContentTableViewController*)self.childViewControllers[i]).channelId = CategorySetArr[i][@"id"];
+                    *stop = YES;
+                }
+            }];
+            
+        }
+        NSLog(@"unUseTitles = %@",unUseTitles);
+    }];
 
 }
 
@@ -182,10 +187,16 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
 #pragma mark --private Method--初始化子控制器
 -(void)setupChildController {
     ///频道书两
-    for (NSInteger i = 0; i<CategorySetArr.count; i++) {
+    for (NSInteger i = 0; i<self.CategoryArr.count; i++) {
 
         VideoContentTableViewController *viewController = [[VideoContentTableViewController alloc] initWithNibName:@"VideoContentTableViewController" bundle:nil];
-        viewController.channelId=CategorySetArr[i][@"id"];
+        
+        [CategorySetArr enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([self.CategoryArr[i] isEqualToString:[obj objectForKey:@"title_show"]]) {
+                viewController.channelId=CategorySetArr[i][@"id"];
+                *stop = YES;
+            }
+        }];
 
         [self addChildViewController:viewController];
     }
@@ -221,7 +232,7 @@ static NSString * const collectionViewSectionHeaderID = @"ChannelCollectionHeade
         NSInteger index = scrollView.contentOffset.x/self.contentScrollView.frame.size.width;
         VideoContentTableViewController *vc = self.childViewControllers[index];
         vc.view.frame = CGRectMake(scrollView.contentOffset.x, 0, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
-        vc.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame)+self.topContianerView.scrollView.frame.size.height, 0, self.tabBarController.tabBar.frame.size.height, 0);
+        vc.tableView.contentInset = UIEdgeInsetsMake(self.topContianerView.scrollView.frame.size.height, 0, self.tabBarController.tabBar.frame.size.height, 0);
         [scrollView addSubview:vc.view];
         for (int i = 0; i<self.contentScrollView.subviews.count; i++) {
             NSInteger currentIndex = vc.tableView.frame.origin.x/self.contentScrollView.frame.size.width;

@@ -16,7 +16,8 @@
     {
         [WendaModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
             return @{
-                     @"des" : @"description"
+                     @"des" : @"description",
+                     @"ID" : @"id"
                      };
         }];
     }

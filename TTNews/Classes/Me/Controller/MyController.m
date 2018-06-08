@@ -8,14 +8,11 @@
 
 #import "MyController.h"
 #import <SDImageCache.h>
-#import "TTDataTool.h"
 #import <SVProgressHUD.h>
-#import "UIImage+Extension.h"
 #import "TTConst.h"
 #import "SendFeedbackViewController.h"
 #import "AppInfoViewController.h"
 #import "EditUserInfoViewController.h"
-#import "UIImage+Extension.h"
 #import <DKNightVersion.h>
 #import "KGTableviewCellModel.h"
 #import "KGMPersonalHeaderView.h"
@@ -31,14 +28,36 @@
 #import "AddMessageViewController.h"
 #import "EditController.h"
 #import "ShoppingController.h"
+#import "MLBasePageViewController.h"
+#import "MyFavQuestionCol.h"
+#import "MyQuestionAnswerCol.h"
+
+#import "ContactListViewController.h"
+#import "ChatListViewController.h"
 
 @interface MyController ()<TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
+{
+    UIBarButtonItem *_addFriendItem;
+    NSDate *date;
+}
 @property (nonatomic, weak) UISwitch                *shakeCanChangeSkinSwitch;
 @property (nonatomic, assign) CGFloat               cacheSize;
-@property (nonatomic, strong)NSMutableArray         *arrayDataItems;
-@property (nonatomic,strong)KGMPersonalHeaderView   *personalHeaderView;
-@property (nonatomic,strong)UITableView             *tableView;
+@property (nonatomic, strong) NSMutableArray         *arrayDataItems;
+@property (nonatomic, strong) KGMPersonalHeaderView   *personalHeaderView;
+@property (nonatomic, strong) UITableView             *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
+
+@property (strong, nonatomic)ChatListViewController     * chatListCol;
+@property (strong, nonatomic)ContactListViewController  * contactListCol;
+
+@property (nonatomic, strong) MLBasePageViewController *vc;
+
+@property (nonatomic, strong) MLBasePageViewController *vcChat;
+
+@property (nonatomic, strong) MyFavQuestionCol *favQuestionCol;
+
+@property (nonatomic, strong) MyQuestionAnswerCol *questionAnswerCol;
+
 
 @property (nonatomic, assign)  NSInteger maxCountTF;  ///< 照片最大可选张数
 
@@ -52,11 +71,6 @@
     if (tag==50)
     {
          LoginController* col = [[LoginController alloc] init];
-        //登录成功刷新数据
-        weakSelf(ws)
-        col.LoginSuccessBlock = ^{
-            [ws.personalHeaderView updateSubView];
-        };
         [self.navigationController pushViewController:col animated:YES];
     }
     else if (tag==60){
@@ -71,32 +85,49 @@
         edit.SendTextBlock = ^(NSString *str) {
             ws.personalHeaderView.contenttext.text=str;
         };
+        edit.titleStr=@"签名";
+        [ws.navigationController pushViewController:edit animated:YES];
+    }
+    else if (tag==80){
+        //昵称
+        weakSelf(ws)
+        EditController *edit=[[EditController alloc] init];
+        edit.SendTextBlock = ^(NSString *str) {
+            ws.personalHeaderView.contenttext.text=str;
+        };
         edit.titleStr=@"昵称";
         [ws.navigationController pushViewController:edit animated:YES];
     }
-    else if (tag==10)
-    {
-        [self.navigationController pushViewController:[KGDynamicsController new] animated:YES];
+    else{
+        if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+            LoginController* loginCol = [[LoginController alloc] init];
+            [self.navigationController pushViewController:loginCol animated:NO];
+        }
+        else if (tag==10)
+        {
+            [self.navigationController pushViewController:[KGDynamicsController new] animated:YES];
+        }
+        else if (tag==20)
+        {
+            [self.navigationController pushViewController:[MyFensiController new] animated:YES];
+        }
+        else if (tag==30)
+        {
+            [self.navigationController pushViewController:[fensiController new] animated:YES];
+        }
+        else if (tag==40)
+        {
+            [self.navigationController pushViewController:[fensiController new] animated:YES];
+        }
     }
-    else if (tag==20)
-    {
-        [self.navigationController pushViewController:[MyFensiController new] animated:YES];
-    }
-    else if (tag==30)
-    {
-        [self.navigationController pushViewController:[fensiController new] animated:YES];
-    }
-    else if (tag==40)
-    {
-        [self.navigationController pushViewController:[fensiController new] animated:YES];
-    }
+    
 }
 -(KGMPersonalHeaderView *)personalHeaderView
 {
     weakSelf(ws);
     if (!_personalHeaderView)
     {
-        _personalHeaderView=[[KGMPersonalHeaderView alloc] initWithFrame:CGRectMake(0, 0, winsize.width, 190)];
+        _personalHeaderView=[[KGMPersonalHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 220)];
         _personalHeaderView.KGPersonalCheckBlock=^(NSInteger tag)
         {
             [ws BtnAction:tag];
@@ -108,21 +139,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _maxCountTF = 1;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, winsize.width, winsize.height-49) style:UITableViewStylePlain];
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.separatorColor = RGB(240, 240, 240);
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.tableView];
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
+    
     [self caculateCacheSize];
     [self setupBasic];
-    self.navigationController.navigationBar.barTintColor=navColor;
-    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
-    self.tableView.tableHeaderView=self.personalHeaderView;
-    self.tableView.separatorColor = [UIColor colorWithHexString:@"#dfdfdf"];
-    self.arrayDataItems=[NSMutableArray array];
+   
+    
     [self loadData];
 }
 
@@ -130,6 +151,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.personalHeaderView updateSubView];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -140,10 +162,37 @@
 }
 
 -(void)setupBasic{
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-    self.tableView.dk_separatorColorPicker = DKColorPickerWithKey(SEP);
-    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(0xfa5054,0x444444,0xfa5054);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    //下面以 '2017-04-24 08:57:29'为例代表服务器返回的时间字符串
+    date = [dateFormatter dateFromString:@"2018-05-20 08:57:29"];
+    
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, SCREEN_WIDTH, SCREEN_HEIGHT-24) style:UITableViewStylePlain];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.separatorColor = RGB(240, 240, 240);
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.tableView];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
+    self.tableView.tableHeaderView=self.personalHeaderView;
+    self.tableView.separatorColor = [UIColor colorWithHexString:@"#dfdfdf"];
+    self.arrayDataItems=[NSMutableArray array];
+    
+    _maxCountTF = 1;
+    self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xAAAAAA, 0x000000);
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444);
+    //获取用户信息并刷新
+    [self.personalHeaderView updateSubView];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    //黑色
+    //return UIStatusBarStyleDefault;
+    //白色
+    return UIStatusBarStyleLightContent;
 }
 
 ///刷新
@@ -153,7 +202,7 @@
     model.title=@"消息通知";
     model.imageName=@"xiaoxiTZ";
     [self.arrayDataItems addObject:model];
-    
+
     model=[[KGTableviewCellModel alloc] init];
     model.title=@"收藏/历史";
     model.imageName=@"shoucangjia";
@@ -170,11 +219,14 @@
     model.imageName=@"qunzu";
     [self.arrayDataItems addObject:model];
     
-    model=[[KGTableviewCellModel alloc] init];
-    model.title=@"我的商城";
-    model.imageName=@"shangcheng";
-    [self.arrayDataItems addObject:model];
     
+    
+    if([self compareOneDay:[self getCurrentTime]  withAnotherDay:date]){
+        model=[[KGTableviewCellModel alloc] init];
+        model.title=@"我的商城";
+        model.imageName=@"shangcheng";
+        [self.arrayDataItems addObject:model];
+    }
     model=[[KGTableviewCellModel alloc] init];
     model.title=@"电子图书馆";
     model.imageName=@"yuedu";
@@ -203,12 +255,48 @@
     [self SetTableviewMethod];
 }
 
+- (NSDate *)getCurrentTime{
+    
+    //2017-04-24 08:57:29
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSString *dateTime=[formatter stringFromDate:[NSDate date]];
+    NSDate *date = [formatter dateFromString:dateTime];
+    //    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    //    NSString *dateString = [formatter stringFromDate:date];
+    //    NSLog(@"datastring  = %@",dateString);
+    return date;
+}
+
+- (BOOL)compareOneDay:(NSDate *)oneDay withAnotherDay:(NSDate *)anotherDay
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSString *oneDayStr = [dateFormatter stringFromDate:oneDay];
+    NSString *anotherDayStr = [dateFormatter stringFromDate:anotherDay];
+    NSDate *dateA = [dateFormatter dateFromString:oneDayStr];
+    NSDate *dateB = [dateFormatter dateFromString:anotherDayStr];
+    NSComparisonResult result = [dateA compare:dateB];
+    NSLog(@"oneDay : %@, anotherDay : %@", oneDay, anotherDay);
+    if (result == NSOrderedDescending) {
+        //在指定时间前面 过了指定时间 过期
+        NSLog(@"oneDay  is in the future");
+        return true;
+    }
+    else if (result == NSOrderedAscending){
+        //没过指定时间 没过期
+        //NSLog(@"Date1 is in the past");
+        return false;
+    }
+    //刚好时间一样.
+    //NSLog(@"Both dates are the same");
+    return false;
+    
+}
+
 
 -(void)caculateCacheSize {
     float imageCache = [[SDImageCache sharedImageCache] getSize]/1024.0/1024.0;
-    //    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"data.sqlite"];
-    //    NSFileManager *fileManager = [NSFileManager defaultManager];
-    //    float sqliteCache = [fileManager attributesOfItemAtPath:path error:nil].fileSize/1024.0/1024.0;
     self.cacheSize = imageCache;
 }
 
@@ -223,14 +311,6 @@
         self.tabBarController.tabBar.barTintColor = [UIColor whiteColor];
         
     }
-    //    else if (theSwitch == self.shakeCanChangeSkinSwitch) {//摇一摇夜间模式
-    //        BOOL status = self.shakeCanChangeSkinSwitch.on;
-    //        [[NSUserDefaults standardUserDefaults] setObject:@(status) forKey:IsShakeCanChangeSkinKey];
-    //        [[NSUserDefaults standardUserDefaults] synchronize];
-    //        if([self.delegate respondsToSelector:@selector(shakeCanChangeSkin:)]) {
-    //            [self.delegate shakeCanChangeSkin:status];
-    //        }
-    //   }
 }
 
 -(void)didReceiveMemoryWarning {
@@ -251,9 +331,15 @@
              })
              .event(^(NSUInteger index, KGTableviewCellModel *model)
             {
-                [ws.navigationController pushViewController:[fensiController new] animated:YES];
+                if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
+                    LoginController* loginCol = [[LoginController alloc] init];
+                    [self.navigationController pushViewController:loginCol animated:NO];
+                }
+                else{
+                    [ws.navigationController pushViewController:[fensiController new] animated:YES];
+                }
             })
-             .height(81);
+             .height(45);
          }];
         
         [make makeSection:^(CBTableViewSectionMaker *section)
@@ -262,70 +348,99 @@
              .cell([UITableViewCell class])
              .adapter(^(UITableViewCell *cell,KGTableviewCellModel *model,NSUInteger index)
                       {
+                          cell.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+                          
+                          cell.contentView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+                          cell.textLabel.dk_textColorPicker = DKColorPickerWithKey(TEXT);
+                          
                           cell=[cell initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identify"];
-                          cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+                      cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
                           cell.textLabel.text=model.title;
                           cell.imageView.image=[UIImage imageNamed:model.imageName];
-                          
+                          if(![self compareOneDay:[self getCurrentTime] withAnotherDay:date] && index > 3 )
+                          {
+                              index = index + 1;
+                          }
                           if (index==6)
                           {
                               UISwitch *sw=[[UISwitch alloc] init];
                               [cell.contentView addSubview:sw];
+                              cell.selectionStyle = UITableViewCellSelectionStyleNone;
                               [sw mas_makeConstraints:^(MASConstraintMaker *make) {
                                   make.top.offset(5);
                                   make.bottom.offset(-5);
                                   make.right.offset(-20);
                                   make.width.mas_equalTo(30);
                               }];
+                              if ([self.dk_manager.themeVersion isEqualToString:DKThemeVersionNormal]) {
+                                  [sw setOn:NO animated:YES];
+                              } else {
+                                  [sw setOn:YES animated:YES];
+                                  
+                              }
                               [sw addTarget:self action:@selector(switchDidChange:) forControlEvents:UIControlEventValueChanged];
                           }
                           
                       })
              .event(^(NSUInteger index, KGTableviewCellModel *model)
                     {
+                        
+                         if(![self compareOneDay:[self getCurrentTime] withAnotherDay:date] && index > 3)
+                         {
+                             index = index + 1;
+                         }
                         //检验用户登录状态
-                        if(index !=5 || index != 8 || index != 9){
+                        if(!(index == 5 || index == 6)){
                             if([[OWTool Instance] getUid] == nil || [[[OWTool Instance] getUid] isEqualToString:@""]){
-                                [SVProgressHUD showImage:nil status:@"用户未登录"];
-                                [SVProgressHUD dismissWithDelay:2];
-                                return;
+                                LoginController* loginCol = [[LoginController alloc] init];
+                                [self.navigationController pushViewController:loginCol animated:NO];
+                            }
+                            else if(index==0){
+                                [self.navigationController pushViewController:self.vc animated:YES];
+                            }
+                            else  if (index==1){
+                                collectController *collect=[[collectController alloc] init];
+                                [self.navigationController pushViewController:collect animated:YES];
+                            }
+                            else if(index == 4){
+                                [self.navigationController pushViewController:[ShoppingController new] animated:YES];
+                            }
+                            else if (index == 2){
+                                AddMessageViewController *col = [[AddMessageViewController alloc]init];
+                                [self.navigationController pushViewController:col animated:YES];
+                            }
+                            else if (index == 3){
+                                //聊天群组
+                                if ([[OWTool Instance] getLastLoginUsername].length!=0) {
+                                    [self.navigationController pushViewController:self.vcChat animated:YES];
+                                    
+                                }
+                                else{
+                                    LoginController *logCol = [[LoginController alloc] init];
+                                    [self.navigationController pushViewController:logCol animated:YES];
+                                }
+                            }
+                            else if(index == 8){
+                                PublishManageViewController
+                                * col=[[PublishManageViewController alloc] init];
+                                [self.navigationController pushViewController:col animated:YES];
+                            }
+                            else if (index==7){
+                                [self.navigationController pushViewController:[[SendFeedbackViewController alloc] init] animated:YES];
+                            }
+                            else if (index==9){
+                                SettingController *settingCol = [[SettingController alloc]init];
+                                [self.navigationController pushViewController:settingCol  animated:YES];
+                                weakSelf(ws)
+                                settingCol.loginOutBlock = ^{
+                                    [ws.personalHeaderView updateSubView];
+                                };
                             }
                         }
                         
-                        if (index==0){
-                            KGDynamicsController *dyVc=[KGDynamicsController new];
-                            [self.navigationController pushViewController:dyVc animated:YES];
-                        }
-                        else if (index==1){
-                            collectController *collect=[[collectController alloc] init];
-                            [self.navigationController pushViewController:collect animated:YES];
-                        }
-                        else if(index == 4){
-                            [self.navigationController pushViewController:[ShoppingController new] animated:YES];
-                        }
-                        else if (index == 2){
-                            AddMessageViewController *col = [[AddMessageViewController alloc]init];
-                            [self.navigationController pushViewController:col animated:YES];
-                        }
                         else  if (index==5){
                             LibraryController *libraryVc=[[LibraryController alloc] init];
                             [self.navigationController pushViewController:libraryVc animated:YES];
-                        }
-                        else if(index == 8){
-                            PublishManageViewController
-                            * col=[[PublishManageViewController alloc] init];
-                            [self.navigationController pushViewController:col animated:YES];
-                        }
-                        else if (index==7){
-                            [self.navigationController pushViewController:[[SendFeedbackViewController alloc] init] animated:YES];
-                        }
-                        else if (index==9){
-                            SettingController *settingCol = [[SettingController alloc]init];
-                            [self.navigationController pushViewController:settingCol  animated:YES];
-                            weakSelf(ws)
-                            settingCol.loginOutBlock = ^{
-                                [ws.personalHeaderView updateSubView];
-                            };
                         }
                         
                     })
@@ -338,26 +453,16 @@
 
 -(void)upLoadUserHeadIm:(UIImage*)img{
     weakSelf(ws)
-    [KGNetworkManager uploadImageWithArray:@[img] parameter:nil success:^(NSData* data) {
-        NSError *err;
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
-                                                            options:NSJSONReadingMutableContainers
-                                                              error:&err];
-        if(err == nil) {
-            NSMutableDictionary *prms=[@{
-                                         @"uid":[[OWTool Instance] getUid] ,
-                                         @"avatar":dic[@"Info"][@"id"]
-                                         }mutableCopy];
+    [[KGNetworkManager sharedInstance] uploadImageWithArray:[@[img] copy] parameter:nil success:^(NSDictionary* dict) {
+        NSDictionary *dic = dict[@"info"][0];
+       
+        NSMutableDictionary* dictData = [@{@"uid":[[OWTool Instance] getUid],@"avatar":dic[@"id"]} copy];
+        [[KGNetworkManager sharedInstance]invokeNetWorkAPIWith:NNetworkUpdateUserAvatar withUserInfo:dictData success:^(id message) {
+            [SVProgressHUD showInfoWithStatus:message[@"message"]];
+             [ws.personalHeaderView.headerImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,dic[@"url"]]]];
+        } failure:^(NSError *error) {
             
-            [[KGNetworkManager sharedInstance] GetInvokeNetWorkAPIWith:KNetworkmyDynamic withUserInfo:prms success:^(NSDictionary *message)
-             {
-                 [SVProgressHUD showSuccessWithStatus:message[@"message"]];
-                 [SVProgressHUD dismissWithDelay:2];
-             } failure:^(NSError *error) {
-                 
-             } visibleHUD:NO];
-            //[ws.personalHeaderView.headerImg setImage:img];
-        }
+        } visibleHUD:NO];
       
     } fail:^(NSError *error) {
         
@@ -431,7 +536,7 @@
 //        imagePickerVc.selectedAssets = self.addMessageView.selectedAssets; // 目前已经选中的图片数组
 //    }
     imagePickerVc.allowTakePicture = NO; // 在内部显示拍照按钮
-    
+//    imagePickerVc.allowCrop = YES;//允许裁剪
     // 2. Set the appearance
     // 2. 在这里设置imagePickerVc的外观
     // imagePickerVc.navigationBar.barTintColor = [UIColor greenColor];
@@ -497,7 +602,7 @@
                 [tzImagePickerVc hideProgressHUD];
                 NSLog(@"图片保存失败 %@",error);
             } else {
-                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES completion:^(TZAlbumModel *model) {
+                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES needFetchAssets:YES completion:^(TZAlbumModel *model) {
                     [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
                         [tzImagePickerVc hideProgressHUD];
                         TZAssetModel *assetModel = [models firstObject];
@@ -536,6 +641,77 @@
         [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
     }
     return _imagePickerVc;
+}
+
+#pragma mark LazyLoad
+
+-(MyFavQuestionCol *)favQuestionCol{
+    if (_favQuestionCol == nil) {
+        _favQuestionCol = [MyFavQuestionCol new];
+        
+    }
+    return _favQuestionCol;
+}
+-(MyQuestionAnswerCol *)questionAnswerCol{
+    
+    if (_questionAnswerCol == nil) {
+        _questionAnswerCol = [MyQuestionAnswerCol new];
+        
+    }
+    return _questionAnswerCol;
+}
+-(MLBasePageViewController*)vc{
+    if (_vc == nil) {
+        _vc = [[MLBasePageViewController alloc] init];
+        _vc.VCArray = @[ self.favQuestionCol,self.questionAnswerCol];
+        _vc.sectionTitles = @[ @"关注问题", @"邀请通知"];
+        _vc.MLBasePageViewBlock = ^(int index) {
+            
+        };
+        
+    }
+    return _vc;
+}
+
+#pragma mark LazyLoad
+
+-(ContactListViewController *)contactListCol{
+    if (_contactListCol == nil) {
+        _contactListCol = [ContactListViewController new];
+        
+    }
+    return _contactListCol;
+}
+-(ChatListViewController *)chatListCol{
+    
+    if (_chatListCol == nil) {
+        _chatListCol = [ChatListViewController new];
+        
+    }
+    return _chatListCol;
+}
+
+-(MLBasePageViewController*)vcChat{
+    if (_vcChat == nil) {
+        _vcChat = [[MLBasePageViewController alloc] init];
+        _vcChat.VCArray = @[ self.chatListCol,self.contactListCol];
+        _vcChat.sectionTitles = @[ @"消息", @"联系人"];
+        UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+        [addButton addTarget:self.contactListCol action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
+        _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+        weakSelf(ws);
+        _vcChat.MLBasePageViewBlock = ^(int index) {
+            if (index == 0) {
+                ws.vc.navigationItem.rightBarButtonItem = nil;
+            }
+            else{
+                ws.vc.navigationItem.rightBarButtonItem = _addFriendItem;
+            }
+        };
+        
+    }
+    return _vcChat;
 }
 
 @end

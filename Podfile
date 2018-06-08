@@ -23,8 +23,21 @@ pod 'TZImagePickerController'
 
 #图文混排
 pod 'TYAttributedLabel'
+#badge
+pod 'RKNotificationHub'
 
-pod 'Hyphenate'
+#友盟分享
+pod 'UMCShare/UI'
+pod 'UMCShare/Social/ReducedWeChat'
+pod 'UMCShare/Social/ReducedQQ'
+pod 'UMCShare/Social/ReducedSina'
+
+
+#搜索
+pod "PYSearch"
+
+#Full版本
+#pod 'Hyphenate'
 pod 'MBProgressHUD'
 pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
 

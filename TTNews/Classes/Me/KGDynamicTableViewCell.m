@@ -9,10 +9,8 @@
 #import "KGDynamicTableViewCell.h"
 
 @interface KGDynamicTableViewCell(){
-    UIImageView * _imgHeaderView;//图像
     UILabel     * _labUserNickname;//昵称
     UILabel     * _labTime;//时间
-    UILabel     * _labCaption;//标题
     UILabel     * _labContent;//内容
     PYPhotosView *_flowPhotosView;//图片展示
 }
@@ -37,109 +35,97 @@
 -(void)setup{
     
     _imgHeaderView = [UIImageView new];
-    _imgHeaderView.layer.cornerRadius = 30;
+    _imgHeaderView.layer.cornerRadius = 20;
     _imgHeaderView.contentMode = UIViewContentModeScaleAspectFit;
     _imgHeaderView.clipsToBounds = YES;
     
     _labUserNickname = [UILabel new];
-    _labUserNickname.font = [UIFont systemFontOfSize:15];
+    _labUserNickname.font = [UIFont systemFontOfSize:17];
     _labUserNickname.numberOfLines = 0;
     _labUserNickname.textColor = [UIColor blackColor];
     
     _labTime = [UILabel new];
-    _labTime.font = [UIFont systemFontOfSize:15];
+    _labTime.font = [UIFont systemFontOfSize:14];
     _labTime.numberOfLines = 0;
     _labTime.textColor = [UIColor lightGrayColor];
     
-    _labCaption = [UILabel new];
-    _labCaption.font = [UIFont systemFontOfSize:15];
-    _labCaption.numberOfLines = 0;
-    _labCaption.textColor = [UIColor blackColor];
-    
     _labContent = [UILabel new];
     _labContent.numberOfLines = 0;
-    _labContent.font = [UIFont systemFontOfSize:15];
+    _labContent.font = [UIFont systemFontOfSize:14];
     _labContent.textColor = [UIColor lightGrayColor];
-    
-    
-    
-    // 2.1 创建一个流水布局photosView(默认为流水布局)
-    _flowPhotosView = [PYPhotosView photosView];
-
     
     [self.contentView addSubview:_imgHeaderView];
     [self.contentView addSubview:_labUserNickname];
     [self.contentView addSubview:_labTime];
-    [self.contentView addSubview:_labCaption];
+    [self.contentView addSubview:_flowPhotosView];
     [self.contentView addSubview:_labContent];
+    
+    self.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+    
+    self.contentView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xffffff, 0x343434, 0xfafafa);
+    _labUserNickname.dk_textColorPicker = DKColorPickerWithKey(TEXT);
     
     _imgHeaderView.sd_layout
     .topSpaceToView(self.contentView, 5)
     .leftSpaceToView(self.contentView, 10)
-    .heightIs(60)
-    .widthIs(60);
+    .heightIs(40)
+    .widthIs(40);
     
     _labTime.sd_layout
-    .topSpaceToView(self.contentView, 5)
+    .topSpaceToView(self.contentView, 20)
     .rightSpaceToView(self.contentView, 5)
-    .widthIs(150)
-    .heightIs(25);
+    .heightIs(20);
+    [_labTime setSingleLineAutoResizeWithMaxWidth:150];
     
     _labUserNickname.sd_layout
     .leftSpaceToView(_imgHeaderView, 5)
-    .topSpaceToView(self.contentView, 10)
-    .rightSpaceToView(_labTime, 10);
+    .topEqualToView(_labTime)
+    .rightSpaceToView(_labTime, 5)
+    .autoHeightRatio(0);
     [_labUserNickname setMaxNumberOfLinesToShow:2];
-    
-    _labCaption.sd_layout
-    .leftSpaceToView(_imgHeaderView, 5)
-    .topSpaceToView(_labUserNickname, 10)
-    .rightSpaceToView(self.contentView, 5);
-    [_labCaption setMaxNumberOfLinesToShow:2];
     
     _labContent.sd_layout
     .leftSpaceToView(_imgHeaderView, 5)
-    .topSpaceToView(_labCaption, 5)
-    .rightSpaceToView(self.contentView, 5);
+    .topSpaceToView(_labUserNickname, 5)
+    .rightSpaceToView(self.contentView, 5)
+    .autoHeightRatio(0);
     [_labContent setMaxNumberOfLinesToShow:3];
-    
-    [self setupAutoHeightWithBottomView:_labContent bottomMargin:10];
 }
 
 -(void)setModel:(DymamicModel *)model{
     
     _model = model;
-    _imgHeaderView.image = [UIImage imageNamed:@"21416661_1369810244934"];
+    
     _labUserNickname.text = @"用户昵称";
     _labTime.text = model.create_time?model.create_time:@"";
-    _labCaption.text = model.title?model.title:@"";
-    _labContent.text = model.description?model.description:@"";
+    _labContent.text = model.description1?model.description1:@"";
+    //先移除在增加
+    [_flowPhotosView removeFromSuperview];
     if (model.fengmian) {
-
-        [self.contentView addSubview:_flowPhotosView];
+        [_labContent updateLayout];
+        // 2.1 创建一个流水布局photosView(默认为流水布局)
+        _flowPhotosView = [PYPhotosView photosView];
         
-        _flowPhotosView.sd_layout
-        .leftSpaceToView(_imgHeaderView,10)
-        .topSpaceToView(_labContent,10);
-        _flowPhotosView.py_y = _labContent.origin.y+_labContent.size.height+10;
-        _flowPhotosView.photoWidth = SCREEN_WIDTH/2;
-        _flowPhotosView.photoHeight = SCREEN_WIDTH/2;
-        _flowPhotosView.photosState = PYPhotosViewStateDidCompose;
-
-        NSMutableArray *thumbnailImageUrls = [NSMutableArray arrayWithArray:@[model.fengmian]];
-        // 添加图片(缩略图)链接
-        // 1.2 创建图片原图链接数组
-        NSMutableArray *originalImageUrls = [NSMutableArray arrayWithArray:@[model.fengmian]];
-        // 添加图片(原图)链接
+        NSMutableArray *thumbnailImageUrls = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,model.fengmian]]];
+        if(thumbnailImageUrls && thumbnailImageUrls.count ==1 && [((NSString*)thumbnailImageUrls[0]) containsString:@"default"]){
+            [self setupAutoHeightWithBottomView:_labContent bottomMargin:10];
+        }
+        else{
+            _flowPhotosView.thumbnailUrls = thumbnailImageUrls;
+            
+            _flowPhotosView.py_y = _labContent.origin.y+_labContent.size.height+10;
+            _flowPhotosView.py_x = _imgHeaderView.origin.x +_imgHeaderView.size.width + 10;
+            _flowPhotosView.photosState = PYPhotosViewStateDidCompose;
+            
+            [self.contentView addSubview:_flowPhotosView];
+            [self setupAutoHeightWithBottomView:_flowPhotosView bottomMargin:10];
+        }
         
-        // 设置缩略图数组
-        _flowPhotosView.thumbnailUrls = thumbnailImageUrls;
-        // 设置原图地址
-        _flowPhotosView.originalUrls = originalImageUrls;
-        
-        
-        [self setupAutoHeightWithBottomView:_flowPhotosView bottomMargin:10];
+    }
+    else{
+        [self setupAutoHeightWithBottomView:_labContent bottomMargin:10];
     }
 }
+
 
 @end

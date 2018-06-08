@@ -329,14 +329,14 @@
     img.image=info[UIImagePickerControllerEditedImage];
     _isImageSelect = true;
     weakSelf(ws)
-    [KGNetworkManager uploadImageWithArray:@[img.image] parameter:nil success:^(NSData* data) {
+    [[KGNetworkManager sharedInstance] uploadImageWithArray:[@[img.image] copy] parameter:nil success:^(NSData* data) {
         NSError *err;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
                                                             options:NSJSONReadingMutableContainers
                                                               error:&err];
         if(err == nil) {
             [ws dismissViewController];
-            _aproveImgId = dic[@"Info"][@"id"];
+            _aproveImgId = [(NSNumber*)dic[@"Info"][@"id"] intValue];
         }
         
     } fail:^(NSError *error) {

@@ -10,4 +10,7 @@
 
 @interface InformEditController : UITableViewController
 
+///当传递的时候表示查看别人的个人信息
+@property (nonatomic, strong)NSString* userID;
+
 @end

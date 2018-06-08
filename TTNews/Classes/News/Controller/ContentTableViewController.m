@@ -11,8 +11,6 @@
 #import "MultiPictureTableViewCell.h"
 #import "DetailViewController.h"
 #import "ShowMultiPictureViewController.h"
-#import "TTNormalNewsFetchDataParameter.h"
-#import "TTDataTool.h"
 #import "TTConst.h"
 #import <DKNightVersion.h>
 #import <SDImageCache.h>
@@ -44,12 +42,6 @@
 
 @end
 
-static NSString * const singlePictureCell = @"SinglePictureCell";
-static NSString * const multiPictureCell = @"MultiPictureCell";
-static NSString * const bigPictureCell = @"BigPictureCell";
-static NSString * const topTextPictureCell = @"TopTextPictureCell";
-static NSString * const topPictureCell = @"TopPictureCell";
-//@"news";
 static NSString * const VideoCell = @"VideoCell";
 
 
@@ -57,11 +49,6 @@ static NSString * const VideoCell = @"VideoCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    if (!self.arrayList) {
-        self.arrayList=[[NSMutableArray alloc] init];
-    }
-
     [self setupBasic];
     [self setupRefresh];
     
@@ -73,7 +60,6 @@ static NSString * const VideoCell = @"VideoCell";
         [self.tableView.mj_header beginRefreshing];
         self.update = NO;
     }
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -85,24 +71,18 @@ static NSString * const VideoCell = @"VideoCell";
 -(void)setupBasic {
     
     self.tableView.dk_backgroundColorPicker = DKColorPickerWithRGB(0xf0f0f0, 0x000000, 0xfafafa);
-//    self.tableView.backgroundColor=[UIColor redColor];
+    
+    self.navigationController.navigationBar.dk_barTintColorPicker = DKColorPickerWithRGB(MainColor,0x444444,MainColor);
 
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([TopPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:topPictureCell];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([TopTextTableViewCell class]) bundle:nil] forCellReuseIdentifier:topTextPictureCell];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BigPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:bigPictureCell];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SinglePictureNewsTableViewCell class]) bundle:nil] forCellReuseIdentifier:singlePictureCell];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MultiPictureTableViewCell class]) bundle:nil] forCellReuseIdentifier:multiPictureCell];
-
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.tableFooterView = [UIView new];
+    if (!self.arrayList) {
+        self.arrayList=[[NSMutableArray alloc] init];
+    }
+    
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:VideoCell];
-
-
+    [self.tableView registerClass:[NewsTableViewCell class] forCellReuseIdentifier:@"NewsTableViewCellIdentify"];
 }
-
-
 #pragma mark --private Method--初始化刷新控件
 -(void)setupRefresh {
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
@@ -112,13 +92,10 @@ static NSString * const VideoCell = @"VideoCell";
     self.currentPage = 1;
 }
 
-
 #pragma mark - /************************* 刷新数据 ***************************/
 // ------下拉刷新
 - (void)loadData
 {
-    // http://c.m.163.com//nc/article/headline/T1348647853363/0-30.html
-    //http://xinwen.52jszhai.com/api/content/lists/id/1/page/2
     self.currentPage=1;
     [self loadDataForType];
 }
@@ -131,48 +108,58 @@ static NSString * const VideoCell = @"VideoCell";
 
 - (void)loadDataForType
 {
-    NSString *allUrlstring=[NSString stringWithFormat:@"%@/api/content/lists/id/%@/page/%ld",kNewWordBaseURLString,self.channelId,(long)self.currentPage];
-
-    [[[SXNetworkTools sharedNetworkTools] GET:allUrlstring parameters:nil progress:nil success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
-        
-        if(self.currentPage==1){
-            [self.arrayList removeAllObjects];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:@{@"id":self.channelId,@"page":@(self.currentPage)}];
+    weakSelf(ws)
+    [[KGNetworkManager sharedInstance] invokeNetWorkAPIWith:KNetWorkLanMuData withUserInfo:dict success:^(NSDictionary* message) {
+        if(ws.currentPage==1){
+            [ws.arrayList removeAllObjects];
         }
-
-        NSArray *arrayM = [TTVideo mj_objectArrayWithKeyValuesArray:responseObject];
-        [self.arrayList addObjectsFromArray:arrayM];
-
-        if (arrayM.count==0) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        
+        NSArray *arrayM = [TTVideo mj_objectArrayWithKeyValuesArray:message];
+        if (_currentPage == 1) {
+            [ws.arrayList removeAllObjects];
+        }
+        [ws.arrayList addObjectsFromArray:arrayM];
+        if ( arrayM == nil || arrayM.count==0) {
+            [ws.tableView.mj_footer endRefreshingWithNoMoreData];
         }
         else{
-            [self.tableView reloadData];
+            [ws.tableView reloadData];
+            [ws.tableView.mj_footer endRefreshing];
         }
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-
+        [ws.tableView.mj_header endRefreshing];
         
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@",error);
-    }] resume];
-}// ------想把这里改成block来着
+        [SVProgressHUD dismiss];
+    } failure:^(NSError *error)
+     {
+     } visibleHUD:YES];
 
-
+}
 
 #pragma mark -UITableViewDataSource 返回tableView有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.arrayList.count;
+    return 1;
 }
 
 #pragma mark -UITableViewDataSource 返回tableView每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.arrayList.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TTVideo *model=self.arrayList[indexPath.row];
+    if ([model.model_id integerValue] != 6) {
+        return [tableView cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[NewsTableViewCell class] contentViewWidth:SCREEN_WIDTH];
+    }
+    else
+        return 322;
 }
 
 #pragma mark -UITableViewDataSource 返回indexPath对应的cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    TTVideo *video=self.arrayList[indexPath.section];
+    TTVideo *video=self.arrayList[indexPath.row];
 
     if ([video.model_id integerValue]==6) {
         ///视频
@@ -184,142 +171,28 @@ static NSString * const VideoCell = @"VideoCell";
         return cell;
     }
     else{
-        
         NewsTableViewCell *cell;
-        cell=[tableView dequeueReusableCellWithIdentifier:@"news"];
-        cell =[[NSBundle mainBundle] loadNibNamed:@"NewsTableViewCell" owner:self options:nil][0];
-        cell.txtLab.text=video.title;
-
-        NSArray *imagss=[video.fengmian componentsSeparatedByString:@","];
-        if (imagss.count!=0) {
-          [cell.myImage1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewWordBaseURLString,imagss[0]]] placeholderImage:nil];
-            
-        }
+        cell=[tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCellIdentify" forIndexPath:indexPath];
+        cell.model = video;
         return cell;
     }
-
-//    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
-//    if (NewsModel.hasHead && NewsModel.photosetID) {
-//        TopPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:topPictureCell];
-//        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
-//        cell.LblTitleLabel.text = NewsModel.title;
-//        return cell;
-//    }else if (NewsModel.hasHead){
-//        TopTextTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:topTextPictureCell];
-//        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
-//        cell.LblTitleLabel.text = NewsModel.title;
-//        return cell;
-//    }else if (NewsModel.imgType){
-//        BigPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bigPictureCell];
-//        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:NewsModel.imgsrc] placeholderImage:[UIImage imageNamed:@"302"]];
-//        cell.LblTitleLabel.text = NewsModel.title;
-//        cell.subTitleLabel.text = NewsModel.subtitle;
-//        return cell;
-//    }else if (NewsModel.imgextra){
-//        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
-//        cell.theTitle = NewsModel.title;
-//        cell.imageUrls = [NSArray arrayWithObjects:NewsModel.imgsrc, NewsModel.imgextra[0], NewsModel.imgextra[0], nil];
-//        return cell;
-//    }else{
-//        SinglePictureNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:singlePictureCell];
-//        cell.imageUrl = NewsModel.imgsrc;
-//        cell.contentTittle = NewsModel.title;
-//        cell.desc = NewsModel.digest;
-//
-//        return cell;
-//    }
-
-//    if (newsModel.imgextra){
-//        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
-//        cell.theTitle = newsModel.title;
-//        cell.imageUrls = [NSArray arrayWithObjects:newsModel.imgsrc, newsModel.imgextra[0], newsModel.imgextra[0], nil];
-//        return cell;
-//    } else {
-//        SinglePictureNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:singlePictureCell];
-//        cell.imageUrl = newsModel.imgsrc;
-//        cell.contentTittle = newsModel.title;
-//        cell.desc = newsModel.digest;
-//        
-//        return cell;
-//    }
-    
-//    TTNormalNews *news = self.normalNewsArray[indexPath.row];
-//    if (news.normalNewsType == NormalNewsTypeMultiPicture) {
-//        MultiPictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:multiPictureCell];
-//        cell.title = news.title;
-//        cell.imageUrls = news.imageurls;
-//        
-//        return cell;
-//    } else if (news.normalNewsType == NormalNewsTypeSigalPicture) {
-//        SinglePictureNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:singlePictureCell];
-//        cell.contentTittle = news.title;
-//        cell.desc = news.desc;
-//        NSDictionary *dict = news.imageurls.firstObject;
-//        if (dict) {
-//            cell.imageUrl = dict[@"url"];
-//        }
-//            return cell;
-//    } else {
-//        NoPictureNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:noPictureCell];
-//        cell.titleText = news.title;
-//        cell.contentText = news.desc;
-//        
-//        return cell;
-//    }
-}
-
-#pragma mark -UITableViewDataSource 返回indexPath对应的cell的高度
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TTVideo *video=self.arrayList[indexPath.section];
-    if ([video.model_id integerValue]==6) {
-        return 322;
-    }
-    else{
-        return 147;
-    }
-
 }
 
 #pragma mark -UITableViewDelegate 点击了某个cell
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TTVideo *video=self.arrayList[indexPath.section];
+    TTVideo *video=self.arrayList[indexPath.row];
     if ([video.model_id integerValue]==6) {
         VideoInfoViewController *info=[[VideoInfoViewController alloc] init];
-//        TTVideo *video=self.videoArray[indexPath.row];
-        info.url=video.id;
+        info.url=video.ID;
         info.video=video;
         [self.navigationController pushViewController:info animated:YES];
     }
     else{
         NewsInfoViewController *info=[[NewsInfoViewController alloc] init];
-        info.url=video.id;
+        info.url=video.ID;
         info.video=video;
         [self.navigationController pushViewController:info animated:YES];
-        
     }
-    
-//    SXNewsEntity *NewsModel = self.arrayList[indexPath.row];
-//    if (NewsModel.hasHead && NewsModel.photosetID) {
-//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-//    }else if (NewsModel.hasHead){
-//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-//
-//    }else if (NewsModel.imgType){
-//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-//
-//    }else if (NewsModel.imgextra){
-//        ShowMultiPictureViewController *viewController = [[ShowMultiPictureViewController alloc] init];
-//        viewController.imageUrls =  [NSArray arrayWithObjects:NewsModel.imgsrc, NewsModel.imgextra[0], NewsModel.imgextra[0], nil];
-//        NSString *text = NewsModel.digest;
-//        if (text == nil || [text isEqualToString:@""]) {
-//            text = NewsModel.title;
-//        }
-//        viewController.text = text;
-//        [self.navigationController pushViewController:viewController animated:YES];
-//    }else{
-//        [self pushToDetailViewControllerWithUrl:NewsModel.url];
-//    }
-
 }
 
 #pragma mark --private Method--点击了某一条新闻，调转到新闻对应的网页去
