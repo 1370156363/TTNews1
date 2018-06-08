@@ -251,6 +251,7 @@ static ApplyViewController *controller = nil;
             for (int i = ((int)[_dataSource count] - 1); i >= 0; i--) {
                 ApplyEntity *oldEntity = [_dataSource objectAtIndex:i];
                 ApplyStyle oldStyle = [oldEntity.style intValue];
+
                 if (oldStyle == style && [applyUsername isEqualToString:oldEntity.applicantUsername]) {
                     if(style != ApplyStyleFriend)
                     {
@@ -268,7 +269,7 @@ static ApplyViewController *controller = nil;
                     return;
                 }
             }
-            
+
             //new apply
             ApplyEntity *newEntity= [[ApplyEntity alloc] init];
             newEntity.applicantUsername = [dictionary objectForKey:@"username"];
@@ -277,7 +278,8 @@ static ApplyViewController *controller = nil;
             
             NSString *loginName = [[EMClient sharedClient] currentUsername];
             newEntity.receiverUsername = loginName;
-            
+
+            ///
             NSString *groupId = [dictionary objectForKey:@"groupId"];
             newEntity.groupId = (groupId && groupId.length > 0) ? groupId : @"";
             

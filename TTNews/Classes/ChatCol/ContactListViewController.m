@@ -135,6 +135,12 @@
         cell.indexPath = indexPath;
         cell.delegate = self;
         cell.model = model;
+<<<<<<< HEAD:TTNews/Classes/ChatCol/ContactListViewController.m
+=======
+        ///头像
+        cell.imageView=
+        ///昵称
+>>>>>>> 0675c265b492e4da721e3ffcadba42cbdbedfa57:TTNews/Classes/IM/Contacts/ContactListViewController.m
         
         return cell;
     }

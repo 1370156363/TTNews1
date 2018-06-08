@@ -60,7 +60,10 @@ typedef enum _NetWorkAction
     KNetWorkSearchMyInfo,   //根据手机号查
     KNetworkGetCommnet,///获取评论
     KNetworkSearch,///根据关键词搜索
+<<<<<<< HEAD
     KNetworkSearchQuesion,///搜索问题
+=======
+>>>>>>> 0675c265b492e4da721e3ffcadba42cbdbedfa57
 
     
     KNetWrokGetVersion,                     //获取服务器版本号
@@ -120,6 +123,7 @@ typedef enum _NetWorkAction
     KnetworkAddPingLun, //添加评论
     KnetworkAddcollect,///添加收藏
     KnetworkAdduserAction,///添加点赞
+
 
 
 

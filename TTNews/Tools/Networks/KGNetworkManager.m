@@ -256,6 +256,7 @@ static NSMutableArray *tasks;
             actionValue=@"api/content/adduseraction";
             break;
         case KNetworkSearch:
+<<<<<<< HEAD
             actionValue=@"api/content/searcharticle";
             break;
         case KNetworkSearchQuesion:
@@ -295,6 +296,9 @@ static NSMutableArray *tasks;
             break;
         case KNetWorkMyHistory:
             actionValue = @"api/index/readHistory";
+=======
+            actionValue=@"api/content/search";
+>>>>>>> 0675c265b492e4da721e3ffcadba42cbdbedfa57
             break;
         
     }
